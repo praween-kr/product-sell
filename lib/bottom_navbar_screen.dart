@@ -32,7 +32,6 @@ class BottomScreen extends StatelessWidget {
               ),
 
               ///svg item
-
               BottomBarItem(
                 inActiveItem: Icon(
                   Icons.chat_bubble_outline,
