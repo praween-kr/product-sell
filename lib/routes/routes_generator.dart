@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/bottom_navbar_screen.dart';
-import 'package:oninto_flutter/choose_plan.dart';
-import 'package:oninto_flutter/home_screen.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import '../splash_screen.dart';
+import '../views/authscreens/login_screen.dart';
+import '../views/home/bottom_navbar_screen.dart';
+import '../views/home/home_screen.dart';
 
 class RoutesGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Widget widgetScreen;
     final args = settings.arguments;
-
     switch (settings.name) {
-      case Routes.bottomScreen:
+      case Routes.splashScreen:
+        widgetScreen = SplashScreen();
+        break;
+        case Routes.loginScreen:
+        widgetScreen = LoginScreen();
+        break;
+        case Routes.homeScreen:
+        widgetScreen = HomeScreen();
+        break;
+        case Routes.bottomScreen:
         widgetScreen = BottomScreen();
-        break;
-      case Routes.homeScreen:
-        widgetScreen = const HomeScreen();
-        break;
-      case Routes.chooseScreen:
-        widgetScreen = const ChooseplanScreen();
         break;
 
       default:
