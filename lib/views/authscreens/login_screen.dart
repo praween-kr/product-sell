@@ -17,15 +17,10 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: (){
-                  Get.toNamed(Routes.bottomScreen);
-                },
-                child: const Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: AppText(text: "Trouble logging In? ",color: Colors.black,underline: true,
-                  underlineColor: Colors.black,),
-                ),
+              const Align(
+                alignment: AlignmentDirectional.topEnd,
+                child: AppText(text: "Trouble logging In? ",color: Colors.black,underline: true,
+                underlineColor: Colors.black,),
               ),const SizedBox(height: 120,),
               const Padding(
                 padding: EdgeInsets.only(top: 0, left: 0),
@@ -83,7 +78,7 @@ class LoginScreen extends StatelessWidget {
               ), const SizedBox(height: 50,),
               GestureDetector(
                 onTap: () {
-                  // showSuccessPayment(context);
+                  Get.toNamed(Routes. bottomScreen);
                 },
                 child: Center(
                   child: Container(

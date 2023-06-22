@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+
+import '../../utills/common_appbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -40,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Spacer(),
                 Container(
-                  margin: EdgeInsets.only(right: 7),
+                  margin: const EdgeInsets.only(right: 7),
                   decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(15)),
@@ -59,14 +58,14 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            AppTextField(
-              height: 45,
-              title: "Search",
-              borderRadius: BorderRadius.circular(50),
-              prefix: Icon(Icons.search),
-              containerColor: Color(0xffF7F7F7),
-            ),
-            Row(
+            // AppTextField(
+            //   height: 45,
+            //   title: "Search",
+            //   borderRadius: BorderRadius.circular(50),
+            //   prefix: Icon(Icons.search),
+            //   containerColor: Color(0xffF7F7F7),
+            // ),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText(
@@ -98,17 +97,17 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Container(
                               margin: const EdgeInsets.only(top: 20),
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                   top: 30, bottom: 30, left: 30, right: 30),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   border:
                                       Border.all(color: Colors.grey, width: 1)),
                               child: Icon(Icons.message)),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          AppText(text: "Men")
+                          const AppText(text: "Men")
                         ],
                       ),
                     );
@@ -119,7 +118,7 @@ class HomeScreen extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () {},
                 backgroundColor: Colors.yellow,
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   color: Colors.white,
                   size: 40,
