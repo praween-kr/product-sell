@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/bottom_navbar_screen.dart';
+import 'package:oninto_flutter/choose_plan.dart';
 import 'package:oninto_flutter/home_screen.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 
@@ -14,7 +15,10 @@ class RoutesGenerator {
         widgetScreen = BottomScreen();
         break;
       case Routes.homeScreen:
-        widgetScreen = HomeScreen();
+        widgetScreen = const HomeScreen();
+        break;
+      case Routes.chooseScreen:
+        widgetScreen = const ChooseplanScreen();
         break;
 
       default:
