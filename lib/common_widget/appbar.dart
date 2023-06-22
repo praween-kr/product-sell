@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 
-class CommonAppbar extends StatelessWidget {
-  String? title;
-  Color? color;
-  BorderRadiusGeometry? borderRadius;
-  BoxBorder? border;
-  final Color? containerColor;
-
-  CommonAppbar(
-      {this.title,
-      this.color,
-      this.containerColor,
-      this.border,
-      this.borderRadius});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-      centerTitle: true,
-      leading: Container(),
-    ));
+class CommonAppbarWidget {
+  static AppBar commonAppBar(
+      {required BuildContext context,
+      String? title,
+      String? iconType,
+      required Function onTap}) {
+    return AppBar(
+        centerTitle: true,
+        toolbarHeight: 40,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: Container(
+          height: 30,
+          width: 30,
+          decoration: BoxDecoration(
+              color: Colors.yellowAccent,
+              borderRadius: BorderRadius.circular(15)),
+          child: Icon(Icons.arrow_back_ios),
+        ));
   }
 }
