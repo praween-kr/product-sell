@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
+
+
+import '../../utills/common_appbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -58,13 +59,13 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            AppTextField(
-              height: 45,
-              title: "Search",
-              borderRadius: BorderRadius.circular(50),
-              prefix: const Icon(Icons.search),
-              containerColor: const Color(0xffF7F7F7),
-            ),
+            // AppTextField(
+            //   height: 45,
+            //   title: "Search",
+            //   borderRadius: BorderRadius.circular(50),
+            //   prefix: const Icon(Icons.search),
+            //   containerColor: const Color(0xffF7F7F7),
+            // ),
             const Padding(
               padding: EdgeInsets.only(
                 left: 20,
