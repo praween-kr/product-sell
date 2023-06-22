@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 class CommonTextfield extends StatelessWidget {
   double? height;
   double? width;
-
   String? hintText;
   CommonTextfield({
     Key? key,
@@ -16,11 +15,7 @@ class CommonTextfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-          top: 5,
-          bottom: 5,
-          left: 20,
-          right: 20),
+      margin: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
       width: width ?? Get.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -35,20 +30,21 @@ class CommonTextfield extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        decoration: InputDecoration(prefixIcon: const Icon(
-          Icons.mail_outline_outlined,
-          color: Colors.black,size:25,),
+        decoration: InputDecoration(
+            prefixIcon: const Icon(
+              Icons.mail_outline_outlined,
+              color: Colors.black,
+              size: 25,
+            ),
             border: InputBorder.none,
             hintText: hintText ?? "",
             hintStyle: const TextStyle(color: Colors.grey),
             contentPadding:
-            const EdgeInsets.only(left: 20, bottom: 15, top: 15)),
+                const EdgeInsets.only(left: 20, bottom: 15, top: 15)),
       ),
     );
   }
 }
-
-
 
 class CommonTextfield2 extends StatelessWidget {
   double? height;
@@ -65,11 +61,7 @@ class CommonTextfield2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-          top: 5,
-          bottom: 5,
-          left: 20,
-          right: 20),
+      margin: const EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 20),
       width: width ?? Get.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -83,18 +75,21 @@ class CommonTextfield2 extends StatelessWidget {
           ),
         ],
       ),
-      child: TextFormField(obscureText: true,
-        decoration: InputDecoration(prefixIcon: const Icon(
-          Icons.lock_open_rounded,
-          color: Colors.black,size:25,),
+      child: TextFormField(
+        obscureText: true,
+        decoration: InputDecoration(
+            prefixIcon: const Icon(
+              Icons.lock_open_rounded,
+              color: Colors.black,
+              size: 25,
+            ),
             suffixIcon: const Icon(Icons.remove_red_eye),
             border: InputBorder.none,
             hintText: hintText ?? "",
             hintStyle: const TextStyle(color: Colors.grey),
             contentPadding:
-            const EdgeInsets.only(left: 20, bottom: 15, top: 15)),
+                const EdgeInsets.only(left: 20, bottom: 15, top: 15)),
       ),
     );
   }
 }
-
