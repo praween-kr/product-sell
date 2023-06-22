@@ -6,6 +6,7 @@ import 'package:oninto_flutter/bottom_nav_controller.dart';
 class BottomScreen extends StatelessWidget {
   BottomScreen({Key? key}) : super(key: key);
   final controller = Get.put(BottomNavController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -14,6 +15,7 @@ class BottomScreen extends StatelessWidget {
           extendBody: true,
           bottomNavigationBar: AnimatedNotchBottomBar(
             notchColor: Colors.red,
+            bottomBarWidth: 10,
             color: Colors.blue,
             bottomBarItems: const [
               BottomBarItem(
@@ -57,6 +59,7 @@ class BottomScreen extends StatelessWidget {
             ],
             onTap: (index) {
               controller.notchBottomBarController.jumpTo(index);
+              if (index == 0) {}
             },
             notchBottomBarController: controller.notchBottomBarController,
           )),
