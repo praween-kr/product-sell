@@ -1,7 +1,8 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/bottom_nav_controller.dart';
+import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 
 class BottomScreen extends StatelessWidget {
   BottomScreen({Key? key}) : super(key: key);
@@ -58,8 +59,10 @@ class BottomScreen extends StatelessWidget {
               ),
             ],
             onTap: (index) {
-              controller.notchBottomBarController.jumpTo(index);
-              if (index == 0) {}
+              // controller.notchBottomBarController.jumpTo(index);
+              if (index == 0) {
+                Get.toNamed(Routes.homeScreen);
+              }
             },
             notchBottomBarController: controller.notchBottomBarController,
           )),

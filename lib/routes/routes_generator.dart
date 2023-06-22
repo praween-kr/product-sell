@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/bottom_navbar_screen.dart';
+import 'package:oninto_flutter/home_screen.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 
 class RoutesGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -7,9 +10,12 @@ class RoutesGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      // case Routes.splashScreen:
-      //   widgetScreen = SplashScreen();
-      //   break;
+      case Routes.bottomScreen:
+        widgetScreen = BottomScreen();
+        break;
+      case Routes.homeScreen:
+        widgetScreen = HomeScreen();
+        break;
 
       default:
         widgetScreen = _errorRoute();
