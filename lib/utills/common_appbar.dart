@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 enum AppTextStyle { title, medium, regular, small }
@@ -20,25 +18,26 @@ class AppText extends StatelessWidget {
   final double? lineHeight;
   final FontStyle? fontStyle;
   final double? letterSpacing;
-  final TextOverflow ?overflow;
+  final TextOverflow? overflow;
 
   const AppText(
-      {super.key, required this.text,
-        this.color,
-        this.style,
-        this.maxlines,
-        this.textAlign,
-        this.underline,
-        this.textSize,
-        this.fontFamily,
-        this.fontWeight,
-        this.lineHeight,
-        this.fontStyle,
-        this.underlineColor,
-        this.strikeThrough,
-        this.capitalise,
-        this.letterSpacing,
-        this.overflow});
+      {super.key,
+      required this.text,
+      this.color,
+      this.style,
+      this.maxlines,
+      this.textAlign,
+      this.underline,
+      this.textSize,
+      this.fontFamily,
+      this.fontWeight,
+      this.lineHeight,
+      this.fontStyle,
+      this.underlineColor,
+      this.strikeThrough,
+      this.capitalise,
+      this.letterSpacing,
+      this.overflow});
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +48,14 @@ class AppText extends StatelessWidget {
       maxLines: maxlines,
       overflow: maxlines != null ? TextOverflow.ellipsis : null,
       textAlign: textAlign,
-      style: getStyle(color ?? Colors.black,
-          textSize ?? getTextSize(width)),);
+      style: getStyle(color ?? Colors.black, textSize ?? getTextSize(width)),
+    );
   }
+
   TextStyle getStyle(
-      Color color,
-      double? textSize,
-      ) {
+    Color color,
+    double? textSize,
+  ) {
     return TextStyle(
         overflow: overflow,
         color: color,
@@ -70,8 +70,8 @@ class AppText extends StatelessWidget {
         decoration: strikeThrough != null && strikeThrough!
             ? TextDecoration.lineThrough
             : underline != null
-            ? TextDecoration.underline
-            : null);
+                ? TextDecoration.underline
+                : null);
   }
 
   getTextSize(double width) {

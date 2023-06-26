@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/setting.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
@@ -14,14 +15,17 @@ class RoutesGenerator {
       case Routes.splashScreen:
         widgetScreen = SplashScreen();
         break;
-        case Routes.loginScreen:
+      case Routes.loginScreen:
         widgetScreen = LoginScreen();
         break;
-        case Routes.homeScreen:
+      case Routes.homeScreen:
         widgetScreen = HomeScreen();
         break;
-        case Routes.bottomScreen:
+      case Routes.bottomScreen:
         widgetScreen = BottomScreen();
+        break;
+      case Routes.settingScreen:
+        widgetScreen = SettingScreen();
         break;
 
       default:
