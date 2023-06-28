@@ -19,7 +19,8 @@ class AppTextField extends StatelessWidget {
   TextInputAction? keyBoardtype;
   double? width;
   final double? elevation;
-  final Widget? suffix; final Widget? CounterycodePiker;
+  final Widget? suffix;
+  final Widget? CounterycodePiker;
   final Widget? prefix;
   StringToVoidFunc? onChanged;
   EdgeInsetsGeometry? contentPadding;
@@ -27,6 +28,7 @@ class AppTextField extends StatelessWidget {
   BorderRadiusGeometry? borderRadius;
   BoxBorder? border;
   final Color? containerColor;
+  EdgeInsetsGeometry? margin;
 
   AppTextField(
       {Key? key,
@@ -50,25 +52,27 @@ class AppTextField extends StatelessWidget {
       this.borderRadius,
       this.border,
       this.suffixIconColor,
-      this.readOnly, this.CounterycodePiker,this.keyBoardtype})
+      this.readOnly,
+      this.margin,
+      this.CounterycodePiker,
+      this.keyBoardtype})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height ?? 60,
       width: width ?? Get.width,
+      margin: margin ?? EdgeInsets.only(left: 0),
       decoration: BoxDecoration(
         color: containerColor ?? Colors.white,
-        borderRadius: borderRadius ??
-            const BorderRadius.all(Radius.circular(10)),
+        borderRadius:
+            borderRadius ?? const BorderRadius.all(Radius.circular(10)),
         border: border,
       ),
       child: TextFormField(
         style: style ??
             const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 15),
+                color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15),
         onChanged: onChanged,
         controller: controller,
         inputFormatters: inputFormatters,
@@ -84,7 +88,8 @@ class AppTextField extends StatelessWidget {
           suffixIcon: suffix,
           prefixIcon: prefix,
           suffixIconColor: suffixIconColor,
-          contentPadding: contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
+          contentPadding:
+              contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
           hintStyle: TextStyle(color: Colors.black.withOpacity(0.4)),
           border: const OutlineInputBorder(
             borderSide: BorderSide.none,

@@ -2,7 +2,9 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
+import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/views/home/home_screen.dart';
 
 class BottomScreen extends StatelessWidget {
   BottomScreen({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class BottomScreen extends StatelessWidget {
           bottomNavigationBar: AnimatedNotchBottomBar(
             notchColor: Colors.red,
             bottomBarWidth: 10,
-            color: Colors.blue,
+            color: AppColor.appcolor,
             bottomBarItems: const [
               BottomBarItem(
                 inActiveItem: Icon(Icons.home),
@@ -60,9 +62,6 @@ class BottomScreen extends StatelessWidget {
             ],
             onTap: (index) {
               // controller.notchBottomBarController.jumpTo(index);
-              if (index == 0) {
-                Get.toNamed(Routes.homeScreen);
-              }
             },
             notchBottomBarController: controller.notchBottomBarController,
           )),
@@ -71,16 +70,12 @@ class BottomScreen extends StatelessWidget {
 
   getPage(int index) {
     switch (index) {
-      case 1:
+      case 0:
         {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Page 1"),
-            ),
-          );
+          return const HomeScreen();
         }
 
-      case 2:
+      case 1:
         {
           return Scaffold(
             appBar: AppBar(
@@ -89,7 +84,7 @@ class BottomScreen extends StatelessWidget {
           );
         }
 
-      case 3:
+      case 2:
         {
           return Scaffold(
             appBar: AppBar(
@@ -97,7 +92,7 @@ class BottomScreen extends StatelessWidget {
             ),
           );
         }
-      case 4:
+      case 3:
         {
           return Scaffold(
             appBar: AppBar(

@@ -7,7 +7,8 @@ class AppColor {
   static const text1 = Color(0xFF9B9FAA);
   static const splashcolor = Color(0xffFC6AA4);
   static const white = Color(0xFFFFFFFF);
-  static const TextColor = Color(0xFF000000);
+  static const appcolor = Color(0xffF1A339);
+  static const TextColor = Color(0xFFf2f2f2);
   static const buttonColor = Color(0xffFDA2C5);
   static const lightpink = Color(0xffff99C0);
   static const signupText = Color(0xffDD4A78);

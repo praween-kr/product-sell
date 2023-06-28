@@ -16,6 +16,7 @@ class CommonButton extends StatelessWidget {
   double? borderWidth;
   EdgeInsetsGeometry? margin;
   EdgeInsetsGeometry? imagePadding;
+  IconData? iconData;
 
   CommonButton(
       {super.key,
@@ -33,6 +34,7 @@ class CommonButton extends StatelessWidget {
       this.margin,
       this.borderColor,
       this.borderWidth,
+      this.iconData,
       this.imagePadding});
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class CommonButton extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
           boxShadow: [
-            BoxShadow(color: const Color(0xffFDA2C5), blurRadius: 15)
+            //BoxShadow(color: const Color(0xffFDA2C5), blurRadius: 15)
           ],
           color: color ?? Colors.red,
           borderRadius: BorderRadius.all(Radius.circular(radius ?? 25)),
@@ -55,9 +57,10 @@ class CommonButton extends StatelessWidget {
             ? MainAxisAlignment.spaceBetween
             : MainAxisAlignment.center,
         children: [
+          //   const  IconiconData??Icon(Icons.arrow_forward) ,
           image != null
               ? Padding(
-                  padding: imagePadding ?? EdgeInsets.only(left: 15),
+                  padding: imagePadding ?? const EdgeInsets.only(left: 15),
                   child: Image.asset(
                       height: imgHeight,
                       width: imgWidth,

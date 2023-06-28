@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
+import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
-
 import '../../utills/colors_file.dart';
-import '../../utills/commontextfield.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -43,9 +43,8 @@ class LoginScreen extends StatelessWidget {
                     child: AppText(
                       text: "Welcome Back !",
                       color: Colors.black,
-                      fontFamily: "poppins",
                       fontWeight: FontWeight.w500,
-                      textSize: 22,
+                      textSize: 38,
                     ),
                   ),
                 ),
@@ -55,7 +54,6 @@ class LoginScreen extends StatelessWidget {
                 const AppText(
                   text: "Login your details",
                   color: Colors.black,
-                  fontFamily: "poppins",
                   fontWeight: FontWeight.w400,
                   textSize: 15,
                 ),
@@ -64,25 +62,29 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const AppText(
                   text: "Phone Number/ Email",
-                  color: Colors.black,
-                  fontFamily: "poppins",
+                  color: Color(0x80000000),
                   fontWeight: FontWeight.w400,
-                  textSize: 18,
+                  textSize: 14,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                CommonTextfield(
-                  hintText: "jennySmith@gmail.com",
+                AppTextField(
+                  title: "jennySmith@gmail.com",
+                  containerColor: AppColor.TextColor,
+                  contentPadding: const EdgeInsets.only(
+                    top: 30,
+                    left: 20,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 const AppText(
                   text: "Password",
-                  color: Colors.black,
+                  color: Color(0x80000000),
                   fontWeight: FontWeight.w400,
-                  textSize: 18,
+                  textSize: 14,
                 ),
                 const SizedBox(
                   height: 10,
@@ -92,17 +94,21 @@ class LoginScreen extends StatelessWidget {
                     title: "*******",
                     isObscure: controller.HomePass.value,
                     maxLines: 1,
-                    style: TextStyle(color: Colors.black),
-                    prefix: Icon(Icons.lock_open),
+                    contentPadding: const EdgeInsets.only(
+                      top: 30,
+                      left: 20,
+                    ),
+                    style: const TextStyle(color: Colors.black),
+                    prefix: const Icon(Icons.lock_open),
                     suffix: GestureDetector(
                       onTap: () {
                         controller.HomePass.value = !controller.HomePass.value;
                       },
                       child: controller.HomePass.value
-                          ? Icon(Icons.remove_red_eye_outlined)
-                          : Icon(Icons.visibility_off_outlined),
+                          ? const Icon(Icons.remove_red_eye_outlined)
+                          : const Icon(Icons.visibility_off_outlined),
                     ),
-                    containerColor: Color(0xffF7F7F7),
+                    containerColor: AppColor.TextColor,
                   ),
                 ),
                 const SizedBox(
@@ -112,8 +118,8 @@ class LoginScreen extends StatelessWidget {
                   () => Row(
                     children: [
                       Transform.scale(
-                          scaleY: 0.5,
-                          scaleX: 1.1,
+                          scaleY: 0.8,
+                          scaleX: 0.8,
                           child: CupertinoSwitch(
                             value: controller.Switch.value,
                             onChanged: (value) {
@@ -121,14 +127,13 @@ class LoginScreen extends StatelessWidget {
                                   !controller.Switch.value;
                             },
                             activeColor: Colors.red,
-                            trackColor: Colors.yellowAccent,
+                            trackColor: themeColor,
                           )),
-                      AppText(
+                      const AppText(
                         text: "Remember me",
                         color: Colors.black,
-                        fontFamily: "poppins",
                         fontWeight: FontWeight.w400,
-                        textSize: 18,
+                        textSize: 13,
                       ),
                     ],
                   ),
@@ -146,14 +151,14 @@ class LoginScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.height * 0.35,
                     decoration: const BoxDecoration(
-                      color: themeColor,
+                      color: AppColor.appcolor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
                       boxShadow: [
                         BoxShadow(
                           offset: Offset(0, 4),
-                          color: Color(0xff29000000),
+                          color: Color(0xff290000000),
                           spreadRadius: 2,
                           blurRadius: 4,
                         ),
@@ -176,6 +181,69 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+                const SizedBox(height: 30),
+                const Center(
+                    child: AppText(
+                  text: "Sign in with",
+                  textSize: 16,
+                )),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(boxShadow: const [
+                          BoxShadow(
+                              color: Color(0xff29000000),
+                              offset: Offset(5, 5),
+                              blurRadius: 5)
+                        ], borderRadius: BorderRadius.circular(15)),
+                        child: Image.asset(Assets.assetsgoogle,
+                            height: 50, width: 50)),
+                    const SizedBox(width: 20),
+                    Container(
+                        decoration: BoxDecoration(boxShadow: const [
+                          BoxShadow(
+                              color: Color(0xff29000000),
+                              offset: Offset(5, 5),
+                              blurRadius: 5)
+                        ], borderRadius: BorderRadius.circular(15)),
+                        child: Image.asset(Assets.assetsfb,
+                            height: 50, width: 50)),
+                    const SizedBox(width: 20),
+                    Container(
+                        decoration: BoxDecoration(boxShadow: const [
+                          BoxShadow(
+                              color: Color(0xff29000000),
+                              offset: Offset(5, 5),
+                              blurRadius: 5)
+                        ], borderRadius: BorderRadius.circular(15)),
+                        child: Image.asset(Assets.assetsapple,
+                            height: 50, width: 50)),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: RichText(
+                    text: const TextSpan(
+                        text: "Don't have an account  ",
+                        style: TextStyle(
+                          color: Color(0xff000000),
+                        ),
+                        children: [
+                          TextSpan(
+                              text: "SIGN UP",
+                              style: TextStyle(
+                                color: Color(0xffF1A339),
+                              ))
+                        ]),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),

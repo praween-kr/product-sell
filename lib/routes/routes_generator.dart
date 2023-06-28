@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/setting.dart';
+import 'package:oninto_flutter/views/authscreens/forgetpassword_screens.dart';
+import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
@@ -26,6 +28,12 @@ class RoutesGenerator {
         break;
       case Routes.settingScreen:
         widgetScreen = SettingScreen();
+        break;
+      case Routes.onboardingScreen:
+        widgetScreen = OnBoardingScreen();
+        break;
+      case Routes.forgotScreen:
+        widgetScreen = ForgotScreen();
         break;
 
       default:

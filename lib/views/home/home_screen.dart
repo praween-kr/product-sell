@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
+import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,62 +17,81 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
-          padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+          padding: const EdgeInsets.only(top: 70, left: 20, right: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const AppText(
-                text: "Hello, jenny",
-                textSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.location_on,
-                    color: Colors.amberAccent,
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText(
+                        text: "  Hello, jenny",
+                        textSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.amberAccent,
+                          ),
+                          AppText(
+                            text: "Street albert, california",
+                            textSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0x80000000),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  const AppText(
-                    text: "Street albert, california",
-                    textSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                  const Spacer(),
-                  Container(
-                    margin: const EdgeInsets.only(right: 7),
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(Icons.filter_alt_rounded,
-                        color: Colors.white),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.yellow,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                      size: 25,
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        margin: const EdgeInsets.only(
+                          right: 7,
+                        ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColor.appcolor),
+                        ),
+                        child: const Icon(Icons.filter_alt_rounded,
+                            color: AppColor.appcolor),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: AppColor.appcolor,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: const Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
               ),
               AppTextField(
                 height: 45,
                 title: "Search",
-                style: TextStyle(color: Color(0x80000000)),
+                style: const TextStyle(color: Color(0x80000000)),
                 borderRadius: BorderRadius.circular(50),
                 prefix: const Icon(Icons.search),
-                containerColor: const Color(0xffF7F7F7),
+                containerColor: const Color(0xffF2F2F2),
               ),
               const Padding(
                 padding: EdgeInsets.only(
@@ -129,12 +151,14 @@ class HomeScreen extends StatelessWidget {
                     }),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 60),
+                padding: const EdgeInsets.only(bottom: 90),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: FloatingActionButton(
-                    onPressed: () {},
-                    backgroundColor: Colors.yellow,
+                    onPressed: () {
+                      Get.toNamed(Routes.forgotScreen);
+                    },
+                    backgroundColor: AppColor.appcolor,
                     child: const Icon(
                       Icons.add,
                       color: Colors.white,

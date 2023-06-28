@@ -5,4 +5,6 @@ class Routes {
   static const String bottomScreen = "/BottomScreen";
   static const String homeScreen = "/HomeScreen";
   static const String settingScreen = "/SettingScreen";
+  static const String onboardingScreen = "/OnBoardingScreen";
+  static const String forgotScreen = "/ForgotScreen";
 }

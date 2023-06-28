@@ -7,10 +7,10 @@ class ChooseplanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppbarWidget.commonAppBar(
-        context: context,
-        onTap: () {},
-      ),
+      // appBar: CommonAppbarWidget.commonAppBar(
+      //   context: context,
+      //   onTap: () {},
+      // ),
       body: Column(
         children: [],
       ),
