@@ -4,6 +4,13 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/setting.dart';
 import 'package:oninto_flutter/views/authscreens/forgetpassword_screens.dart';
 import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
+import 'package:oninto_flutter/views/authscreens/signup_screen.dart';
+import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
+import 'package:oninto_flutter/views/home/denim_screen.dart';
+import 'package:oninto_flutter/views/home/filter_screen.dart';
+import 'package:oninto_flutter/views/home/men_screen.dart';
+import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/product_screen/product_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
@@ -15,7 +22,7 @@ class RoutesGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case Routes.splashScreen:
-        widgetScreen = SplashScreen();
+        widgetScreen = const SplashScreen();
         break;
       case Routes.loginScreen:
         widgetScreen = LoginScreen();
@@ -27,13 +34,34 @@ class RoutesGenerator {
         widgetScreen = BottomScreen();
         break;
       case Routes.settingScreen:
-        widgetScreen = SettingScreen();
+        widgetScreen = const SettingScreen();
         break;
       case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
         break;
       case Routes.forgotScreen:
-        widgetScreen = ForgotScreen();
+        widgetScreen = const ForgotScreen();
+        break;
+      case Routes.verificationScreen:
+        widgetScreen = const VerificationScreen();
+        break;
+      case Routes.menScreen:
+        widgetScreen = MenScreen();
+        break;
+      case Routes.filterScreen:
+        widgetScreen = const FilterScreen();
+        break;
+      case Routes.denimScreen:
+        widgetScreen = const DenimScreen();
+        break;
+      case Routes.paymentScreen:
+        widgetScreen = const PaymentScreen();
+        break;
+      case Routes.productScreen:
+        widgetScreen = ProductScreen();
+        break;
+      case Routes.signupScreen:
+        widgetScreen = SignUpScreen();
         break;
 
       default:

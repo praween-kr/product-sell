@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
 class ForgotScreen extends StatelessWidget {
@@ -49,13 +51,18 @@ class ForgotScreen extends StatelessWidget {
               prefix: const Icon(Icons.email_outlined),
             ),
             const SizedBox(height: 20),
-            CommonButton(
-              color: AppColor.appcolor,
-              margin: const EdgeInsets.only(right: 20),
-              radius: 15,
-              height: 50,
-              text: "Send",
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.verificationScreen);
+              },
+              child: CommonButton(
+                color: AppColor.appcolor,
+                margin: const EdgeInsets.only(right: 20),
+                radius: 15,
+                height: 50,
+                text: "Send",
+                textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
             )
           ],
         ),

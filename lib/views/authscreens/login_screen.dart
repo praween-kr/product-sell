@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home_controller.dart';
@@ -31,6 +32,8 @@ class LoginScreen extends StatelessWidget {
                     color: Colors.black,
                     underline: true,
                     underlineColor: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    textSize: 12,
                   ),
                 ),
                 const SizedBox(
@@ -44,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                       text: "Welcome Back !",
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
-                      textSize: 38,
+                      textSize: 35,
                     ),
                   ),
                 ),
@@ -53,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const AppText(
                   text: "Login your details",
-                  color: Colors.black,
+                  color: Color(0xff292929),
                   fontWeight: FontWeight.w400,
                   textSize: 15,
                 ),
@@ -71,6 +74,12 @@ class LoginScreen extends StatelessWidget {
                 ),
                 AppTextField(
                   title: "jennySmith@gmail.com",
+                  prefix: Image.asset(
+                    Assets.assetemail,
+                    height: 12,
+                    width: 12,
+                    fit: BoxFit.contain,
+                  ),
                   containerColor: AppColor.TextColor,
                   contentPadding: const EdgeInsets.only(
                     top: 30,
@@ -112,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Obx(
                   () => Row(
@@ -139,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -157,10 +166,10 @@ class LoginScreen extends StatelessWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          offset: Offset(0, 4),
+                          offset: Offset(0, 2),
                           color: Color(0xff290000000),
-                          spreadRadius: 2,
-                          blurRadius: 4,
+                          // spreadRadius: 2,
+                          blurRadius: 6,
                         ),
                       ],
                     ),
@@ -228,7 +237,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Center(
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                         text: "Don't have an account  ",
                         style: TextStyle(
                           color: Color(0xff000000),
@@ -236,6 +245,10 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           TextSpan(
                               text: "SIGN UP",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.toNamed(Routes.signupScreen);
+                                },
                               style: TextStyle(
                                 color: Color(0xffF1A339),
                               ))

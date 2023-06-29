@@ -15,54 +15,53 @@ class OnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var dim = MediaQuery.of(context).size;
     return Scaffold(
-        body: Column(children: [
-      Expanded(
-        child: PageView.builder(
-          // physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: controller.onPageChanged,
-          itemCount: controller.onBoardingData.length,
-          controller: controller.pageController,
-          itemBuilder: (BuildContext context, int index) {
-            var data = controller.onBoardingData[index];
-            return Column(children: [
-              Image.asset(
-                data.image,
-                fit: BoxFit.contain,
-                height: MediaQuery.of(context).size.height * 0.6,
-                width: MediaQuery.of(context).size.width,
-              ),
-              Expanded(
-                child: Container(
-                    width: dim.width,
-                    //margin: EdgeInsets.only(top: dim.height * 0.30),
-                    padding: EdgeInsets.only(
-                        top: dim.height * 0.06,
-                        left: dim.width * 0.10,
-                        right: dim.width * 0.10),
-                    decoration: BoxDecoration(
-                        color: Color(0xffF1A339),
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(30),
-                          topLeft: Radius.circular(30),
-                        )),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AppText(
-                          text: data.title,
-                          textSize: 18,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        AppText(
-                            text: AppStrings.Onboarding,
-                            textSize: 15,
-                            color: Colors.white,
-                            lineHeight: 1.4),
-                        SizedBox(height: 40),
-                        Align(
+        body: PageView.builder(
+      // physics: const NeverScrollableScrollPhysics(),
+      onPageChanged: controller.onPageChanged,
+      itemCount: controller.onBoardingData.length,
+      controller: controller.pageController,
+      itemBuilder: (BuildContext context, int index) {
+        var data = controller.onBoardingData[index];
+        return Column(children: [
+          Image.asset(
+            data.image,
+            fit: BoxFit.contain,
+            height: dim.height * 0.6,
+            width: dim.width,
+          ),
+          Expanded(
+            child: Container(
+                width: dim.width,
+                //margin: EdgeInsets.only(top: dim.height * 0.30),
+                padding: EdgeInsets.only(
+                    top: dim.height * 0.06,
+                    left: dim.width * 0.10,
+                    right: dim.width * 0.10),
+                decoration: const BoxDecoration(
+                    color: Color(0xffF1A339),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30),
+                    )),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AppText(
+                      text: data.title,
+                      textSize: 25,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    AppText(
+                        text: AppStrings.Onboarding,
+                        textSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        lineHeight: 1.4),
+                    SizedBox(height: 40),
+                    /*Align(
                           alignment: Alignment.bottomCenter,
                           child: SmoothPageIndicator(
                             controller: controller.pageController,
@@ -73,8 +72,19 @@ class OnBoardingScreen extends StatelessWidget {
                                 dotHeight: 12,
                                 dotWidth: 12),
                           ),
-                        ),
-                        GestureDetector(
+                        ),*/
+                    Transform.scale(
+                        scale: .5,
+                        child: SmoothPageIndicator(
+                          controller: controller.pageController,
+                          count: controller.onBoardingData.length,
+                          effect: const ExpandingDotsEffect(
+                              activeDotColor: Colors.black,
+                              dotColor: Colors.grey,
+                              dotWidth: 25),
+                          onDotClicked: (index) {},
+                        )),
+                    /*GestureDetector(
                             onTap: () {
                               if (controller.pagePosition.value ==
                                   controller.onBoardingData.length - 1) {
@@ -84,14 +94,12 @@ class OnBoardingScreen extends StatelessWidget {
                                     .nextScreen(controller.pagePosition.value);
                               }
                             },
-                            child: Icon(Icons.arrow_forward)),
-                      ],
-                    )),
-              ),
-            ]);
-          },
-        ),
-      ),
-    ]));
+                            child: Icon(Icons.arrow_forward)),*/
+                  ],
+                )),
+          ),
+        ]);
+      },
+    ));
   }
 }

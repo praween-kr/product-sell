@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,21 +11,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 5), () {
-      Get.offAllNamed(Routes.loginScreen);
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.offAllNamed(Routes.onboardingScreen);
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        // child: Image.asset(Assets.assetsRent-fpLogoImage,scale: 5,
-        // ),
+        child: Image.asset(Assets.assetsplash),
       ),
     );
   }

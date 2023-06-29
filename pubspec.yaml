@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.5
   country_code_picker: ^3.0.0
   smooth_page_indicator: ^1.1.0
+  pinput: ^2.2.31
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:

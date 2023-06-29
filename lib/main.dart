@@ -17,7 +17,7 @@ void main() async {
 }
 
 Future<String> findIntialRoute() async {
-  String initialRoute = Routes.onboardingScreen;
+  String initialRoute = Routes.splashScreen;
   return initialRoute;
 }
 
@@ -31,12 +31,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins', primaryColor: Colors.white),
       title: 'Flutter Demo',
-      initialRoute: Routes.onboardingScreen,
+      initialRoute: Routes.splashScreen,
       onGenerateRoute: RoutesGenerator.generateRoute,
       onGenerateInitialRoutes: (String initialRouteName) {
         return [
           RoutesGenerator.generateRoute(
-              const RouteSettings(name: Routes.onboardingScreen)),
+              const RouteSettings(name: Routes.splashScreen)),
         ];
       },
     );

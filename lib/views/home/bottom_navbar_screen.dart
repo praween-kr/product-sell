@@ -72,7 +72,7 @@ class BottomScreen extends StatelessWidget {
     switch (index) {
       case 0:
         {
-          return const HomeScreen();
+          return HomeScreen();
         }
 
       case 1:

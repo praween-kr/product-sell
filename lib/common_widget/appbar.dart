@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/get_utils.dart';
+import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 
-class CommonAppbarWidget extends StatelessWidget {
+class CommonAppbarWidget extends StatelessWidget
+    implements PreferredSizeWidget {
   String? heading;
+  IconData? iconData;
+  TextStyle? textStyle;
+  Widget? leading;
+  double? preferredheight;
 
-  CommonAppbarWidget({this.heading});
+  CommonAppbarWidget(
+      {this.heading,
+      this.iconData,
+      this.textStyle,
+      this.leading,
+      this.preferredheight});
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +23,36 @@ class CommonAppbarWidget extends StatelessWidget {
       centerTitle: true,
       backgroundColor: Colors.white,
       elevation: 0,
-      title: Text(heading ?? ""),
-      leading: Container(
-        margin: EdgeInsets.only(left: 20),
-        padding: EdgeInsets.only(left: 10),
-        height: 30,
-        width: 30,
-        decoration: BoxDecoration(
-            color: AppColor.appcolor, borderRadius: BorderRadius.circular(15)),
-        child: Icon(Icons.arrow_back_ios),
+      title: Text(
+        heading ?? "",
+        style: textStyle ??
+            const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15),
       ),
-      actions: [Icon(Icons.filter_alt_rounded)],
+      leading: leading ??
+          GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Container(
+              padding: const EdgeInsets.only(left: 12),
+              height: 20,
+              width: 20,
+              decoration: BoxDecoration(
+                  color: AppColor.appcolor,
+                  borderRadius: BorderRadius.circular(15)),
+              child: const Icon(Icons.arrow_back_ios),
+            ),
+          ),
+      actions: [
+        Icon(
+          iconData,
+          color: Colors.red,
+        )
+      ],
     );
   }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
