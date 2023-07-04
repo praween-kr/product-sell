@@ -37,5 +37,9 @@ class Assets {
   static const String assetsStackjean = 'assets/stackjean.png';
   static const String assetsTshirt = 'assets/Tshirt.png';
   static const String assetsVideo = 'assets/video.png';
-
+  static const String assetsShop = 'assets/shop.png';
+  static const String assetsMen = 'assets/men.png';
+  static const String assetsFashion = 'assets/fashion.png';
+  static const String assetsBack = 'assets/back.png';
+  static const String assetsattachment = 'assets/attachment.png';
 }

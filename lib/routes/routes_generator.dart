@@ -15,6 +15,7 @@ import 'package:oninto_flutter/views/settings/address/address_screen.dart';
 import 'package:oninto_flutter/views/settings/address/newAddress/new_address.dart';
 import 'package:oninto_flutter/views/settings/cms_screen/cms_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
+import '../bottom_screen.dart';
 import 'package:oninto_flutter/views/settings/mySubscription/subscription.dart';
 import 'package:oninto_flutter/views/settings/password/password_screen.dart';
 import 'package:oninto_flutter/views/settings/payments/setting_payment_screen.dart';
@@ -44,7 +45,7 @@ class RoutesGenerator {
       case Routes.bottomScreen:
         widgetScreen = BottomScreen();
         break;
-         case Routes.onboardingScreen:
+      case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
         break;
       case Routes.forgotScreen:
@@ -77,14 +78,12 @@ class RoutesGenerator {
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
         break;
-        case Routes.notificationScreen:
+
+      case Routes.notificationScreen:
         widgetScreen = NotificationScreen();
         break;
       case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
-        break;
-      case Routes.passwordScreen:
-        widgetScreen = PasswordScreen();
         break;
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();

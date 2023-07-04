@@ -18,6 +18,9 @@ class Routes {
   static const String homebidScreen = "/HomeBidScreen";
   static const String notificationScreen = "/NotificationScreen";
   static const String favouriteScreen = "/FavouriteScreen";
+  static const String menshirtScreen = "/MenshirtScreen";
+  static const String biddingScreen = "/BiddingScreen";
+  static const String messageScreen = "/MessageScreen";
   static const String passwordScreen = "/PasswordScreen";
   static const String settingPaymentScreen = "/SettingPaymentScreen";
   static const String addressScreen = "/AddressScreen";

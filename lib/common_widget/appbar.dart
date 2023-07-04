@@ -9,12 +9,14 @@ class CommonAppbarWidget extends StatelessWidget
   TextStyle? textStyle;
   Widget? leading;
   double? preferredheight;
+  Widget? action;
 
   CommonAppbarWidget(
       {this.heading,
       this.iconData,
       this.textStyle,
       this.leading,
+      this.action,
       this.preferredheight});
 
   @override
@@ -39,21 +41,15 @@ class CommonAppbarWidget extends StatelessWidget
                 Get.back();
               },
               child: Container(
+                margin: EdgeInsets.all(5),
                 padding: const EdgeInsets.only(left: 12),
-                height: 20,
-                width: 20,
                 decoration: BoxDecoration(
                     color: AppColor.appcolor,
                     borderRadius: BorderRadius.circular(15)),
                 child: const Icon(Icons.arrow_back_ios),
               ),
             ),
-        actions: [
-          Icon(
-            iconData,
-            color: Colors.red,
-          )
-        ],
+        actions: [action ?? Icon(Icons.add)],
       ),
     );
   }
