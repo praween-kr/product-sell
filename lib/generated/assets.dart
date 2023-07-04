@@ -9,6 +9,7 @@ class Assets {
   static const String assetsCar = 'assets/car.png';
   static const String assetsCard = 'assets/Card.png';
   static const String assetsCredit = 'assets/credit.png';
+  static const String assetsCrowd = 'assets/crowd.png';
   static const String assetsDog = 'assets/dog.png';
   static const String assetsElectronic = 'assets/Electronic.png';
   static const String assetsEmail = 'assets/email.png';
@@ -25,6 +26,7 @@ class Assets {
   static const String assetsHomeSelected = 'assets/home_selected.png';
   static const String assetsJean = 'assets/Jean.png';
   static const String assetsKids = 'assets/Kids.png';
+  static const String assetsLocationImage = 'assets/location_image.png';
   static const String assetsMobile = 'assets/mobile.png';
   static const String assetsPersonIcon = 'assets/person_icon.png';
   static const String assetsRoom = 'assets/Room.png';

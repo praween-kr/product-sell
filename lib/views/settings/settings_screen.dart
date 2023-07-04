@@ -133,7 +133,7 @@ class SettingScreen extends StatelessWidget {
                               child: CupertinoSwitch(
                                 activeColor: AppColor.appcolor,
                                 thumbColor: AppColor.white,
-                                trackColor: AppColor.blackColor,
+                                trackColor: Colors.red,
                                 value: controller.on.value,
                                 onChanged: (val) => controller.toggle(),
                               ),
@@ -213,6 +213,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
+                     Get.toNamed(Routes.settingPaymentScreen);
                     },
                     child: const AppText(text: "Payment",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -238,6 +239,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
+                      Get.toNamed(Routes.addressScreen);
                     },
                     child: const AppText(text: "Address",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -263,6 +265,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
+                     Get.toNamed(Routes.mySubscription);
                     },
                     child: const AppText(text: "My Subscription",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -288,6 +291,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
+                      Get.toNamed(Routes.cmsScreen);
                     },
                     child: const AppText(text: "Privacy Policy",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -363,6 +367,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
+                      Get.toNamed(Routes.loginScreen);
                     },
                     child: const AppText(text: "Logout",
                       textSize: 13.0,color: AppColor.blackColor,

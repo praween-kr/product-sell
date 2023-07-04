@@ -19,4 +19,10 @@ class Routes {
   static const String notificationScreen = "/NotificationScreen";
   static const String favouriteScreen = "/FavouriteScreen";
   static const String passwordScreen = "/PasswordScreen";
+  static const String settingPaymentScreen = "/SettingPaymentScreen";
+  static const String addressScreen = "/AddressScreen";
+  static const String newAddressScreen = "/NewAddressScreen";
+  static const String mySubscription = "/MySubscription";
+  static const String cmsScreen = "/CmsScreen";
+  static const String messageScreen = "/MessageScreen";
 }

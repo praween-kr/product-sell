@@ -16,6 +16,7 @@ class AppColor {
   static const termcondition = Color(0xffE6337E);
   static const textfield = Color(0xffF7F7F7);
   static const blackColor = Color(0xff000000);
+  static const borderColor = Color(0xff707070);
 
   static const TextStyle defaultDateTextStyle = TextStyle(
     color: text1,

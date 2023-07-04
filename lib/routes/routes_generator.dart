@@ -10,8 +10,14 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/message/message_screen.dart';
+import 'package:oninto_flutter/views/settings/address/address_screen.dart';
+import 'package:oninto_flutter/views/settings/address/newAddress/new_address.dart';
+import 'package:oninto_flutter/views/settings/cms_screen/cms_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
+import 'package:oninto_flutter/views/settings/mySubscription/subscription.dart';
 import 'package:oninto_flutter/views/settings/password/password_screen.dart';
+import 'package:oninto_flutter/views/settings/payments/setting_payment_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -82,6 +88,24 @@ class RoutesGenerator {
         break;
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();
+        break;
+      case Routes.settingPaymentScreen:
+        widgetScreen = SettingPaymentScreen();
+        break;
+      case Routes.addressScreen:
+        widgetScreen = AddressScreen();
+        break;
+      case Routes.newAddressScreen:
+        widgetScreen = NewAddress();
+        break;
+      case Routes.mySubscription:
+        widgetScreen = MySubscription();
+        break;
+      case Routes.cmsScreen:
+        widgetScreen = CmsScreen();
+        break;
+      case Routes.messageScreen:
+        widgetScreen = MessageScreen();
         break;
       default:
         widgetScreen = _errorRoute();
