@@ -10,6 +10,7 @@ import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
 import 'package:oninto_flutter/views/product_screen/product_screen.dart';
+import '../bottom_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/home/bottom_navbar_screen.dart';

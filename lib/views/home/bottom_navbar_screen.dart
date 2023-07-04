@@ -1,4 +1,6 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
@@ -10,16 +12,47 @@ class BottomScreen extends StatelessWidget {
   BottomScreen({Key? key}) : super(key: key);
   final controller = Get.put(BottomNavController());
 
+  List<TabItem> items = [
+    const TabItem(
+      icon: Icons.home,
+    ),
+    const TabItem(
+      icon: Icons.favorite_border,
+    ),
+    const TabItem(
+      icon: Icons.chat_bubble_outline,
+    ),
+    const TabItem(
+      icon: Icons.person,
+    ),
+    const TabItem(
+      icon: Icons.settings_outlined,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
+    return Obx(() => Scaffold(
           body: getPage(controller.selectedIndex.value),
           extendBody: true,
-          bottomNavigationBar: AnimatedNotchBottomBar(
+          bottomNavigationBar: BottomBarInspiredOutside(
+            items: items,
+            iconSize: 25,
+            backgroundColor: AppColor.appcolor,
+            color: AppColor.white,
+            colorSelected: AppColor.white,
+            indexSelected: controller.selectedIndex.value,
+            onTap: controller.changeTab,
+            animated: true,
+            itemStyle: ItemStyle.circle,
+            chipStyle: const ChipStyle(
+                background: AppColor.appcolor,
+                notchSmoothness: NotchSmoothness.sharpEdge),
+          ),
+          /*bottomNavigationBar: AnimatedNotchBottomBar(
             notchColor: Colors.red,
             bottomBarWidth: 10,
-            color: AppColor.appcolor,
+            color: AppColor.appColor,
             bottomBarItems: const [
               BottomBarItem(
                 inActiveItem: Icon(Icons.home),
@@ -61,11 +94,11 @@ class BottomScreen extends StatelessWidget {
               ),
             ],
             onTap: (index) {
-              //controller.notchBottomBarController.jumpTo(index);
+              // controller.notchBottomBarController.jumpTo(index);
             },
             notchBottomBarController: controller.notchBottomBarController,
-          )),
-    );
+          )),*/
+        ));
   }
 
   getPage(int index) {
@@ -74,6 +107,7 @@ class BottomScreen extends StatelessWidget {
         {
           return HomeScreen();
         }
+
       case 1:
         {
           return Scaffold(
@@ -95,6 +129,7 @@ class BottomScreen extends StatelessWidget {
         {
           return SettingScreen();
         }
+
       default:
         {
           return Scaffold(
