@@ -5,6 +5,8 @@ import 'package:oninto_flutter/views/authscreens/forgetpassword_screens.dart';
 import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
 import 'package:oninto_flutter/views/authscreens/signup_screen.dart';
 import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
+import 'package:oninto_flutter/views/bid_screen/home_bid_screen.dart';
+import 'package:oninto_flutter/views/home/category_screen.dart';
 import 'package:oninto_flutter/views/home/denim_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
@@ -13,6 +15,7 @@ import 'package:oninto_flutter/views/product_screen/product_screen.dart';
 import '../bottom_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
+import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/home_screen.dart';
 import '../views/settings/settings_screen.dart';
@@ -67,7 +70,15 @@ class RoutesGenerator {
       case Routes.settingScreen:
         widgetScreen = SettingScreen();
         break;
-
+      case Routes.categoryScreen:
+        widgetScreen = CategoryScreen();
+        break;
+      case Routes.notificationScreen:
+        widgetScreen = NotificationScreen();
+        break;
+      case Routes.homebidScreen:
+        widgetScreen = HomeBidScreen();
+        break;
       default:
         widgetScreen = _errorRoute();
     }
