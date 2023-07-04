@@ -10,7 +10,7 @@ import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
-import '../bottom_screen.dart';
+import 'package:oninto_flutter/views/settings/password/password_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -70,12 +70,14 @@ class RoutesGenerator {
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
         break;
-
-      case Routes.notificationScreen:
+        case Routes.notificationScreen:
         widgetScreen = NotificationScreen();
         break;
       case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
+        break;
+      case Routes.passwordScreen:
+        widgetScreen = PasswordScreen();
         break;
       default:
         widgetScreen = _errorRoute();
