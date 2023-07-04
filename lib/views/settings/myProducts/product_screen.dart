@@ -36,6 +36,7 @@ class ProductScreen extends StatelessWidget {
                 // labelColor: Colors.black,
                 // unselectedLabelColor: Colors.grey,
                 indicatorWeight: 1,
+
                 tabs: [
                   Container(
                     height: 40,
