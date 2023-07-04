@@ -187,6 +187,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 15,),
                   InkWell(
                     onTap: (){
+                      Get.toNamed(Routes.passwordScreen);
                     },
                     child: const AppText(text: "Password",
                       textSize: 13.0,color: AppColor.blackColor,
