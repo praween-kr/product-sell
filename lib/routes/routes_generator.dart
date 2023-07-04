@@ -7,6 +7,7 @@ import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
 import 'package:oninto_flutter/views/authscreens/signup_screen.dart';
 import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
 import 'package:oninto_flutter/views/bid_screen/home_bid_screen.dart';
+import 'package:oninto_flutter/views/bid_screen/notification_Screen.dart';
 import 'package:oninto_flutter/views/home/category_screen.dart';
 import 'package:oninto_flutter/views/home/denim_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
@@ -70,6 +71,9 @@ class RoutesGenerator {
         break;
       case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
+        break;
+      case Routes.notificationScreen:
+        widgetScreen = NotificationScreen();
         break;
 
       default:
