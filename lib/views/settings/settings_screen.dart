@@ -18,6 +18,7 @@ class SettingsScreen extends GetView<SettingsController> {
     textSize: 17.0,
     color: AppColor.blackColor,
     style: AppTextStyle.regular,
+
   ),
 ),
       body: Container(
