@@ -63,6 +63,9 @@ class RoutesGenerator {
       case Routes.signupScreen:
         widgetScreen = SignUpScreen();
         break;
+      case Routes.settingScreen:
+        widgetScreen = SettingScreen();
+        break;
 
       default:
         widgetScreen = _errorRoute();

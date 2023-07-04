@@ -35,7 +35,7 @@ class FilterScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(Assets.assetgirljean,
+                            Image.asset(Assets.assetsGirlJean,
                                 height: 170, width: 300, fit: BoxFit.fill),
                             const SizedBox(
                               height: 10,

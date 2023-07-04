@@ -32,7 +32,7 @@ class DenimScreen extends StatelessWidget {
                 height: 20,
               ),
               Stack(children: [
-                Image.asset(Assets.assetgirljean),
+                Image.asset(Assets.assetsGirlJean),
                 Positioned(
                     left: 20,
                     top: MediaQuery.of(context).size.height * 0.30,
@@ -41,7 +41,7 @@ class DenimScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          Assets.assetstackjean,
+                          Assets.assetsStackjean,
                           height: 80,
                           width: 80,
                         ),
@@ -49,7 +49,7 @@ class DenimScreen extends StatelessWidget {
                           width: 10,
                         ),
                         Image.asset(
-                          Assets.assetstackjean,
+                          Assets.assetsStackjean,
                           height: 80,
                           width: 80,
                         ),
@@ -58,14 +58,14 @@ class DenimScreen extends StatelessWidget {
                         ),
                         Stack(children: [
                           Image.asset(
-                            Assets.assetstackjean,
+                            Assets.assetsStackjean,
                             height: 80,
                             width: 80,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(20),
                             child: Image.asset(
-                              Assets.assetvideo,
+                              Assets.assetsVideo,
                               height: 40,
                               width: 40,
                             ),
@@ -322,7 +322,7 @@ class DenimScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    Image.asset(Assets.assetsale),
+                    Image.asset(Assets.assetsSale),
                     const SizedBox(
                       height: 5,
                     ),

@@ -201,7 +201,7 @@ class HomeScreen extends StatelessWidget {
                 height: 15,
               ),
               Image.asset(
-                Assets.assetsale,
+                Assets.assetsSale,
                 fit: BoxFit.fill,
               ),
               Padding(
