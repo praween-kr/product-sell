@@ -25,41 +25,41 @@ class Homecontroller extends GetxController {
     pageController = PageController(initialPage: pagePosition.value);
     onBoardingData = RxList([
       CommonModel(
-          image: Assets.assetshome1,
+          image: Assets.assetsHome1,
           title: "Login Your Details",
           description: AppStrings.Onboarding),
       CommonModel(
-          image: Assets.assetshome2,
+          image: Assets.assetsHome2,
           title: "Add Your Product",
           description: AppStrings.Onboarding),
       CommonModel(
-          image: Assets.assetshome3,
+          image: Assets.assetsHome3,
           title: "Sold Your Product",
           description: AppStrings.Onboarding),
     ]);
     Categorydata = RxList([
       HomeModel(
-        image: Assets.assetgirl,
+        image: Assets.assetsGirl,
         Name: "Women",
       ),
       HomeModel(
-        image: Assets.assetshirt,
+        image: Assets.assetsShirt,
         Name: "Men",
       ),
       HomeModel(
-        image: Assets.assetkids,
+        image: Assets.assetsKids,
         Name: "Kids",
       ),
       HomeModel(
-        image: Assets.assetroom,
+        image: Assets.assetsRoom,
         Name: "Home & living",
       ),
       HomeModel(
-        image: Assets.assetelectronic,
+        image: Assets.assetsElectronic,
         Name: "Electronic",
       ),
       HomeModel(
-        image: Assets.assetbeauty,
+        image: Assets.assetsBeauty,
         Name: "Beauty",
       ),
       HomeModel(

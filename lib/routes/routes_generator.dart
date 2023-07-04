@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/setting.dart';
 import 'package:oninto_flutter/views/authscreens/forgetpassword_screens.dart';
 import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
 import 'package:oninto_flutter/views/authscreens/signup_screen.dart';
 import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
-import 'package:oninto_flutter/views/bid_screen/home_bid_screen.dart';
-import 'package:oninto_flutter/views/bid_screen/notification_Screen.dart';
-import 'package:oninto_flutter/views/home/category_screen.dart';
 import 'package:oninto_flutter/views/home/denim_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
@@ -18,6 +14,7 @@ import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/settings/settings_screen.dart';
 
 class RoutesGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -37,7 +34,7 @@ class RoutesGenerator {
         widgetScreen = BottomScreen();
         break;
       case Routes.settingScreen:
-        widgetScreen = const SettingScreen();
+        widgetScreen = SettingScreen();
         break;
       case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
@@ -66,14 +63,8 @@ class RoutesGenerator {
       case Routes.signupScreen:
         widgetScreen = SignUpScreen();
         break;
-      case Routes.categoryScreen:
-        widgetScreen = CategoryScreen();
-        break;
-      case Routes.homebidScreen:
-        widgetScreen = HomeBidScreen();
-        break;
-      case Routes.notificationScreen:
-        widgetScreen = NotificationScreen();
+      case Routes.settingScreen:
+        widgetScreen = SettingScreen();
         break;
 
       default:

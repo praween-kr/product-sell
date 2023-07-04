@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                 AppTextField(
                   title: "jennySmith@gmail.com",
                   prefix: Image.asset(
-                    Assets.assetemail,
+                    Assets.assetsEmail,
                     height: 12,
                     width: 12,
                     fit: BoxFit.contain,
@@ -208,7 +208,7 @@ class LoginScreen extends StatelessWidget {
                               offset: Offset(5, 5),
                               blurRadius: 5)
                         ], borderRadius: BorderRadius.circular(15)),
-                        child: Image.asset(Assets.assetsgoogle,
+                        child: Image.asset(Assets.assetsGoogle,
                             height: 50, width: 50)),
                     const SizedBox(width: 20),
                     Container(
@@ -218,7 +218,7 @@ class LoginScreen extends StatelessWidget {
                               offset: Offset(5, 5),
                               blurRadius: 5)
                         ], borderRadius: BorderRadius.circular(15)),
-                        child: Image.asset(Assets.assetsfb,
+                        child: Image.asset(Assets.assetsFb,
                             height: 50, width: 50)),
                     const SizedBox(width: 20),
                     Container(
@@ -228,7 +228,7 @@ class LoginScreen extends StatelessWidget {
                               offset: Offset(5, 5),
                               blurRadius: 5)
                         ], borderRadius: BorderRadius.circular(15)),
-                        child: Image.asset(Assets.assetsapple,
+                        child: Image.asset(Assets.assetsApple,
                             height: 50, width: 50)),
                   ],
                 ),

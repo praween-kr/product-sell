@@ -71,7 +71,7 @@ class PaymentScreen extends StatelessWidget {
                       Row(
                         children: [
                           Image.asset(
-                            Assets.assetjean,
+                            Assets.assetsJean,
                             height: 20,
                             width: 20,
                           ),
@@ -134,7 +134,7 @@ class PaymentScreen extends StatelessWidget {
                       Row(
                         children: [
                           Image.asset(
-                            Assets.assetcredit,
+                            Assets.assetsCredit,
                             height: 20,
                             width: 20,
                           ),

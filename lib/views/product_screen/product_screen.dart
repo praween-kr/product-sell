@@ -131,7 +131,7 @@ class ProductScreen extends StatelessWidget {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: Image.asset(
-                                        Assets.assetgirljean,
+                                        Assets.assetsGirlJean,
                                         fit: BoxFit.cover,
                                         height: 100,
                                         width: 100,
@@ -208,7 +208,7 @@ class ProductScreen extends StatelessWidget {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: Image.asset(
-                                    Assets.assetmobile,
+                                    Assets.assetsMobile,
                                     height: 130,
                                     width: 130,
                                     fit: BoxFit.fill,
@@ -348,7 +348,7 @@ class ProductScreen extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
                                     child: Image.asset(
-                                      Assets.assetgyradox,
+                                      Assets.assetsGyradox,
                                       height: 130,
                                       width: 130,
                                       fit: BoxFit.fill,

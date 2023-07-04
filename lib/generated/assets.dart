@@ -1,5 +1,38 @@
 class Assets {
   Assets._();
+
+  static const String assetsAmericanBall = 'assets/american_ball.png';
+  static const String assetsApple = 'assets/apple.png';
+  static const String assetsBeauty = 'assets/Beauty.png';
+  static const String assetsBuilding = 'assets/building.png';
+  static const String assetsCar = 'assets/car.png';
+  static const String assetsCard = 'assets/Card.png';
+  static const String assetsCredit = 'assets/credit.png';
+  static const String assetsDog = 'assets/dog.png';
+  static const String assetsElectronic = 'assets/Electronic.png';
+  static const String assetsEmail = 'assets/email.png';
+  static const String assetsFb = 'assets/fb.png';
+  static const String assetsFrame = 'assets/Frame.png';
+  static const String assetsGirl = 'assets/Girl.png';
+  static const String assetsGirlJean = 'assets/girl_jean.png';
+  static const String assetsGoogle = 'assets/google.png';
+  static const String assetsGraphIcon = 'assets/graph_icon.png';
+  static const String assetsGyradox = 'assets/gyradox.png';
+  static const String assetsHome1 = 'assets/home1.png';
+  static const String assetsHome2 = 'assets/home2.png';
+  static const String assetsHome3 = 'assets/home3.png';
+  static const String assetsHomeSelected = 'assets/home_selected.png';
+  static const String assetsJean = 'assets/Jean.png';
+  static const String assetsKids = 'assets/Kids.png';
+  static const String assetsMobile = 'assets/mobile.png';
+  static const String assetsRoom = 'assets/Room.png';
+  static const String assetsSale = 'assets/sale.png';
+  static const String assetsShirt = 'assets/Shirt.png';
+  static const String assetsSplash = 'assets/splash.png';
+  static const String assetsStackjean = 'assets/stackjean.png';
+  static const String assetsTshirt = 'assets/Tshirt.png';
+  static const String assetsVideo = 'assets/video.png';
+
   static const String assetshome1 = 'assets/home1.png';
   static const String assetshome2 = 'assets/home2.png';
   static const String assetsgoogle = 'assets/google.png';

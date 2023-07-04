@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
+import '../settings/settings_screen.dart';
 
 class BottomScreen extends StatelessWidget {
   BottomScreen({Key? key}) : super(key: key);
@@ -60,7 +61,7 @@ class BottomScreen extends StatelessWidget {
               ),
             ],
             onTap: (index) {
-              // controller.notchBottomBarController.jumpTo(index);
+              //controller.notchBottomBarController.jumpTo(index);
             },
             notchBottomBarController: controller.notchBottomBarController,
           )),
@@ -73,7 +74,6 @@ class BottomScreen extends StatelessWidget {
         {
           return HomeScreen();
         }
-
       case 1:
         {
           return Scaffold(
@@ -93,13 +93,8 @@ class BottomScreen extends StatelessWidget {
         }
       case 3:
         {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Page 4"),
-            ),
-          );
+          return SettingScreen();
         }
-
       default:
         {
           return Scaffold(
