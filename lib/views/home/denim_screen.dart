@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
@@ -6,7 +7,6 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
-
 import '../../common_widget/color_constant.dart';
 
 class DenimScreen extends StatelessWidget {
@@ -74,14 +74,15 @@ class DenimScreen extends StatelessWidget {
                       ],
                     )),
               ]),
-              const Padding(
-                padding: EdgeInsets.only(top: 20, left: 20),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
+                        const Column(
                           children: [
                             AppText(
                               text: "Jenny Johnson",
@@ -91,42 +92,61 @@ class DenimScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        Column(
+                          children: [
+                            Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: AppColor.appcolor,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: const Icon(
+                                  Icons.message,
+                                  color: Colors.white,
+                                ))
+                          ],
+                        )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        AppText(
+                        const AppText(
                           text: "Girl Denim",
                           textSize: 17,
                           fontWeight: FontWeight.w400,
                           color: blackColor,
                         ),
-                        Icon(Icons.star, color: AppColor.appcolor),
-                        AppText(
-                          text: "/4.5",
-                          textSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0x4d000000),
-                          fontFamily: "Poppins",
+                        const Icon(Icons.star, color: AppColor.appcolor),
+                        GestureDetector(
+                          onTap: () {
+                            reviewDialog();
+                          },
+                          child: const AppText(
+                            text: "/4.5",
+                            textSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0x4d000000),
+                            fontFamily: "Poppins",
+                          ),
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    AppText(
+                    const AppText(
                       text: "\$2000",
                       textSize: 22,
                       fontWeight: FontWeight.w400,
                       color: AppColor.appcolor,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         AppText(
                           text: "Category : ",
@@ -143,10 +163,10 @@ class DenimScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         AppText(
                           text: "Sub Category : ",
@@ -163,10 +183,10 @@ class DenimScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         AppText(
                           text: "Color :  ",
@@ -183,10 +203,10 @@ class DenimScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Row(
+                    const Row(
                       children: [
                         AppText(
                           text: "Brand : ",
@@ -376,5 +396,126 @@ class DenimScreen extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  Future reviewDialog() async {
+    print("clicked---- ");
+
+    return showDialog(
+        barrierDismissible: true,
+        useSafeArea: false,
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(
+                              0.0,
+                              0.0,
+                            ),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                        ],
+                        // borderRadius: BorderRadius.all(Radius.circular(17)),
+                        color: Colors.white),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 20, right: 20, left: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30),
+                          child: AppText(
+                            text: "Reviews",
+                            textSize: 18,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            color: blackColor,
+                          ),
+                        ),
+                        ListView.builder(
+                          itemCount: 5,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    AppText(
+                                      text: "Albert Smith",
+                                      textSize: 11,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    AppText(
+                                      text: "Feb 20, 2023",
+                                      textSize: 10,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0x4d000000),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                RatingBar.builder(
+                                    initialRating: 5,
+                                    updateOnDrag: false,
+                                    glow: false,
+                                    minRating: 1,
+                                    itemSize: 20,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    //  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: AppColor.appcolor,
+                                        ),
+                                    ignoreGestures: true,
+                                    onRatingUpdate: (rating) {}),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const AppText(
+                                  text: "Best Product",
+                                  textSize: 11,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                const Divider(
+                                  thickness: 1,
+                                  color: Color(0x33000000),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          );
+        });
   }
 }

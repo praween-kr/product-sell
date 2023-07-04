@@ -1,15 +1,14 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
-
+import 'package:oninto_flutter/routes/routes.dart';
 import '../model/onboard_model.dart';
 
 class Homecontroller extends GetxController {
-  RxBool HomePass = true.obs;
+  RxBool homePass = true.obs;
   RxBool Switch = false.obs;
   var tabController = 0.obs;
   late PageController pageController;
@@ -63,13 +62,23 @@ class Homecontroller extends GetxController {
         image: Assets.assetsBeauty,
         Name: "Beauty",
       ),
+      HomeModel(
+        image: Assets.assetamericanball,
+        Name: "Sports",
+      ),
+      HomeModel(
+        image: Assets.assetdog,
+        Name: "Pets",
+      ),
+      HomeModel(
+        image: Assets.assetcard,
+        Name: "Cards",
+      ),
+      HomeModel(
+        image: Assets.assetcar,
+        Name: "Vehicle",
+      ),
     ]);
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    //pageController.dispose();
   }
 
   void onPageChanged(index) {

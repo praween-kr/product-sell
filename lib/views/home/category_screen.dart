@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home_controller.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import '../../common_widget/app_text.dart';
+import '../../common_widget/appbar.dart';
 
-class MenScreen extends StatelessWidget {
-  MenScreen({super.key});
+class CategoryScreen extends StatelessWidget {
+  CategoryScreen({super.key});
   final controller = Get.put(Homecontroller());
 
   @override
@@ -18,7 +18,7 @@ class MenScreen extends StatelessWidget {
         child: Column(
           children: [
             CommonAppbarWidget(
-              heading: "Men",
+              heading: "Categories",
             ),
             Expanded(
               child: GridView.builder(
@@ -27,12 +27,12 @@ class MenScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, childAspectRatio: 0.75),
-                  itemCount: 5,
+                  itemCount: 10,
                   itemBuilder: (context, index) {
                     var data = controller.Categorydata[index];
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.homebidScreen);
+                        Get.toNamed(Routes.menScreen);
                       },
                       child: Column(
                         children: [

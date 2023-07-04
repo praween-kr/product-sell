@@ -77,75 +77,6 @@ class HomeScreen extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 showPopupMenu(context);
-                                /* // PopupMenuButton<int>(
-                                  constraints: BoxConstraints.expand(
-                                      width: Get.width / 3, height: 50),
-                                  shape: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.only(left: 20),
-                                    child: Icon(
-                                      Icons.more_horiz,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  color: Colors.white,
-                                  onOpened: () {},
-                                  onSelected: (val) {
-                                    // beenThereDialog(context, val);
-                                  },
-                                  offset: const Offset(0, 30),
-                                  itemBuilder: (context) => [
-                                    const PopupMenuItem<int>(
-                                      height: 25,
-                                      value: 0,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(top: 12),
-                                        child: Column(
-                                          children: [
-                                            AppText(
-                                              text: 'Sort by',
-                                              textAlign: TextAlign.center,
-                                              textSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                            AppText(
-                                              text: 'Lowest Lot #',
-                                              textAlign: TextAlign.center,
-                                              textSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                            AppText(
-                                              text: 'Ending Soonest',
-                                              textAlign: TextAlign.center,
-                                              textSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                            AppText(
-                                              text: 'Highest Price',
-                                              textAlign: TextAlign.center,
-                                              textSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                            AppText(
-                                              text: 'Lowest Price',
-                                              textAlign: TextAlign.center,
-                                              textSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                            AppText(
-                                              text: ' Most Bid',
-                                              textAlign: TextAlign.center,
-                                              textSize: 12,
-                                              color: Colors.black,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );*/
                               },
                               child: const Icon(Icons.filter_alt_rounded,
                                   color: AppColor.appcolor),
@@ -221,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.menScreen);
+                        Get.toNamed(Routes.categoryScreen);
                       },
                       child: const AppText(
                           text: "See all",
@@ -313,14 +244,14 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     Get.toNamed(Routes.filterScreen);
                   },
-                  child: AppText(
+                  child: const AppText(
                     text: 'Sort by',
                     textAlign: TextAlign.center,
                     textSize: 12,
                     color: Colors.black,
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Colors.black,
                 ),
               ],

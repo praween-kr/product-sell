@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
 
 class BottomScreen extends StatelessWidget {
