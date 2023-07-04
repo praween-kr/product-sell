@@ -20,13 +20,8 @@ class DenimScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: CommonAppbarWidget(
-                  heading: "Girls Denim",
-                ),
+              CommonAppbarWidget(
+                heading: "Girls Denim",
               ),
               const SizedBox(
                 height: 20,
