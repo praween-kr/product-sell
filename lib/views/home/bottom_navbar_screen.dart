@@ -61,7 +61,8 @@ class BottomScreen extends StatelessWidget {
               ),
             ],
             onTap: (index) {
-              //controller.notchBottomBarController.jumpTo(index);
+             // controller.notchBottomBarController.jumpTo(index);
+              controller.changeTab(index);
             },
             notchBottomBarController: controller.notchBottomBarController,
           )),

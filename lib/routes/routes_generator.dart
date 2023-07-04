@@ -33,10 +33,7 @@ class RoutesGenerator {
       case Routes.bottomScreen:
         widgetScreen = BottomScreen();
         break;
-      case Routes.settingScreen:
-        widgetScreen = SettingScreen();
-        break;
-      case Routes.onboardingScreen:
+         case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
         break;
       case Routes.forgotScreen:
