@@ -64,7 +64,16 @@ class RoutesGenerator {
       case Routes.settingScreen:
         widgetScreen = SettingScreen();
         break;
+      case Routes.categoryScreen:
+        widgetScreen = CategoryScreen();
+        break;
 
+      case Routes.notificationScreen:
+        widgetScreen = NotificationScreen();
+        break;
+      case Routes.homebidScreen:
+        widgetScreen = HomeBidScreen();
+        break;
       default:
         widgetScreen = _errorRoute();
     }
