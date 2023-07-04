@@ -13,7 +13,10 @@ import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
 import '../bottom_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
+import '../views/bid_screen/home_bid_screen.dart';
+import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
+import '../views/home/category_screen.dart';
 import '../views/home/home_screen.dart';
 import '../views/settings/settings_screen.dart';
 
