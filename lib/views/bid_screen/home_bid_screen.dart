@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import '../../common_widget/app_text.dart';
 import '../../common_widget/color_constant.dart';
 
@@ -72,21 +70,16 @@ class HomeBidScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(Routes.notificationScreen);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: AppColor.appcolor,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Icon(
-                            Icons.notifications,
-                            color: Colors.white,
-                            size: 25,
-                          ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: AppColor.appcolor,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: const Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                          size: 25,
                         ),
                       ),
                     ],

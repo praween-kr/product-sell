@@ -5,7 +5,7 @@ import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
-import '../../common_widget/appbar.dart';
+import '../../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({super.key});
@@ -27,99 +27,72 @@ class ProductScreen extends StatelessWidget {
         length: 3,
         child: Column(
           children: [
-            Obx(() => TabBar(
-                    splashFactory: NoSplash.splashFactory,
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                      // Use the default focused overlay color
-                      return states.contains(MaterialState.focused)
-                          ? null
-                          : Colors.transparent;
-                    }),
-                    onTap: (index) {
-                      controller.tabController.value = index;
-                    },
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    indicator:
-                        BoxDecoration(borderRadius: BorderRadius.circular(12)),
-                    // indicatorColor: Colors.grey,
-                    // labelColor: Colors.black,
-                    // unselectedLabelColor: Colors.grey,
-                    indicatorWeight: 1,
-                    tabs: [
-                      Container(
-                        height: 40,
-                        width: 100,
-                        margin: const EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            color: controller.tabController.value == 0
-                                ? AppColor.appcolor
-                                : const Color(0xFFFFFFFF),
-                            border: Border.all(
-                                color: controller.tabController.value == 0
-                                    ? AppColor.appcolor
-                                    : Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(19)),
-                        child: Center(
-                          child: AppText(
-                            text: "Buy",
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 0
-                                ? Colors.white
-                                : Colors.grey.shade500,
-                          ),
-                        ),
+            TabBar(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                indicator: BoxDecoration(
+                    color: AppColor.appcolor,
+                    borderRadius: BorderRadius.circular(20)),
+                // indicatorColor: Colors.grey,
+                // labelColor: Colors.black,
+                // unselectedLabelColor: Colors.grey,
+                indicatorWeight: 1,
+
+                tabs: [
+                  Container(
+                    height: 40,
+                    width: 100,
+                    margin: const EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                        color: AppColor.appcolor,
+                        borderRadius: BorderRadius.circular(19)),
+                    child: Center(
+                      child: AppText(
+                        text: "Buy",
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w400,
+                        color: controller.tabController.value == 0
+                            ? const Color(0x33000000)
+                            : const Color(0xffF2F2F2),
                       ),
-                      Container(
-                        height: 40,
-                        width: 100,
-                        margin: const EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            color: controller.tabController.value == 1
-                                ? AppColor.appcolor
-                                : const Color(0xFFFFFFFF),
-                            border: Border.all(
-                                color: controller.tabController.value == 1
-                                    ? AppColor.appcolor
-                                    : Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(19)),
-                        child: Center(
-                          child: AppText(
-                            text: "Sell",
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 1
-                                ? Colors.white
-                                : Colors.grey.shade500,
-                          ),
-                        ),
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    width: 100,
+                    margin: const EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                        color: AppColor.appcolor,
+                        borderRadius: BorderRadius.circular(19)),
+                    child: Center(
+                      child: AppText(
+                        text: "Sell",
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w400,
+                        color: controller.tabController.value == 1
+                            ? const Color(0x33000000)
+                            : const Color(0xffF2F2F2),
                       ),
-                      Container(
-                        height: 40,
-                        width: 100,
-                        margin: const EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            color: controller.tabController.value == 2
-                                ? AppColor.appcolor
-                                : const Color(0xFFFFFFFF),
-                            border: Border.all(
-                                color: controller.tabController.value == 2
-                                    ? AppColor.appcolor
-                                    : Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(19)),
-                        child: Center(
-                          child: AppText(
-                            text: "Co-owner",
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 2
-                                ? Colors.white
-                                : Colors.grey.shade500,
-                          ),
-                        ),
+                    ),
+                  ),
+                  Container(
+                    height: 40,
+                    width: 100,
+                    margin: const EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                        color: AppColor.appcolor,
+                        borderRadius: BorderRadius.circular(19)),
+                    child: Center(
+                      child: AppText(
+                        text: "Co-owner",
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w400,
+                        color: controller.tabController.value == 2
+                            ? const Color(0x33000000)
+                            : const Color(0xffF2F2F2),
                       ),
-                    ])),
+                    ),
+                  ),
+                ]),
             Expanded(
               child: TabBarView(children: [
                 GridView.builder(

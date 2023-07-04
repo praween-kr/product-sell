@@ -38,7 +38,7 @@ class FilterScreen extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Center(
-                                child: Image.asset(Assets.assetgirljean,
+                                child: Image.asset(Assets.assetsGirlJean,
                                     height: 170, width: 300, fit: BoxFit.fill),
                               ),
                             ),

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import '../model/onboard_model.dart';
 
 class Homecontroller extends GetxController {
@@ -63,19 +62,19 @@ class Homecontroller extends GetxController {
         Name: "Beauty",
       ),
       HomeModel(
-        image: Assets.assetamericanball,
+        image: Assets.assetsAmericanBall,
         Name: "Sports",
       ),
       HomeModel(
-        image: Assets.assetdog,
+        image: Assets.assetsDog,
         Name: "Pets",
       ),
       HomeModel(
-        image: Assets.assetcard,
+        image: Assets.assetsCard,
         Name: "Cards",
       ),
       HomeModel(
-        image: Assets.assetcar,
+        image: Assets.assetsCar,
         Name: "Vehicle",
       ),
     ]);
