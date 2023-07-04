@@ -8,6 +8,7 @@ import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
 import 'package:oninto_flutter/views/bid_screen/home_bid_screen.dart';
 import 'package:oninto_flutter/views/home/category_screen.dart';
 import 'package:oninto_flutter/views/home/denim_screen.dart';
+import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
@@ -79,6 +80,9 @@ class RoutesGenerator {
         break;
       case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
+        break;
+      case Routes.favouriteScreen:
+        widgetScreen = FavouriteScreen();
         break;
       default:
         widgetScreen = _errorRoute();
