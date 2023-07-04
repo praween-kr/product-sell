@@ -11,6 +11,9 @@ class BottomNavController extends GetxController {
 
   final List<Widget> bottomBarPages = [
     HomeScreen(),
+    Container(),
+    Container(),
+    Container(),
     SettingScreen(),
   ];
   int maxCount = 5;
