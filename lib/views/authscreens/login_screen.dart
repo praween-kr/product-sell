@@ -101,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                 Obx(
                   () => AppTextField(
                     title: "*******",
-                    isObscure: controller.HomePass.value,
+                    isObscure: controller.homePass.value,
                     maxLines: 1,
                     contentPadding: const EdgeInsets.only(
                       top: 30,
@@ -111,9 +111,9 @@ class LoginScreen extends StatelessWidget {
                     prefix: const Icon(Icons.lock_open),
                     suffix: GestureDetector(
                       onTap: () {
-                        controller.HomePass.value = !controller.HomePass.value;
+                        controller.homePass.value = !controller.homePass.value;
                       },
-                      child: controller.HomePass.value
+                      child: controller.homePass.value
                           ? const Icon(Icons.remove_red_eye_outlined)
                           : const Icon(Icons.visibility_off_outlined),
                     ),

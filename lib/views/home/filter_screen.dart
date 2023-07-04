@@ -35,8 +35,13 @@ class FilterScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(Assets.assetgirljean,
-                                height: 170, width: 300, fit: BoxFit.fill),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Center(
+                                child: Image.asset(Assets.assetgirljean,
+                                    height: 170, width: 300, fit: BoxFit.fill),
+                              ),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),

@@ -24,7 +24,11 @@ class PaymentScreen extends StatelessWidget {
               heading: "Pay Now",
               textStyle: const TextStyle(
                   fontSize: 18, fontWeight: FontWeight.w500, color: blackColor),
-              leading: const Icon(Icons.arrow_back, color: blackColor),
+              leading: GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: const Icon(Icons.arrow_back, color: blackColor)),
             ),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 10),
@@ -77,19 +81,19 @@ class PaymentScreen extends StatelessWidget {
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             decoration: BoxDecoration(
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(20)),
-                            child: Icon(
+                            child: const Icon(
                               Icons.done,
                               color: Colors.white,
                             ),
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       const AppText(
@@ -140,14 +144,14 @@ class PaymentScreen extends StatelessWidget {
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
                           ),
-                          Spacer(),
-                          CircleAvatar(
+                          const Spacer(),
+                          const CircleAvatar(
                             radius: 14,
                             backgroundColor: Color(0xffE5E5E5),
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       const AppText(
@@ -167,21 +171,19 @@ class PaymentScreen extends StatelessWidget {
                 right: 20,
               ),
               child: DottedBorder(
-                borderPadding: EdgeInsets.only(top: 20),
+                borderPadding: const EdgeInsets.only(top: 20),
                 borderType: BorderType.RRect,
-                radius: Radius.circular(12),
-                padding: EdgeInsets.only(top: 20),
-                child: ClipRRect(
+                radius: const Radius.circular(12),
+                padding: const EdgeInsets.only(top: 20),
+                child: const ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: Container(
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        child: AppText(
-                          text: '+ Add New Card',
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Poppins",
-                        ),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 20),
+                      child: AppText(
+                        text: '+ Add New Card',
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "Poppins",
                       ),
                     ),
                   ),

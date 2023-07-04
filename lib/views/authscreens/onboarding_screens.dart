@@ -4,7 +4,6 @@ import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -51,7 +50,7 @@ class OnBoardingScreen extends StatelessWidget {
                       textSize: 25,
                       color: Colors.white,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     AppText(
@@ -60,7 +59,7 @@ class OnBoardingScreen extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         lineHeight: 1.4),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     /*Align(
                           alignment: Alignment.bottomCenter,
                           child: SmoothPageIndicator(
@@ -84,17 +83,17 @@ class OnBoardingScreen extends StatelessWidget {
                               dotWidth: 25),
                           onDotClicked: (index) {},
                         )),
-                    /*GestureDetector(
-                            onTap: () {
-                              if (controller.pagePosition.value ==
-                                  controller.onBoardingData.length - 1) {
-                                Get.offAllNamed(Routes.loginScreen);
-                              } else {
-                                controller
-                                    .nextScreen(controller.pagePosition.value);
-                              }
-                            },
-                            child: Icon(Icons.arrow_forward)),*/
+                    GestureDetector(
+                        onTap: () {
+                          if (controller.pagePosition.value ==
+                              controller.onBoardingData.length - 1) {
+                            Get.offAllNamed(Routes.loginScreen);
+                          } else {
+                            controller
+                                .nextScreen(controller.pagePosition.value);
+                          }
+                        },
+                        child: const Icon(Icons.arrow_forward)),
                   ],
                 )),
           ),

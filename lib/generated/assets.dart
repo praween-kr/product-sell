@@ -13,9 +13,9 @@ class Assets {
   static const String assetjean = 'assets/Jean.png';
   static const String assetgirl = 'assets/Girl.png';
   static const String assetframe = 'assets/Frame.png';
-  static const String assetdog = 'assets/Dog.png';
+  static const String assetdog = 'assets/dog.png';
   static const String assetcard = 'assets/Card.png';
-  static const String assetcar = 'assets/Car.png';
+  static const String assetcar = 'assets/car.png';
   static const String assetbuilding = 'assets/Building.png';
   static const String assetbeauty = 'assets/Beauty.png';
   static const String assetamericanball = 'assets/american_ball.png';

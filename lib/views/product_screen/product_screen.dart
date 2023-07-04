@@ -5,7 +5,6 @@ import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
-
 import '../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -29,7 +28,7 @@ class ProductScreen extends StatelessWidget {
         child: Column(
           children: [
             TabBar(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
                 indicator: BoxDecoration(
                     color: AppColor.appcolor,
                     borderRadius: BorderRadius.circular(20)),
@@ -51,8 +50,8 @@ class ProductScreen extends StatelessWidget {
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.w400,
                         color: controller.tabController.value == 0
-                            ? Color(0x33000000)
-                            : Color(0xffF2F2F2),
+                            ? const Color(0x33000000)
+                            : const Color(0xffF2F2F2),
                       ),
                     ),
                   ),
@@ -69,8 +68,8 @@ class ProductScreen extends StatelessWidget {
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.w400,
                         color: controller.tabController.value == 1
-                            ? Color(0x33000000)
-                            : Color(0xffF2F2F2),
+                            ? const Color(0x33000000)
+                            : const Color(0xffF2F2F2),
                       ),
                     ),
                   ),
@@ -87,8 +86,8 @@ class ProductScreen extends StatelessWidget {
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.w400,
                         color: controller.tabController.value == 2
-                            ? Color(0x33000000)
-                            : Color(0xffF2F2F2),
+                            ? const Color(0x33000000)
+                            : const Color(0xffF2F2F2),
                       ),
                     ),
                   ),
@@ -385,7 +384,7 @@ class ProductScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Column(
+                                const Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AppText(
