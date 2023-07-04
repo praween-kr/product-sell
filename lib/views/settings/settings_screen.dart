@@ -6,8 +6,9 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
-class SettingsScreen extends GetView<SettingsController> {
-  const SettingsScreen({super.key});
+class SettingScreen extends StatelessWidget {
+   SettingScreen({super.key});
+  final controller = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
