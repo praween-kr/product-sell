@@ -73,6 +73,7 @@ class RoutesGenerator {
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
         break;
+
       case Routes.notificationScreen:
         widgetScreen = NotificationScreen();
         break;
