@@ -5,7 +5,7 @@ import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
-import '../../common_widget/appbar.dart';
+import '../../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({super.key});

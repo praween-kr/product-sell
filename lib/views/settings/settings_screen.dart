@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/settings_controller.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
+import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/views/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
@@ -25,18 +25,17 @@ class SettingScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30.0),
+          margin: const EdgeInsets.only(left: 35.0,right: 35.0,bottom: 65.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                   crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(Assets.assetsPersonIcon,scale: 1.6,),
+                      Image.asset(Assets.assetsPersonIcon,scale: 1.0,),
                       const SizedBox(width: 3,),
                       Column(
                         children: [
@@ -86,8 +85,7 @@ class SettingScreen extends StatelessWidget {
                     ],
                   ),
                    Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
+                     children: [
                       Icon(Icons.arrow_forward_ios_outlined,
                           color: AppColor.blackColor.withOpacity(0.3),
                           size:15),
@@ -100,8 +98,9 @@ class SettingScreen extends StatelessWidget {
                 text: "Settings",
                 textSize: 17.0,
                 color: AppColor.blackColor,
-                style: AppTextStyle.medium,
+                style: AppTextStyle.title,
               ),
+              const SizedBox(height: 18.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,25 +108,24 @@ class SettingScreen extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        height: 33,width: 33,
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                         decoration: const BoxDecoration(
                             color: AppColor.appcolor,
                             shape: BoxShape.circle
                         ),
                         child: const Center(
                           child: Icon(Icons.notifications,
-                            color: AppColor.white,size: 20,),
+                            color: AppColor.white,size: 25,),
                         ),
                       ),
-                      const SizedBox(width: 15,),
+                      const SizedBox(width: 17.0,),
                       const AppText(text: "Notifications",
-                        textSize: 12,color: AppColor.blackColor,
+                        textSize: 13.0,color: AppColor.blackColor,
                         style: AppTextStyle.regular,
                       ),
                     ],
                   ),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Obx(()=>
                             Transform.scale(
@@ -147,22 +145,23 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.shopping_cart_sharp,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.shopping_cart_rounded,color: AppColor.white,
+                        size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
+                      Get.toNamed(Routes.productScreen);
                       },
                     child: const AppText(text: "My Products",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -173,17 +172,16 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.lock,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.lock,color: AppColor.white,size: 25,),
                     ),
                   ),
                   const SizedBox(width: 15,),
@@ -199,20 +197,19 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.payment,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.payment,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
@@ -225,20 +222,19 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.location_on,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.location_on,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
@@ -251,20 +247,19 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.attach_money,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.attach_money,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
@@ -277,7 +272,6 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
@@ -287,10 +281,10 @@ class SettingScreen extends StatelessWidget {
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.privacy_tip_rounded,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.event_note_sharp,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
@@ -303,20 +297,19 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.headphones,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.headphones,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
@@ -329,20 +322,19 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
                         color: AppColor.appcolor,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.help,color: AppColor.white,size: 20,),
+                      child: Icon(Icons.help,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
@@ -355,20 +347,19 @@ class SettingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 17.0,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: 42,width: 42,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
                     decoration: const BoxDecoration(
-                        color: AppColor.appcolor,
+                        color: Colors.red,
                         shape: BoxShape.circle
                     ),
                     child: const Center(
-                      child: Icon(Icons.login_outlined,color: Colors.red,size: 20,),
+                      child: Icon(Icons.logout_sharp,color: AppColor.white,size: 25,),
                     ),
                   ),
-                  const SizedBox(width: 15,),
+                  const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
                     },
