@@ -10,8 +10,10 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/bidding_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/message_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
-import '../bottom_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -38,7 +40,7 @@ class RoutesGenerator {
       case Routes.bottomScreen:
         widgetScreen = BottomScreen();
         break;
-         case Routes.onboardingScreen:
+      case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
         break;
       case Routes.forgotScreen:
@@ -80,6 +82,15 @@ class RoutesGenerator {
         break;
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();
+        break;
+      case Routes.menshirtScreen:
+        widgetScreen = MenshirtScreen();
+        break;
+      case Routes.biddingScreen:
+        widgetScreen = BiddingScreen();
+        break;
+      case Routes.messageScreen:
+        widgetScreen = MessageScreen();
         break;
       default:
         widgetScreen = _errorRoute();

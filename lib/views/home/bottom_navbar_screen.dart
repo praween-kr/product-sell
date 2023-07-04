@@ -30,7 +30,7 @@ class BottomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-          body: getPage(controller.selectedIndex.value),
+          body: controller.bottomBarPages[controller.selectedIndex.value],
           extendBody: true,
           bottomNavigationBar: BottomBarInspiredOutside(
             items: items,
@@ -43,8 +43,9 @@ class BottomScreen extends StatelessWidget {
             animated: true,
             itemStyle: ItemStyle.circle,
             chipStyle: const ChipStyle(
-                background: AppColor.appcolor,
-                notchSmoothness: NotchSmoothness.sharpEdge),
+              background: AppColor.appcolor,
+              notchSmoothness: NotchSmoothness.sharpEdge,
+            ),
           ),
           /*bottomNavigationBar: AnimatedNotchBottomBar(
             notchColor: Colors.red,
