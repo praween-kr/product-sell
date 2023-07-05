@@ -777,6 +777,7 @@ class DenimScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             Get.back();
+
                             Get.toNamed(Routes.productScreen);
                           },
                           child: CommonButton(
