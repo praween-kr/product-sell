@@ -10,7 +10,6 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/gyraados_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
 import '../bottom_screen.dart';
 import '../splash_screen.dart';
@@ -81,9 +80,6 @@ class RoutesGenerator {
         break;
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();
-        break;
-      case Routes.gyradosScreen:
-        widgetScreen = GyradosScreen();
         break;
       default:
         widgetScreen = _errorRoute();

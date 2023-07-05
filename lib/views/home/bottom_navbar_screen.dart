@@ -6,6 +6,7 @@ import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
+import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
 import '../settings/settings_screen.dart';
 
 class BottomScreen extends StatelessWidget {
@@ -113,11 +114,7 @@ class BottomScreen extends StatelessWidget {
 
       case 2:
         {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Page 3"),
-            ),
-          );
+          return NavBarMessage();
         }
       case 3:
         {

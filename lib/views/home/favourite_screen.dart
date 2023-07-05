@@ -13,10 +13,10 @@ class FavouriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 50),
         child: Column(
           children: [
-            Center(
+            const Center(
               child: AppText(
                 text: "My Favourite",
                 textSize: 20,
