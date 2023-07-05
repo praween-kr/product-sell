@@ -153,7 +153,6 @@ class GyradosScreen extends StatelessWidget {
                     height: 50,
                     color: AppColor.appcolor,
                     text: "Community",
-                    \
                     textStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
