@@ -10,14 +10,13 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
-import 'package:oninto_flutter/views/message/message_screen.dart';
+import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
 import 'package:oninto_flutter/views/settings/address/address_screen.dart';
 import 'package:oninto_flutter/views/settings/address/newAddress/new_address.dart';
 import 'package:oninto_flutter/views/settings/cms_screen/cms_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
-import '../bottom_screen.dart';
 import 'package:oninto_flutter/views/settings/mySubscription/subscription.dart';
-import 'package:oninto_flutter/views/settings/password/password_screen.dart';
 import 'package:oninto_flutter/views/settings/payments/setting_payment_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
@@ -26,6 +25,7 @@ import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/settings/myProducts/message_screen.dart';
 import '../views/settings/settings_screen.dart';
 
 class RoutesGenerator {
@@ -105,6 +105,12 @@ class RoutesGenerator {
         break;
       case Routes.messageScreen:
         widgetScreen = MessageScreen();
+        break;
+      case Routes.menshirtScreen:
+        widgetScreen = MenshirtScreen();
+        break;
+      case Routes.navBarMessage:
+        widgetScreen = NavBarMessage();
         break;
       default:
         widgetScreen = _errorRoute();

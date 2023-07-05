@@ -25,7 +25,7 @@ class SettingScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.only(left: 35.0,right: 35.0,bottom: 65.0),
+          margin: const EdgeInsets.only(left: 35.0,right: 35.0,bottom: 85.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,10 +34,12 @@ class SettingScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Image.asset(Assets.assetsPersonIcon,scale: 1.0,),
                       const SizedBox(width: 3,),
                       Column(
+
                         children: [
                           const AppText(
                             text: "John Smith",

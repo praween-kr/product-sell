@@ -10,6 +10,7 @@ class Homecontroller extends GetxController {
   RxBool homePass = true.obs;
   RxBool Switch = false.obs;
   var tabController = 0.obs;
+  var messageController = 0.obs;
   late PageController pageController;
 
   RxList<CommonModel> onBoardingData = RxList([]);

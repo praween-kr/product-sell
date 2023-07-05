@@ -27,5 +27,5 @@ class Routes {
   static const String newAddressScreen = "/NewAddressScreen";
   static const String mySubscription = "/MySubscription";
   static const String cmsScreen = "/CmsScreen";
-  static const String messageScreen = "/MessageScreen";
+  static const String navBarMessage = "/NavBarMessage";
 }
