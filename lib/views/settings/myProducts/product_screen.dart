@@ -4,10 +4,12 @@ import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import '../../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
+  Map<String, dynamic>? data;
   ProductScreen({super.key});
   final controller = Get.put(Homecontroller());
 
@@ -142,10 +144,10 @@ class ProductScreen extends StatelessWidget {
                         itemCount: 6,
                         itemBuilder: (context, index) {
                           //  var data = controller.Categorydata[index];
-                          return GestureDetector(
-                            child: Column(
-                              children: [
-                                Container(
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                child: Container(
                                   padding: const EdgeInsets.only(
                                       bottom: 10, left: 20, right: 20, top: 7),
                                   decoration: BoxDecoration(
@@ -205,8 +207,8 @@ class ProductScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           );
                         }),
                     GridView.builder(
@@ -367,6 +369,9 @@ class ProductScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           //  var data = controller.Categorydata[index];
                           return GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.gyradosScreen);
+                            },
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 8),
                               decoration: BoxDecoration(

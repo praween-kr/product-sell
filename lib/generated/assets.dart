@@ -40,4 +40,8 @@ class Assets {
   static const String assetsFashion = 'assets/fashion.png';
   static const String assetsBack = 'assets/back.png';
   static const String assetsattachment = 'assets/attachment.png';
+  static const String assetsgyrados = 'assets/gyrados.png';
+  static const String assetsgyrados1 = 'assets/gyrados1.png';
+  static const String assetspokemon = 'assets/pokemon.png';
+  static const String assetsparker = 'assets/parker.png';
 }
