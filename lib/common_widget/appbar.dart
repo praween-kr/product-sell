@@ -5,6 +5,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 class CommonAppbarWidget extends StatelessWidget
     implements PreferredSizeWidget {
   String? heading;
+  final VoidCallback? onBackPress;
   IconData? iconData;
   TextStyle? textStyle;
   Widget? leading;
@@ -16,6 +17,7 @@ class CommonAppbarWidget extends StatelessWidget
       this.iconData,
       this.textStyle,
       this.leading,
+      this.onBackPress,
       this.action,
       this.preferredheight});
 
@@ -37,9 +39,10 @@ class CommonAppbarWidget extends StatelessWidget
         ),
         leading: leading ??
             GestureDetector(
-              onTap: () {
-                Get.back();
-              },
+              onTap: onBackPress ??
+                  () {
+                    Get.back();
+                  },
               child: Container(
                 margin: EdgeInsets.all(5),
                 padding: const EdgeInsets.only(left: 12),

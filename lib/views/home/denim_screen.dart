@@ -1,6 +1,9 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
@@ -10,7 +13,9 @@ import 'package:oninto_flutter/utills/common_appbar.dart';
 import '../../common_widget/color_constant.dart';
 
 class DenimScreen extends StatelessWidget {
-  const DenimScreen({super.key});
+  Map<String, dynamic>? data;
+  DenimScreen({Key? key, required this.data}) : super(key: key);
+  final controller = Get.put(Homecontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +26,10 @@ class DenimScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CommonAppbarWidget(
+                onBackPress: () {
+                  controller.upload.value = false;
+                  Get.back();
+                },
                 heading: "Girls Denim",
               ),
               const SizedBox(
@@ -117,7 +126,7 @@ class DenimScreen extends StatelessWidget {
                         const Icon(Icons.star, color: AppColor.appcolor),
                         GestureDetector(
                           onTap: () {
-                            reviewDialog();
+                            data?["from"] == 1 ? Container() : reviewDialog();
                           },
                           child: const AppText(
                             text: "/4.5",
@@ -138,6 +147,26 @@ class DenimScreen extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       color: AppColor.appcolor,
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const AppText(
+                      text: "Inclusive of all taxes",
+                      textSize: 12,
+                      color: Color(0x32000000),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    data?["from"] == 1
+                        ? const AppText(
+                            text: "Tracking ID : XX123XX343XX",
+                            textSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          )
+                        : Container(),
                     const SizedBox(
                       height: 30,
                     ),
@@ -370,20 +399,31 @@ class DenimScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(Routes.paymentScreen);
+                  // Map<String, dynamic> data = {
+                  //   "data": "from",
+                  // };
+                  data?["from"] == 1 && !controller.upload.value
+                      ? uploadDialog()
+                      : data?["from"] == 1
+                          ? givereviewDialog()
+                          : Get.toNamed(Routes.paymentScreen, arguments: data);
                 },
-                child: CommonButton(
-                  height: 50,
-                  radius: 15,
-                  margin: const EdgeInsets.only(left: 20, right: 20),
-                  text: "Buy Now",
-                  textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontFamily: "Poppins",
-                      fontWeight: FontWeight.w400),
-                  color: AppColor.appcolor,
-                ),
+                child: Obx(() => CommonButton(
+                      height: 50,
+                      radius: 15,
+                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      text: controller.upload.value
+                          ? "Give Reviews"
+                          : data?["from"] == 1
+                              ? "Upload"
+                              : "Buy Now",
+                      textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w400),
+                      color: AppColor.appcolor,
+                    )),
               ),
               const SizedBox(
                 height: 10,
@@ -505,6 +545,253 @@ class DenimScreen extends StatelessWidget {
                               ],
                             );
                           },
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future uploadDialog() async {
+    print("clicked---- ");
+    return showDialog(
+        barrierDismissible: true,
+        useSafeArea: false,
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(
+                              0.0,
+                              0.0,
+                            ),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                        ],
+                        // borderRadius: BorderRadius.all(Radius.circular(17)),
+                        color: Colors.white),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 20, right: 20, left: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30),
+                          child: AppText(
+                            text: "Upload",
+                            textSize: 18,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            color: blackColor,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            controller.cameraHelper.cropAspectRatioPreset =
+                                CropAspectRatioPreset.square;
+                            controller.cameraHelper.openImagePickerNew();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                top: 20, bottom: 20, left: 50),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
+                            decoration: BoxDecoration(
+                                color: const Color(0xffF6F6F6),
+                                borderRadius: BorderRadius.circular(17),
+                                border:
+                                    Border.all(color: const Color(0xffF6F6F6))),
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.camera_alt,
+                                  color: Color(0x1e000000),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                AppText(
+                                  text: "Upload Picture",
+                                  textSize: 15,
+                                  color: Color(0x1e000000),
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        const AppText(
+                          text: "Add Signature",
+                          textSize: 15,
+                          color: Color(0x1e000000),
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w400,
+                          underline: true,
+                          underlineColor: Colors.black,
+                        ),
+                        DottedBorder(
+                          borderPadding: const EdgeInsets.only(
+                              top: 20, left: 20, right: 20),
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(12),
+                          padding: const EdgeInsets.all(5),
+                          child: const TextField(
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    top: 30, left: 20, right: 20),
+                                border: InputBorder.none),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            controller.upload.value = true;
+                            Get.back();
+                            /* Map<String, dynamic> data = {
+                              "data": 2,
+                            };
+                            Get.toNamed(Routes.denimScreen, arguments: data);*/
+                          },
+                          child: CommonButton(
+                            height: 50,
+                            radius: 15,
+                            margin: const EdgeInsets.only(
+                                left: 20, top: 20, right: 20),
+                            text: "Upload",
+                            textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w400),
+                            color: AppColor.appcolor,
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future givereviewDialog() async {
+    print("clicked---- ");
+    return showDialog(
+        barrierDismissible: true,
+        useSafeArea: false,
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(
+                              0.0,
+                              0.0,
+                            ),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                        ],
+                        // borderRadius: BorderRadius.all(Radius.circular(17)),
+                        color: Colors.white),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 20, right: 20, left: 20),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30),
+                          child: AppText(
+                            text: "Upload",
+                            textSize: 18,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            color: blackColor,
+                          ),
+                        ),
+                        RatingBar.builder(
+                            initialRating: 5,
+                            updateOnDrag: false,
+                            glow: false,
+                            minRating: 1,
+                            itemSize: 25,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            //  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                            itemBuilder: (context, _) => const Icon(
+                                  Icons.star,
+                                  color: AppColor.appcolor,
+                                ),
+                            ignoreGestures: true,
+                            onRatingUpdate: (rating) => null),
+                        DottedBorder(
+                          borderPadding: const EdgeInsets.only(
+                              top: 20, left: 20, right: 20),
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(12),
+                          padding: const EdgeInsets.all(5),
+                          child: const TextField(
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    top: 30, left: 20, right: 20),
+                                border: InputBorder.none),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.back();
+                            Get.toNamed(Routes.productScreen);
+                          },
+                          child: CommonButton(
+                            height: 50,
+                            radius: 15,
+                            margin: const EdgeInsets.only(
+                                left: 20, top: 20, right: 20),
+                            text: "Done",
+                            textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w400),
+                            color: AppColor.appcolor,
+                          ),
                         ),
                       ],
                     )),

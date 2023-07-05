@@ -22,4 +22,10 @@ class Routes {
   static const String biddingScreen = "/BiddingScreen";
   static const String messageScreen = "/MessageScreen";
   static const String passwordScreen = "/PasswordScreen";
+  static const String gyradosScreen = "/GyradosScreen";
+  static const String addressScreen = "/AddressScreen";
+  static const String cmsScreen = "/CmsScreen";
+  static const String navbarScreen = "/NavbarScreen";
+  static const String subscriptionScreen = "/MySubscriptionScreen";
+  static const String newaddressScreen = "/NewAddressScreen";
 }

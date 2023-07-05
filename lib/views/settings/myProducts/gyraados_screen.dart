@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
 class GyradosScreen extends StatelessWidget {
-  const GyradosScreen({super.key});
+  GyradosScreen({super.key});
+  final controller = Get.put(Homecontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -149,15 +153,21 @@ class GyradosScreen extends StatelessWidget {
                   const SizedBox(
                     height: 40,
                   ),
-                  CommonButton(
-                    height: 50,
-                    color: AppColor.appcolor,
-                    text: "Community",
-                    textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Poppins",
-                        color: Colors.white),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.navbarScreen);
+                    },
+                    child: CommonButton(
+                      height: 50,
+                      radius: 20,
+                      color: AppColor.appcolor,
+                      text: "Community",
+                      textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Poppins",
+                          color: Colors.white),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

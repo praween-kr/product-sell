@@ -10,8 +10,12 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
+import 'package:oninto_flutter/views/settings/myProducts/bidding_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/gyraados_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/message_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
-import '../bottom_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -54,7 +58,9 @@ class RoutesGenerator {
         widgetScreen = const FilterScreen();
         break;
       case Routes.denimScreen:
-        widgetScreen = const DenimScreen();
+        widgetScreen = DenimScreen(
+          data: args as Map<String, dynamic>,
+        );
         break;
       case Routes.paymentScreen:
         widgetScreen = const PaymentScreen();
@@ -80,6 +86,21 @@ class RoutesGenerator {
         break;
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();
+        break;
+      case Routes.messageScreen:
+        widgetScreen = const MessageScreen();
+        break;
+      case Routes.menshirtScreen:
+        widgetScreen = const MenshirtScreen();
+        break;
+      case Routes.biddingScreen:
+        widgetScreen = const BiddingScreen();
+        break;
+      case Routes.gyradosScreen:
+        widgetScreen = GyradosScreen();
+        break;
+      case Routes.navbarScreen:
+        widgetScreen = NavBarMessage();
         break;
       default:
         widgetScreen = _errorRoute();

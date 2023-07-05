@@ -9,8 +9,9 @@ import 'package:oninto_flutter/utills/colors_file.dart';
 import '../../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
-  Map<String, dynamic>? data;
-  ProductScreen({super.key});
+  ProductScreen({
+    Key? key,
+  }) : super(key: key);
   final controller = Get.put(Homecontroller());
 
   @override
@@ -127,7 +128,7 @@ class ProductScreen extends StatelessWidget {
                     ])),
             Expanded(
               child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     GridView.builder(
                         physics: const ClampingScrollPhysics(),
@@ -147,6 +148,13 @@ class ProductScreen extends StatelessWidget {
                           return Column(
                             children: [
                               GestureDetector(
+                                onTap: () {
+                                  Map<String, dynamic> data = {
+                                    "from": 1,
+                                  };
+                                  Get.toNamed(Routes.denimScreen,
+                                      arguments: data);
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                       bottom: 10, left: 20, right: 20, top: 7),
