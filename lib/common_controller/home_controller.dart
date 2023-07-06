@@ -19,7 +19,7 @@ class Homecontroller extends GetxController
   var imagePath = "".obs;
   late PageController pageController;
   late CameraHelper cameraHelper;
-
+  var menu = false.obs;
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);

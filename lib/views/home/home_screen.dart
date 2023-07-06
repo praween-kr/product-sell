@@ -103,125 +103,178 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed(Routes.verificationScreen);
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
-                  margin: const EdgeInsets.symmetric(horizontal: 30),
-                  decoration: BoxDecoration(
-                      color: AppColor.TextColor,
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.search),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      AppText(
-                          text: "Search",
-                          textSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0x80000000))
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Image.asset(
-                Assets.assetsSale,
-                fit: BoxFit.fill,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const AppText(
-                      text: "Shop by category",
-                      fontWeight: FontWeight.w600,
-                      textSize: 16,
-                      color: Colors.black,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Map<String, dynamic> data = {
-                          "from": 1,
-                        };
-                        Get.toNamed(Routes.categoryScreen, arguments: data);
-                      },
-                      child: const AppText(
-                          text: "See all",
-                          fontWeight: FontWeight.w400,
-                          textSize: 12,
-                          color: Color(0x80000000)),
-                    ),
-                  ],
-                ),
-              ),
-              data?["from"] == 1
-                  ? Expanded(
-                      child: SwipableStack(
-                        builder: (context, properties) {
-                          return Image.asset(Assets.assetshome);
-                        },
+              Obx(() => controller.menu.value
+                  ? Container()
+                  : Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.verificationScreen);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 20, bottom: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 30),
+                            decoration: BoxDecoration(
+                                color: AppColor.TextColor,
+                                borderRadius: BorderRadius.circular(50)),
+                            child: const Row(
+                              children: [
+                                Icon(Icons.search),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AppText(
+                                    text: "Search",
+                                    textSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0x80000000))
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Image.asset(
+                          Assets.assetsSale,
+                          fit: BoxFit.fill,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const AppText(
+                                text: "Shop by category",
+                                fontWeight: FontWeight.w600,
+                                textSize: 16,
+                                color: Colors.black,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(
+                                    Routes.categoryScreen,
+                                  );
+                                },
+                                child: const AppText(
+                                    text: "See all",
+                                    fontWeight: FontWeight.w400,
+                                    textSize: 12,
+                                    color: Color(0x80000000)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+              controller.menu.value
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Image.asset(
+                            Assets.assetstouch,
+                            height: 30,
+                            width: 30,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Container(
+                            height: 30,
+                            width: 30,
+                            margin: const EdgeInsets.only(
+                              right: 7,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColor.appcolor),
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                //  showPopupMenu(context);
+                              },
+                              child: const Icon(Icons.sort,
+                                  color: AppColor.appcolor),
+                            ),
+                          ),
+                        ],
                       ),
                     )
-                  : Expanded(
-                      child: GridView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3, childAspectRatio: 0.75),
-                          itemCount: 6,
-                          itemBuilder: (context, index) {
-                            var data = controller.Categorydata[index];
-                            return GestureDetector(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 20),
-                                    padding: const EdgeInsets.only(
-                                        top: 15,
-                                        bottom: 15,
-                                        left: 20,
-                                        right: 20),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: Colors.grey, width: 1)),
-                                    child: Image.asset(
-                                      data.image,
-                                      fit: BoxFit.contain,
-                                      height: 70,
-                                      width: 50,
+                  : Container(),
+              controller.menu.value
+                  ? SizedBox(
+                      height: 20,
+                    )
+                  : SizedBox(),
+              Obx(
+                () => controller.menu.value
+                    ? Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SwipableStack(
+                            builder: (context, properties) {
+                              return Image.asset(Assets.assetshome);
+                            },
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: GridView.builder(
+                            physics: const ClampingScrollPhysics(),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, childAspectRatio: 0.75),
+                            itemCount: 6,
+                            itemBuilder: (context, index) {
+                              var data = controller.Categorydata[index];
+                              return GestureDetector(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 20),
+                                      padding: const EdgeInsets.only(
+                                          top: 15,
+                                          bottom: 15,
+                                          left: 20,
+                                          right: 20),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: Colors.grey, width: 1)),
+                                      child: Image.asset(
+                                        data.image,
+                                        fit: BoxFit.contain,
+                                        height: 70,
+                                        width: 50,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  AppText(
-                                    text: controller.Categorydata[index].Name,
-                                    color: Colors.black,
-                                    textSize: 14,
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
-                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    AppText(
+                                      text: controller.Categorydata[index].Name,
+                                      color: Colors.black,
+                                      textSize: 14,
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 110, right: 20),
                 child: Align(
