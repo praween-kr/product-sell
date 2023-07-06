@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/views/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
@@ -14,14 +15,14 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: const AppText(text: "Account",
-        style: AppTextStyle.title,
+      backgroundColor: AppColor.white,
+      appBar: CommonAppbarWidget(
+        leading: const AppText(
+          text: "Account",
           color: AppColor.blackColor,
-          textSize: 20.0,
+          textSize: 15,fontWeight: FontWeight.w600,
         ),
+        heading: "",
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -39,13 +40,17 @@ class SettingScreen extends StatelessWidget {
                       Image.asset(Assets.assetsPersonIcon,scale: 1.0,),
                       const SizedBox(width: 3,),
                       Column(
-
                         children: [
-                          const AppText(
-                            text: "John Smith",
-                            textSize: 15.0,
-                            color: AppColor.blackColor,
-                            style: AppTextStyle.medium,
+                          GestureDetector(
+                            onTap: (){
+                              Get.toNamed(Routes.profileScreen);
+                            },
+                            child: const AppText(
+                              text: "John Smith",
+                              textSize: 15.0,
+                              color: AppColor.blackColor,
+                              style: AppTextStyle.medium,
+                            ),
                           ),
                           const SizedBox(height: 3.0,),
                            Row(

@@ -14,12 +14,12 @@ class VerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: CommonAppbarWidget(),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 20),
+        padding: const EdgeInsets.only(left: 25, top: 20,right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CommonAppbarWidget(),
             const SizedBox(
               height: 50,
             ),
@@ -75,8 +75,8 @@ class VerificationScreen extends StatelessWidget {
               child: CommonButton(
                 text: "Verify",
                 height: 50,
-                radius: 20,
-                margin: const EdgeInsets.only(right: 20),
+                radius: 17,
+                margin: const EdgeInsets.only(right: 25,left: 25 ),
                 color: AppColor.appcolor,
                 textStyle: const TextStyle(
                   color: AppColor.TextColor,

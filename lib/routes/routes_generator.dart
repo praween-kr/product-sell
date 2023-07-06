@@ -10,7 +10,9 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/navBarMessage/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
+import 'package:oninto_flutter/views/sellItem/sell_item.dart';
 import 'package:oninto_flutter/views/settings/address/address_screen.dart';
 import 'package:oninto_flutter/views/settings/address/newAddress/new_address.dart';
 import 'package:oninto_flutter/views/settings/cms_screen/cms_screen.dart';
@@ -18,6 +20,8 @@ import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
 import 'package:oninto_flutter/views/settings/mySubscription/subscription.dart';
 import 'package:oninto_flutter/views/settings/payments/setting_payment_screen.dart';
+import 'package:oninto_flutter/views/settings/profileScreen/editProfileScreen/editProfileScreen.dart';
+import 'package:oninto_flutter/views/settings/profileScreen/profileScreen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -111,6 +115,18 @@ class RoutesGenerator {
         break;
       case Routes.navBarMessage:
         widgetScreen = NavBarMessage();
+        break;
+      case Routes.sellItem:
+        widgetScreen = SellItem();
+        break;
+      case Routes.gyaradoMsgScreen:
+        widgetScreen = GyaradoMsgScreen();
+        break;
+      case Routes.profileScreen:
+        widgetScreen = ProfileScreen();
+        break;
+      case Routes.editProfileScreen:
+        widgetScreen = EditProfileScreen();
         break;
       default:
         widgetScreen = _errorRoute();

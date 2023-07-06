@@ -80,9 +80,8 @@ class SettingPaymentScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index){
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Image.asset(Assets.assetsGirlJean,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Image.asset(Assets.assetsCreditCard),
                         );
                       }
                       ),

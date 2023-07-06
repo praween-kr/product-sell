@@ -4,6 +4,7 @@ import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
@@ -112,45 +113,50 @@ class NavBarMessage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 35.0,
                                     vertical: 15.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(Assets.assetsCrowd,
-                                          height: 57.0,width: 57.0,
-                                        ),
-                                        const SizedBox(width: 12.0,),
-                                       const  AppText(
-                                          text: "Gyarado EX",
-                                          textSize: 15.0,
-                                          color: AppColor.blackColor,
-                                          style: AppTextStyle.medium,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                                              vertical: 10.0),
-                                          decoration: const BoxDecoration(
-                                            color: AppColor.appcolor,
-                                            shape: BoxShape.circle,
+                                child: GestureDetector(
+                                  onTap: (){
+                              Get.toNamed(Routes.gyaradoMsgScreen);
+                          },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Image.asset(Assets.assetsCrowd,
+                                            height: 57.0,width: 57.0,
                                           ),
-                                          child: const Center(
-                                            child: AppText(
-                                              text: "2",
-                                              color: AppColor.white,
-                                              textSize: 10.0,
-                                              style: AppTextStyle.regular,
+                                          const SizedBox(width: 12.0,),
+                                         const  AppText(
+                                            text: "Gyarado EX",
+                                            textSize: 15.0,
+                                            color: AppColor.blackColor,
+                                            style: AppTextStyle.medium,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                                                vertical: 10.0),
+                                            decoration: const BoxDecoration(
+                                              color: AppColor.appcolor,
+                                              shape: BoxShape.circle,
                                             ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                            child: const Center(
+                                              child: AppText(
+                                                text: "2",
+                                                color: AppColor.white,
+                                                textSize: 10.0,
+                                                style: AppTextStyle.regular,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               Divider(
@@ -173,56 +179,61 @@ class NavBarMessage extends StatelessWidget {
                                      vertical: 15.0),
                                  child: Column(
                                    children: [
-                                     Row(
-                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                       crossAxisAlignment: CrossAxisAlignment.center,
-                                       children: [
-                                         Row(
-                                           children: [
-                                             Image.asset(Assets.assetsGirlJean,
-                                             height: 57.0,width: 57.0,
-                                             ),
-                                             const SizedBox(width: 12.0,),
-                                              Column(
-                                               children: [
-                                                 const AppText(
-                                                   text: "Men Tshirt",
-                                                   textSize: 15.0,
-                                                   color: AppColor.blackColor,
-                                                   style: AppTextStyle.title,
-                                                 ),
-                                                 const SizedBox(height: 7.0,),
-                                                 AppText(
-                                                   text: "Send Images",
-                                                   textSize: 12.0,
-                                                   color: AppColor.blackColor.withOpacity(0.3),
-                                                   style: AppTextStyle.medium,
-                                                 )
-                                               ],
-                                             )
-                                           ],
-                                         ),
-                                         Row(
-                                           children: [
-                                             Container(
-                                               padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                                               vertical: 10.0),
-                                               decoration: const BoxDecoration(
-                                                 color: AppColor.appcolor,
-                                                 shape: BoxShape.circle,
+                                     GestureDetector(
+                                       onTap:(){
+                                       Get.toNamed(Routes.messageScreen);
+                           },
+                                       child: Row(
+                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                         crossAxisAlignment: CrossAxisAlignment.center,
+                                         children: [
+                                           Row(
+                                             children: [
+                                               Image.asset(Assets.assetsGirlJean,
+                                               height: 57.0,width: 57.0,
                                                ),
-                                               child: const Center(
-                                                 child: AppText(
-                                                   text: "2",
-                                                   color: AppColor.white,
-                                                   textSize: 10.0,
-                                                   style: AppTextStyle.regular,
+                                               const SizedBox(width: 12.0,),
+                                                Column(
+                                                 children: [
+                                                   const AppText(
+                                                     text: "Men Tshirt",
+                                                     textSize: 15.0,
+                                                     color: AppColor.blackColor,
+                                                     style: AppTextStyle.title,
+                                                   ),
+                                                   const SizedBox(height: 7.0,),
+                                                   AppText(
+                                                     text: "Send Images",
+                                                     textSize: 12.0,
+                                                     color: AppColor.blackColor.withOpacity(0.3),
+                                                     style: AppTextStyle.medium,
+                                                   )
+                                                 ],
+                                               )
+                                             ],
+                                           ),
+                                           Row(
+                                             children: [
+                                               Container(
+                                                 padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                                                 vertical: 10.0),
+                                                 decoration: const BoxDecoration(
+                                                   color: AppColor.appcolor,
+                                                   shape: BoxShape.circle,
                                                  ),
-                                               ),
-                                             )
-                                           ],
-                                         )
-                                       ],
+                                                 child: const Center(
+                                                   child: AppText(
+                                                     text: "2",
+                                                     color: AppColor.white,
+                                                     textSize: 10.0,
+                                                     style: AppTextStyle.regular,
+                                                   ),
+                                                 ),
+                                               )
+                                             ],
+                                           )
+                                         ],
+                                       ),
                                      ),
 
                                    ],

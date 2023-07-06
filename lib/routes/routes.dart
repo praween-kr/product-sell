@@ -28,4 +28,8 @@ class Routes {
   static const String mySubscription = "/MySubscription";
   static const String cmsScreen = "/CmsScreen";
   static const String navBarMessage = "/NavBarMessage";
+  static const String sellItem = "/SellItem";
+  static const String gyaradoMsgScreen = "/GyaradoMsgScreen";
+  static const String profileScreen = "/ProfileScreen";
+  static const String editProfileScreen = "/EditProfileScreen";
 }
