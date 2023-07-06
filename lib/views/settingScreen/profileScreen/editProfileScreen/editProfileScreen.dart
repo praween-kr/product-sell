@@ -26,7 +26,7 @@ class EditProfileScreen extends StatelessWidget {
             fontFamily: "Poppins"),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.only(left: 30.0,right: 30.0,top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -120,10 +120,18 @@ class EditProfileScreen extends StatelessWidget {
                           color: AppColor.TextColor,
                           borderRadius: BorderRadius.circular(19)
                       ),
-                      child: const AppText(
-                        text: "5555-555-55",
-                        textSize: 15.0,
-                        color: AppColor.blackColor,
+                      child: AppTextField(
+                        height: 20.0,width: 30.0,
+                        title: "5555-555-55",
+                        hintStyle: const TextStyle(
+                            color: AppColor.blackColor
+                        ),
+                        keyBoardtype: TextInputAction.next,
+                        textInputType: TextInputType.emailAddress,
+                        contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                        //margin: const EdgeInsets.only(right: 35.0),
+                        borderRadius: BorderRadius.circular(19),
+                        containerColor: AppColor.TextColor,
                       ),
                     ),
                     Container(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
@@ -21,22 +24,27 @@ class GyaradoMsgScreen extends StatelessWidget {
               color: blackColor,
               fontWeight: FontWeight.w500,
               fontFamily: "Poppins"),
-        action: Container(
-          margin: const EdgeInsets.symmetric(vertical: 2,horizontal: 2),
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-          decoration:  BoxDecoration(
-            color: AppColor.white,
-              boxShadow:   [
-              BoxShadow(
-                color: AppColor.borderColor.withOpacity(0.3),
-                  blurRadius: 6
-              )
-            ],
-            borderRadius: BorderRadius.circular(20.0)
-          ),
-          child: const Center(
-            child: Icon(Icons.bar_chart_rounded,color: AppColor.appcolor,
-            size: 40.0,
+        action: GestureDetector(
+          onTap: () {
+          customDialog(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 2,horizontal: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+            decoration:  BoxDecoration(
+              color: AppColor.white,
+                boxShadow:   [
+                BoxShadow(
+                  color: AppColor.borderColor.withOpacity(0.3),
+                    blurRadius: 6
+                )
+              ],
+              borderRadius: BorderRadius.circular(20.0)
+            ),
+            child: const Center(
+              child: Icon(Icons.bar_chart_rounded,color: AppColor.appcolor,
+              size: 40.0,
+              ),
             ),
           ),
         )
@@ -122,6 +130,141 @@ body:  Column(
     )
   ],
 ),
+    );
+  }
+
+  /// Dialog View
+  customDialog(BuildContext context){
+    showDialog(context: context,
+        builder: (BuildContext context){
+        return Material(
+              type: MaterialType.transparency,
+              child: Align(
+                //alignment: Alignment.center,
+                child: Container(
+                 height: 390.0,width: 300.0,
+                  //padding: const EdgeInsets.symmetric(vertical: 30.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 35.0,vertical: 50.0),
+                  decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 12.0,bottom: 30.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        const Align(
+                          alignment: Alignment.center,
+                          child: AppText(text: "Poll",
+                            textSize: 13,color: AppColor.blackColor,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 24.0,),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 13.0),
+                          child: Column(
+                            children: [
+                              AppText(text: "Question",
+                                textSize: 9,color: AppColor.blackColor,
+                              ),
+                              SizedBox(height: 7.0,),
+                              AppText(text: "What's your poll question ?",
+                                textSize: 9,color: AppColor.blackColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 13.0,),
+                         Divider(
+                          thickness: 1,color: AppColor.blackColor.withOpacity(0.2),
+                        ),
+                        const SizedBox(height: 12.0,),
+                        const Padding(
+                          padding:  EdgeInsets.symmetric(horizontal: 13.0),
+                          child:  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(text: "Expiration",
+                                textSize: 9,color: AppColor.blackColor,
+                              ),
+                              SizedBox(height: 7.0,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.calendar_month_outlined,color: AppColor.appcolor,
+                                  size: 15.0,
+                                  ),
+                                  SizedBox(width: 11.0,),
+                                  AppText(text: "What's your poll question ?",
+                                    textSize: 9,color: AppColor.blackColor,
+                                  ),
+                                ],
+                              ),
+                               SizedBox(height: 19.0,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.watch_later,color: AppColor.appcolor,
+                                    size: 15.0,
+                                  ),
+                                  SizedBox(width: 11.0,),
+                                  AppText(text: "What's your poll question ?",
+                                    textSize: 9,color: AppColor.blackColor,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 13.0,),
+                         Divider(
+                          thickness: 1,color: AppColor.blackColor.withOpacity(0.2),
+                        ),
+                        const SizedBox(height: 13.0,),
+                        const Padding(
+                           padding:  EdgeInsets.symmetric(horizontal: 13.0),
+                           child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(text: "Options",
+                                textSize: 9,color: AppColor.blackColor,
+                              ),
+                              SizedBox(height: 11.0,),
+                              AppText(text: "Option 1",
+                                textSize: 9,color: AppColor.blackColor,
+                              ),
+                              SizedBox(height: 22.0,),
+                              AppText(text: "Option 2",
+                                textSize: 9,color: AppColor.blackColor,
+                              ),
+                            ],
+                        ),
+                         ),
+                        const SizedBox(height: 20.0,),
+                        GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: CommonButton(
+                            color: AppColor.appcolor,
+                            radius: 17,
+                            margin: const EdgeInsets.only(right: 30,left: 30),
+                            height: 39,
+                            text: "Create Poll",
+                            textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+          );
+        }
+
     );
   }
 }

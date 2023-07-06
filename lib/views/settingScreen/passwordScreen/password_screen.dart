@@ -46,9 +46,18 @@ class PasswordScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 35.0),
                   borderRadius: BorderRadius.circular(40),
                   containerColor: AppColor.TextColor,
-                  suffix:  Icon(Icons.visibility,size: 20.0,
-                  color: AppColor.blackColor.withOpacity(0.3),
-                  ),
+                  suffix:   IconButton(
+                    icon: controller.oldPassword.value ?
+                    Icon(Icons.visibility_off,
+                      size: 20, color: AppColor.blackColor.withOpacity(0.3),
+                    )
+                        :  Icon(Icons.visibility,
+                      size: 20,color: AppColor.blackColor.withOpacity(0.3),
+                    ),
+                    onPressed: (){
+                      controller.oldPassword.value = !controller.oldPassword.value;
+                    },
+                  )
                 ),
             ),
             const SizedBox(height: 22.0,),
@@ -58,20 +67,30 @@ class PasswordScreen extends StatelessWidget {
               color: AppColor.blackColor,
             ),
             const SizedBox(height: 14.0),
-            // Obx(() =>
+            Obx(() =>
                    AppTextField(
                     height: 46.0,
-                   // isObscure: controller.newPassWord.value,
-                   // controller: controller.newPasswordTextController,
+                   isObscure: controller.newPassWord.value,
+                   controller: controller.newPasswordTextController,
+                    maxLines: 1,
                     contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                     margin: const EdgeInsets.only(right: 35.0),
                     borderRadius: BorderRadius.circular(40),
                     containerColor: AppColor.TextColor,
-                    suffix:  Icon(Icons.visibility,size: 14.0,
-                      color: AppColor.blackColor.withOpacity(0.3),
-                    ),
+                    suffix:  IconButton(
+                      icon: controller.newPassWord.value ?
+                       Icon(Icons.visibility_off,
+                        size: 20, color: AppColor.blackColor.withOpacity(0.3),
+                      )
+                          :  Icon(Icons.visibility,
+                        size: 20,color: AppColor.blackColor.withOpacity(0.3),
+                      ),
+                      onPressed: (){
+                        controller.newPassWord.value = !controller.newPassWord.value;
+                      },
+                    )
                   ),
-      //),
+      ),
             const SizedBox(height: 22.0,),
             const AppText(text: "Confirm New Password",
               style: AppTextStyle.medium,
@@ -79,20 +98,30 @@ class PasswordScreen extends StatelessWidget {
               color: AppColor.blackColor,
             ),
             const SizedBox(height: 14.0),
-            // Obx(() =>
+            Obx(() =>
                AppTextField(
                     height: 46.0,
-                  //  isObscure: controller.confirmNewPass.value,
-                  //  controller: controller.confirmNewPasswordTextController,
+                   isObscure: controller.confirmNewPass.value,
+                   controller: controller.confirmNewPassTextController,
+                    maxLines: 1,
                     contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                     margin: const EdgeInsets.only(right: 35.0),
                     borderRadius: BorderRadius.circular(40),
                     containerColor: AppColor.TextColor,
-                    suffix:  Icon(Icons.visibility,size: 14.0,
-                      color: AppColor.blackColor.withOpacity(0.3),
-                    ),
+                    suffix:   IconButton(
+                      icon: controller.confirmNewPass.value ?
+                      Icon(Icons.visibility_off,
+                        size: 20, color: AppColor.blackColor.withOpacity(0.3),
+                      )
+                          :  Icon(Icons.visibility,
+                        size: 20,color: AppColor.blackColor.withOpacity(0.3),
+                      ),
+                      onPressed: (){
+                        controller.confirmNewPass.value = !controller.confirmNewPass.value;
+                      },
+                    )
                   ),
-            //),
+            ),
           const SizedBox(height: 30.0,),
             GestureDetector(
               onTap: () {

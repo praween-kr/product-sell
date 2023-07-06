@@ -31,7 +31,8 @@ class Routes {
   static const String profileScreen = "/ProfileScreen";
   static const String editProfileScreen = "/EditProfileScreen";
   static const String navbarScreen = "/NavbarScreen";
-  static const String subscriptionScreen = "/MySubscriptionScreen";
-  static const String newaddressScreen = "/NewAddressScreen";
+  static const String subscriptionScreen = "/SubscriptionScreen";
+  static const String newAddressScreen = "/NewAddressScreen";
   static const String itemBidScreen = "/ItemBidScreen";
+  static const String settingPaymentScreen = "/SettingPaymentScreen";
 }

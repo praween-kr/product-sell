@@ -220,7 +220,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                    // Get.toNamed(Routes.settingPaymentScreen);
+                    Get.toNamed(Routes.settingPaymentScreen);
                     },
                     child: const AppText(text: "Payment",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -272,7 +272,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                //     Get.toNamed(Routes.mySubscription);
+                Get.toNamed(Routes.subscriptionScreen);
                     },
                     child: const AppText(text: "My Subscription",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -324,7 +324,8 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                    },
+                      Get.toNamed(Routes.cmsScreen);
+                      },
                     child: const AppText(text: "Help Center",
                       textSize: 13.0,color: AppColor.blackColor,
                       style: AppTextStyle.regular,
@@ -349,7 +350,8 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                    },
+                      Get.toNamed(Routes.cmsScreen);
+                      },
                     child: const AppText(text: "About Us",
                       textSize: 13.0,color: AppColor.blackColor,
                       style: AppTextStyle.regular,

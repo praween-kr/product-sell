@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/address_controller.dart';
+import '../../../common_widget/common_button.dart';
 import '../../../utills/colors_file.dart';
 import '../../../utills/common_appbar.dart';
 
@@ -85,6 +87,19 @@ class AddressScreen extends StatelessWidget {
                     )
                 );
               }
+          ),
+          const SizedBox(height: 50.0,),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.newAddressScreen);
+            },
+            child: CommonButton(
+              color: AppColor.appcolor,
+              margin: const EdgeInsets.only(right: 30.0,left: 30.0),
+              height: 57,
+              text: "Add New Address",
+              textStyle: const TextStyle(color: Colors.white, fontSize: 15),
+            ),
           )
         ],
       ),
