@@ -53,6 +53,7 @@ class RoutesGenerator {
         break;
       case Routes.menScreen:
         widgetScreen = MenScreen();
+
         break;
       case Routes.filterScreen:
         widgetScreen = const FilterScreen();
