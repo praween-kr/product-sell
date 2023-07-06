@@ -40,7 +40,7 @@ class RoutesGenerator {
         widgetScreen = HomeScreen(data: args as Map<String, dynamic>?);
         break;
       case Routes.bottomScreen:
-        widgetScreen = BottomScreen();
+        widgetScreen = BottomScreen(data: args as Map<String, dynamic>?);
         break;
       case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
