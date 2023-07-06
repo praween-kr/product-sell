@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
+import 'package:swipable_stack/swipable_stack.dart';
 import '../model/onboard_model.dart';
 import '../utills/helper/camera_helper.dart';
 
@@ -18,6 +19,8 @@ class Homecontroller extends GetxController
   var imagePath = "".obs;
   late PageController pageController;
   late CameraHelper cameraHelper;
+
+  var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);
   RxList<HomeModel> Categorydata = RxList([]);

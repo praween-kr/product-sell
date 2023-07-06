@@ -10,7 +10,9 @@ import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
 import '../settings/settings_screen.dart';
 
 class BottomScreen extends StatelessWidget {
-  BottomScreen({Key? key}) : super(key: key);
+  BottomScreen({
+    Key? key,
+  }) : super(key: key);
   final controller = Get.put(BottomNavController());
 
   List<TabItem> items = [
@@ -104,7 +106,9 @@ class BottomScreen extends StatelessWidget {
     switch (index) {
       case 0:
         {
-          return HomeScreen();
+          return HomeScreen(
+            data: {},
+          );
         }
 
       case 1:

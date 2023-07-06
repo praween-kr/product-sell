@@ -5,9 +5,12 @@ import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 
+import '../../common_controller/bottom_nav_controller.dart';
+
 class MenScreen extends StatelessWidget {
   MenScreen({super.key});
   final controller = Get.put(Homecontroller());
+  final bottomcontroller = Get.put(BottomNavController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,10 @@ class MenScreen extends StatelessWidget {
                     var data = controller.Categorydata[index];
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.homebidScreen);
+                        Map<String, dynamic> data = {
+                          "from": 1,
+                        };
+                        Get.offAndToNamed(Routes.bottomScreen, arguments: data);
                       },
                       child: Column(
                         children: [
