@@ -33,6 +33,5 @@ class Routes {
   static const String navbarScreen = "/NavbarScreen";
   static const String subscriptionScreen = "/MySubscriptionScreen";
   static const String newaddressScreen = "/NewAddressScreen";
-  static const String listSc = "/NewAddressScreen";
   static const String itemBidScreen = "/ItemBidScreen";
 }
