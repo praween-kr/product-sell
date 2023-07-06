@@ -11,8 +11,11 @@ import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
-import 'package:oninto_flutter/views/sellItemScreen/itemBidScreen/item_bid_screen.dart';
 import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
@@ -51,6 +54,9 @@ class RoutesGenerator {
       case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
         break;
+      case Routes.passwordScreen:
+        widgetScreen = PasswordScreen();
+        break;
       case Routes.forgotScreen:
         widgetScreen = const ForgotScreen();
         break;
@@ -69,6 +75,9 @@ class RoutesGenerator {
           data: args as Map<String, dynamic>,
         );
         break;
+    case Routes.sellItemScreen:
+    widgetScreen = SellItemScreen();
+    break;
       case Routes.paymentScreen:
         widgetScreen = const PaymentScreen();
         break;
@@ -84,10 +93,13 @@ class RoutesGenerator {
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
         break;
-
-      case Routes.notificationScreen:
+        case Routes.notificationScreen:
         widgetScreen = NotificationScreen();
         break;
+      case Routes.cmsScreen:
+        widgetScreen = CmsScreen();
+        break;
+
       case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
         break;
@@ -109,10 +121,7 @@ class RoutesGenerator {
       case Routes.navbarScreen:
         widgetScreen = NavBarMsgScreen();
         break;
-      case Routes.sellItemScreen:
-        widgetScreen = SellItemScreen();
-        break;
-      case Routes.gyaradoMsgScreen:
+        case Routes.gyaradoMsgScreen:
         widgetScreen = GyaradoMsgScreen();
         break;
       case Routes.profileScreen:
@@ -121,6 +130,11 @@ class RoutesGenerator {
       case Routes.editProfileScreen:
         widgetScreen = EditProfileScreen();
         break;
+      case Routes.addressScreen:
+        widgetScreen = AddressScreen();
+        break;
+      case Routes.subscriptionScreen:
+        widgetScreen = SubscriptionScreen();
         break;
       // case Routes.itemBidScreen:
       //   widgetScreen = ItemBidScreen();

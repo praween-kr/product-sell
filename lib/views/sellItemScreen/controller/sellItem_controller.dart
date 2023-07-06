@@ -70,7 +70,6 @@ class SellItemController extends GetxController {
   /// datePicker View
   TextEditingController startDateController = TextEditingController();
   TextEditingController endDateController = TextEditingController();
-
   void pickDate(BuildContext context, int value) async {
     DateTime? pickedDate = await showDatePicker(
         builder: (context, Widget? child) {
@@ -99,8 +98,7 @@ class SellItemController extends GetxController {
       print(
           formattedDate);
       if (value == 0) {
-        startDateController.text =
-            formattedDate; //set output date to TextField value
+        startDateController.text = formattedDate; //set output date to TextField value
       }
       else {
         endDateController.text = formattedDate;

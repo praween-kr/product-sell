@@ -5,13 +5,14 @@ import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/views/sellItemScreen/controller/sellItem_controller.dart';
+import '../../generated/assets.dart';
+import '../../routes/routes.dart';
 import '../../utills/common_appbar.dart';
 
 class SellItemScreen extends StatelessWidget {
-  SellItemScreen ({super.key});
+  SellItemScreen({super.key});
   final controller = Get.put(SellItemController());
 
   @override
@@ -100,7 +101,6 @@ class SellItemScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ])),
             Expanded(
               child: TabBarView(
@@ -554,10 +554,10 @@ class SellItemScreen extends StatelessWidget {
                                 DropdownButtonHideUnderline(
                                   child: DropdownButton2<String>(
                                     onChanged: (newValue) {
-                                      // print("DropDown");
-                                      // SellItemController sellItemCtrl = Get.find();
-                                      // sellItemCtrl.selectedItemValue.value == true;
+                                      print("valueChecking");
                                       controller.dropDownValue6.value=newValue!;
+                                      controller.selectedItemValue.value = true;
+                                      print("valueChecking ----${ controller.selectedItemValue.value} ");
                                     },
                                     value: controller.dropDownValue6.value,
                                     items:controller.sellItems.value.map((items) {
@@ -581,10 +581,10 @@ class SellItemScreen extends StatelessWidget {
                                       ),
                                       //elevation: 2,
                                     ),
-                                    iconStyleData:  const IconStyleData(
-                                      icon:  Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                      ),
+                                    iconStyleData:   const IconStyleData(
+                                       icon: Icon(
+                                         Icons.keyboard_arrow_down_rounded,
+                                       ),
                                       iconSize: 20,
                                       iconEnabledColor: AppColor.blackColor,
                                       iconDisabledColor:AppColor.blackColor,
@@ -612,85 +612,12 @@ class SellItemScreen extends StatelessWidget {
                                   ),
                                 ),
                             ),
-                            // const SizedBox(height: 14.0,),
-                            // controller.selectedItemValue.value == true?
-                            //     Column(
-                            //       children: [
-                            //         const SizedBox(height: 14.0,),
-                            //         const AppText(text: "Start Date",
-                            //           color: AppColor.blackColor,
-                            //           textSize: 13.0,
-                            //           style: AppTextStyle.medium,
-                            //         ),
-                            //         const SizedBox(height: 16.0,),
-                            //         AppTextField(height: 46.0,
-                            //           title: "Start Date",
-                            //           hintStyle: const TextStyle(
-                            //               color: AppColor.blackColor),
-                            //           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                            //           margin: const EdgeInsets.only(right: 0.0),
-                            //           borderRadius: BorderRadius.circular(23),
-                            //           containerColor: AppColor.TextColor,
-                            //         ),
-                            //         const SizedBox(height: 14.0,),
-                            //         const AppText(text: "End Date",
-                            //           color: AppColor.blackColor,
-                            //           textSize: 13.0,
-                            //           style: AppTextStyle.medium,
-                            //         ),
-                            //         const SizedBox(height: 16.0,),
-                            //         AppTextField(height: 46.0,
-                            //           title: "End Date",
-                            //           hintStyle: const TextStyle(
-                            //               color: AppColor.blackColor),
-                            //           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                            //           margin: const EdgeInsets.only(right: 0.0),
-                            //           borderRadius: BorderRadius.circular(23),
-                            //           containerColor: AppColor.TextColor,
-                            //           suffix: IconButton(
-                            //               onPressed: () => controller.pickDate(context, 0),
-                            //               icon: Image.asset(Assets.assetsCreditCard,
-                            //                 height: 14.0,width: 12.0,
-                            //               )
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ):
-                            const SizedBox(height: 24.0,),
-                            const AppText(text: "Price",
-                              color: AppColor.blackColor,
-                              textSize: 13.0,
-                              style: AppTextStyle.medium,
-                            ),
-                            const SizedBox(height: 14.0,),
-                            AppTextField(
-                              height: 46.0,
-                              title: "\$2000",
-                              hintStyle: const TextStyle(
-                                color: AppColor.blackColor),
-                              //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                              margin: const EdgeInsets.only(right: 0.0),
-                              borderRadius: BorderRadius.circular(23),
-                              containerColor: AppColor.TextColor,
-                            ),
                             const SizedBox(height: 16.0,),
-                            const AppText(text: "Description",
-                              color: AppColor.blackColor,
-                              textSize: 13.0,
-                              style: AppTextStyle.medium,
-                            ),
-                            const SizedBox(height: 14.0,),
-                            AppTextField(
-                              height: 46.0,
-                              title: "Write Here...",
-                              //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                              margin: const EdgeInsets.only(right: 0.0),
-                              borderRadius: BorderRadius.circular(23),
-                              containerColor: AppColor.TextColor,
-                              maxLines: 5,
-                            ),
-                            const SizedBox(height: 31.0,),
-                            Container(
+                          Obx(() =>
+                            controller.selectedItemValue.value == true?
+                            Container(height: 20,width: 100,color: Colors.green,): priceFields(context),
+                          ),
+                          Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 20.0),
                               decoration: BoxDecoration(
                                 color: AppColor.TextColor,
@@ -1007,4 +934,108 @@ class SellItemScreen extends StatelessWidget {
       ),
     );
   }
+
+  ///Start and End Date View
+  Widget columnData(BuildContext context){
+    return   Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const AppText(text: "Start Date",
+          color: AppColor.blackColor,
+          textSize: 13.0,
+          style: AppTextStyle.medium,
+        ),
+        const SizedBox(height: 16.0,),
+        AppTextField(
+          readOnly: true,
+          controller: controller.startDateController,
+          height: 46.0,
+          title: "Start Date",
+          hintStyle: const TextStyle(
+              color: AppColor.blackColor,fontSize: 13),
+          //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+          margin: const EdgeInsets.only(right: 0.0),
+          borderRadius: BorderRadius.circular(23),
+          containerColor: AppColor.TextColor,
+          suffix: IconButton(
+              onPressed: () => controller.pickDate(context, 0),
+              icon: Icon(Icons.calendar_month_outlined,
+              size: 16,color: AppColor.blackColor.withOpacity(0.3),
+              )
+          ),
+        ),
+        const SizedBox(height: 14.0,),
+        const AppText(text: "End Date",
+          color: AppColor.blackColor,
+          textSize: 13.0,
+          style: AppTextStyle.medium,
+        ),
+        const SizedBox(height: 16.0,),
+        AppTextField(
+          controller:  controller.endDateController,
+          readOnly: true,
+          height: 46.0,
+            title: "End Date",
+            hintStyle: const TextStyle(
+                color: AppColor.blackColor,fontSize: 13),
+            //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+            margin: const EdgeInsets.only(right: 0.0),
+            borderRadius: BorderRadius.circular(23),
+            containerColor: AppColor.TextColor,
+            suffix: IconButton(
+                onPressed: () => controller.pickDate(context, 2),
+                icon: Icon(Icons.calendar_month_outlined,
+                  size: 16,color: AppColor.blackColor.withOpacity(0.3),
+                )
+            ),
+          ),
+        const SizedBox(height: 29.0,),
+      ],
+    );
+  }
+
+/// Price fields View
+  Widget priceFields(BuildContext context){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const AppText(text: "Price",
+          color: AppColor.blackColor,
+          textSize: 13.0,
+          style: AppTextStyle.medium,
+        ),
+        const SizedBox(height: 14.0,),
+        AppTextField(
+          height: 46.0,
+          title: "\$2000",
+          hintStyle: const TextStyle(
+            color: AppColor.blackColor,
+          ),
+          //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+          margin: const EdgeInsets.only(right: 0.0),
+          borderRadius: BorderRadius.circular(23),
+          containerColor: AppColor.TextColor,
+        ),
+        const SizedBox(height: 16.0,),
+        const AppText(text: "Description",
+          color: AppColor.blackColor,
+          textSize: 13.0,
+          style: AppTextStyle.medium,
+        ),
+        const SizedBox(height: 14.0,),
+        AppTextField(
+          height: 46.0,
+          title: "Write Here...",
+          //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+          margin: const EdgeInsets.only(right: 0.0),
+          borderRadius: BorderRadius.circular(23),
+          containerColor: AppColor.TextColor,
+          maxLines: 5,
+        ),
+        const SizedBox(height: 31.0,),
+      ],
+    );
+  }
+
+
 }
