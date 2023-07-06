@@ -6,8 +6,9 @@ import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
-import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
-import '../settings/settings_screen.dart';
+import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
+import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
+
 
 class BottomScreen extends StatelessWidget {
   BottomScreen({Key? key}) : super(key: key);
@@ -114,7 +115,7 @@ class BottomScreen extends StatelessWidget {
 
       case 2:
         {
-          return NavBarMessage();
+          return NavBarMsgScreen();
         }
       case 3:
         {

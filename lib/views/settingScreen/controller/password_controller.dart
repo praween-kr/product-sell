@@ -7,7 +7,7 @@ class PasswordController extends GetxController{
   final oldPasswordTextController = TextEditingController();
 
   RxBool newPassWord = true.obs;
-   final newPasswordTextController = TextEditingController();
+  final newPasswordTextController = TextEditingController();
 
   RxBool confirmNewPass = true.obs;
   final confirmNewPassTextController = TextEditingController();

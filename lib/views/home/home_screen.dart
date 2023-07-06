@@ -105,8 +105,7 @@ class HomeScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(Routes.verificationScreen);
-                },
+                  },
                 child: Container(
                   padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
                   margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -211,7 +210,7 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: FloatingActionButton(
                     onPressed: () {
-                      Get.toNamed(Routes.sellItem);
+                      Get.toNamed(Routes.sellItemScreen);
                     },
                     backgroundColor: AppColor.appcolor,
                     child: const Icon(

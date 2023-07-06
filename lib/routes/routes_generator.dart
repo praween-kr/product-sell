@@ -10,21 +10,10 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
-import 'package:oninto_flutter/views/navBarMessage/gyaradoMsgScreen/gyaradoMsgScreen.dart';
-import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
-import 'package:oninto_flutter/views/sellItem/sell_item.dart';
-import 'package:oninto_flutter/views/settings/address/address_screen.dart';
-import 'package:oninto_flutter/views/settings/address/newAddress/new_address.dart';
-import 'package:oninto_flutter/views/settings/cms_screen/cms_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/bidding_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/gyraados_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/message_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
-import 'package:oninto_flutter/views/settings/mySubscription/subscription.dart';
-import 'package:oninto_flutter/views/settings/payments/setting_payment_screen.dart';
-import 'package:oninto_flutter/views/settings/profileScreen/editProfileScreen/editProfileScreen.dart';
-import 'package:oninto_flutter/views/settings/profileScreen/profileScreen.dart';
+import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
+import 'package:oninto_flutter/views/sellItemScreen/itemBidScreen/item_bid_screen.dart';
+import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -32,7 +21,15 @@ import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/home_screen.dart';
-import '../views/settings/settings_screen.dart';
+import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
+import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
+import '../views/settingScreen/myProductsScreen/gyraados_screen.dart';
+import '../views/settingScreen/myProductsScreen/men_shirt_screen.dart';
+import '../views/settingScreen/myProductsScreen/message_screen.dart';
+import '../views/settingScreen/myProductsScreen/product_screen.dart';
+import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
+import '../views/settingScreen/profileScreen/profileScreen.dart';
+
 
 class RoutesGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -109,10 +106,10 @@ class RoutesGenerator {
         widgetScreen = GyradosScreen();
         break;
       case Routes.navbarScreen:
-        widgetScreen = NavBarMessage();
+        widgetScreen = NavBarMsgScreen();
         break;
-      case Routes.sellItem:
-        widgetScreen = SellItem();
+      case Routes.sellItemScreen:
+        widgetScreen = SellItemScreen();
         break;
       case Routes.gyaradoMsgScreen:
         widgetScreen = GyaradoMsgScreen();
@@ -123,6 +120,10 @@ class RoutesGenerator {
       case Routes.editProfileScreen:
         widgetScreen = EditProfileScreen();
         break;
+        break;
+      // case Routes.itemBidScreen:
+      //   widgetScreen = ItemBidScreen();
+      //   break;
       default:
         widgetScreen = _errorRoute();
     }

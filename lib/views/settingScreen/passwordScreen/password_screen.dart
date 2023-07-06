@@ -5,8 +5,8 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/views/settings/password/password_controller.dart';
 import '../../../common_widget/app_textfield.dart';
+import '../controller/password_controller.dart';
 
 class PasswordScreen extends StatelessWidget {
    PasswordScreen({super.key});

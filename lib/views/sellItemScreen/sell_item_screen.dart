@@ -1,17 +1,18 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
+import 'package:oninto_flutter/views/sellItemScreen/controller/sellItem_controller.dart';
 import '../../utills/common_appbar.dart';
 
-class SellItem extends StatelessWidget {
-   SellItem({super.key});
-  final controller = Get.put(Homecontroller());
+class SellItemScreen extends StatelessWidget {
+  SellItemScreen ({super.key});
+  final controller = Get.put(SellItemController());
 
   @override
   Widget build(BuildContext context) {
@@ -217,14 +218,23 @@ class SellItem extends StatelessWidget {
                                       controller.dropDownValue.value = newValue!;
                                     },
                                     value: controller.dropDownValue.value,
-                                    items:controller.items.value.map((items) {
+                                    items:controller.categoryItems.value.map((items) {
                                       return DropdownMenuItem(
                                         value: items,
-                                        child: AppText(
-                                          text: items,
-                                          style: AppTextStyle.regular,
-                                          color: AppColor.blackColor,
-                                          textSize: 13,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            AppText(
+                                              text: items,
+                                              style: AppTextStyle.regular,
+                                              color: AppColor.blackColor,
+                                              textSize: 13,
+                                            ),
+                                            const Divider(thickness: 1,
+                                            color: AppColor.itemBorderColor,
+                                            )
+                                          ],
                                         ),
                                       );
                                     }).toList(),
@@ -248,10 +258,12 @@ class SellItem extends StatelessWidget {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       maxHeight: 200,
-                                      width: 350,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                          color: AppColor.white,
+                                          border: Border.all(
+                                              color: AppColor.itemBorderColor
+                                          )
                                       ),
                                       offset: const Offset(-2, 0),
                                       scrollbarTheme: ScrollbarThemeData(
@@ -281,7 +293,7 @@ class SellItem extends StatelessWidget {
                                       controller.dropDownValue2.value = newValue!;
                                     },
                                     value: controller.dropDownValue2.value,
-                                    items:controller.item2.value.map((items) {
+                                    items:controller.subItems.value.map((items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: AppText(
@@ -312,10 +324,12 @@ class SellItem extends StatelessWidget {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       maxHeight: 200,
-                                      width: 350,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                          color: AppColor.white,
+                                          border: Border.all(
+                                              color: AppColor.itemBorderColor
+                                          )
                                       ),
                                       offset: const Offset(-2, 0),
                                       scrollbarTheme: ScrollbarThemeData(
@@ -345,7 +359,7 @@ class SellItem extends StatelessWidget {
                                       controller.dropDownValue3.value = newValue!;
                                     },
                                     value: controller.dropDownValue3.value,
-                                    items:controller.item3.value.map((items) {
+                                    items:controller.colorItems.value.map((items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: AppText(
@@ -376,10 +390,12 @@ class SellItem extends StatelessWidget {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       maxHeight: 200,
-                                      width: 350,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                          color: AppColor.white,
+                                          border: Border.all(
+                                              color: AppColor.itemBorderColor
+                                          )
                                       ),
                                       offset: const Offset(-2, 0),
                                       scrollbarTheme: ScrollbarThemeData(
@@ -409,7 +425,7 @@ class SellItem extends StatelessWidget {
                                       controller.dropDownValue4.value = newValue!;
                                     },
                                     value: controller.dropDownValue4.value,
-                                    items:controller.item4.value.map((items) {
+                                    items:controller.brandItems.value.map((items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: AppText(
@@ -440,10 +456,12 @@ class SellItem extends StatelessWidget {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       maxHeight: 200,
-                                      width: 350,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                          color: AppColor.white,
+                                          border: Border.all(
+                                              color: AppColor.itemBorderColor
+                                          )
                                       ),
                                       offset: const Offset(-2, 0),
                                       scrollbarTheme: ScrollbarThemeData(
@@ -473,7 +491,7 @@ class SellItem extends StatelessWidget {
                                       controller.dropDownValue5.value = newValue!;
                                     },
                                     value: controller.dropDownValue5.value,
-                                    items:controller.item5.value.map((items) {
+                                    items:controller.conditionItems.value.map((items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: AppText(
@@ -504,10 +522,12 @@ class SellItem extends StatelessWidget {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       maxHeight: 200,
-                                      width: 350,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                          color: AppColor.white,
+                                          border: Border.all(
+                                              color: AppColor.itemBorderColor
+                                          )
                                       ),
                                       offset: const Offset(-2, 0),
                                       scrollbarTheme: ScrollbarThemeData(
@@ -534,10 +554,13 @@ class SellItem extends StatelessWidget {
                                 DropdownButtonHideUnderline(
                                   child: DropdownButton2<String>(
                                     onChanged: (newValue) {
-                                      controller.dropDownValue6.value = newValue!;
+                                      // print("DropDown");
+                                      // SellItemController sellItemCtrl = Get.find();
+                                      // sellItemCtrl.selectedItemValue.value == true;
+                                      controller.dropDownValue6.value=newValue!;
                                     },
                                     value: controller.dropDownValue6.value,
-                                    items:controller.item6.value.map((items) {
+                                    items:controller.sellItems.value.map((items) {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: AppText(
@@ -568,10 +591,12 @@ class SellItem extends StatelessWidget {
                                     ),
                                     dropdownStyleData: DropdownStyleData(
                                       maxHeight: 200,
-                                      width: 350,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                        borderRadius: BorderRadius.circular(18),
+                                        color: AppColor.white,
+                                        border: Border.all(
+                                          color: AppColor.itemBorderColor
+                                        )
                                       ),
                                       offset: const Offset(-2, 0),
                                       scrollbarTheme: ScrollbarThemeData(
@@ -587,6 +612,50 @@ class SellItem extends StatelessWidget {
                                   ),
                                 ),
                             ),
+                            // const SizedBox(height: 14.0,),
+                            // controller.selectedItemValue.value == true?
+                            //     Column(
+                            //       children: [
+                            //         const SizedBox(height: 14.0,),
+                            //         const AppText(text: "Start Date",
+                            //           color: AppColor.blackColor,
+                            //           textSize: 13.0,
+                            //           style: AppTextStyle.medium,
+                            //         ),
+                            //         const SizedBox(height: 16.0,),
+                            //         AppTextField(height: 46.0,
+                            //           title: "Start Date",
+                            //           hintStyle: const TextStyle(
+                            //               color: AppColor.blackColor),
+                            //           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                            //           margin: const EdgeInsets.only(right: 0.0),
+                            //           borderRadius: BorderRadius.circular(23),
+                            //           containerColor: AppColor.TextColor,
+                            //         ),
+                            //         const SizedBox(height: 14.0,),
+                            //         const AppText(text: "End Date",
+                            //           color: AppColor.blackColor,
+                            //           textSize: 13.0,
+                            //           style: AppTextStyle.medium,
+                            //         ),
+                            //         const SizedBox(height: 16.0,),
+                            //         AppTextField(height: 46.0,
+                            //           title: "End Date",
+                            //           hintStyle: const TextStyle(
+                            //               color: AppColor.blackColor),
+                            //           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                            //           margin: const EdgeInsets.only(right: 0.0),
+                            //           borderRadius: BorderRadius.circular(23),
+                            //           containerColor: AppColor.TextColor,
+                            //           suffix: IconButton(
+                            //               onPressed: () => controller.pickDate(context, 0),
+                            //               icon: Image.asset(Assets.assetsCreditCard,
+                            //                 height: 14.0,width: 12.0,
+                            //               )
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ):
                             const SizedBox(height: 24.0,),
                             const AppText(text: "Price",
                               color: AppColor.blackColor,

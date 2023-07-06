@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/views/settings/settings_controller.dart';
+import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
@@ -220,7 +220,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                     Get.toNamed(Routes.settingPaymentScreen);
+                    // Get.toNamed(Routes.settingPaymentScreen);
                     },
                     child: const AppText(text: "Payment",
                       textSize: 13.0,color: AppColor.blackColor,
@@ -272,7 +272,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                     Get.toNamed(Routes.mySubscription);
+                //     Get.toNamed(Routes.mySubscription);
                     },
                     child: const AppText(text: "My Subscription",
                       textSize: 13.0,color: AppColor.blackColor,

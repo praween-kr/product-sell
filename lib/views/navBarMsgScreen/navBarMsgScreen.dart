@@ -8,8 +8,8 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
-class NavBarMessage extends StatelessWidget {
-  NavBarMessage({super.key});
+class NavBarMsgScreen extends StatelessWidget {
+  NavBarMsgScreen({super.key});
   final controller = Get.put(Homecontroller());
 
   @override
