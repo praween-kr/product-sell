@@ -22,14 +22,15 @@ class Routes {
   static const String biddingScreen = "/BiddingScreen";
   static const String messageScreen = "/MessageScreen";
   static const String passwordScreen = "/PasswordScreen";
-  static const String settingPaymentScreen = "/SettingPaymentScreen";
+  static const String gyradosScreen = "/GyradosScreen";
   static const String addressScreen = "/AddressScreen";
-  static const String newAddressScreen = "/NewAddressScreen";
-  static const String mySubscription = "/MySubscription";
   static const String cmsScreen = "/CmsScreen";
   static const String navBarMessage = "/NavBarMessage";
   static const String sellItem = "/SellItem";
   static const String gyaradoMsgScreen = "/GyaradoMsgScreen";
   static const String profileScreen = "/ProfileScreen";
   static const String editProfileScreen = "/EditProfileScreen";
+  static const String navbarScreen = "/NavbarScreen";
+  static const String subscriptionScreen = "/MySubscriptionScreen";
+  static const String newaddressScreen = "/NewAddressScreen";
 }

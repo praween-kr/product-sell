@@ -5,13 +5,18 @@ import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
 import '../model/onboard_model.dart';
+import '../utills/helper/camera_helper.dart';
 
-class Homecontroller extends GetxController {
+class Homecontroller extends GetxController
+    implements CameraOnCompleteListener {
   RxBool homePass = true.obs;
   RxBool Switch = false.obs;
+  RxBool upload = false.obs;
   var tabController = 0.obs;
   var messageController = 0.obs;
+  var imagePath = "".obs;
   late PageController pageController;
+  late CameraHelper cameraHelper;
 
   RxList<CommonModel> onBoardingData = RxList([]);
   RxList<HomeModel> Categorydata = RxList([]);
@@ -20,8 +25,8 @@ class Homecontroller extends GetxController {
 
   @override
   void onInit() {
+    cameraHelper = CameraHelper(this);
     super.onInit();
-
     pageController = PageController(initialPage: pagePosition.value);
     onBoardingData = RxList([
       CommonModel(
@@ -138,4 +143,13 @@ class Homecontroller extends GetxController {
     'Price 2',
     'Price 3',
   ].obs;
+
+  @override
+  void onSuccessFile(File file, String fileType) {
+    imagePath.value = file.path;
+  }
+
+  void reset() {
+    imagePath.value = "";
+  }
 }

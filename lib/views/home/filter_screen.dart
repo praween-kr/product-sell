@@ -26,7 +26,10 @@ class FilterScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      Get.toNamed(Routes.denimScreen);
+                      Map<String, dynamic> data = {
+                        "from": 0,
+                      };
+                      Get.toNamed(Routes.denimScreen, arguments: data);
                     },
                     child: Container(
                         margin: const EdgeInsets.only(left: 20),

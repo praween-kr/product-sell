@@ -16,7 +16,10 @@ import 'package:oninto_flutter/views/sellItem/sell_item.dart';
 import 'package:oninto_flutter/views/settings/address/address_screen.dart';
 import 'package:oninto_flutter/views/settings/address/newAddress/new_address.dart';
 import 'package:oninto_flutter/views/settings/cms_screen/cms_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/bidding_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/gyraados_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
+import 'package:oninto_flutter/views/settings/myProducts/message_screen.dart';
 import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
 import 'package:oninto_flutter/views/settings/mySubscription/subscription.dart';
 import 'package:oninto_flutter/views/settings/payments/setting_payment_screen.dart';
@@ -29,7 +32,6 @@ import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/home_screen.dart';
-import '../views/settings/myProducts/message_screen.dart';
 import '../views/settings/settings_screen.dart';
 
 class RoutesGenerator {
@@ -65,7 +67,9 @@ class RoutesGenerator {
         widgetScreen = const FilterScreen();
         break;
       case Routes.denimScreen:
-        widgetScreen = const DenimScreen();
+        widgetScreen = DenimScreen(
+          data: args as Map<String, dynamic>,
+        );
         break;
       case Routes.paymentScreen:
         widgetScreen = const PaymentScreen();
@@ -92,28 +96,19 @@ class RoutesGenerator {
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();
         break;
-      case Routes.settingPaymentScreen:
-        widgetScreen = SettingPaymentScreen();
-        break;
-      case Routes.addressScreen:
-        widgetScreen = AddressScreen();
-        break;
-      case Routes.newAddressScreen:
-        widgetScreen = NewAddress();
-        break;
-      case Routes.mySubscription:
-        widgetScreen = MySubscription();
-        break;
-      case Routes.cmsScreen:
-        widgetScreen = CmsScreen();
-        break;
       case Routes.messageScreen:
-        widgetScreen = MessageScreen();
+        widgetScreen = const MessageScreen();
         break;
       case Routes.menshirtScreen:
-        widgetScreen = MenshirtScreen();
+        widgetScreen = const MenshirtScreen();
         break;
-      case Routes.navBarMessage:
+      case Routes.biddingScreen:
+        widgetScreen = const BiddingScreen();
+        break;
+      case Routes.gyradosScreen:
+        widgetScreen = GyradosScreen();
+        break;
+      case Routes.navbarScreen:
         widgetScreen = NavBarMessage();
         break;
       case Routes.sellItem:

@@ -74,11 +74,9 @@ class LoginScreen extends StatelessWidget {
                 ),
                 AppTextField(
                   title: "jennySmith@gmail.com",
-                  prefix: Image.asset(
-                    Assets.assetsEmail,
-                    height: 12,
-                    width: 12,
-                    fit: BoxFit.contain,
+                  prefix: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.black,
                   ),
                   containerColor: AppColor.TextColor,
                   contentPadding: const EdgeInsets.only(
