@@ -10,12 +10,13 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
-import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
-import 'package:oninto_flutter/views/settings/myProducts/bidding_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/gyraados_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/men_shirt_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/message_screen.dart';
-import 'package:oninto_flutter/views/settings/myProducts/product_screen.dart';
+import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
+import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
@@ -23,7 +24,15 @@ import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/home_screen.dart';
-import '../views/settings/settings_screen.dart';
+import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
+import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
+import '../views/settingScreen/myProductsScreen/gyraados_screen.dart';
+import '../views/settingScreen/myProductsScreen/men_shirt_screen.dart';
+import '../views/settingScreen/myProductsScreen/message_screen.dart';
+import '../views/settingScreen/myProductsScreen/product_screen.dart';
+import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
+import '../views/settingScreen/profileScreen/profileScreen.dart';
+
 
 class RoutesGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -45,6 +54,9 @@ class RoutesGenerator {
       case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
         break;
+      case Routes.passwordScreen:
+        widgetScreen = PasswordScreen();
+        break;
       case Routes.forgotScreen:
         widgetScreen = const ForgotScreen();
         break;
@@ -63,6 +75,9 @@ class RoutesGenerator {
           data: args as Map<String, dynamic>,
         );
         break;
+    case Routes.sellItemScreen:
+    widgetScreen = SellItemScreen();
+    break;
       case Routes.paymentScreen:
         widgetScreen = const PaymentScreen();
         break;
@@ -78,10 +93,13 @@ class RoutesGenerator {
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
         break;
-
-      case Routes.notificationScreen:
+        case Routes.notificationScreen:
         widgetScreen = NotificationScreen();
         break;
+      case Routes.cmsScreen:
+        widgetScreen = CmsScreen();
+        break;
+
       case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
         break;
@@ -101,8 +119,26 @@ class RoutesGenerator {
         widgetScreen = GyradosScreen();
         break;
       case Routes.navbarScreen:
-        widgetScreen = NavBarMessage();
+        widgetScreen = NavBarMsgScreen();
         break;
+        case Routes.gyaradoMsgScreen:
+        widgetScreen = GyaradoMsgScreen();
+        break;
+      case Routes.profileScreen:
+        widgetScreen = ProfileScreen();
+        break;
+      case Routes.editProfileScreen:
+        widgetScreen = EditProfileScreen();
+        break;
+      case Routes.addressScreen:
+        widgetScreen = AddressScreen();
+        break;
+      case Routes.subscriptionScreen:
+        widgetScreen = SubscriptionScreen();
+        break;
+      // case Routes.itemBidScreen:
+      //   widgetScreen = ItemBidScreen();
+      //   break;
       default:
         widgetScreen = _errorRoute();
     }

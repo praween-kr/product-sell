@@ -218,7 +218,7 @@ class MessageScreen extends StatelessWidget {
                   ),
                 ),
                 Image.asset(
-                  Assets.assetsattachment,
+                  Assets.assetsAttachment,
                   height: 20,
                   width: 20,
                 ),

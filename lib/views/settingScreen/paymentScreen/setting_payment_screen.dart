@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
-import 'package:oninto_flutter/views/settings/payments/setting_payment_controller.dart';
+import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_controller.dart';
 import '../../../generated/assets.dart';
 import '../../../utills/colors_file.dart';
 
@@ -80,9 +80,8 @@ class SettingPaymentScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index){
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Image.asset(Assets.assetsGirlJean,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Image.asset(Assets.assetsCreditCard),
                         );
                       }
                       ),

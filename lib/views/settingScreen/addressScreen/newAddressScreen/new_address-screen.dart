@@ -8,8 +8,8 @@ import 'package:oninto_flutter/utills/colors_file.dart';
 import '../../../../common_widget/appbar.dart';
 import '../../../../utills/common_appbar.dart';
 
-class  NewAddress extends StatelessWidget {
-  const  NewAddress({super.key});
+class  NewAddressScreen extends StatelessWidget {
+  const  NewAddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

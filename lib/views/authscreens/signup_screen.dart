@@ -31,14 +31,14 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText(
+                  const AppText(
                     text: "Welcome Back !",
                     color: Colors.black,
                     fontFamily: "poppins",
                     fontWeight: FontWeight.w500,
                     textSize: 30,
                   ),
-                  AppText(
+                  const AppText(
                     text: "Signup your details",
                     color: Color(0x80000000),
                     fontFamily: "poppins",
@@ -48,69 +48,21 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  AppText(
+                  const AppText(
                     text: "First Name",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   AppTextField(
                     height: 50,
                     borderRadius: BorderRadius.circular(15),
-                    margin: EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.only(right: 20),
                     title: "jennySmith@gmail.com",
-                    prefix: Icon(Icons.person_outline),
-                    containerColor: AppColor.TextColor,
-                    contentPadding: const EdgeInsets.only(
-                      top: 30,
-                      left: 20,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  AppText(
-                    text: "Last Name",
-                    color: Color(0x80000000),
-                    fontWeight: FontWeight.w400,
-                    textSize: 14,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  AppTextField(
-                    height: 50,
-                    borderRadius: BorderRadius.circular(19),
-                    margin: EdgeInsets.only(right: 20),
-                    title: "jennySmith@gmail.com",
-                    prefix: Icon(Icons.person_outline),
-                    containerColor: AppColor.TextColor,
-                    contentPadding: const EdgeInsets.only(
-                      top: 30,
-                      left: 20,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  AppText(
-                    text: "Email",
-                    color: Color(0x80000000),
-                    fontWeight: FontWeight.w400,
-                    textSize: 14,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  AppTextField(
-                    height: 50,
-                    borderRadius: BorderRadius.circular(19),
-                    margin: EdgeInsets.only(right: 20),
-                    title: "jennySmith@gmail.com",
-                    prefix: Icon(Icons.person_outline),
+                    prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.TextColor,
                     contentPadding: const EdgeInsets.only(
                       top: 30,
@@ -120,7 +72,55 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  AppText(
+                  const AppText(
+                    text: "Last Name",
+                    color: Color(0x80000000),
+                    fontWeight: FontWeight.w400,
+                    textSize: 14,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextField(
+                    height: 50,
+                    borderRadius: BorderRadius.circular(19),
+                    margin: const EdgeInsets.only(right: 20),
+                    title: "jennySmith@gmail.com",
+                    prefix: const Icon(Icons.person_outline),
+                    containerColor: AppColor.TextColor,
+                    contentPadding: const EdgeInsets.only(
+                      top: 30,
+                      left: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const AppText(
+                    text: "Email",
+                    color: Color(0x80000000),
+                    fontWeight: FontWeight.w400,
+                    textSize: 14,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextField(
+                    height: 50,
+                    borderRadius: BorderRadius.circular(19),
+                    margin: const EdgeInsets.only(right: 20),
+                    title: "jennySmith@gmail.com",
+                    prefix: const Icon(Icons.person_outline),
+                    containerColor: AppColor.TextColor,
+                    contentPadding: const EdgeInsets.only(
+                      top: 30,
+                      left: 20,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const AppText(
                     text: "Phone Number",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
@@ -131,7 +131,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   AppTextField(
                     height: 50,
-                    margin: EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
                     containerColor: AppColor.TextColor,
                     prefix: Container(
@@ -164,18 +164,18 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  AppText(
+                  const AppText(
                     text: "Password",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   AppTextField(
                     height: 50,
-                    margin: EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -193,21 +193,21 @@ class SignUpScreen extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  AppText(
+                  const AppText(
                     text: "Confirm Password",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   AppTextField(
                     height: 50,
-                    margin: EdgeInsets.only(right: 20),
+                    margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -269,7 +269,7 @@ class SignUpScreen extends StatelessWidget {
                     },
                     child: Center(
                       child: Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 20),
                         alignment: Alignment.center,
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.height * 0.40,

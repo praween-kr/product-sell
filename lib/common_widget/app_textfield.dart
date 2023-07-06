@@ -16,6 +16,7 @@ class AppTextField extends StatelessWidget {
   bool? readOnly;
   TextInputType? textInputType = TextInputType.emailAddress;
   double? height;
+  TextStyle? hintStyle;
   TextInputAction? keyBoardtype;
   double? width;
   final double? elevation;
@@ -37,6 +38,7 @@ class AppTextField extends StatelessWidget {
       this.suffix,
       this.name,
       this.controller,
+        this.hintStyle,
       this.containerColor,
       this.elevation,
       this.inputFormatters,
@@ -90,7 +92,7 @@ class AppTextField extends StatelessWidget {
           suffixIconColor: suffixIconColor,
           contentPadding:
               contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
-          hintStyle: TextStyle(color: Colors.black.withOpacity(0.4)),
+          hintStyle: hintStyle ??TextStyle(color: Colors.black.withOpacity(0.4)),
           border: const OutlineInputBorder(
             borderSide: BorderSide.none,
           ),

@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
-import 'package:oninto_flutter/views/navBarMessage/navBarMessage.dart';
-import '../views/settings/settings_screen.dart';
+import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
+import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
 class BottomNavController extends GetxController {
   NotchBottomBarController notchBottomBarController =
@@ -16,7 +16,7 @@ class BottomNavController extends GetxController {
       data: {},
     ),
     FavouriteScreen(),
-    NavBarMessage(),
+    NavBarMsgScreen(),
     SettingScreen(),
   ];
   int maxCount = 5;

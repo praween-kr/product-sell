@@ -1,4 +1,7 @@
+
+
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -98,6 +101,8 @@ class Homecontroller extends GetxController
     onBoardingData.refresh();
     pageController.nextPage(duration: 300.milliseconds, curve: Curves.ease);
   }
+
+
 
   @override
   void onSuccessFile(File file, String fileType) {

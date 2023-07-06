@@ -281,7 +281,7 @@ class HomeScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: FloatingActionButton(
                     onPressed: () {
-                      Get.toNamed(Routes.forgotScreen);
+                      Get.toNamed(Routes.sellItemScreen);
                     },
                     backgroundColor: AppColor.appcolor,
                     child: const Icon(

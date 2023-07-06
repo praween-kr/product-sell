@@ -25,15 +25,20 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: AppText(
-                    text: "Trouble logging In? ",
-                    color: Colors.black,
-                    underline: true,
-                    underlineColor: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    textSize: 12,
+                GestureDetector(
+                  onTap: (){
+                    Get.toNamed(Routes.forgotScreen);
+                  },
+                  child: const Align(
+                    alignment: AlignmentDirectional.topEnd,
+                    child: AppText(
+                      text: "Trouble logging In? ",
+                      color: Colors.black,
+                      underline: true,
+                      underlineColor: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      textSize: 12,
+                    ),
                   ),
                 ),
                 const SizedBox(

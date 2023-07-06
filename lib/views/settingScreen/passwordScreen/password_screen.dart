@@ -5,8 +5,8 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/views/settings/password/password_controller.dart';
 import '../../../common_widget/app_textfield.dart';
+import '../controller/password_controller.dart';
 
 class PasswordScreen extends StatelessWidget {
    PasswordScreen({super.key});
@@ -36,20 +36,21 @@ class PasswordScreen extends StatelessWidget {
               color: AppColor.blackColor,
             ),
             const SizedBox(height: 14.0),
-            // Obx(()=>
+            Obx(()=>
              AppTextField(
                   height: 46.0,
-                // controller: controller.oldPasswordTextController,
-                 //isObscure: controller.oldPassword.value,
+                controller: controller.oldPasswordTextController,
+                 isObscure: controller.oldPassword.value,
+                  maxLines: 1,
                   contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                   margin: const EdgeInsets.only(right: 35.0),
                   borderRadius: BorderRadius.circular(40),
                   containerColor: AppColor.TextColor,
-                  suffix:  Icon(Icons.visibility,size: 14.0,
+                  suffix:  Icon(Icons.visibility,size: 20.0,
                   color: AppColor.blackColor.withOpacity(0.3),
                   ),
                 ),
-            //),
+            ),
             const SizedBox(height: 22.0,),
             const AppText(text: "New Password",
               style: AppTextStyle.medium,
