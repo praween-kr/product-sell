@@ -11,8 +11,10 @@ import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
 
 class BottomScreen extends StatelessWidget {
+  Map<String, dynamic>? data;
   BottomScreen({
     Key? key,
+    required this.data,
   }) : super(key: key);
   final controller = Get.put(BottomNavController());
 

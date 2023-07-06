@@ -35,7 +35,6 @@ import '../views/settingScreen/myProductsScreen/product_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
 import '../views/settingScreen/profileScreen/profileScreen.dart';
 
-
 class RoutesGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Widget widgetScreen;
@@ -51,7 +50,7 @@ class RoutesGenerator {
         widgetScreen = HomeScreen(data: args as Map<String, dynamic>?);
         break;
       case Routes.bottomScreen:
-        widgetScreen = BottomScreen();
+        widgetScreen = BottomScreen(data: args as Map<String, dynamic>?);
         break;
       case Routes.onboardingScreen:
         widgetScreen = OnBoardingScreen();
@@ -79,9 +78,9 @@ class RoutesGenerator {
           data: args as Map<String, dynamic>,
         );
         break;
-    case Routes.sellItemScreen:
-    widgetScreen = SellItemScreen();
-    break;
+      case Routes.sellItemScreen:
+        widgetScreen = SellItemScreen();
+        break;
       case Routes.paymentScreen:
         widgetScreen = const PaymentScreen();
         break;
@@ -100,7 +99,7 @@ class RoutesGenerator {
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
         break;
-        case Routes.notificationScreen:
+      case Routes.notificationScreen:
         widgetScreen = NotificationScreen();
         break;
       case Routes.cmsScreen:
@@ -117,7 +116,7 @@ class RoutesGenerator {
         widgetScreen = const MessageScreen();
         break;
       case Routes.menshirtScreen:
-        widgetScreen = const MenshirtScreen();
+        widgetScreen = MenshirtScreen();
         break;
       case Routes.biddingScreen:
         widgetScreen = const BiddingScreen();
@@ -128,7 +127,7 @@ class RoutesGenerator {
       case Routes.navbarScreen:
         widgetScreen = NavBarMsgScreen();
         break;
-        case Routes.gyaradoMsgScreen:
+      case Routes.gyaradoMsgScreen:
         widgetScreen = GyaradoMsgScreen();
         break;
       case Routes.profileScreen:

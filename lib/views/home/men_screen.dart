@@ -35,10 +35,10 @@ class MenScreen extends StatelessWidget {
                     var data = controller.Categorydata[index];
                     return GestureDetector(
                       onTap: () {
-                        Map<String, dynamic> data = {
-                          "from": 1,
-                        };
-                        Get.offAndToNamed(Routes.bottomScreen, arguments: data);
+                        controller.menu.value = true;
+                        Get.offAndToNamed(
+                          Routes.bottomScreen,
+                        );
                       },
                       child: Column(
                         children: [

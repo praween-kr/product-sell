@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
@@ -10,7 +11,13 @@ import '../../../common_widget/color_constant.dart';
 import '../../../utills/colors_file.dart';
 
 class MenshirtScreen extends StatelessWidget {
-  const MenshirtScreen({super.key});
+  MenshirtScreen({super.key}) {
+    // controller.timerDialog();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.timerDialog();
+    });
+  }
+  final controller = Get.put(Homecontroller());
 
   @override
   Widget build(BuildContext context) {

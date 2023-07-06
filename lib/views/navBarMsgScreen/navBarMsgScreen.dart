@@ -29,77 +29,76 @@ class NavBarMsgScreen extends StatelessWidget {
         child: Column(
           children: [
             Obx(() => TabBar(
-                splashFactory: NoSplash.splashFactory,
-                overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    splashFactory: NoSplash.splashFactory,
+                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
                         (Set<MaterialState> states) {
                       // Use the default focused overlay color
                       return states.contains(MaterialState.focused)
                           ? null
                           : Colors.transparent;
                     }),
-                onTap: (index) {
-                  controller.tabController.value = index;
-                },
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                indicator:
-                BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                // indicatorColor: Colors.grey,
-                // labelColor: Colors.black,
-                // unselectedLabelColor: Colors.grey,
-                indicatorWeight: 1,
-                tabs: [
-                  Container(
-                    height: 42,
-                    width: 148,
-                    margin: const EdgeInsets.only(top: 10),
-                    decoration: BoxDecoration(
-                        color: controller.tabController.value == 0
-                            ? AppColor.appcolor
-                            : Colors.white,
-                        border: Border.all(
-                          color: controller.tabController.value == 0
-                              ? AppColor.appcolor
-                              : Colors.grey.shade300,
+                    onTap: (index) {
+                      controller.tabController.value = index;
+                    },
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    indicator:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    // indicatorColor: Colors.grey,
+                    // labelColor: Colors.black,
+                    // unselectedLabelColor: Colors.grey,
+                    indicatorWeight: 1,
+                    tabs: [
+                      Container(
+                        height: 42,
+                        width: 148,
+                        margin: const EdgeInsets.only(top: 10),
+                        decoration: BoxDecoration(
+                            color: controller.tabController.value == 0
+                                ? AppColor.appcolor
+                                : Colors.white,
+                            border: Border.all(
+                              color: controller.tabController.value == 0
+                                  ? AppColor.appcolor
+                                  : Colors.grey.shade300,
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Center(
+                          child: AppText(
+                            text: "Community",
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            color: controller.tabController.value == 0
+                                ? Colors.white
+                                : Colors.grey.shade500,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Center(
-                      child: AppText(
-                        text: "Community",
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w400,
-                        color: controller.tabController.value == 0
-                            ? Colors.white
-                            : Colors.grey.shade500,
                       ),
-                    ),
-                  ),
-                  Container(
-                    height: 42,
-                    width: 148,
-                    margin: const EdgeInsets.only(top: 10),
-                    decoration: BoxDecoration(
-                        color: controller.tabController.value == 1
-                            ? AppColor.appcolor
-                            : Colors.white,
-                        border: Border.all(
-                          color: controller.tabController.value == 1
-                              ? AppColor.appcolor
-                              : Colors.grey.shade300,
+                      Container(
+                        height: 42,
+                        width: 148,
+                        margin: const EdgeInsets.only(top: 10),
+                        decoration: BoxDecoration(
+                            color: controller.tabController.value == 1
+                                ? AppColor.appcolor
+                                : Colors.white,
+                            border: Border.all(
+                              color: controller.tabController.value == 1
+                                  ? AppColor.appcolor
+                                  : Colors.grey.shade300,
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Center(
+                          child: AppText(
+                            text: "Messages",
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            color: controller.tabController.value == 1
+                                ? Colors.white
+                                : Colors.grey.shade500,
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Center(
-                      child: AppText(
-                        text: "Messages",
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w400,
-                        color: controller.tabController.value == 1
-                            ? Colors.white
-                            : Colors.grey.shade500,
                       ),
-                    ),
-                  ),
-
-                ])),
+                    ])),
             Expanded(
               child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
@@ -107,27 +106,33 @@ class NavBarMsgScreen extends StatelessWidget {
                     ListView.builder(
                         itemCount: 2,
                         shrinkWrap: true,
-                        itemBuilder: (context, position){
+                        itemBuilder: (context, position) {
                           return Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 35.0,
-                                    vertical: 15.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 35.0, vertical: 15.0),
                                 child: GestureDetector(
-                                  onTap: (){
-                              Get.toNamed(Routes.gyaradoMsgScreen);
-                          },
+                                  onTap: () {
+                                    Get.toNamed(Routes.gyaradoMsgScreen);
+                                  },
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Row(
                                         children: [
-                                          Image.asset(Assets.assetsCrowd,
-                                            height: 57.0,width: 57.0,
+                                          Image.asset(
+                                            Assets.assetsCrowd,
+                                            height: 57.0,
+                                            width: 57.0,
                                           ),
-                                          const SizedBox(width: 12.0,),
-                                         const  AppText(
+                                          const SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          const AppText(
                                             text: "Gyarado EX",
                                             textSize: 15.0,
                                             color: AppColor.blackColor,
@@ -138,7 +143,8 @@ class NavBarMsgScreen extends StatelessWidget {
                                       Row(
                                         children: [
                                           Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0,
                                                 vertical: 10.0),
                                             decoration: const BoxDecoration(
                                               color: AppColor.appcolor,
@@ -161,93 +167,107 @@ class NavBarMsgScreen extends StatelessWidget {
                               ),
                               Divider(
                                 color: AppColor.blackColor.withOpacity(0.1),
-                                height: 1.0,thickness: 1.0,
+                                height: 1.0,
+                                thickness: 1.0,
                               )
                             ],
                           );
-                        }
-                    ),
-                   Expanded(
-                     child: ListView.builder(
-                       itemCount: 4,
-                         shrinkWrap: true,
-                         itemBuilder: (context, position){
-                           return Column(
-                             children: [
-                               Padding(
-                                 padding: const EdgeInsets.symmetric(horizontal: 35.0,
-                                     vertical: 15.0),
-                                 child: Column(
-                                   children: [
-                                     GestureDetector(
-                                       onTap:(){
-                                       Get.toNamed(Routes.messageScreen);
-                           },
-                                       child: Row(
-                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                         children: [
-                                           Row(
-                                             children: [
-                                               Image.asset(Assets.assetsGirlJean,
-                                               height: 57.0,width: 57.0,
-                                               ),
-                                               const SizedBox(width: 12.0,),
+                        }),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: 4,
+                          shrinkWrap: true,
+                          itemBuilder: (context, position) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 35.0, vertical: 15.0),
+                                  child: Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(Routes.messageScreen);
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  Assets.assetsGirlJean,
+                                                  height: 57.0,
+                                                  width: 57.0,
+                                                ),
+                                                const SizedBox(
+                                                  width: 12.0,
+                                                ),
                                                 Column(
-                                                 children: [
-                                                   const AppText(
-                                                     text: "Men Tshirt",
-                                                     textSize: 15.0,
-                                                     color: AppColor.blackColor,
-                                                     style: AppTextStyle.title,
-                                                   ),
-                                                   const SizedBox(height: 7.0,),
-                                                   AppText(
-                                                     text: "Send Images",
-                                                     textSize: 12.0,
-                                                     color: AppColor.blackColor.withOpacity(0.3),
-                                                     style: AppTextStyle.medium,
-                                                   )
-                                                 ],
-                                               )
-                                             ],
-                                           ),
-                                           Row(
-                                             children: [
-                                               Container(
-                                                 padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                                                 vertical: 10.0),
-                                                 decoration: const BoxDecoration(
-                                                   color: AppColor.appcolor,
-                                                   shape: BoxShape.circle,
-                                                 ),
-                                                 child: const Center(
-                                                   child: AppText(
-                                                     text: "2",
-                                                     color: AppColor.white,
-                                                     textSize: 10.0,
-                                                     style: AppTextStyle.regular,
-                                                   ),
-                                                 ),
-                                               )
-                                             ],
-                                           )
-                                         ],
-                                       ),
-                                     ),
-
-                                   ],
-                                 ),
-                               ),
-                               Divider(
-                                 color: AppColor.blackColor.withOpacity(0.1),
-                                 height: 1.0,thickness: 1.0,
-                               )
-                             ],
-                           );
-                         }
-                     ),
-                   )
+                                                  children: [
+                                                    const AppText(
+                                                      text: "Men Tshirt",
+                                                      textSize: 15.0,
+                                                      color:
+                                                          AppColor.blackColor,
+                                                      style: AppTextStyle.title,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 7.0,
+                                                    ),
+                                                    AppText(
+                                                      text: "Send Images",
+                                                      textSize: 12.0,
+                                                      color: AppColor.blackColor
+                                                          .withOpacity(0.3),
+                                                      style:
+                                                          AppTextStyle.medium,
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10.0,
+                                                      vertical: 10.0),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: AppColor.appcolor,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: const Center(
+                                                    child: AppText(
+                                                      text: "2",
+                                                      color: AppColor.white,
+                                                      textSize: 10.0,
+                                                      style:
+                                                          AppTextStyle.regular,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  color: AppColor.blackColor.withOpacity(0.1),
+                                  height: 1.0,
+                                  thickness: 1.0,
+                                )
+                              ],
+                            );
+                          }),
+                    )
                   ]),
             )
           ],
