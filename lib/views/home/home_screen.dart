@@ -5,13 +5,16 @@ import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:swipable_stack/swipable_stack.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  Map<String, dynamic>? data;
+  HomeScreen({Key? key, required this.data}) : super(key: key);
   final controller = Get.put(Homecontroller());
 
   @override
   Widget build(BuildContext context) {
+    print("data ${data}");
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -151,7 +154,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.categoryScreen);
+                        Map<String, dynamic> data = {
+                          "from": 1,
+                        };
+                        Get.toNamed(Routes.categoryScreen, arguments: data);
                       },
                       child: const AppText(
                           text: "See all",
@@ -162,48 +168,59 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: GridView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, childAspectRatio: 0.75),
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      var data = controller.Categorydata[index];
-                      return GestureDetector(
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              padding: const EdgeInsets.only(
-                                  top: 15, bottom: 15, left: 20, right: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Colors.grey, width: 1)),
-                              child: Image.asset(
-                                data.image,
-                                fit: BoxFit.contain,
-                                height: 70,
-                                width: 50,
+              data?["from"] == 1
+                  ? Expanded(
+                      child: SwipableStack(
+                        builder: (context, properties) {
+                          return Image.asset(Assets.assetshome);
+                        },
+                      ),
+                    )
+                  : Expanded(
+                      child: GridView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3, childAspectRatio: 0.75),
+                          itemCount: 6,
+                          itemBuilder: (context, index) {
+                            var data = controller.Categorydata[index];
+                            return GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 20),
+                                    padding: const EdgeInsets.only(
+                                        top: 15,
+                                        bottom: 15,
+                                        left: 20,
+                                        right: 20),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            color: Colors.grey, width: 1)),
+                                    child: Image.asset(
+                                      data.image,
+                                      fit: BoxFit.contain,
+                                      height: 70,
+                                      width: 50,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  AppText(
+                                    text: controller.Categorydata[index].Name,
+                                    color: Colors.black,
+                                    textSize: 14,
+                                  )
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppText(
-                              text: controller.Categorydata[index].Name,
-                              color: Colors.black,
-                              textSize: 14,
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
+                            );
+                          }),
+                    ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 110, right: 20),
                 child: Align(

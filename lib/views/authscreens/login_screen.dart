@@ -44,17 +44,11 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 120,
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 0, left: 0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: AppText(
-                      text: "Welcome Back !",
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      textSize: 35,
-                    ),
-                  ),
+                const AppText(
+                  text: "Welcome Back !",
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  textSize: 35,
                 ),
                 const SizedBox(
                   height: 10,

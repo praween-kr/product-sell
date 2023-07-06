@@ -32,7 +32,10 @@ class CategoryScreen extends StatelessWidget {
                     var data = controller.Categorydata[index];
                     return GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.menScreen);
+                        Map<String, dynamic> data = {
+                          "from": 1,
+                        };
+                        Get.toNamed(Routes.menScreen, arguments: data);
                       },
                       child: Column(
                         children: [

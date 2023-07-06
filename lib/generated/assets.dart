@@ -53,4 +53,5 @@ class Assets {
   static const String assetspokemon = 'assets/pokemon.png';
   static const String assetsparker = 'assets/parker.png';
 
+  static const String assetshome = 'assets/home_bid.png';
 }

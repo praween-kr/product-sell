@@ -43,7 +43,7 @@ class RoutesGenerator {
         widgetScreen = LoginScreen();
         break;
       case Routes.homeScreen:
-        widgetScreen = HomeScreen();
+        widgetScreen = HomeScreen(data: args as Map<String, dynamic>?);
         break;
       case Routes.bottomScreen:
         widgetScreen = BottomScreen();
@@ -59,6 +59,7 @@ class RoutesGenerator {
         break;
       case Routes.menScreen:
         widgetScreen = MenScreen();
+
         break;
       case Routes.filterScreen:
         widgetScreen = const FilterScreen();
