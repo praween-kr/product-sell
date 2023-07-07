@@ -28,6 +28,8 @@ class Homecontroller extends GetxController
   late CameraHelper cameraHelper;
   var menu = false.obs;
   var sub = false.obs;
+  var track = false.obs;
+  var trackupload = false.obs;
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);

@@ -28,6 +28,8 @@ class DenimScreen extends StatelessWidget {
               CommonAppbarWidget(
                 onBackPress: () {
                   controller.upload.value = false;
+                  controller.track.value = false;
+                  controller.trackupload.value = false;
                   Get.back();
                 },
                 heading: "Girls Denim",
@@ -159,14 +161,17 @@ class DenimScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    data?["from"] == 1
-                        ? const AppText(
-                            text: "Tracking ID : XX123XX343XX",
-                            textSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          )
-                        : Container(),
+                    Obx(
+                      () =>
+                          controller.track.value || controller.trackupload.value
+                              ? const AppText(
+                                  text: "Tracking ID : XX123XX343XX",
+                                  textSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                )
+                              : Container(),
+                    ),
                     const SizedBox(
                       height: 30,
                     ),
@@ -402,11 +407,16 @@ class DenimScreen extends StatelessWidget {
                   // Map<String, dynamic> data = {
                   //   "data": "from",
                   // };
-                  data?["from"] == 1 && !controller.upload.value
+                  controller.trackupload.value
                       ? uploadDialog()
-                      : data?["from"] == 1
+                      : controller.upload.value
                           ? givereviewDialog()
-                          : Get.toNamed(Routes.paymentScreen, arguments: data);
+                          : data?["from"] == 1 && !controller.upload.value
+                              ? trackingDialog()
+                              : data?["from"] == 1
+                                  ? givereviewDialog()
+                                  : Get.toNamed(Routes.paymentScreen,
+                                      arguments: data);
                 },
                 child: Obx(() => CommonButton(
                       height: 50,
@@ -414,9 +424,13 @@ class DenimScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       text: controller.upload.value
                           ? "Give Reviews"
-                          : data?["from"] == 1
-                              ? "Upload"
-                              : "Buy Now",
+                          : controller.track.value
+                              ? "Edit Tracking"
+                              : controller.trackupload.value
+                                  ? "Upload"
+                                  : data?["from"] == 1
+                                      ? "Add Tracking ID"
+                                      : "Buy Now",
                       textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -666,6 +680,7 @@ class DenimScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             controller.upload.value = true;
+                            controller.trackupload.value = false;
                             Get.back();
                             /* Map<String, dynamic> data = {
                               "data": 2,
@@ -678,6 +693,151 @@ class DenimScreen extends StatelessWidget {
                             margin: const EdgeInsets.only(
                                 left: 20, top: 20, right: 20),
                             text: "Upload",
+                            textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontFamily: "Poppins",
+                                fontWeight: FontWeight.w400),
+                            color: AppColor.appcolor,
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          );
+        });
+  }
+
+  Future trackingDialog() async {
+    print("clicked---- ");
+    return showDialog(
+        barrierDismissible: true,
+        useSafeArea: false,
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(
+                              0.0,
+                              0.0,
+                            ),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                          ), //BoxShadow
+                        ],
+                        // borderRadius: BorderRadius.all(Radius.circular(17)),
+                        color: Colors.white),
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 20, right: 20, left: 20),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: AppText(
+                            text: controller.track.value
+                                ? "Edit Tracking ID"
+                                : "Add Tracking ID",
+                            textSize: 18,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w400,
+                            color: blackColor,
+                          ),
+                        ),
+                        DottedBorder(
+                          borderPadding: const EdgeInsets.only(
+                              top: 20, left: 20, right: 20),
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(12),
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                          ),
+                          child: const ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 20, bottom: 20),
+                                child: AppText(
+                                  text: 'XX123XX343XX',
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "Poppins",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            controller.cameraHelper.cropAspectRatioPreset =
+                                CropAspectRatioPreset.square;
+                            controller.cameraHelper.openImagePickerNew();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                top: 20, bottom: 20, left: 50),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
+                            decoration: BoxDecoration(
+                                color: const Color(0xffF6F6F6),
+                                borderRadius: BorderRadius.circular(17),
+                                border:
+                                    Border.all(color: const Color(0xffF6F6F6))),
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.camera_alt,
+                                  color: Color(0x1e000000),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                AppText(
+                                  text: "Upload Picture",
+                                  textSize: 15,
+                                  color: Color(0x1e000000),
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (controller.track.value) {
+                              controller.trackupload.value = true;
+                              controller.track.value = false;
+                              Get.back();
+                            } else {
+                              controller.track.value = true;
+                              Get.back();
+                            }
+                          },
+                          child: CommonButton(
+                            height: 50,
+                            radius: 15,
+                            margin: const EdgeInsets.only(
+                                left: 20, top: 20, right: 20),
+                            text: controller.track.value
+                                ? "Update"
+                                : "Add Tracking ID",
                             textStyle: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
