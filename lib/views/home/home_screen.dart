@@ -88,16 +88,21 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: AppColor.appcolor,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Icon(
-                            Icons.notifications,
-                            color: Colors.white,
-                            size: 25,
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.notificationScreen);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: AppColor.appcolor,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: const Icon(
+                              Icons.notifications,
+                              color: Colors.white,
+                              size: 25,
+                            ),
                           ),
                         ),
                       ],
@@ -243,33 +248,11 @@ class HomeScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.black),
-                                              child: const Icon(
-                                                Icons.favorite,
-                                                size: 20,
-                                                color: Colors.red,
-                                              ),
-                                            ),
+                                            Image.asset(Assets.assetslike),
                                             const SizedBox(
                                               width: 70,
                                             ),
-                                            Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.black),
-                                              child: const Icon(
-                                                Icons.favorite,
-                                                size: 20,
-                                                color: Colors.red,
-                                              ),
-                                            )
+                                            Image.asset(Assets.assetsdislike)
                                           ],
                                         ),
                                       )
@@ -279,7 +262,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             Positioned(
-                              bottom: 40,
+                              bottom: 80,
                               left: 20,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

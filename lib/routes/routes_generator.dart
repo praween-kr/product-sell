@@ -71,7 +71,7 @@ class RoutesGenerator {
         widgetScreen = const FilterScreen();
         break;
       case Routes.subscriptionScreen:
-        widgetScreen =  SubscriptionScreen();
+        widgetScreen = SubscriptionScreen();
         break;
       case Routes.denimScreen:
         widgetScreen = DenimScreen(
@@ -103,7 +103,9 @@ class RoutesGenerator {
         widgetScreen = NotificationScreen();
         break;
       case Routes.cmsScreen:
-        widgetScreen = CmsScreen();
+        widgetScreen = CmsScreen(
+          type: args as int,
+        );
         break;
 
       case Routes.homebidScreen:

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class SettingsController extends GetxController{
-
+class SettingsController extends GetxController {
   RxBool on = false.obs;
-  void toggle() => on.value = on.value ? false: true;
+  var type = 0.obs;
+  void toggle() => on.value = on.value ? false : true;
 }
