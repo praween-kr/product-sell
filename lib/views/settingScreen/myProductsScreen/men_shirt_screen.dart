@@ -13,8 +13,12 @@ import '../../../utills/colors_file.dart';
 class MenshirtScreen extends StatelessWidget {
   MenshirtScreen({super.key}) {
     // controller.timerDialog();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      controller.timerDialog();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (controller.menu.value) {
+        controller.timerDialog();
+      } else {
+        return;
+      }
     });
   }
   final controller = Get.put(Homecontroller());

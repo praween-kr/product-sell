@@ -155,6 +155,9 @@ class Homecontroller extends GetxController
                         top: 10, bottom: 20, right: 20, left: 20),
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: 10,
+                        ),
                         const AppText(
                           text: "Bid Now",
                           textSize: 15,
@@ -163,7 +166,7 @@ class Homecontroller extends GetxController
                           fontWeight: FontWeight.w400,
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -186,7 +189,7 @@ class Homecontroller extends GetxController
                           ],
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 14,
                         ),
                         const AppText(
                           text: "Minimum \$2000",
@@ -196,7 +199,7 @@ class Homecontroller extends GetxController
                           fontFamily: "Poppins",
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 50,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -231,7 +234,9 @@ class Homecontroller extends GetxController
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        left: 20, right: 20, top: 20),
+                                      left: 20,
+                                      right: 20,
+                                    ),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,

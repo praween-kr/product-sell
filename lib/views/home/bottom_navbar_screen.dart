@@ -9,7 +9,6 @@ import 'package:oninto_flutter/views/home/home_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
-
 class BottomScreen extends StatelessWidget {
   Map<String, dynamic>? data;
   BottomScreen({
