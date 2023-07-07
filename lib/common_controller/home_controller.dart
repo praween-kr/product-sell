@@ -205,33 +205,40 @@ class Homecontroller extends GetxController
                         const SizedBox(
                           height: 50,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const AppText(
-                              text: "Bid History",
-                              textSize: 12,
-                              color: blackColor,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Poppins",
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed(Routes.biddingScreen);
-                              },
-                              child: const AppText(
-                                text: "See all",
-                                textSize: 10,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const AppText(
+                                text: "Bid History",
+                                textSize: 12,
                                 color: blackColor,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "Poppins",
                               ),
-                            ),
-                          ],
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.biddingScreen);
+                                },
+                                child: const AppText(
+                                  text: "See all",
+                                  textSize: 10,
+                                  color: blackColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Poppins",
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
                         ),
                         ListView.builder(
                             itemCount: 5,
+                            padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               return const Column(
