@@ -121,7 +121,7 @@ class HomeBidScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SwipableStack(
                 builder: (context, properties) {
-                  return Image.asset(Assets.assetshome);
+                  return Image.asset(Assets.assetsHomeBid);
                 },
               ),
             ),
