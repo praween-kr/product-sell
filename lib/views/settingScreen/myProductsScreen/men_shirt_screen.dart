@@ -499,41 +499,58 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CommonButton(
-                    height: 50,
-                    width: 150,
-                    radius: 18,
-                    color: AppColor.appcolor,
-                    text: "Bid \$2500",
-                    textStyle: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Poppins"),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  CommonButton(
-                    height: 50,
-                    width: 150,
-                    color: AppColor.appcolor,
-                    radius: 18,
-                    text: "Bid \$3500",
-                    textStyle: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Poppins"),
-                  ),
-                ],
-              ),
+            Obx(
+              () => controller.sub.value
+                  ? CommonButton(
+                      height: 50,
+                      radius: 15,
+                      margin:
+                          const EdgeInsets.only(left: 20, right: 20, top: 20),
+                      color: AppColor.appcolor,
+                      text: "Edit Bid",
+                      textStyle: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Poppins"),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CommonButton(
+                            height: 50,
+                            width: 150,
+                            radius: 18,
+                            color: AppColor.appcolor,
+                            text: "Bid \$2500",
+                            textStyle: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Poppins"),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          CommonButton(
+                            height: 50,
+                            width: 150,
+                            color: AppColor.appcolor,
+                            radius: 18,
+                            text: "Bid \$3500",
+                            textStyle: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Poppins"),
+                          ),
+                        ],
+                      ),
+                    ),
             ),
             const SizedBox(
               height: 20,

@@ -12,6 +12,7 @@ class MenScreen extends StatelessWidget {
   MenScreen({super.key});
   final controller = Get.put(MenListController());
   final bottomcontroller = Get.put(BottomNavController());
+  final controller1 = Get.put(Homecontroller());
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,8 @@ class MenScreen extends StatelessWidget {
                     var data = controller.categoryData[index];
                     return GestureDetector(
                       onTap: () {
-                        controller.menu.value = true;
-                        Get.offAndToNamed(
-                          Routes.bottomScreen,
-                        );
+                        controller1.menu.value = true;
+                        Get.toNamed(Routes.bottomScreen);
                       },
                       child: Column(
                         children: [

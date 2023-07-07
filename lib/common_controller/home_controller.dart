@@ -22,10 +22,12 @@ class Homecontroller extends GetxController
   RxBool upload = false.obs;
   var tabController = 0.obs;
   var messageController = 0.obs;
+  var timer = false.obs;
   var imagePath = "".obs;
   late PageController pageController;
   late CameraHelper cameraHelper;
   var menu = false.obs;
+  var sub = false.obs;
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);
@@ -264,16 +266,22 @@ class Homecontroller extends GetxController
                                 ],
                               );
                             }),
-                        CommonButton(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          color: AppColor.appcolor,
-                          text: "Confirm",
-                          radius: 15,
-                          textStyle: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Poppins",
-                              fontSize: 15,
-                              color: Colors.white),
+                        GestureDetector(
+                          onTap: () {
+                            sub.value = true;
+                            Get.back();
+                          },
+                          child: CommonButton(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            color: AppColor.appcolor,
+                            text: "Confirm",
+                            radius: 15,
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Poppins",
+                                fontSize: 15,
+                                color: Colors.white),
+                          ),
                         ),
                       ],
                     )),

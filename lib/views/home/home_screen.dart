@@ -248,11 +248,19 @@ class HomeScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Image.asset(Assets.assetslike),
+                                            Image.asset(
+                                              Assets.assetsdislike,
+                                              height: 50,
+                                              width: 50,
+                                            ),
                                             const SizedBox(
                                               width: 70,
                                             ),
-                                            Image.asset(Assets.assetsdislike)
+                                            Image.asset(
+                                              Assets.assetslike,
+                                              height: 50,
+                                              width: 50,
+                                            )
                                           ],
                                         ),
                                       )
@@ -542,6 +550,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
+                            Get.back();
                             Get.toNamed(Routes.menshirtScreen);
                           },
                           child: CommonButton(
