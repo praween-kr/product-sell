@@ -15,6 +15,8 @@ class MenListController extends GetxController{
         image: Assets.assetsMenJean,
         Name: "Jeans",
       ),
+
+
       HomeModel(
         image: Assets.assetsShirt,
         Name: "Tshirts",
