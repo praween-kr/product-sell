@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_widget/app_textfield.dart';
 
 import '../../../common_widget/app_text.dart';
 import '../../../common_widget/appbar.dart';
@@ -19,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
       appBar: CommonAppbarWidget(
-        heading: "Message",
+        heading: "Profile",
         textStyle: const TextStyle(
             fontSize: 20,
             color: blackColor,
@@ -114,45 +115,81 @@ class ProfileScreen extends StatelessWidget {
               color: AppColor.blackColor.withOpacity(0.5),
             ),
             const SizedBox(height: 12,),
-            Row(
-              children: [
-                Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 100,vertical: 20),
-                        decoration: BoxDecoration(
-                            color: AppColor.TextColor,
-                            borderRadius: BorderRadius.circular(19)
-                        ),
-                        child: const AppText(
-                          text: "5555-555-55",
-                          textSize: 15.0,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
-                      Container(
-                        height: 57,width: 73,
-                        decoration: BoxDecoration(
-                            color: AppColor.appcolor,
-                            borderRadius: BorderRadius.circular(19)
-                        ),
-                        child:  const CountryCodePicker(
-                          initialSelection: 'in',
-                          showDropDownButton: true,
-                          textStyle: TextStyle(
-                              color: AppColor.white,fontSize: 22,
-                              fontWeight: FontWeight.w300),
-                          backgroundColor: AppColor.white,
-                          showFlagDialog: false,
-                          showFlag: false,
-                          showCountryOnly: true,
-                        ),
-                      ),
-                    ]
+            // Row(
+            //   children: [
+            //     Stack(
+            //         alignment: Alignment.centerLeft,
+            //         children: [
+            //           Container(
+            //             padding: const EdgeInsets.symmetric(horizontal: 110,vertical: 20),
+            //             decoration: BoxDecoration(
+            //                 color: AppColor.TextColor,
+            //                 borderRadius: BorderRadius.circular(19)
+            //             ),
+            //             child: const AppText(
+            //               text: "5555-555-55",
+            //               textSize: 15.0,
+            //               color: AppColor.blackColor,
+            //             ),
+            //           ),
+            //           Container(
+            //             height: 57,width: 73,
+            //             decoration: BoxDecoration(
+            //                 color: AppColor.appcolor,
+            //                 borderRadius: BorderRadius.circular(19)
+            //             ),
+            //             child:  const CountryCodePicker(
+            //               padding: EdgeInsets.only(left: 10),
+            //               initialSelection: 'in',
+            //               showDropDownButton: true,
+            //               textStyle: TextStyle(
+            //                   color: AppColor.white,fontSize: 15,
+            //                   fontWeight: FontWeight.w300),
+            //               backgroundColor: AppColor.white,
+            //               showFlagDialog: false,
+            //               showFlag: false,
+            //               showCountryOnly: true,
+            //             ),
+            //           ),
+            //         ]
+            //     ),
+            //
+            //   ],
+            // ),
+            AppTextField(
+              height: 50,
+              margin: const EdgeInsets.only(right: 0),
+              borderRadius: BorderRadius.circular(20),
+              containerColor: AppColor.TextColor,
+              prefix: Container(
+                decoration: const BoxDecoration(
+                    color: AppColor.appcolor,
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CountryCodePicker(
+                      padding: EdgeInsets.only(right: 5.0),
+                      textStyle:
+                      TextStyle(color: Colors.white, fontSize: 15),
+                      enabled: true,
+                      showFlag: false,
+                      alignLeft: false,
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                  ],
                 ),
-
-              ],
+              ),
+              title: "5555-555-55",
+              style: const TextStyle(
+                  color: AppColor.blackColor
+              ),
+              contentPadding: const EdgeInsets.only(right: 2.0),
+              maxLength: 8,
             ),
             const SizedBox(height: 30,),
             GestureDetector(

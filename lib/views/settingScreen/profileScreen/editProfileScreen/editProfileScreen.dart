@@ -109,54 +109,40 @@ class EditProfileScreen extends StatelessWidget {
               color: AppColor.blackColor.withOpacity(0.5),
             ),
             const SizedBox(height: 12,),
-            Row(
-              children: [
-                Stack(
-                  alignment: Alignment.centerLeft,
+            AppTextField(
+              height: 50,
+              margin: const EdgeInsets.only(right: 0),
+              borderRadius: BorderRadius.circular(20),
+              containerColor: AppColor.TextColor,
+              prefix: Container(
+                decoration: const BoxDecoration(
+                    color: AppColor.appcolor,
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 100,vertical: 20),
-                      decoration: BoxDecoration(
-                          color: AppColor.TextColor,
-                          borderRadius: BorderRadius.circular(19)
-                      ),
-                      child: AppTextField(
-                        height: 20.0,width: 30.0,
-                        title: "5555-555-55",
-                        hintStyle: const TextStyle(
-                            color: AppColor.blackColor
-                        ),
-                        keyBoardtype: TextInputAction.next,
-                        textInputType: TextInputType.emailAddress,
-                        contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                        //margin: const EdgeInsets.only(right: 35.0),
-                        borderRadius: BorderRadius.circular(19),
-                        containerColor: AppColor.TextColor,
-                      ),
+                    CountryCodePicker(
+                      padding: EdgeInsets.only(right: 5.0),
+                      textStyle:
+                      TextStyle(color: Colors.white, fontSize: 15),
+                      enabled: true,
+                      showFlag: false,
+                      alignLeft: false,
                     ),
-                    Container(
-                      height: 57,width: 100,
-                      decoration: BoxDecoration(
-                          color: AppColor.appcolor,
-                          borderRadius: BorderRadius.circular(19)
-                      ),
-                      child:  const CountryCodePicker(
-                        initialSelection: 'in',
-                        //padding: EdgeInsets.all(15.0),
-                        showDropDownButton: true,
-                        textStyle: TextStyle(
-                            color: AppColor.white,fontSize: 15,
-                            fontWeight: FontWeight.w500),
-                        backgroundColor: AppColor.white,
-                        showFlagDialog: false,
-                        showFlag: false,
-                        showCountryOnly: true,
-                      ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white,
+                      size: 25,
                     ),
-      ]
+                  ],
                 ),
-
-              ],
+              ),
+              title: "5555-555-55",
+              style: const TextStyle(
+                color: AppColor.blackColor
+              ),
+              contentPadding: const EdgeInsets.only(right: 2.0),
+              maxLength: 8,
             ),
             const SizedBox(height: 30,),
             GestureDetector(
