@@ -16,7 +16,7 @@ class VerificationScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(),
       body: Padding(
-        padding: const EdgeInsets.only(left: 25, top: 20,right: 20),
+        padding: const EdgeInsets.only(left: 30, top: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,7 +76,7 @@ class VerificationScreen extends StatelessWidget {
                 text: "Verify",
                 height: 50,
                 radius: 17,
-                margin: const EdgeInsets.only(right: 25,left: 25 ),
+                margin: const EdgeInsets.only(right: 25, left: 25),
                 color: AppColor.appcolor,
                 textStyle: const TextStyle(
                   color: AppColor.TextColor,
@@ -91,6 +91,7 @@ class VerificationScreen extends StatelessWidget {
             const Center(
               child: AppText(
                 text: "Resend code",
+                color: Colors.red,
                 underline: true,
                 underlineColor: Colors.red,
               ),

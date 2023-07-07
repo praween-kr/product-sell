@@ -118,9 +118,7 @@ class HomeScreen extends StatelessWidget {
                           height: 10,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.verificationScreen);
-                          },
+                          onTap: () {},
                           child: Container(
                             padding: const EdgeInsets.only(
                                 top: 10, left: 20, bottom: 10),
