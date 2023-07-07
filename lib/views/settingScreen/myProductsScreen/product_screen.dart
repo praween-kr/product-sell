@@ -19,6 +19,20 @@ class ProductScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
+        leading: GestureDetector(
+          onTap: (){
+            Get.back();
+            Get.back();
+          },
+          child: Container(
+            margin: EdgeInsets.all(5),
+            padding: const EdgeInsets.only(left: 12),
+            decoration: BoxDecoration(
+                color: AppColor.appcolor,
+                borderRadius: BorderRadius.circular(15)),
+            child: const Icon(Icons.arrow_back_ios),
+          ),
+        ),
         heading: "My Products",
         textStyle: const TextStyle(
             fontSize: 20,

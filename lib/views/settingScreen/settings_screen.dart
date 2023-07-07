@@ -350,7 +350,7 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(width: 17.0,),
                   InkWell(
                     onTap: (){
-                      Get.toNamed(Routes.cmsScreen);
+                     Get.toNamed(Routes.insightScreen);
                       },
                     child: const AppText(text: "About Us",
                       textSize: 13.0,color: AppColor.blackColor,

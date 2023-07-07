@@ -1,10 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:oninto_flutter/utills/helper/camera_helper.dart';
 import '../../../common_widget/color_constant.dart';
 
-class SellItemController extends GetxController {
+class SellItemController extends GetxController implements CameraOnCompleteListener  {
 
   var tabController = 0.obs;
 
@@ -66,6 +68,25 @@ class SellItemController extends GetxController {
 
   /// selectedItem view
   RxBool selectedItemValue = false.obs;
+
+  /// camera View
+  late CameraHelper cameraHelper;
+  RxString imagePath = "".obs;
+
+  @override
+  void onInit() {
+    cameraHelper = CameraHelper(this);
+    super.onInit();
+  }
+
+  @override
+  void onSuccessFile(File file, String fileType) {
+    imagePath.value = file.path;
+  }
+  void reset() {
+    imagePath.value = "";
+  }
+
 
   /// datePicker View
   TextEditingController startDateController = TextEditingController();

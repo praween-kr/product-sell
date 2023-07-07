@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
@@ -120,7 +121,9 @@ class SellItemScreen extends StatelessWidget {
                               ),
                               child:  GestureDetector(
                                 onTap: (){
-
+                                  controller.cameraHelper.cropAspectRatioPreset =
+                                      CropAspectRatioPreset.square;
+                                  controller.cameraHelper.openImagePickerNew();
                                     },
                                 child: Center(
                                   child: Icon(Icons.camera_alt,
@@ -147,9 +150,23 @@ class SellItemScreen extends StatelessWidget {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                         Icon(Icons.camera_alt,
-                                          size: 22.0,color: AppColor.blackColor.withOpacity(0.3),
+                                         Container(
+                                           padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 80.0),
+                                           decoration: BoxDecoration(
+                                               color:AppColor.white,
+                                               borderRadius: BorderRadius.circular(17.0)
+                                           ),
+                                           child: GestureDetector(
+                                             onTap: (){
+                                               controller.cameraHelper.cropAspectRatioPreset =
+                                                   CropAspectRatioPreset.square;
+                                               controller.cameraHelper.openImagePickerNew();
+                                      },
+                                             child: Icon(Icons.camera_alt,
+                                              size: 22.0,color: AppColor.blackColor.withOpacity(0.3),
                                         ),
+                                           ),
+                                         ),
                                         const SizedBox(height: 5.0,),
                                         AppText(text: "JPEG",
                                           color: AppColor.blackColor.withOpacity(0.3),
@@ -663,8 +680,10 @@ class SellItemScreen extends StatelessWidget {
                             const SizedBox(height: 31.0,),
                             GestureDetector(
                               onTap: () {
-                                 customDialog(context);
-                                 },
+                                if(controller.selectedItemValue.value == true){
+                                  customDialog(context);
+                                }
+                                },
                               child: CommonButton(
                                 color: AppColor.appcolor,
                                 height: 57,

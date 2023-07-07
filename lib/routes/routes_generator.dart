@@ -10,6 +10,7 @@ import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/insight_screen/insight_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
@@ -145,9 +146,9 @@ class RoutesGenerator {
       case Routes.subscriptionScreen:
         widgetScreen = SubscriptionScreen();
         break;
-      // case Routes.itemBidScreen:
-      //   widgetScreen = ItemBidScreen();
-      //   break;
+      case Routes.insightScreen:
+        widgetScreen = InsightsScreen();
+        break;
       default:
         widgetScreen = _errorRoute();
     }
