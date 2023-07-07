@@ -404,7 +404,7 @@ class HomeScreen extends StatelessWidget {
                       ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 110, right: 20),
+                padding: const EdgeInsets.only(bottom: 80, right: 20),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: FloatingActionButton(

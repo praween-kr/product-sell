@@ -13,9 +13,11 @@ import 'package:oninto_flutter/views/home/payment_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 import '../splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
@@ -64,10 +66,12 @@ class RoutesGenerator {
         break;
       case Routes.menScreen:
         widgetScreen = MenScreen();
-
         break;
       case Routes.filterScreen:
         widgetScreen = const FilterScreen();
+        break;
+      case Routes.subscriptionScreen:
+        widgetScreen =  SubscriptionScreen();
         break;
       case Routes.denimScreen:
         widgetScreen = DenimScreen(
@@ -88,6 +92,9 @@ class RoutesGenerator {
         break;
       case Routes.settingScreen:
         widgetScreen = SettingScreen();
+        break;
+      case Routes.settingPaymentScreen:
+        widgetScreen = SettingPaymentScreen();
         break;
       case Routes.categoryScreen:
         widgetScreen = CategoryScreen();
@@ -131,6 +138,9 @@ class RoutesGenerator {
         break;
       case Routes.addressScreen:
         widgetScreen = AddressScreen();
+        break;
+      case Routes.newAddressScreen:
+        widgetScreen = NewAddressScreen();
         break;
       case Routes.subscriptionScreen:
         widgetScreen = SubscriptionScreen();
