@@ -55,4 +55,5 @@ class Assets {
   static const String assetsclock = 'assets/Clock.png';
   static const String assetshome = 'assets/home_bid.png';
   static const String assetstouch = 'assets/touch.png';
+  static const String assetssplash = 'assets/splash.png';
 }
