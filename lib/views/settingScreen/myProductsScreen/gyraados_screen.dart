@@ -29,7 +29,7 @@ class GyradosScreen extends StatelessWidget {
         child: Column(
           children: [
             Stack(children: [
-              Image.asset(Assets.assetsparker),
+              Image.asset(Assets.assetsParker),
               Positioned(
                   left: 20,
                   top: MediaQuery.of(context).size.height * 0.25,
@@ -38,7 +38,7 @@ class GyradosScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.asset(
-                        Assets.assetsgyrados,
+                        Assets.assetsGyrados,
                         height: 80,
                         width: 80,
                       ),
@@ -46,7 +46,7 @@ class GyradosScreen extends StatelessWidget {
                         width: 10,
                       ),
                       Image.asset(
-                        Assets.assetsgyrados1,
+                        Assets.assetsGyrados1,
                         height: 80,
                         width: 80,
                       ),
@@ -55,7 +55,7 @@ class GyradosScreen extends StatelessWidget {
                       ),
                       Stack(children: [
                         Image.asset(
-                          Assets.assetspokemon,
+                          Assets.assetsPokemon,
                           height: 80,
                           width: 80,
                         ),

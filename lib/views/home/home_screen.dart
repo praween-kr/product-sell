@@ -185,7 +185,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Image.asset(
-                            Assets.assetstouch,
+                            Assets.assetsTouch,
                             height: 30,
                             width: 30,
                           ),
@@ -234,7 +234,7 @@ class HomeScreen extends StatelessWidget {
                                     clipBehavior: Clip.none,
                                     alignment: Alignment.bottomCenter,
                                     children: [
-                                      Image.asset(Assets.assetshome),
+                                      Image.asset(Assets.assetsHomeBid),
                                       Positioned(
                                         bottom: -17,
                                         child: Row(
@@ -541,7 +541,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          Assets.assetsclock,
+                          Assets.assetsClock,
                           height: 100,
                           width: 100,
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_controller/men_list_controller.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
@@ -9,7 +10,7 @@ import '../../common_controller/bottom_nav_controller.dart';
 
 class MenScreen extends StatelessWidget {
   MenScreen({super.key});
-  final controller = Get.put(Homecontroller());
+  final controller = Get.put(MenListController());
   final bottomcontroller = Get.put(BottomNavController());
 
   @override
@@ -32,7 +33,7 @@ class MenScreen extends StatelessWidget {
                       crossAxisCount: 3, childAspectRatio: 0.75),
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    var data = controller.Categorydata[index];
+                    var data = controller.categoryData[index];
                     return GestureDetector(
                       onTap: () {
                         controller.menu.value = true;
@@ -61,7 +62,7 @@ class MenScreen extends StatelessWidget {
                             height: 10,
                           ),
                           AppText(
-                            text: controller.Categorydata[index].Name,
+                            text: controller.categoryData[index].Name,
                             color: Colors.black,
                             textSize: 14,
                           )
