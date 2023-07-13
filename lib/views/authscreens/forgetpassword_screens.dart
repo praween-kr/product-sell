@@ -14,58 +14,64 @@ class ForgotScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CommonAppbarWidget(),
-            const SizedBox(height: 50),
-            const AppText(
-              text: "Forgot\nPassword",
-              textSize: 30,
-              fontWeight: FontWeight.w600,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonAppbarWidget(),
+          const SizedBox(height: 50),
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const AppText(
+                  text: "Forgot\nPassword",
+                  textSize: 30,
+                  fontWeight: FontWeight.w600,
+                ),
+                const SizedBox(height: 20),
+                const AppText(
+                  text:
+                      "Please enter your register email id. We will \nsend One Time Password on your\nemail id",
+                  textSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0x80000000),
+                  lineHeight: 1.3,
+                ),
+                const SizedBox(height: 20),
+                const AppText(
+                  text: "Email",
+                  textSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0x80000000),
+                ),
+                const SizedBox(height: 10),
+                AppTextField(
+                  margin: const EdgeInsets.only(right: 30),
+                  borderRadius: BorderRadius.circular(20),
+                  title: "jennysmith@gmail.com",
+                  containerColor: AppColor.TextColor,
+                  prefix: const Icon(Icons.email_outlined),
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.verificationScreen);
+                  },
+                  child: CommonButton(
+                    color: AppColor.appcolor,
+                    margin: const EdgeInsets.only(right: 20),
+                    radius: 15,
+                    height: 50,
+                    text: "Send",
+                    textStyle:
+                        const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(height: 20),
-            const AppText(
-              text:
-                  "Please enter your register email id. We will \nsend One Time Password on your\nemail id",
-              textSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Color(0x80000000),
-              lineHeight: 1.3,
-            ),
-            const SizedBox(height: 20),
-            const AppText(
-              text: "Email",
-              textSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0x80000000),
-            ),
-            const SizedBox(height: 10),
-            AppTextField(
-              margin: const EdgeInsets.only(right: 30),
-              borderRadius: BorderRadius.circular(20),
-              title: "jennysmith@gmail.com",
-              containerColor: AppColor.TextColor,
-              prefix: const Icon(Icons.email_outlined),
-            ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.verificationScreen);
-              },
-              child: CommonButton(
-                color: AppColor.appcolor,
-                margin: const EdgeInsets.only(right: 20),
-                radius: 15,
-                height: 50,
-                text: "Send",
-                textStyle: const TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

@@ -53,54 +53,54 @@ class BottomScreen extends StatelessWidget {
             ),
           ),
           /*bottomNavigationBar: AnimatedNotchBottomBar(
-            notchColor: Colors.red,
-            bottomBarWidth: 10,
-            color: AppColor.appColor,
-            bottomBarItems: const [
-              BottomBarItem(
-                inActiveItem: Icon(Icons.home),
-                activeItem: Icon(Icons.home_filled),
-              ),
-              BottomBarItem(
-                inActiveItem: Icon(
-                  Icons.favorite_outline,
-                  color: Colors.white,
-                ),
-                activeItem: Icon(
-                  Icons.favorite,
-                  color: Colors.white,
-                ),
-              ),
+        notchColor: Colors.red,
+        bottomBarWidth: 10,
+        color: AppColor.appColor,
+        bottomBarItems: const [
+          BottomBarItem(
+            inActiveItem: Icon(Icons.home),
+            activeItem: Icon(Icons.home_filled),
+          ),
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.favorite_outline,
+              color: Colors.white,
+            ),
+            activeItem: Icon(
+              Icons.favorite,
+              color: Colors.white,
+            ),
+          ),
 
-              ///svg item
-              BottomBarItem(
-                inActiveItem: Icon(
-                  Icons.chat_bubble_outline,
-                  color: Colors.white,
-                ),
-                activeItem: Icon(Icons.message),
-              ),
-              BottomBarItem(
-                inActiveItem: Icon(
-                  Icons.person_outline,
-                  color: Colors.white,
-                ),
-                activeItem: Icon(Icons.person),
-              ),
-              BottomBarItem(
-                inActiveItem: Icon(
-                  Icons.settings_outlined,
-                  color: Colors.white,
-                ),
-                activeItem: Icon(Icons.search),
-                // itemLabel: 'Page 3',
-              ),
-            ],
-            onTap: (index) {
-              // controller.notchBottomBarController.jumpTo(index);
-            },
-            notchBottomBarController: controller.notchBottomBarController,
-          )),*/
+          ///svg item
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.chat_bubble_outline,
+              color: Colors.white,
+            ),
+            activeItem: Icon(Icons.message),
+          ),
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.person_outline,
+              color: Colors.white,
+            ),
+            activeItem: Icon(Icons.person),
+          ),
+          BottomBarItem(
+            inActiveItem: Icon(
+              Icons.settings_outlined,
+              color: Colors.white,
+            ),
+            activeItem: Icon(Icons.search),
+            // itemLabel: 'Page 3',
+          ),
+        ],
+        onTap: (index) {
+          // controller.notchBottomBarController.jumpTo(index);
+        },
+        notchBottomBarController: controller.notchBottomBarController,
+      )),*/
         ));
   }
 

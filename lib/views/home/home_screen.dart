@@ -17,34 +17,35 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("data ${data}");
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: const EdgeInsets.only(
-            top: 60,
-          ),
-          child: Column(
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        AppText(
-                          text: "  Hello, jenny",
-                          textSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: AppText(
+                            text: "  Hello, jenny",
+                            textSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
                         ),
                         SizedBox(
                           height: 2,
@@ -67,7 +68,118 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        GestureDetector(
+                        PopupMenuButton(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          offset: const Offset(0, 20),
+                          icon: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: AppColor.appcolor),
+                            ),
+                            child: const Icon(Icons.filter_alt_rounded,
+                                color: AppColor.appcolor),
+                          ),
+                          onSelected: (value) {
+                            value();
+                          },
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: AppText(
+                                      text: "Sort by",
+                                      textAlign: TextAlign.center,
+                                      textSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Divider(
+                                    thickness: 1,
+                                  ),
+                                ],
+                              ),
+                              value: () {
+                                Get.toNamed(Routes.filterScreen);
+                              },
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: AppText(
+                                  text: "Lowest Lot #",
+                                  textAlign: TextAlign.center,
+                                  textSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              value: () {},
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: AppText(
+                                  text: "Highest Price",
+                                  textAlign: TextAlign.center,
+                                  textSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              value: () {},
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: AppText(
+                                  text: "Ending Soonest",
+                                  textAlign: TextAlign.center,
+                                  textSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              value: () {},
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: AppText(
+                                  text: "Lowest Price",
+                                  textAlign: TextAlign.center,
+                                  textSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              value: () {},
+                            ),
+                            PopupMenuItem(
+                              padding: EdgeInsets.zero,
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: AppText(
+                                  text: "Most Bid",
+                                  textAlign: TextAlign.center,
+                                  textSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              value: () {},
+                            ),
+                          ],
+                        ),
+
+                        /* GestureDetector(
                           onTap: () {},
                           child: Container(
                             height: 30,
@@ -87,7 +199,7 @@ class HomeScreen extends StatelessWidget {
                                   color: AppColor.appcolor),
                             ),
                           ),
-                        ),
+                        ),*/
                         GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.notificationScreen);
@@ -118,9 +230,7 @@ class HomeScreen extends StatelessWidget {
                           height: 10,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Get.toNamed(Routes.verificationScreen);
-                          },
+                          onTap: () {},
                           child: Container(
                             padding: const EdgeInsets.only(
                                 top: 10, left: 20, bottom: 10),
@@ -248,11 +358,19 @@ class HomeScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Image.asset(Assets.assetslike),
+                                            Image.asset(
+                                              Assets.assetsdislike,
+                                              height: 50,
+                                              width: 50,
+                                            ),
                                             const SizedBox(
                                               width: 70,
                                             ),
-                                            Image.asset(Assets.assetsdislike)
+                                            Image.asset(
+                                              Assets.assetslike,
+                                              height: 50,
+                                              width: 50,
+                                            )
                                           ],
                                         ),
                                       )
@@ -386,24 +504,21 @@ class HomeScreen extends StatelessWidget {
                             }),
                       ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 80, right: 20),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Get.toNamed(Routes.sellItemScreen);
-                    },
-                    backgroundColor: AppColor.appcolor,
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
-                ),
-              )
             ],
+          ),
+          floatingActionButton: Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton(
+              onPressed: () {
+                Get.toNamed(Routes.sellItemScreen);
+              },
+              backgroundColor: AppColor.appcolor,
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 40,
+              ),
+            ),
           ),
         ),
       ),
@@ -542,6 +657,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
+                            Get.back();
                             Get.toNamed(Routes.menshirtScreen);
                           },
                           child: CommonButton(
