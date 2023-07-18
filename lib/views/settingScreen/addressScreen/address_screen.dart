@@ -28,12 +28,13 @@ class AddressScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ListView.builder(
-              itemCount: 3,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Obx(() =>
-                    GestureDetector(
+          Expanded(
+            child: ListView.builder(
+                itemCount: 3,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Obx(() =>
+                      GestureDetector(
                         onTap: () {
                           controller.selectedContainer.value = index;
                         },
@@ -84,23 +85,30 @@ class AddressScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                    )
-                );
-              }
-          ),
-          const SizedBox(height: 50.0,),
-          GestureDetector(
-            onTap: () {
-              Get.toNamed(Routes.newAddressScreen);
-            },
-            child: CommonButton(
-              color: AppColor.appcolor,
-              margin: const EdgeInsets.only(right: 30.0,left: 30.0),
-              height: 57,
-              text: "Add New Address",
-              textStyle: const TextStyle(color: Colors.white, fontSize: 15),
+                      )
+                  );
+                }
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 35.0),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.newAddressScreen);
+                  },
+                  child: CommonButton(
+                    color: AppColor.appcolor,
+                    margin: const EdgeInsets.only(right: 30.0,left: 30.0),
+                    height: 57,
+                    text: "Add New Address",
+                    textStyle: const TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

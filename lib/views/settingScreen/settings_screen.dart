@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
@@ -17,21 +16,22 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
-        leading: const AppText(
-          text: "Account",
-          color: AppColor.blackColor,
-          textSize: 15,
-          fontWeight: FontWeight.w600,
-        ),
-        heading: "",
-      ),
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.only(left: 35.0, right: 35.0, bottom: 85.0),
+          margin: const EdgeInsets.only(
+              left: 35.0, top: 50, right: 35.0, bottom: 85.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const AppText(
+                text: "Account",
+                color: AppColor.blackColor,
+                textSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,41 +82,44 @@ class SettingScreen extends StatelessWidget {
                           const SizedBox(
                             height: 4.0,
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 5.0),
-                            decoration: BoxDecoration(
-                                color: AppColor.appcolor,
-                                borderRadius: BorderRadius.circular(7.0)),
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  Assets.assetsGraphIcon,
-                                  height: 12.0,
-                                  width: 12.0,
-                                ),
-                                const SizedBox(
-                                  width: 2.0,
-                                ),
-                                const AppText(
-                                  text: "Insights",
-                                  textSize: 13.0,
-                                  color: AppColor.white,
-                                  style: AppTextStyle.regular,
-                                ),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.insightScreen);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 5.0),
+                              decoration: BoxDecoration(
+                                  color: AppColor.appcolor,
+                                  borderRadius: BorderRadius.circular(7.0)),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    Assets.assetsGraphIcon,
+                                    height: 12.0,
+                                    width: 12.0,
+                                  ),
+                                  const SizedBox(
+                                    width: 2.0,
+                                  ),
+                                  const AppText(
+                                    text: "Insights",
+                                    textSize: 13.0,
+                                    color: AppColor.white,
+                                    style: AppTextStyle.regular,
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],
                       )
                     ],
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.arrow_forward_ios_outlined,
-                          color: AppColor.blackColor.withOpacity(0.3),
-                          size: 15),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Icon(Icons.arrow_forward_ios_outlined,
+                        color: AppColor.blackColor.withOpacity(0.3), size: 15),
                   )
                 ],
               ),
@@ -164,15 +167,15 @@ class SettingScreen extends StatelessWidget {
                   ),
                   Row(children: [
                     Obx(() => Transform.scale(
-                          scale: 0.8,
-                          child: CupertinoSwitch(
-                            activeColor: AppColor.appcolor,
-                            thumbColor: AppColor.white,
-                            trackColor: Colors.red,
-                            value: controller.on.value,
-                            onChanged: (val) => controller.toggle(),
-                          ),
-                        )),
+                      scale: 0.8,
+                      child: CupertinoSwitch(
+                        activeColor: AppColor.appcolor,
+                        thumbColor: AppColor.white,
+                        trackColor: Colors.red,
+                        value: controller.on.value,
+                        onChanged: (val) => controller.toggle(),
+                      ),
+                    )),
                   ]),
                 ],
               ),
@@ -444,11 +447,6 @@ class SettingScreen extends StatelessWidget {
                     width: 17.0,
                   ),
                   InkWell(
-                    onTap: (){
-                     Get.toNamed(Routes.insightScreen);
-                      },
-                    child: const AppText(text: "About Us",
-                      textSize: 13.0,color: AppColor.blackColor,
                     onTap: () {
                       Get.to(CmsScreen(type: 3));
                     },

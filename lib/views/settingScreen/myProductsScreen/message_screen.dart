@@ -20,6 +20,8 @@ class MessageScreen extends StatelessWidget {
           fontSize: 18,
           color: Colors.black,
         ),
+        action: const Icon(Icons.more_vert,color: AppColor.blackColor,
+        ),
       ),
       body: Column(
         children: [

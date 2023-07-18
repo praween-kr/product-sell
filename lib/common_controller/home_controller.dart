@@ -27,6 +27,9 @@ class Homecontroller extends GetxController
   late PageController pageController;
   late CameraHelper cameraHelper;
   var menu = false.obs;
+  /// o for menu and 1 for filter selected
+  var selectValue= 0.obs;
+  var filter = false.obs;
   var sub = false.obs;
   var track = false.obs;
   var trackupload = false.obs;
@@ -102,6 +105,9 @@ class Homecontroller extends GetxController
 
   void onPageChanged(index) {
     pagePosition.value = index;
+    if(index==2){
+      2.delay(()=>Get.offAllNamed(Routes.loginScreen));
+    }
   }
 
   void nextScreen(int index) {

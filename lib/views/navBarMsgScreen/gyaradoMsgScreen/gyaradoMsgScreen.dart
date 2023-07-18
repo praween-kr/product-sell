@@ -140,11 +140,10 @@ body:  Column(
         return Material(
               type: MaterialType.transparency,
               child: Align(
-                //alignment: Alignment.center,
                 child: Container(
-                 height: 390.0,width: 300.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 30.0),
-                  margin: const EdgeInsets.symmetric(horizontal: 35.0,vertical: 50.0),
+                height: 390.0,width: 300.0,
+                 // padding: const EdgeInsets.symmetric(vertical: 30.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 35.0,vertical: 20.0),
                   decoration: BoxDecoration(
                       color: AppColor.white,
                       borderRadius: BorderRadius.circular(25)
@@ -153,21 +152,22 @@ body:  Column(
                     padding: const EdgeInsets.only(top: 12.0,bottom: 30.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-
                       children: [
                         const Align(
                           alignment: Alignment.center,
                           child: AppText(text: "Poll",
+                            style: AppTextStyle.title,
                             textSize: 13,color: AppColor.blackColor,
-                            textAlign: TextAlign.center,
                           ),
                         ),
                         const SizedBox(height: 24.0,),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 13.0),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(text: "Question",
+                                style: AppTextStyle.title,
                                 textSize: 9,color: AppColor.blackColor,
                               ),
                               SizedBox(height: 7.0,),
@@ -188,17 +188,19 @@ body:  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(text: "Expiration",
+                                style: AppTextStyle.title,
                                 textSize: 9,color: AppColor.blackColor,
                               ),
-                              SizedBox(height: 7.0,),
+                              SizedBox(height: 11.0,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(Icons.calendar_month_outlined,color: AppColor.appcolor,
                                   size: 15.0,
                                   ),
                                   SizedBox(width: 11.0,),
-                                  AppText(text: "What's your poll question ?",
+                                  AppText(text: "13-12-2022",
                                     textSize: 9,color: AppColor.blackColor,
                                   ),
                                 ],
@@ -206,12 +208,13 @@ body:  Column(
                                SizedBox(height: 19.0,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Icon(Icons.watch_later,color: AppColor.appcolor,
                                     size: 15.0,
                                   ),
                                   SizedBox(width: 11.0,),
-                                  AppText(text: "What's your poll question ?",
+                                  AppText(text: "16:35",
                                     textSize: 9,color: AppColor.blackColor,
                                   ),
                                 ],
@@ -227,9 +230,10 @@ body:  Column(
                         const Padding(
                            padding:  EdgeInsets.symmetric(horizontal: 13.0),
                            child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(text: "Options",
+                                style: AppTextStyle.title,
                                 textSize: 9,color: AppColor.blackColor,
                               ),
                               SizedBox(height: 11.0,),
@@ -252,7 +256,7 @@ body:  Column(
                             color: AppColor.appcolor,
                             radius: 17,
                             margin: const EdgeInsets.only(right: 30,left: 30),
-                            height: 39,
+                            //height: 39,
                             text: "Create Poll",
                             textStyle: const TextStyle(color: Colors.white, fontSize: 16),
                           ),

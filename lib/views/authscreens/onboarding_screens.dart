@@ -93,7 +93,9 @@ class OnBoardingScreen extends StatelessWidget {
                                 .nextScreen(controller.pagePosition.value);
                           }
                         },
-                        child: const Icon(Icons.arrow_forward)),
+                        child: controller.pagePosition.value ==2
+                            ?Container():SizedBox()
+                    ),
                   ],
                 )),
           ),

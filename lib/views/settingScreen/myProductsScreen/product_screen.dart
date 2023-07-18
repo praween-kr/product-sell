@@ -39,6 +39,92 @@ class ProductScreen extends StatelessWidget {
             color: blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
+        action:  PopupMenuButton(
+          tooltip: "",
+          shape: const RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.all(Radius.circular(22))),
+          offset: const Offset(0, 20),
+          icon: Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColor.appcolor),
+            ),
+            child: const Icon(Icons.filter_alt_rounded,
+                color: AppColor.appcolor),
+          ),
+          onSelected: (value) {
+            value();
+          },
+          itemBuilder: (context) => [
+            PopupMenuItem(
+             // padding: EdgeInsets.zero,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 10),
+                    child: AppText(
+                      text: "Sort by",
+                      textAlign: TextAlign.center,
+                      textSize: 12,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                  ),
+                ],
+              ),
+              value: () {
+                Get.toNamed(Routes.filterScreen);
+              },
+            ),
+            PopupMenuItem(
+             // padding: EdgeInsets.zero,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: AppText(
+                  text: "Sold",
+                  textAlign: TextAlign.center,
+                  textSize: 12,
+                  color: Colors.black,
+                ),
+              ),
+
+              value: () {},
+            ),
+            PopupMenuItem(
+              //padding: EdgeInsets.zero,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: AppText(
+                  text: "New Added",
+                  textAlign: TextAlign.center,
+                  textSize: 12,
+                  color: Colors.black,
+                ),
+              ),
+              value: () {},
+            ),
+            PopupMenuItem(
+             // padding: EdgeInsets.zero,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: AppText(
+                  text: "Pending",
+                  textAlign: TextAlign.center,
+                  textSize: 12,
+                  color: Colors.black,
+                ),
+              ),
+              value: () {},
+            ),
+          ],
+        ),
       ),
       body: DefaultTabController(
         length: 3,

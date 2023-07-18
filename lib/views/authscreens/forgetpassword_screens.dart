@@ -20,7 +20,7 @@ class ForgotScreen extends StatelessWidget {
           CommonAppbarWidget(),
           const SizedBox(height: 50),
           Padding(
-            padding: const EdgeInsets.only(left: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,22 +47,21 @@ class ForgotScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 AppTextField(
-                  margin: const EdgeInsets.only(right: 30),
                   borderRadius: BorderRadius.circular(20),
                   title: "jennysmith@gmail.com",
                   containerColor: AppColor.TextColor,
                   prefix: const Icon(Icons.email_outlined),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
                     Get.toNamed(Routes.verificationScreen);
                   },
                   child: CommonButton(
                     color: AppColor.appcolor,
-                    margin: const EdgeInsets.only(right: 20),
-                    radius: 15,
-                    height: 50,
+                   // margin: const EdgeInsets.only(right: 20,left: 20),
+                    radius: 20,
+                    height: 57,
                     text: "Send",
                     textStyle:
                         const TextStyle(color: Colors.white, fontSize: 16),

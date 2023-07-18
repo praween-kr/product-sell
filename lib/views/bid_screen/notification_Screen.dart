@@ -12,7 +12,7 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
-        heading: "Notification",
+        heading: "Notifications",
         textStyle: const TextStyle(
             fontSize: 18,
             fontFamily: "Poppins",

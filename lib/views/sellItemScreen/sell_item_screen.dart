@@ -1,7 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
@@ -32,78 +31,78 @@ class SellItemScreen extends StatelessWidget {
         child: Column(
           children: [
             Obx(() => TabBar(
-                    splashFactory: NoSplash.splashFactory,
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                splashFactory: NoSplash.splashFactory,
+                overlayColor: MaterialStateProperty.resolveWith<Color?>(
                         (Set<MaterialState> states) {
                       // Use the default focused overlay color
                       return states.contains(MaterialState.focused)
                           ? null
                           : Colors.transparent;
                     }),
-                    onTap: (index) {
-                      controller.tabController.value = index;
-                    },
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    indicator:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                    // indicatorColor: Colors.grey,
-                    // labelColor: Colors.black,
-                    // unselectedLabelColor: Colors.grey,
-                    indicatorWeight: 1,
-                    tabs: [
-                      Container(
-                        height: 42,
-                        width: 148,
-                        margin: const EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            color: controller.tabController.value == 0
-                                ? AppColor.appcolor
-                                : Colors.white,
-                            border: Border.all(
-                              color: controller.tabController.value == 0
-                                  ? AppColor.appcolor
-                                  : Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Center(
-                          child: AppText(
-                            text: "Physical Product",
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 0
-                                ? Colors.white
-                                : Colors.grey.shade500,
-                          ),
+                onTap: (index) {
+                  controller.tabController.value = index;
+                },
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                indicator:
+                BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                // indicatorColor: Colors.grey,
+                // labelColor: Colors.black,
+                // unselectedLabelColor: Colors.grey,
+                indicatorWeight: 1,
+                tabs: [
+                  Container(
+                    height: 42,
+                    width: 148,
+                    margin: const EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                        color: controller.tabController.value == 0
+                            ? AppColor.appcolor
+                            : Colors.white,
+                        border: Border.all(
+                          color: controller.tabController.value == 0
+                              ? AppColor.appcolor
+                              : Colors.grey.shade300,
                         ),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Center(
+                      child: AppText(
+                        text: "Physical Product",
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w400,
+                        color: controller.tabController.value == 0
+                            ? Colors.white
+                            : Colors.grey.shade500,
                       ),
-                      Container(
-                        height: 42,
-                        width: 148,
-                        margin: const EdgeInsets.only(
-                          top: 10,
+                    ),
+                  ),
+                  Container(
+                    height: 42,
+                    width: 148,
+                    margin: const EdgeInsets.only(
+                      top: 10,
+                    ),
+                    decoration: BoxDecoration(
+                        color: controller.tabController.value == 1
+                            ? AppColor.appcolor
+                            : Colors.white,
+                        border: Border.all(
+                          color: controller.tabController.value == 1
+                              ? AppColor.appcolor
+                              : Colors.grey.shade300,
                         ),
-                        decoration: BoxDecoration(
-                            color: controller.tabController.value == 1
-                                ? AppColor.appcolor
-                                : Colors.white,
-                            border: Border.all(
-                              color: controller.tabController.value == 1
-                                  ? AppColor.appcolor
-                                  : Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Center(
-                          child: AppText(
-                            text: "Co-Owner",
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 1
-                                ? Colors.white
-                                : Colors.grey.shade500,
-                          ),
-                        ),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Center(
+                      child: AppText(
+                        text: "Co-Owner",
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w400,
+                        color: controller.tabController.value == 1
+                            ? Colors.white
+                            : Colors.grey.shade500,
                       ),
-                    ])),
+                    ),
+                  ),
+                ])),
             Expanded(
               child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
@@ -118,15 +117,6 @@ class SellItemScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 80.0),
                               decoration: BoxDecoration(
-                                color:AppColor.text1.withOpacity(0.1) ,
-                                borderRadius: BorderRadius.circular(17.0)
-                              ),
-                              child:  GestureDetector(
-                                onTap: (){
-                                  controller.cameraHelper.cropAspectRatioPreset =
-                                      CropAspectRatioPreset.square;
-                                  controller.cameraHelper.openImagePickerNew();
-                                    },
                                   color: AppColor.text1.withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(17.0)),
                               child: GestureDetector(
@@ -158,30 +148,16 @@ class SellItemScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                         color: AppColor.text1.withOpacity(0.1),
                                         borderRadius:
-                                            BorderRadius.circular(17.0)),
+                                        BorderRadius.circular(17.0)),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.camera_alt,
                                           size: 22.0,
                                           color: AppColor.blackColor
                                               .withOpacity(0.3),
-                                         Container(
-                                           padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 80.0),
-                                           decoration: BoxDecoration(
-                                               color:AppColor.white,
-                                               borderRadius: BorderRadius.circular(17.0)
-                                           ),
-                                           child: GestureDetector(
-                                             onTap: (){
-                                               controller.cameraHelper.cropAspectRatioPreset =
-                                                   CropAspectRatioPreset.square;
-                                               controller.cameraHelper.openImagePickerNew();
-                                      },
-                                             child: Icon(Icons.camera_alt,
-                                              size: 22.0,color: AppColor.blackColor.withOpacity(0.3),
                                         ),
                                         const SizedBox(
                                           height: 5.0,
@@ -190,11 +166,6 @@ class SellItemScreen extends StatelessWidget {
                                           text: "JPEG",
                                           color: AppColor.blackColor
                                               .withOpacity(0.3),
-                                           ),
-                                         ),
-                                        const SizedBox(height: 5.0,),
-                                        AppText(text: "JPEG",
-                                          color: AppColor.blackColor.withOpacity(0.3),
                                           textSize: 10.0,
                                           style: AppTextStyle.regular,
                                         )
@@ -277,7 +248,7 @@ class SellItemScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                             Obx(
-                              () => DropdownButtonHideUnderline(
+                                  () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
                                     controller.dropDownValue.value = newValue!;
@@ -325,15 +296,15 @@ class SellItemScreen extends StatelessWidget {
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(40),
                                       thickness:
-                                          MaterialStateProperty.all<double>(6),
+                                      MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                      MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                    EdgeInsets.symmetric(horizontal: 10.0),
                                   ),
                                 ),
                               ),
@@ -351,7 +322,7 @@ class SellItemScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                             Obx(
-                              () => DropdownButtonHideUnderline(
+                                  () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
                                     controller.dropDownValue2.value = newValue!;
@@ -398,15 +369,15 @@ class SellItemScreen extends StatelessWidget {
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(40),
                                       thickness:
-                                          MaterialStateProperty.all<double>(6),
+                                      MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                      MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
                                     padding:
-                                        EdgeInsets.only(left: 23, right: 24),
+                                    EdgeInsets.only(left: 23, right: 24),
                                   ),
                                 ),
                               ),
@@ -424,14 +395,14 @@ class SellItemScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                             Obx(
-                              () => DropdownButtonHideUnderline(
+                                  () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
                                     controller.dropDownValue3.value = newValue!;
                                   },
                                   value: controller.dropDownValue3.value,
                                   items:
-                                      controller.colorItems.value.map((items) {
+                                  controller.colorItems.value.map((items) {
                                     return DropdownMenuItem(
                                       value: items,
                                       child: AppText(
@@ -472,15 +443,15 @@ class SellItemScreen extends StatelessWidget {
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(40),
                                       thickness:
-                                          MaterialStateProperty.all<double>(6),
+                                      MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                      MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
                                     padding:
-                                        EdgeInsets.only(left: 23, right: 24),
+                                    EdgeInsets.only(left: 23, right: 24),
                                   ),
                                 ),
                               ),
@@ -498,14 +469,14 @@ class SellItemScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                             Obx(
-                              () => DropdownButtonHideUnderline(
+                                  () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
                                     controller.dropDownValue4.value = newValue!;
                                   },
                                   value: controller.dropDownValue4.value,
                                   items:
-                                      controller.brandItems.value.map((items) {
+                                  controller.brandItems.value.map((items) {
                                     return DropdownMenuItem(
                                       value: items,
                                       child: AppText(
@@ -546,15 +517,15 @@ class SellItemScreen extends StatelessWidget {
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(40),
                                       thickness:
-                                          MaterialStateProperty.all<double>(6),
+                                      MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                      MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
                                     padding:
-                                        EdgeInsets.only(left: 23, right: 24),
+                                    EdgeInsets.only(left: 23, right: 24),
                                   ),
                                 ),
                               ),
@@ -572,7 +543,7 @@ class SellItemScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                             Obx(
-                              () => DropdownButtonHideUnderline(
+                                  () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
                                     controller.dropDownValue5.value = newValue!;
@@ -620,15 +591,15 @@ class SellItemScreen extends StatelessWidget {
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(40),
                                       thickness:
-                                          MaterialStateProperty.all<double>(6),
+                                      MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                      MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
                                     padding:
-                                        EdgeInsets.only(left: 23, right: 24),
+                                    EdgeInsets.only(left: 23, right: 24),
                                   ),
                                 ),
                               ),
@@ -646,7 +617,7 @@ class SellItemScreen extends StatelessWidget {
                               height: 14.0,
                             ),
                             Obx(
-                              () => DropdownButtonHideUnderline(
+                                  () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
                                     controller.dropDownValue6.value = newValue!;
@@ -654,7 +625,7 @@ class SellItemScreen extends StatelessWidget {
                                   },
                                   value: controller.dropDownValue6.value,
                                   items:
-                                      controller.sellItems.value.map((items) {
+                                  controller.sellItems.value.map((items) {
                                     return DropdownMenuItem(
                                       value: items,
                                       child: AppText(
@@ -695,15 +666,15 @@ class SellItemScreen extends StatelessWidget {
                                     scrollbarTheme: ScrollbarThemeData(
                                       radius: const Radius.circular(40),
                                       thickness:
-                                          MaterialStateProperty.all<double>(6),
+                                      MaterialStateProperty.all<double>(6),
                                       thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                      MaterialStateProperty.all<bool>(true),
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
                                     height: 40,
                                     padding:
-                                        EdgeInsets.only(left: 23, right: 24),
+                                    EdgeInsets.only(left: 23, right: 24),
                                   ),
                                 ),
                               ),
@@ -798,93 +769,95 @@ class SellItemScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: Icon(
-                                Icons.camera_alt,
-                                size: 35.0,
-                                color: AppColor.blackColor.withOpacity(0.3),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 80.0),
+                              decoration: BoxDecoration(
+                                  color: AppColor.text1.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(17.0)),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Center(
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    size: 35.0,
+                                    color: AppColor.blackColor.withOpacity(0.3),
+                                  ),
+                                ),
                               ),
                             ),
                             const SizedBox(
                               height: 14.0,
                             ),
-                            Stack(children: [
-                              Container(
-                                height: 190,
-                                decoration: BoxDecoration(
-                                  color: AppColor.listColor,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 70.0,
-                                    child: ListView.builder(
-                                      itemCount: 4,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, position) {
-                                        return Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 25.0),
-                                          //margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                                          decoration: BoxDecoration(
-                                              color: AppColor.listColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0)),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.camera_alt,
-                                                size: 22.0,
-                                                color: AppColor.blackColor
-                                                    .withOpacity(0.3),
-                                              ),
-                                              const SizedBox(
-                                                height: 5.0,
-                                              ),
-                                              AppText(
-                                                text: "JPEG",
-                                                color: AppColor.blackColor
-                                                    .withOpacity(0.3),
-                                                textSize: 10.0,
-                                                style: AppTextStyle.regular,
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
+                            SizedBox(
+                              height: 70.0,
+                              child: ListView.builder(
+                                itemCount: 4,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, position) {
+                                  return Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 23.0),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    decoration: BoxDecoration(
+                                        color: AppColor.text1.withOpacity(0.1),
+                                        borderRadius:
+                                        BorderRadius.circular(17.0)),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.camera_alt,
+                                          size: 22.0,
+                                          color: AppColor.blackColor
+                                              .withOpacity(0.3),
+                                        ),
+                                        const SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        AppText(
+                                          text: "JPEG",
+                                          color: AppColor.blackColor
+                                              .withOpacity(0.3),
+                                          textSize: 10.0,
+                                          style: AppTextStyle.regular,
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 19.0,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: CommonButton(
-                                      color: AppColor.appcolor,
-                                      radius: 25,
-                                      margin: const EdgeInsets.only(right: 0),
-                                      height: 57,
-                                      text: "Add more",
-                                      textStyle: const TextStyle(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 23),
-                                  const AppText(
-                                    text: "Add Title",
-                                    color: AppColor.blackColor,
-                                    textSize: 13.0,
-                                    style: AppTextStyle.medium,
-                                  ),
-                                ],
+                                  );
+                                },
                               ),
-                            ]),
+                            ),
+                            const SizedBox(
+                              height: 19.0,
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: CommonButton(
+                                color: AppColor.appcolor,
+                                radius: 25,
+                                margin: const EdgeInsets.only(right: 0),
+                                height: 57,
+                                text: "Add more",
+                                textStyle: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 23.0,
+                            ),
+                            const AppText(
+                              text: "Add Title",
+                              color: AppColor.blackColor,
+                              textSize: 13.0,
+                              style: AppTextStyle.medium,
+                            ),
+                            const SizedBox(
+                              height: 14,
+                            ),
                             AppTextField(
                               height: 46.0,
                               title: "Add",
@@ -937,11 +910,6 @@ class SellItemScreen extends StatelessWidget {
                               margin: const EdgeInsets.only(right: 0.0),
                               borderRadius: BorderRadius.circular(23),
                               containerColor: AppColor.TextColor,
-                              suffix: const Icon(
-                                Icons.my_location,
-                                size: 18.0,
-                                color: AppColor.appcolor,
-                              ),
                             ),
                             const SizedBox(
                               height: 16.0,
@@ -1117,7 +1085,7 @@ class SellItemScreen extends StatelessWidget {
                           ),
                           const AppText(
                             text:
-                                "Your product has been submitted successfully!",
+                            "Your product has been submitted successfully!",
                             textSize: 15,
                             color: AppColor.blackColor,
                             lineHeight: 1.6,
@@ -1141,7 +1109,7 @@ class SellItemScreen extends StatelessWidget {
                         height: 57,
                         text: "Ok",
                         textStyle:
-                            const TextStyle(color: Colors.white, fontSize: 16),
+                        const TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     )
                   ]),

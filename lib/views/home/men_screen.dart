@@ -18,13 +18,13 @@ class MenScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: CommonAppbarWidget(
+        heading: "Men",
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            CommonAppbarWidget(
-              heading: "Men",
-            ),
             Expanded(
               child: GridView.builder(
                   physics: const ClampingScrollPhysics(),

@@ -12,52 +12,41 @@ class SellItemController extends GetxController implements CameraOnCompleteListe
 
   /// dropDown View
   RxString dropDownValue = 'Man'.obs;
-
   // List of items in our dropdown menu
   RxList<String>categoryItems = [
     'Man',
     'Category 2',
     'Category 3',
   ].obs;
-
   RxString dropDownValue2 = 'Tshirt'.obs;
-
   // List of items in our dropdown menu
   RxList<String>subItems = [
     'Tshirt',
     'Sub cat 2',
     'Sub cat 3',
   ].obs;
-
   RxString dropDownValue3 = 'Red'.obs;
-
   // List of items in our dropdown menu
   RxList<String>colorItems = [
     'Red',
     'Color 2',
     'Color 3',
   ].obs;
-
   RxString dropDownValue4 = 'Tommy'.obs;
-
   // List of items in our dropdown menu
   RxList<String>brandItems = [
     'Tommy',
     'Brand 2',
     'Brand 3',
   ].obs;
-
   RxString dropDownValue5 = 'Excellent'.obs;
-
   // List of items in our dropdown menu
   RxList<String>conditionItems = [
     'Excellent',
     'Condition 2',
     'Condition 3',
   ].obs;
-
   RxString dropDownValue6 = 'Bid'.obs;
-
   // List of items in our dropdown menu
   RxList<String>sellItems = [
     'Bid',

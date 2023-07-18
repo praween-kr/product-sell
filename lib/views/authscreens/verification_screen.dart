@@ -72,16 +72,39 @@ class VerificationScreen extends StatelessWidget {
               onTap: () {
                 Get.toNamed(Routes.loginScreen);
               },
-              child: CommonButton(
-                text: "Verify",
-                height: 50,
-                radius: 17,
-                margin: const EdgeInsets.only(right: 25, left: 25),
-                color: AppColor.appcolor,
-                textStyle: const TextStyle(
-                  color: AppColor.TextColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
+                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                decoration: const BoxDecoration(
+                  color: AppColor.appcolor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 2),
+                      color: Color(0xff290000000),
+                      // spreadRadius: 2,
+                      blurRadius: 6,
+                    ),
+                  ],
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppText(
+                      text: "Verify",
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    )
+                  ],
                 ),
               ),
             ),

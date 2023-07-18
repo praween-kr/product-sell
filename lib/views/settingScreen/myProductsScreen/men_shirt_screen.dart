@@ -202,7 +202,7 @@ class MenshirtScreen extends StatelessWidget {
                       const Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: AppText(
-                          text: "Current Bid :",
+                          text: "End  Bid :",
                           textSize: 12,
                           fontWeight: FontWeight.w400,
                           color: Color(0xff9F9F9F),

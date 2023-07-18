@@ -173,101 +173,99 @@ class NavBarMsgScreen extends StatelessWidget {
                             ],
                           );
                         }),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: 4,
-                          shrinkWrap: true,
-                          itemBuilder: (context, position) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 35.0, vertical: 15.0),
-                                  child: Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed(Routes.messageScreen);
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  Assets.assetsGirlJean,
-                                                  height: 57.0,
-                                                  width: 57.0,
-                                                ),
-                                                const SizedBox(
-                                                  width: 12.0,
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    const AppText(
-                                                      text: "Men Tshirt",
-                                                      textSize: 15.0,
-                                                      color:
-                                                          AppColor.blackColor,
-                                                      style: AppTextStyle.title,
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 7.0,
-                                                    ),
-                                                    AppText(
-                                                      text: "Send Images",
-                                                      textSize: 12.0,
-                                                      color: AppColor.blackColor
-                                                          .withOpacity(0.3),
-                                                      style:
-                                                          AppTextStyle.medium,
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10.0,
-                                                      vertical: 10.0),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: AppColor.appcolor,
-                                                    shape: BoxShape.circle,
+                    ListView.builder(
+                        itemCount: 4,
+                        shrinkWrap: true,
+                        itemBuilder: (context, position) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 35.0, vertical: 15.0),
+                                child: Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(Routes.messageScreen);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                Assets.assetsGirlJean,
+                                                height: 57.0,
+                                                width: 57.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 12.0,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  const AppText(
+                                                    text: "Men Tshirt",
+                                                    textSize: 15.0,
+                                                    color:
+                                                        AppColor.blackColor,
+                                                    style: AppTextStyle.title,
                                                   ),
-                                                  child: const Center(
-                                                    child: AppText(
-                                                      text: "2",
-                                                      color: AppColor.white,
-                                                      textSize: 10.0,
-                                                      style:
-                                                          AppTextStyle.regular,
-                                                    ),
+                                                  const SizedBox(
+                                                    height: 7.0,
                                                   ),
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                                  AppText(
+                                                    text: "Send Images",
+                                                    textSize: 12.0,
+                                                    color: AppColor.blackColor
+                                                        .withOpacity(0.3),
+                                                    style:
+                                                        AppTextStyle.medium,
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets
+                                                        .symmetric(
+                                                    horizontal: 10.0,
+                                                    vertical: 10.0),
+                                                decoration:
+                                                    const BoxDecoration(
+                                                  color: AppColor.appcolor,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Center(
+                                                  child: AppText(
+                                                    text: "2",
+                                                    color: AppColor.white,
+                                                    textSize: 10.0,
+                                                    style:
+                                                        AppTextStyle.regular,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Divider(
-                                  color: AppColor.blackColor.withOpacity(0.1),
-                                  height: 1.0,
-                                  thickness: 1.0,
-                                )
-                              ],
-                            );
-                          }),
-                    )
+                              ),
+                              Divider(
+                                color: AppColor.blackColor.withOpacity(0.1),
+                                height: 1.0,
+                                thickness: 1.0,
+                              )
+                            ],
+                          );
+                        })
                   ]),
             )
           ],

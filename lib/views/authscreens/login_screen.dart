@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                   height: 120,
                 ),
                 const AppText(
-                  text: "Welcome Back !",
+                  text: "Welcome Back!",
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                   textSize: 35,

@@ -13,13 +13,13 @@ class FilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: CommonAppbarWidget(
+        heading: "Filter",
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            CommonAppbarWidget(
-              heading: "Filter",
-            ),
             Expanded(
               child: ListView.builder(
                 itemCount: 5,
