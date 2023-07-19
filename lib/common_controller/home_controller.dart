@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
+import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
@@ -20,13 +21,14 @@ class Homecontroller extends GetxController
   RxBool homePass = true.obs;
   RxBool Switch = false.obs;
   RxBool upload = false.obs;
-  var tabController = 0.obs;
+  var tabController = 1.obs;
   var messageController = 0.obs;
   var timer = false.obs;
   var imagePath = "".obs;
   late PageController pageController;
   late CameraHelper cameraHelper;
   var menu = false.obs;
+  var touchTap = false.obs;
   /// o for menu and 1 for filter selected
   var selectValue= 0.obs;
   var filter = false.obs;
@@ -106,7 +108,7 @@ class Homecontroller extends GetxController
   void onPageChanged(index) {
     pagePosition.value = index;
     if(index==2){
-      2.delay(()=>Get.offAllNamed(Routes.loginScreen));
+      1.delay(()=>Get.offAllNamed(Routes.loginScreen));
     }
   }
 
@@ -124,9 +126,8 @@ class Homecontroller extends GetxController
     imagePath.value = "";
   }
 
-  Future timerDialog() async {
+  Future bidHistoryDialog() async {
     print("clicked---- ");
-
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -165,7 +166,7 @@ class Homecontroller extends GetxController
                         top: 10, bottom: 20, right: 20, left: 20),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         const AppText(
@@ -178,26 +179,41 @@ class Homecontroller extends GetxController
                         const SizedBox(
                           height: 20,
                         ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            AppText(
-                              text: "\$",
-                              textSize: 14,
-                              color: blackColor,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Poppins",
-                            ),
-                            AppText(
-                              text: "2000",
-                              textSize: 20,
-                              color: blackColor,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Poppins",
-                            ),
-                          ],
+                        AppTextField(
+                        // width: 80,height: 60,
+                          maxLines: 3,
+                          containerColor: AppColor.textfield,
+                          title: "\$2000",
+                          hintStyle: const TextStyle(
+                            color: AppColor.blackColor,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Poppins"
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 50,
+                          ),
                         ),
+                        // const Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     AppText(
+                        //       text: "\$",
+                        //       textSize: 14,
+                        //       color: blackColor,
+                        //       fontWeight: FontWeight.w400,
+                        //       fontFamily: "Poppins",
+                        //     ),
+                        //     AppText(
+                        //       text: "2000",
+                        //       textSize: 20,
+                        //       color: blackColor,
+                        //       fontWeight: FontWeight.w400,
+                        //       fontFamily: "Poppins",
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(
                           height: 14,
                         ),
@@ -283,8 +299,11 @@ class Homecontroller extends GetxController
                             }),
                         GestureDetector(
                           onTap: () {
-                            sub.value = true;
                             Get.back();
+                            sub.value = true;
+                            Get.toNamed(Routes.menshirtScreen);
+
+
                           },
                           child: CommonButton(
                             margin: const EdgeInsets.symmetric(horizontal: 20),

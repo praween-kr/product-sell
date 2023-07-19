@@ -181,7 +181,6 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         /* GestureDetector(
                           onTap: () {},
                           child: Container(
@@ -226,8 +225,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Obx(() => controller.menu.value
-                  ? Container()
-                  : Column(
+                  ? Container():
+              Column(
                 children: [
                   const SizedBox(
                     height: 10,
@@ -294,59 +293,68 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-              )),
-              controller.menu.value
-                  ? Padding(
-                padding: const EdgeInsets.only(right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        controller.menu.value = true;
-                      },
-                      child: Image.asset(
-                        Assets.assetsTouch,
-                        height: 30,
-                        width: 30,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Get.toNamed(Routes.filterScreen);
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        margin: const EdgeInsets.only(
-                          right: 7,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColor.appcolor),
-                        ),
-                        child: GestureDetector(
+              ),
+              ),
+              /// Touch Button
+              Obx(
+                ()=> controller.menu.value
+                    ? Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        GestureDetector(
                           onTap: () {
-                            controller.filter.value =
-                            !controller.filter.value;
+                            controller.menu.value = true;
+                            controller.selectValue.value = 0;
+
                           },
-                          child: const Icon(Icons.sort,
-                              color: AppColor.appcolor),
+                          child: controller.selectValue.value == 0
+                              ?Image.asset(
+                            Assets.assetsTouch,
+                            height: 30,
+                            width: 30,
+                          ) :Image.asset(
+                               Assets.assetsTouchIcon,
+                               height: 30,
+                               width: 30,
+                               ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-                  : Container(),
-              controller.menu.value
-                  ? const SizedBox(
-                height: 20,
-              )
-                  : const SizedBox(),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 7.0),
+                          child: GestureDetector(
+                              onTap: () {
+                                controller.filter.value = true;
+                                controller.selectValue.value=1;
+                              },
+                              child:  controller.selectValue.value == 1
+                             ? Image.asset(
+                                Assets.assetsSortIcon,
+                                height: 30,
+                                width: 30,
+                              ) :Image.asset(
+                                Assets.assetsSort,
+                                height: 30,
+                                width: 30,
+                              ),
+                            ),
+                        ),
+                      ],
+                  ),
+                )
+                    : Container(),
+              ),
+              Obx(
+                ()=> controller.menu.value
+                    ? const SizedBox(
+                  height: 20,
+                )
+                    : const SizedBox(),
+              ),
               Obx(
                     () => controller.menu.value
                     ? Expanded(
@@ -560,28 +568,33 @@ class HomeScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              RichText(
-                                  text: const TextSpan(
-                                      text: "20 Bid",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontFamily: "Poppins",
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: "Show bid history",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontFamily: "Poppins",
-                                              fontWeight:
-                                              FontWeight.w400,
-                                              decoration: TextDecoration
-                                                  .underline),
-                                        )
-                                      ]))
+                              GestureDetector(
+                                onTap: (){
+                                  Get.toNamed(Routes.biddingScreen);
+                                },
+                                child: RichText(
+                                    text: const TextSpan(
+                                        text: "20 Bid",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontFamily: "Poppins",
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: "Show bid history",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                                fontFamily: "Poppins",
+                                                fontWeight:
+                                                FontWeight.w400,
+                                                decoration: TextDecoration
+                                                    .underline),
+                                          )
+                                        ])),
+                              )
                             ],
                           ),
                         )
@@ -599,6 +612,9 @@ class HomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var data = controller.Categorydata[index];
                         return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.menScreen);
+                          },
                           child: Column(
                             children: [
                               Container(
@@ -657,7 +673,6 @@ class HomeScreen extends StatelessWidget {
 
   Future timerDialog() async {
     print("clicked---- ");
-
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -716,6 +731,7 @@ class HomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             Get.back();
+                            controller.bidHistoryDialog();
                             Get.toNamed(Routes.menshirtScreen);
                           },
                           child: CommonButton(

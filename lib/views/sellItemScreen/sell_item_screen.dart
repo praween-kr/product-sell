@@ -460,6 +460,79 @@ class SellItemScreen extends StatelessWidget {
                               height: 16.0,
                             ),
                             const AppText(
+                              text: "Size",
+                              color: AppColor.blackColor,
+                              textSize: 13.0,
+                              style: AppTextStyle.medium,
+                            ),
+                            const SizedBox(
+                              height: 14.0,
+                            ),
+                            Obx(
+                                  () => DropdownButtonHideUnderline(
+                                child: DropdownButton2<String>(
+                                  onChanged: (newValue) {
+                                    controller.sizeDropValue.value = newValue!;
+                                  },
+                                  value: controller.sizeDropValue.value,
+                                  items: controller.sizeItems.value.map((items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: AppText(
+                                        text: items,
+                                        style: AppTextStyle.regular,
+                                        color: AppColor.blackColor,
+                                        textSize: 13,
+                                      ),
+                                    );
+                                  }).toList(),
+                                  buttonStyleData: ButtonStyleData(
+                                    height: 44,
+                                    width: Get.width,
+                                    padding: const EdgeInsets.only(
+                                        left: 14.0, right: 16.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(23),
+                                      color: AppColor.TextColor,
+                                    ),
+                                    //elevation: 2,
+                                  ),
+                                  iconStyleData: const IconStyleData(
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                    ),
+                                    iconSize: 20,
+                                    iconEnabledColor: AppColor.blackColor,
+                                    iconDisabledColor: AppColor.blackColor,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    maxHeight: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(23),
+                                        color: AppColor.white,
+                                        border: Border.all(
+                                            color: AppColor.itemBorderColor)),
+                                    offset: const Offset(-2, 0),
+                                    scrollbarTheme: ScrollbarThemeData(
+                                      radius: const Radius.circular(40),
+                                      thickness:
+                                      MaterialStateProperty.all<double>(6),
+                                      thumbVisibility:
+                                      MaterialStateProperty.all<bool>(true),
+                                    ),
+                                  ),
+                                  menuItemStyleData: const MenuItemStyleData(
+                                    height: 40,
+                                    padding:
+                                    EdgeInsets.only(left: 23, right: 24),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            const AppText(
                               text: "Brand",
                               color: AppColor.blackColor,
                               textSize: 13.0,
@@ -472,9 +545,9 @@ class SellItemScreen extends StatelessWidget {
                                   () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
-                                    controller.dropDownValue4.value = newValue!;
+                                    controller.dropDownValue5.value = newValue!;
                                   },
-                                  value: controller.dropDownValue4.value,
+                                  value: controller.dropDownValue5.value,
                                   items:
                                   controller.brandItems.value.map((items) {
                                     return DropdownMenuItem(
@@ -546,9 +619,9 @@ class SellItemScreen extends StatelessWidget {
                                   () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
-                                    controller.dropDownValue5.value = newValue!;
+                                    controller.dropDownValue6.value = newValue!;
                                   },
-                                  value: controller.dropDownValue5.value,
+                                  value: controller.dropDownValue6.value,
                                   items: controller.conditionItems.value
                                       .map((items) {
                                     return DropdownMenuItem(
@@ -620,10 +693,10 @@ class SellItemScreen extends StatelessWidget {
                                   () => DropdownButtonHideUnderline(
                                 child: DropdownButton2<String>(
                                   onChanged: (newValue) {
-                                    controller.dropDownValue6.value = newValue!;
+                                    controller.dropDownValue7.value = newValue!;
                                     controller.selectedItemValue.value = true;
                                   },
-                                  value: controller.dropDownValue6.value,
+                                  value: controller.dropDownValue7.value,
                                   items:
                                   controller.sellItems.value.map((items) {
                                     return DropdownMenuItem(
@@ -685,6 +758,9 @@ class SellItemScreen extends StatelessWidget {
                             Obx(() => controller.selectedItemValue.value == true
                                 ? columnData(context)
                                 : Container()),
+                            const SizedBox(
+                              height: 14.0,
+                            ),
                             const AppText(
                               text: "Price",
                               color: AppColor.blackColor,
@@ -729,19 +805,18 @@ class SellItemScreen extends StatelessWidget {
                             const SizedBox(
                               height: 31.0,
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 20.0),
-                              decoration: BoxDecoration(
-                                  color: AppColor.TextColor,
-                                  borderRadius: BorderRadius.circular(23)),
-                              child: Center(
-                                child: AppText(
-                                  text: "Boost your post",
-                                  color: AppColor.blackColor.withOpacity(0.3),
-                                  textSize: 15.0,
-                                  style: AppTextStyle.regular,
-                                ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.subscriptionScreen);
+                              },
+                              child: CommonButton(
+                                color: AppColor.TextColor,
+                                height: 57,
+                                radius: 23,
+                                text: "Boost your post",
+                                textStyle:  TextStyle(
+                                    color: AppColor.blackColor.withOpacity(0.3),
+                                    fontSize: 16),
                               ),
                             ),
                             const SizedBox(
@@ -935,19 +1010,18 @@ class SellItemScreen extends StatelessWidget {
                             const SizedBox(
                               height: 31.0,
                             ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0, vertical: 20.0),
-                              decoration: BoxDecoration(
-                                  color: AppColor.TextColor,
-                                  borderRadius: BorderRadius.circular(23)),
-                              child: Center(
-                                child: AppText(
-                                  text: "Boost your post",
-                                  color: AppColor.blackColor.withOpacity(0.3),
-                                  textSize: 15.0,
-                                  style: AppTextStyle.regular,
-                                ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.subscriptionScreen);
+                              },
+                              child: CommonButton(
+                                color: AppColor.TextColor,
+                                height: 57,
+                                radius: 23,
+                                text: "Boost your post",
+                                textStyle:  TextStyle(
+                                    color: AppColor.blackColor.withOpacity(0.3),
+                                    fontSize: 16),
                               ),
                             ),
                             const SizedBox(

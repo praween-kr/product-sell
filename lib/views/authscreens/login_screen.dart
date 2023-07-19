@@ -149,12 +149,12 @@ class LoginScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.bottomScreen);
-                  },
+                    Get.offAllNamed(Routes.bottomScreen);
+                    },
                   child: Container(
                     alignment: Alignment.center,
                     margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
-                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    padding: const EdgeInsets.only(top: 15, bottom: 15),
                     decoration: const BoxDecoration(
                       color: AppColor.appcolor,
                       borderRadius: BorderRadius.all(
@@ -235,7 +235,7 @@ class LoginScreen extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                         text: "Don't have an account  ",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color(0xff000000),
                         ),
                         children: [
@@ -245,7 +245,7 @@ class LoginScreen extends StatelessWidget {
                                 ..onTap = () {
                                   Get.toNamed(Routes.signupScreen);
                                 },
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xffF1A339),
                               ))
                         ]),

@@ -8,7 +8,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
   final controller = Get.put(SettingsController());
 
@@ -204,6 +204,8 @@ class SettingScreen extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Get.toNamed(Routes.productScreen);
+                      controller.tabController.value = 1 ;
+
                     },
                     child: const AppText(
                       text: "My Products",
@@ -483,7 +485,7 @@ class SettingScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.toNamed(Routes.loginScreen);
+                      Get.offAllNamed(Routes.loginScreen);
                     },
                     child: const AppText(
                       text: "Logout",

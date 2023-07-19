@@ -77,9 +77,9 @@ class OnBoardingScreen extends StatelessWidget {
                         child: SmoothPageIndicator(
                           controller: controller.pageController,
                           count: controller.onBoardingData.length,
-                          effect: const ExpandingDotsEffect(
-                              activeDotColor: Colors.black,
-                              dotColor: Colors.grey,
+                          effect:  ExpandingDotsEffect(
+                              activeDotColor: Colors.white,
+                              dotColor: Colors.white.withOpacity(0.3),
                               dotWidth: 25),
                           onDotClicked: (index) {},
                         )),

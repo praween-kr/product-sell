@@ -16,6 +16,7 @@ import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/myProductsScreen/productDetail_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_screen.dart';
@@ -150,6 +151,9 @@ class RoutesGenerator {
         break;
       case Routes.insightScreen:
         widgetScreen = InsightsScreen();
+        break;
+      case Routes.productDetailScreen:
+        widgetScreen = ProductDetailScreen();
         break;
       default:
         widgetScreen = _errorRoute();

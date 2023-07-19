@@ -52,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                         color: AppColor.blackColor,
                         fontSize: 15
                     ),
-                    keyBoardtype: TextInputAction.next,
+                    keyBoardType: TextInputAction.next,
                     textInputType: TextInputType.name,
                     contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                     //margin: const EdgeInsets.only(right: 35.0),
@@ -75,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor
                     ),
-                    keyBoardtype: TextInputAction.next,
+                    keyBoardType: TextInputAction.next,
                     textInputType: TextInputType.name,
                     contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                     //margin: const EdgeInsets.only(right: 35.0),
@@ -98,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor
                     ),
-                    keyBoardtype: TextInputAction.next,
+                    keyBoardType: TextInputAction.next,
                     textInputType: TextInputType.emailAddress,
                     contentPadding: const EdgeInsets.only(bottom: 8.0,left: 13.0),
                     //margin: const EdgeInsets.only(right: 35.0),
@@ -150,8 +150,30 @@ class ProfileScreen extends StatelessWidget {
                     style: const TextStyle(
                         color: AppColor.blackColor
                     ),
-                    contentPadding: const EdgeInsets.only(right: 2.0),
                     maxLength: 8,
+                  ),
+                  const SizedBox(height: 18,),
+                   AppText(
+                    text: "Location",
+                    color: AppColor.blackColor.withOpacity(0.5),
+                    textSize: 15.0,
+                    style: AppTextStyle.medium,
+                  ),
+                  const SizedBox(
+                    height: 14.0,
+                  ),
+                  AppTextField(
+                    height: 50,
+                    margin: const EdgeInsets.only(right: 0),
+                    borderRadius: BorderRadius.circular(20),
+                    containerColor: AppColor.TextColor,
+                    title: "Add",
+                    //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                    suffix: const Icon(
+                      Icons.my_location,
+                      size: 18.0,
+                      color: AppColor.appcolor,
+                    ),
                   ),
                 ],
               ),

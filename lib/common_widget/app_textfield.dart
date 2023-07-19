@@ -17,11 +17,11 @@ class AppTextField extends StatelessWidget {
   TextInputType? textInputType = TextInputType.emailAddress;
   double? height;
   TextStyle? hintStyle;
-  TextInputAction? keyBoardtype;
+  TextInputAction? keyBoardType;
   double? width;
   final double? elevation;
   final Widget? suffix;
-  final Widget? CounterycodePiker;
+  final Widget? countryCodePiker;
   final Widget? prefix;
   StringToVoidFunc? onChanged;
   EdgeInsetsGeometry? contentPadding;
@@ -56,8 +56,8 @@ class AppTextField extends StatelessWidget {
       this.suffixIconColor,
       this.readOnly,
       this.margin,
-      this.CounterycodePiker,
-      this.keyBoardtype})
+      this.countryCodePiker,
+      this.keyBoardType})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class AppTextField extends StatelessWidget {
         maxLength: maxLength,
         maxLines: maxLines,
         readOnly: readOnly ?? false,
-        textInputAction: keyBoardtype ?? TextInputAction.done,
+        textInputAction: keyBoardType ?? TextInputAction.done,
         obscureText: isObscure ?? false,
         keyboardType: textInputType ?? TextInputType.emailAddress,
         decoration: InputDecoration(
@@ -90,8 +90,7 @@ class AppTextField extends StatelessWidget {
           suffixIcon: suffix,
           prefixIcon: prefix,
           suffixIconColor: suffixIconColor,
-          contentPadding:
-              contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
+          contentPadding: contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
           hintStyle: hintStyle ??TextStyle(color: Colors.black.withOpacity(0.4)),
           border: const OutlineInputBorder(
             borderSide: BorderSide.none,

@@ -6,7 +6,6 @@ import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
-
 import '../../../common_widget/color_constant.dart';
 import '../../../utills/colors_file.dart';
 
@@ -15,7 +14,7 @@ class MenshirtScreen extends StatelessWidget {
     // controller.timerDialog();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.menu.value) {
-        controller.timerDialog();
+        controller.bidHistoryDialog();
       } else {
         return;
       }
@@ -28,12 +27,27 @@ class MenshirtScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
+        leading: GestureDetector(
+          onTap: () {
+                Get.back();
+                Get.back();
+              },
+          child: Container(
+            margin: const EdgeInsets.all(5),
+            padding: const EdgeInsets.only(left: 12),
+            decoration: BoxDecoration(
+                color: AppColor.appcolor,
+                borderRadius: BorderRadius.circular(15)),
+            child: const Icon(Icons.arrow_back_ios),
+          ),
+        ),
         heading: "Men Black Tshirt",
         textStyle: const TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.black,
             fontSize: 18,
             fontFamily: "Poppins"),
+        action: Icon(Icons.favorite,color: AppColor.blackColor.withOpacity(0.2),)
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -157,13 +171,13 @@ class MenshirtScreen extends StatelessWidget {
                           ),
                           const AppText(
                             text: "Min \$2000",
-                            textSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0x1e000000),
+                            textSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff000000),
                             fontFamily: "Poppins",
                           ),
                           const SizedBox(
-                            height: 8,
+                            height: 6,
                           ),
                           GestureDetector(
                             onTap: () {
@@ -173,7 +187,7 @@ class MenshirtScreen extends StatelessWidget {
                                 text: const TextSpan(
                                     text: "20 Bid ",
                                     style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 8,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                         fontFamily: "Poppins"),
@@ -183,7 +197,7 @@ class MenshirtScreen extends StatelessWidget {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontFamily: "Poppins",
-                                          fontSize: 12,
+                                          fontSize: 8,
                                           color: Colors.black,
                                           decoration: TextDecoration.underline))
                                 ])),
@@ -193,7 +207,7 @@ class MenshirtScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 30,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,8 +273,8 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(
-              color: Color(0x66000000),
+             Divider(
+              color: const Color(0x66000000).withOpacity(0.1),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -349,18 +363,20 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(
-              color: Color(0x66000000),
+
+             Divider(
+              color: const Color(0x66000000).withOpacity(0.1),
+              thickness: 1,
             ),
             const Padding(
-              padding: EdgeInsets.only(top: 20, left: 20),
+              padding: EdgeInsets.only(top: 15, left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
                     text: "Condition",
                     textSize: 15,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.appcolor,
                   ),
                   SizedBox(
@@ -369,17 +385,17 @@ class MenshirtScreen extends StatelessWidget {
                   AppText(
                     text: "New with tags",
                     textSize: 13,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w600,
                     color: blackColor,
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   AppText(
-                    text:
-                        "A brand-new, unused item with tags attached\nor in the original packing.",
+                    text: "A brand-new, unused item with tags attached\nor "
+                        "in the original packing.",
                     textSize: 12,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                     lineHeight: 1.3,
                     color: Color(0x4d000000),
                     fontFamily: "Poppins",
@@ -389,10 +405,11 @@ class MenshirtScreen extends StatelessWidget {
             ),
             const Divider(
               color: Color(0x66000000),
+              thickness: 1,
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 20,
+                top: 15,
               ),
               child: Column(
                 children: [
@@ -419,6 +436,7 @@ class MenshirtScreen extends StatelessWidget {
                             )
                           ],
                         ),
+                        SizedBox(height: 10,),
                         Row(
                           children: [
                             AppText(
@@ -437,7 +455,7 @@ class MenshirtScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -460,7 +478,7 @@ class MenshirtScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 15,
                   ),
                   Image.asset(Assets.assetsSale),
                   const SizedBox(
@@ -469,88 +487,94 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20, left: 20),
+             Padding(
+              padding: const EdgeInsets.only(top: 20, left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText(
+                  const AppText(
                     text: "Item Description",
-                    textSize: 13,
+                    textSize: 13,fontWeight: FontWeight.w600,
                     fontFamily: "Poppins",
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   AppText(
                       text: "Comfort Experience comfort to greates",
-                      textSize: 13,
+                      textSize: 12,fontWeight: FontWeight.w500,
                       fontFamily: "Poppins",
-                      color: Color(0x4d000000)),
-                  SizedBox(
+                      color: AppColor.blackColor.withOpacity(0.3)
+                  ),
+                  const SizedBox(
                     height: 10,
                   ),
-                  AppText(
-                    text: "Quick Bid :",
-                    textSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff9F9F9F),
-                  )
+                  // AppText(
+                  //   text: "Quick Bid :",
+                  //   textSize: 12,
+                  //   fontWeight: FontWeight.w500,
+                  //   color: Color(0xff9F9F9F),
+                  // )
                 ],
               ),
             ),
-            Obx(
-              () => controller.sub.value
-                  ? CommonButton(
-                      height: 50,
-                      radius: 15,
-                      margin:
-                          const EdgeInsets.only(left: 20, right: 20, top: 20),
-                      color: AppColor.appcolor,
-                      text: "Edit Bid",
-                      textStyle: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Poppins"),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CommonButton(
-                            height: 50,
-                            width: 150,
-                            radius: 18,
-                            color: AppColor.appcolor,
-                            text: "Bid \$2500",
-                            textStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Poppins"),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          CommonButton(
-                            height: 50,
-                            width: 150,
-                            color: AppColor.appcolor,
-                            radius: 18,
-                            text: "Bid \$3500",
-                            textStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Poppins"),
-                          ),
-                        ],
+            GestureDetector(
+              onTap: (){
+                controller.bidHistoryDialog();
+              },
+              child: Obx(
+                () => controller.sub.value
+                    ? CommonButton(
+                        height: 57,
+                        radius: 20,
+                        margin:
+                            const EdgeInsets.only(left: 30, right: 30, top: 20),
+                        color: AppColor.appcolor,
+                        text: "Edit Bid",
+                        textStyle: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Poppins"),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 15),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CommonButton(
+                              height: 50,
+                              width: 150,
+                              radius: 18,
+                              color: AppColor.appcolor,
+                              text: "Bid \$2500",
+                              textStyle: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Poppins"),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            CommonButton(
+                              height: 50,
+                              width: 150,
+                              color: AppColor.appcolor,
+                              radius: 18,
+                              text: "Bid \$3500",
+                              textStyle: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Poppins"),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+              ),
             ),
             const SizedBox(
               height: 20,

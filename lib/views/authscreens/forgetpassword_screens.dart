@@ -55,7 +55,7 @@ class ForgotScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.verificationScreen);
+                    Get.toNamed(Routes.loginScreen);
                   },
                   child: CommonButton(
                     color: AppColor.appcolor,

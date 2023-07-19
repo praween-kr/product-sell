@@ -35,7 +35,6 @@ class Assets {
   static const String assetsHome3 = 'assets/home3.png';
   static const String assetsHomeBid = 'assets/home_bid.png';
   static const String assetsHomeSelected = 'assets/home_selected.png';
-  static const String assetsTouchIcon = 'assets/touch_icon.png';
   static const String assetsJean = 'assets/Jean.png';
   static const String assetsKids = 'assets/Kids.png';
   static const String assetsLike = 'assets/like.png';
@@ -48,6 +47,7 @@ class Assets {
   static const String assetsPersonIcon = 'assets/person_icon.png';
   static const String assetsPhoneBack = 'assets/phone_back.png';
   static const String assetsPhoneFront = 'assets/phone_front.png';
+  static const String assetsPhoneImage = 'assets/phone_image.png';
   static const String assetsPokemon = 'assets/pokemon.png';
   static const String assetsRoom = 'assets/Room.png';
   static const String assetsSale = 'assets/sale.png';
@@ -60,6 +60,7 @@ class Assets {
   static const String assetsSplash = 'assets/splash.png';
   static const String assetsStackjean = 'assets/stackjean.png';
   static const String assetsTouch = 'assets/touch.png';
+  static const String assetsTouchIcon = 'assets/touch_icon.png';
   static const String assetsTshirt = 'assets/Tshirt.png';
   static const String assetsVideo = 'assets/video.png';
 
