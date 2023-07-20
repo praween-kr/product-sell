@@ -150,6 +150,7 @@ class LoginScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Get.offAllNamed(Routes.bottomScreen);
+                    print(" menu value ${controller.menu.value}");
                     },
                   child: Container(
                     alignment: Alignment.center,

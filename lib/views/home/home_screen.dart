@@ -297,8 +297,8 @@ class HomeScreen extends StatelessWidget {
               ),
               /// Touch Button
               Obx(
-                ()=> controller.menu.value
-                    ? Padding(
+              ()=> controller.menu.value
+                  ? Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -307,7 +307,10 @@ class HomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             controller.menu.value = true;
+                            controller.touchTap.value = true;
+                            controller.filter.value = false;
                             controller.selectValue.value = 0;
+                            print("menu value${controller.menu.value}");
 
                           },
                           child: controller.selectValue.value == 0
@@ -324,12 +327,15 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           width: 6,
                         ),
+                        /// Filter Button
                         Padding(
                           padding: const EdgeInsets.only(right: 7.0),
                           child: GestureDetector(
                               onTap: () {
                                 controller.filter.value = true;
+                                controller.touchTap.value = false;
                                 controller.selectValue.value=1;
+                                print("menu value${controller.menu.value}");
                               },
                               child:  controller.selectValue.value == 1
                              ? Image.asset(
@@ -355,8 +361,10 @@ class HomeScreen extends StatelessWidget {
                 )
                     : const SizedBox(),
               ),
+              /// when menu == true (Category Screen), when filter == true(Filter Screen),
+              /// When touchTap== ture(Home Screen)
               Obx(
-                    () => controller.menu.value
+                    () => controller.menu.value == true
                     ? Expanded(
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -472,7 +480,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       )
-                          : Stack(children: [
+                          : controller.touchTap.value == true  ?
+                      Stack(children: [
                         GestureDetector(
                           onTap: () {},
                           child: SwipableStack(
@@ -498,10 +507,25 @@ class HomeScreen extends StatelessWidget {
                                         const SizedBox(
                                           width: 70,
                                         ),
-                                        Image.asset(
-                                          Assets.assetsLike,
-                                          height: 50,
-                                          width: 50,
+                                        Obx(
+                                           ()=> GestureDetector(
+                                            onTap: (){
+                                              controller.heartColor.value = true;
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                                              decoration:  BoxDecoration(
+                                                color: controller.heartColor.value == true?
+                                                AppColor.prdtextColor:
+                                                  AppColor.blackColor,
+                                                shape: BoxShape.circle
+                                              ),
+                                              child: const Center(
+                                                child: Icon(Icons.favorite,color: AppColor.white,size: 30,
+                                                )
+                                              ),
+                                            ),
+                                          ),
                                         )
                                       ],
                                     ),
@@ -512,7 +536,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          bottom: 80,
+                          bottom: Get.height *.14,
                           left: 20,
                           child: Column(
                             crossAxisAlignment:
@@ -598,10 +622,10 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                         )
-                      ])),
+                      ]):Container()),
                 )
                     : Expanded(
-                  child: GridView.builder(
+                     child: GridView.builder(
                       physics: const ClampingScrollPhysics(),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5, vertical: 5),
@@ -614,6 +638,7 @@ class HomeScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.menScreen);
+                            print("menu value ${controller.menu.value}");
                           },
                           child: Column(
                             children: [

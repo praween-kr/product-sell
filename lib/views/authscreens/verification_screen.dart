@@ -70,7 +70,7 @@ class VerificationScreen extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.loginScreen);
+                Get.toNamed(Routes.bottomScreen);
               },
               child: Container(
                 alignment: Alignment.center,

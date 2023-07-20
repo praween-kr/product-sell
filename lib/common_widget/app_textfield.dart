@@ -19,6 +19,7 @@ class AppTextField extends StatelessWidget {
   TextStyle? hintStyle;
   TextInputAction? keyBoardType;
   double? width;
+  TextAlign? textAlign;
   final double? elevation;
   final Widget? suffix;
   final Widget? countryCodePiker;
@@ -39,6 +40,7 @@ class AppTextField extends StatelessWidget {
       this.name,
       this.controller,
         this.hintStyle,
+        this.textAlign,
       this.containerColor,
       this.elevation,
       this.inputFormatters,
@@ -80,6 +82,7 @@ class AppTextField extends StatelessWidget {
         inputFormatters: inputFormatters,
         maxLength: maxLength,
         maxLines: maxLines,
+        textAlign: textAlign ?? TextAlign.start,
         readOnly: readOnly ?? false,
         textInputAction: keyBoardType ?? TextInputAction.done,
         obscureText: isObscure ?? false,

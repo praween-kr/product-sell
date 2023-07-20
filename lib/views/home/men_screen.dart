@@ -5,7 +5,6 @@ import 'package:oninto_flutter/common_controller/men_list_controller.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-
 import '../../common_controller/bottom_nav_controller.dart';
 
 class MenScreen extends StatelessWidget {
@@ -38,7 +37,9 @@ class MenScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         controller1.menu.value = true;
+                         controller1.touchTap.value= true;
                         Get.toNamed(Routes.bottomScreen);
+
                       },
                       child: Column(
                         children: [

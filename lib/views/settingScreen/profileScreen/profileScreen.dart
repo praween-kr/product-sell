@@ -44,6 +44,7 @@ class ProfileScreen extends StatelessWidget {
                   AppTextField(
                     height: 57.0,
                     title: "Jenny",
+                    readOnly: true,
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor,
                       fontSize: 15
@@ -72,6 +73,7 @@ class ProfileScreen extends StatelessWidget {
                   AppTextField(
                     height: 57.0,
                     title: "Smith",
+                    readOnly: true,
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor
                     ),
@@ -94,6 +96,7 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 12,),
                   AppTextField(
                     height: 57.0,
+                    readOnly: true,
                     title: "Jennysmith@gmail.com",
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor
@@ -109,16 +112,46 @@ class ProfileScreen extends StatelessWidget {
                       scale: 2.2,
                     ),
                   ),
-                  const SizedBox(height: 18,),
+                  const SizedBox(height: 12,),
+                  AppText(
+                    text: "Location",
+                    color: AppColor.blackColor.withOpacity(0.5),
+                    textSize: 15.0,
+                    style: AppTextStyle.medium,
+                  ),
+                  const SizedBox(
+                    height: 14.0,
+                  ),
+                  AppTextField(
+                    height: 50,
+                    readOnly: true,
+                    margin: const EdgeInsets.only(right: 0),
+                    borderRadius: BorderRadius.circular(20),
+                    containerColor: AppColor.TextColor,
+                    title: "Add",
+                    style: const TextStyle(
+                        color: AppColor.blackColor
+                    ),
+                    hintStyle: const TextStyle(
+                        color: AppColor.blackColor
+                    ),
+                    //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                    suffix: const Icon(
+                      Icons.my_location,
+                      size: 18.0,
+                      color: AppColor.appcolor,
+                    ),
+                  ),
+                  const SizedBox(height: 12,),
                   AppText(
                     text: "Phone Number",
                     textSize: 15.0,
                     color: AppColor.blackColor.withOpacity(0.5),
                   ),
-                  const SizedBox(height: 12,),
+                  const SizedBox(height: 14,),
                   AppTextField(
                     height: 50,
-                    margin: const EdgeInsets.only(right: 0),
+                    readOnly: true,
                     borderRadius: BorderRadius.circular(20),
                     containerColor: AppColor.TextColor,
                     textInputType: TextInputType.phone,
@@ -131,7 +164,6 @@ class ProfileScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CountryCodePicker(
-                            padding: EdgeInsets.zero,
                             textStyle:
                             TextStyle(color: Colors.white, fontSize: 15),
                             enabled: true,
@@ -147,33 +179,13 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     title: "5555-555-55",
+                    hintStyle: const TextStyle(
+                        color: AppColor.blackColor
+                    ),
                     style: const TextStyle(
                         color: AppColor.blackColor
                     ),
                     maxLength: 8,
-                  ),
-                  const SizedBox(height: 18,),
-                   AppText(
-                    text: "Location",
-                    color: AppColor.blackColor.withOpacity(0.5),
-                    textSize: 15.0,
-                    style: AppTextStyle.medium,
-                  ),
-                  const SizedBox(
-                    height: 14.0,
-                  ),
-                  AppTextField(
-                    height: 50,
-                    margin: const EdgeInsets.only(right: 0),
-                    borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
-                    title: "Add",
-                    //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                    suffix: const Icon(
-                      Icons.my_location,
-                      size: 18.0,
-                      color: AppColor.appcolor,
-                    ),
                   ),
                 ],
               ),

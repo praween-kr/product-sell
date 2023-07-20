@@ -39,7 +39,7 @@ class ProductDetailScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 15.0,),
+          padding: const EdgeInsets.only(top: 15.0,bottom: 30.0),
           child: Column(
             children: [
               Stack(
@@ -207,30 +207,39 @@ class ProductDetailScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20,),
-                    Image.asset(Assets.assetsSale),
-                    const SizedBox(height: 20,),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppText(
-                            text: "Item Description",
-                            textSize: 13,
-                            fontFamily: "Poppins",
-                            color: blackColor,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          AppText(
-                              text: "Comfort Experience comfort to greates",
-                              textSize: 13,
-                              fontFamily: "Poppins",
-                              color: Color(0x4d000000)),
-                        ],
-                      ),
-                    ),
+                   Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Image.asset(Assets.assetsSale),
+                       const SizedBox(
+                         height: 15,
+                       ),
+                       Padding(
+                         padding: const EdgeInsets.only(left: 30.0),
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             const AppText(
+                               text: "Item Description",
+                               textSize: 13,
+                               fontFamily: "Poppins",
+                               color: blackColor,
+                             ),
+                            const SizedBox(
+                               height: 5,
+                             ),
+                             AppText(
+                                 text: "Comfort Experience comfort to greates",
+                                 textSize: 13,
+                                 fontFamily: "Poppins",
+                                 color: AppColor.blackColor.withOpacity(0.3)
+                             ),
+                           ],
+                         ),
+                       ),
+
+                     ],
+                   ),
                     const SizedBox(
                       height: 31.0,
                     ),
@@ -254,7 +263,7 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.sellItemScreen);
+                        Get.toNamed(Routes.editItemScreen);
                       },
                       child: CommonButton(
                         color: AppColor.appcolor,

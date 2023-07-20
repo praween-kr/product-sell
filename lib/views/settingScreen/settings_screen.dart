@@ -182,319 +182,73 @@ class SettingScreen extends GetView<SettingsController> {
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.shopping_cart_rounded,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.productScreen);
-                      controller.tabController.value = 1 ;
-
-                    },
-                    child: const AppText(
-                      text: "My Products",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              commonRow(icon: Icons.shopping_cart_rounded, title: "My Products",
+                  onClick: (){
+                Get.toNamed(Routes.productScreen);
+                controller.tabController.value = 1 ;
+              }),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.lock,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.passwordScreen);
-                    },
-                    child: const AppText(
-                      text: "Password",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// Password Row
+              commonRow(icon:  Icons.lock,
+                  title: "Password",
+                  onClick: (){
+                    Get.toNamed(Routes.passwordScreen);
+                  }),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.payment,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.settingPaymentScreen);
-                    },
-                    child: const AppText(
-                      text: "Payment",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// Payment Row
+              commonRow(icon: Icons.payment, title: "Payment", onClick: () {
+                Get.toNamed(Routes.settingPaymentScreen);
+              },),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.location_on,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.addressScreen);
-                    },
-                    child: const AppText(
-                      text: "Address",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// Address Row
+              commonRow(icon: Icons.location_on, title: "Address", onClick: () {
+                Get.toNamed(Routes.addressScreen);
+              },),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.attach_money,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.subscriptionScreen);
-                    },
-                    child: const AppText(
-                      text: "My Subscription",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// My Subscription Row
+              commonRow(icon: Icons.attach_money, title: "My Subscription", onClick: () {
+                Get.toNamed(Routes.subscriptionScreen);
+              },),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 42,
-                    width: 42,
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.event_note_sharp,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(CmsScreen(type: 1));
-                    },
-                    child: const AppText(
-                      text: "Privacy Policy",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// Privacy Policy Row
+              commonRow(icon: Icons.event_note_sharp, title: "Privacy Policy", onClick: () {
+                Get.to(CmsScreen(type: 1));
+              },),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.headphones,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(CmsScreen(type: 2));
-                    },
-                    child: const AppText(
-                      text: "Help Center",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// Help Center Row
+             commonRow(icon: Icons.headphones, title: "Help Center", onClick: () {
+            Get.to(CmsScreen(type: 2));
+          },),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: AppColor.appcolor, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.help,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(CmsScreen(type: 3));
-                    },
-                    child: const AppText(
-                      text: "About Us",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
-              ),
+              /// About Us Row
+            commonRow(icon:  Icons.help, title: "About Us", onClick: () {
+              Get.to(CmsScreen(type: 3));
+            },),
               const SizedBox(
                 height: 17.0,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    decoration: const BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.logout_sharp,
-                        color: AppColor.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 17.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.offAllNamed(Routes.loginScreen);
-                    },
-                    child: const AppText(
-                      text: "Logout",
-                      textSize: 13.0,
-                      color: AppColor.blackColor,
-                      style: AppTextStyle.regular,
-                    ),
-                  ),
-                ],
+              /// Logout Row
+             commonRow(icon:  Icons.logout_sharp, title: "Logout",
+               color: AppColor.prdtextColor, boxColor: AppColor.prdtextColor,
+               onClick: () {
+               Get.offAllNamed(Routes.loginScreen);
+             },),
+              const SizedBox(
+                height: 17.0,
               ),
             ],
           ),
@@ -502,4 +256,43 @@ class SettingScreen extends GetView<SettingsController> {
       ),
     );
   }
+  /// CommonRow View
+  Widget commonRow({required IconData icon, Color? color,Color? boxColor,required String title, required Function onClick}){
+    return   GestureDetector(
+      onTap: (){
+        onClick();
+      },
+      child: Card(
+        elevation: 0,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0, vertical: 10.0),
+              decoration:  BoxDecoration(
+                  color: boxColor ?? AppColor.appcolor, shape: BoxShape.circle),
+              child:  Center(
+                child: Icon(
+                  icon,
+                  color: AppColor.white,
+                  size: 25,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 17.0,
+            ),
+            AppText(
+              text: title,
+              textSize: 13.0,
+              color: color?? AppColor.blackColor,
+              style: AppTextStyle.regular,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

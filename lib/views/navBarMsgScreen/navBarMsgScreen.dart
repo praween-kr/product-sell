@@ -26,6 +26,7 @@ class NavBarMsgScreen extends StatelessWidget {
       ),
       body: DefaultTabController(
         length: 2,
+        initialIndex: 0,
         child: Column(
           children: [
             Obx(() => TabBar(
@@ -38,7 +39,7 @@ class NavBarMsgScreen extends StatelessWidget {
                           : Colors.transparent;
                     }),
                     onTap: (index) {
-                      controller.tabController.value = index;
+                      controller.messageController.value = index;
                     },
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     indicator:
@@ -53,11 +54,11 @@ class NavBarMsgScreen extends StatelessWidget {
                         width: 148,
                         margin: const EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(
-                            color: controller.tabController.value == 0
+                            color: controller.messageController.value == 0
                                 ? AppColor.appcolor
                                 : Colors.white,
                             border: Border.all(
-                              color: controller.tabController.value == 0
+                              color: controller.messageController.value == 0
                                   ? AppColor.appcolor
                                   : Colors.grey.shade300,
                             ),
@@ -67,7 +68,7 @@ class NavBarMsgScreen extends StatelessWidget {
                             text: "Community",
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 0
+                            color: controller.messageController.value == 0
                                 ? Colors.white
                                 : Colors.grey.shade500,
                           ),
@@ -78,11 +79,11 @@ class NavBarMsgScreen extends StatelessWidget {
                         width: 148,
                         margin: const EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(
-                            color: controller.tabController.value == 1
+                            color: controller.messageController.value == 1
                                 ? AppColor.appcolor
                                 : Colors.white,
                             border: Border.all(
-                              color: controller.tabController.value == 1
+                              color: controller.messageController.value == 1
                                   ? AppColor.appcolor
                                   : Colors.grey.shade300,
                             ),
@@ -92,7 +93,7 @@ class NavBarMsgScreen extends StatelessWidget {
                             text: "Messages",
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: controller.tabController.value == 1
+                            color: controller.messageController.value == 1
                                 ? Colors.white
                                 : Colors.grey.shade500,
                           ),

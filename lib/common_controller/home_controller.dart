@@ -28,6 +28,7 @@ class Homecontroller extends GetxController
   late PageController pageController;
   late CameraHelper cameraHelper;
   var menu = false.obs;
+  var heartColor = false.obs;
   var touchTap = false.obs;
   /// o for menu and 1 for filter selected
   var selectValue= 0.obs;
@@ -175,45 +176,27 @@ class Homecontroller extends GetxController
                           color: blackColor,
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w400,
+
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         AppTextField(
                         // width: 80,height: 60,
+                          textAlign: TextAlign.center,
                           maxLines: 3,
                           containerColor: AppColor.textfield,
                           title: "\$2000",
                           hintStyle: const TextStyle(
                             color: AppColor.blackColor,
                             fontWeight: FontWeight.w400,
-                            fontFamily: "Poppins"
+                            fontFamily: "Poppins",
+
                           ),
                           contentPadding: const EdgeInsets.symmetric(
                             vertical: 20,
-                            horizontal: 50,
                           ),
                         ),
-                        // const Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                        //     AppText(
-                        //       text: "\$",
-                        //       textSize: 14,
-                        //       color: blackColor,
-                        //       fontWeight: FontWeight.w400,
-                        //       fontFamily: "Poppins",
-                        //     ),
-                        //     AppText(
-                        //       text: "2000",
-                        //       textSize: 20,
-                        //       color: blackColor,
-                        //       fontWeight: FontWeight.w400,
-                        //       fontFamily: "Poppins",
-                        //     ),
-                        //   ],
-                        // ),
                         const SizedBox(
                           height: 14,
                         ),

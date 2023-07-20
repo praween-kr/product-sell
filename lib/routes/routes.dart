@@ -37,4 +37,5 @@ class Routes {
   static const String insightScreen = "/InsightScreen";
   static const String settingPaymentScreen = "/SettingPaymentScreen";
   static const String productDetailScreen = "/ProductDetailScreen";
+  static const String editItemScreen = "/EditItemScreen";
 }

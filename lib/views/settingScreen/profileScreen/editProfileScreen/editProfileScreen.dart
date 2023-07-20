@@ -116,54 +116,6 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 18,),
-                  AppText(
-                    text: "Phone Number",
-                    textSize: 15.0,
-                    color: AppColor.blackColor.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 12,),
-                  AppTextField(
-                    height: 50,
-                    margin: const EdgeInsets.only(right: 0),
-                    borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
-                    textInputType: TextInputType.phone,
-                    prefix: Container(
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: const BoxDecoration(
-                          color: AppColor.appcolor,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CountryCodePicker(
-                            padding: EdgeInsets.zero,
-                            textStyle:
-                            TextStyle(color: Colors.white, fontSize: 15),
-                            enabled: true,
-                            showFlag: false,
-                            alignLeft: false,
-                          ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ],
-                      ),
-                    ),
-                    title: "5555-555-55",
-                    hintStyle: const TextStyle(
-                        color: AppColor.blackColor,
-                        fontSize: 15,fontWeight: FontWeight.w400
-                    ),
-                    style: const TextStyle(
-                        color: AppColor.blackColor,
-                        fontSize: 15,fontWeight: FontWeight.w400
-                    ),
-                    maxLength: 8,
-                  ),
-                  const SizedBox(height: 18,),
                    AppText(
                     text: "Location",
                     color: AppColor.blackColor.withOpacity(0.5),
@@ -193,7 +145,53 @@ class EditProfileScreen extends StatelessWidget {
                       color: AppColor.appcolor,
                     ),
                   ),
-
+                  const SizedBox(height: 18,),
+                  AppText(
+                    text: "Phone Number",
+                    textSize: 15.0,
+                    color: AppColor.blackColor.withOpacity(0.5),
+                  ),
+                  const SizedBox(height: 12,),
+                  AppTextField(
+                    height: 50,
+                    margin: const EdgeInsets.only(right: 0),
+                    borderRadius: BorderRadius.circular(20),
+                    containerColor: AppColor.TextColor,
+                    textInputType: TextInputType.phone,
+                    prefix: Container(
+                      margin: const EdgeInsets.only(right: 15),
+                      decoration: const BoxDecoration(
+                          color: AppColor.appcolor,
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CountryCodePicker(
+                            textStyle:
+                            TextStyle(color: Colors.white, fontSize: 15),
+                            enabled: true,
+                            showFlag: false,
+                            alignLeft: false,
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                        ],
+                      ),
+                    ),
+                    title: "5555-555-55",
+                    hintStyle: const TextStyle(
+                        color: AppColor.blackColor,
+                        fontSize: 15,fontWeight: FontWeight.w400
+                    ),
+                    style: const TextStyle(
+                        color: AppColor.blackColor,
+                        fontSize: 15,fontWeight: FontWeight.w400
+                    ),
+                    maxLength: 8,
+                  ),
                 ],
               ),
             ),
