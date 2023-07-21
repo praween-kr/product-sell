@@ -420,8 +420,8 @@ class DenimScreen extends StatelessWidget {
                               ? trackingDialog()
                               : data?["from"] == 1
                                   ? givereviewDialog()
-                                  : Get.toNamed(Routes.paymentScreen,
-                                      arguments: data);
+                                  : Get.toNamed(Routes.addressScreen,
+                                     );
                 },
                 child: Obx(() => CommonButton(
                       height: 50,

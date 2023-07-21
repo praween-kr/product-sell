@@ -157,6 +157,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    // controller.productValue.value = 0;
+                    // controller.touchTap.value = false;
+                    // controller.menu.value = false;
+                    // controller.filter.value = false;
                     Get.offAllNamed(Routes.bottomScreen);
                     print(" menu value ${controller.menu.value}");
                     },

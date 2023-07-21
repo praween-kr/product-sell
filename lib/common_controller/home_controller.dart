@@ -51,7 +51,7 @@ class Homecontroller extends GetxController
   void onInit() {
     cameraHelper = CameraHelper(this);
     if(Get.arguments != null){
-       value = Get.arguments;
+       tabController.value = Get.arguments;
     }
 
     Timer.periodic(const Duration(seconds: 2), (Timer timer) {

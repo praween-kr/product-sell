@@ -96,6 +96,26 @@ class AddressScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
+                    Get.toNamed(Routes.settingPaymentScreen);
+                  },
+                  child: CommonButton(
+                    color: AppColor.appcolor,
+                    margin: const EdgeInsets.only(right: 30.0,left: 30.0),
+                    height: 57,
+                    text: "Pay Now",
+                    textStyle: const TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 35.0),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
                     Get.toNamed(Routes.newAddressScreen);
                   },
                   child: CommonButton(

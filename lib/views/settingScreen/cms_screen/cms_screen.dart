@@ -7,7 +7,7 @@ import '../../../common_widget/appbar.dart';
 import '../../../utills/colors_file.dart';
 
 class CmsScreen extends StatelessWidget {
-  int type = 0;
+  int type ;
   CmsScreen({super.key, required this.type});
   final controller = Get.put(SettingsController());
 

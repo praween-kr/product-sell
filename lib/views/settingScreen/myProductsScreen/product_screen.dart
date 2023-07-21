@@ -253,13 +253,13 @@ class ProductScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                  Homecontroller controller = Get.find();
-                                  controller.productValue.value = 1;
-                                  controller.touchTap.value = true;
-                                  controller.menu.value = true;
-                                  controller.filter.value = false;
-
-                                    Get.toNamed(Routes.bottomScreen);
+                                  // Homecontroller controller = Get.find();
+                                  // controller.productValue.value = 1;
+                                  // controller.touchTap.value = true;
+                                  // controller.menu.value = true;
+                                  // controller.filter.value = false;
+                                  //
+                                  //   Get.toNamed(Routes.bottomScreen);
                                   //   Map<String, dynamic> data = {
                                   //     "from": 1,
                                   //   };

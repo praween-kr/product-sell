@@ -394,7 +394,12 @@ class HomeScreen extends StatelessWidget {
                               itemBuilder: (BuildContext context,
                                   int index) {
                                 return GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Map<String, dynamic> data = {
+                                      "from": 0,
+                                    };
+                                    Get.toNamed(Routes.denimScreen, arguments: data);
+                                  },
                                   child: Column(
                                     children: [
                                       Container(
@@ -541,8 +546,8 @@ class HomeScreen extends StatelessWidget {
                         Positioned(
                           bottom: Get.height *.16,
                           left: 20,
-                          child: Obx(
-                            ()=> Column(
+                          child:
+                                Column(
                               crossAxisAlignment:
                               CrossAxisAlignment.start,
                               children: [
@@ -550,8 +555,8 @@ class HomeScreen extends StatelessWidget {
                                   onTap: (){
                                 Get.toNamed(Routes.menshirtScreen);
                             },
-                                  child:  AppText(
-                                    text: controller.productValue.value==1?"Girl Denim":"Men Black Tshirt",
+                                  child:  const AppText(
+                                    text: "Men Black Tshirt",
                                     textSize: 18,
                                     fontFamily: "Poppins",
                                     color: Colors.white,
@@ -573,13 +578,17 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    timerDialog();
+
+                                      timerDialog();
+
+
                                   },
                                   child: CommonButton(
                                     height: 40,
                                     radius: 15,
                                     color: AppColor.appcolor,
-                                    text:controller.productValue.value==1?"Buy Now": "Bid \$2500",
+                                    text:
+                                    "Bid \$2500",
                                     textStyle: const TextStyle(
                                       fontSize: 15,
                                       fontFamily: "Poppins",
@@ -591,17 +600,17 @@ class HomeScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                controller.productValue.value==1?Container(): const AppText(
+                                 const AppText(
                                   text: "min \$4000.00",
                                   textSize: 10,
                                   color: Colors.white,
                                   fontFamily: "Poppins",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                controller.productValue.value==1?Container(): const SizedBox(
+                               const SizedBox(
                                   height: 10,
                                 ),
-                                controller.productValue.value==1?Container():  GestureDetector(
+                                GestureDetector(
                                   onTap: (){
                                     Get.toNamed(Routes.biddingScreen);
                                   },
@@ -630,7 +639,7 @@ class HomeScreen extends StatelessWidget {
                                 )
                               ],
                             ),
-                          ),
+
                         )
                       ]):Container()),
                 )
