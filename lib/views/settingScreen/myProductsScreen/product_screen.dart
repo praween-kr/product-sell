@@ -236,7 +236,7 @@ class ProductScreen extends StatelessWidget {
                       GridView.builder(
                           physics: const ClampingScrollPhysics(),
                           padding: const EdgeInsets.only(
-                            top: 20,
+                            top: 20
                           ),
                           // padding:
                           //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -244,6 +244,7 @@ class ProductScreen extends StatelessWidget {
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   childAspectRatio: 1.1,
+                                  mainAxisSpacing: 10,
                                   crossAxisSpacing: 2),
                           itemCount: 6,
                           itemBuilder: (context, index) {
@@ -252,12 +253,19 @@ class ProductScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Map<String, dynamic> data = {
-                                      "from": 1,
-                                    };
-                                    Get.toNamed(Routes.denimScreen,
-                                        arguments: data);
-                                  },
+                                  Homecontroller controller = Get.find();
+                                  controller.productValue.value = 1;
+                                  controller.touchTap.value = true;
+                                  controller.menu.value = true;
+                                  controller.filter.value = false;
+
+                                    Get.toNamed(Routes.bottomScreen);
+                                  //   Map<String, dynamic> data = {
+                                  //     "from": 1,
+                                  //   };
+                                  //   Get.toNamed(Routes.denimScreen,
+                                  //       arguments: data);
+                                   },
                                   child: Container(
                                     padding: const EdgeInsets.only(
                                         bottom: 10, left: 20, right: 20, top: 7),
@@ -299,6 +307,9 @@ class ProductScreen extends StatelessWidget {
                                           textSize: 12,
                                           color: Color(0x4d000000),
                                           fontWeight: FontWeight.w400,
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
                                         ),
                                         const AppText(
                                           text: "Girl Denim",
@@ -421,6 +432,9 @@ class ProductScreen extends StatelessWidget {
                                                   color: Color(0x4d000000),
                                                   fontWeight: FontWeight.w400,
                                                 ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
                                                 AppText(
                                                   text: "Girl Denim",
                                                   textSize: 13,
@@ -428,7 +442,7 @@ class ProductScreen extends StatelessWidget {
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                                 SizedBox(
-                                                  height: 8,
+                                                  height: 4,
                                                 ),
                                                 AppText(
                                                   text: "\$2000",
@@ -558,6 +572,9 @@ class ProductScreen extends StatelessWidget {
                                             color: Color(0x4d000000),
                                             fontWeight: FontWeight.w400,
                                           ),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
                                           AppText(
                                             text: "Gyarados EX",
                                             textSize: 13,
@@ -565,13 +582,16 @@ class ProductScreen extends StatelessWidget {
                                             fontWeight: FontWeight.w500,
                                           ),
                                           SizedBox(
-                                            height: 8,
+                                            height: 3,
                                           ),
                                           AppText(
                                             text: "\$300",
                                             textSize: 18,
                                             color: Color(0xff000000),
                                             fontWeight: FontWeight.w500,
+                                          ),
+                                          SizedBox(
+                                            height: 1,
                                           ),
                                           AppText(
                                             text: "Sold on : 29 May 2023",

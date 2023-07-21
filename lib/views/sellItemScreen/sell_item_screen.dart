@@ -1,4 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
@@ -9,6 +10,7 @@ import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/views/sellItemScreen/controller/sellItem_controller.dart';
 import '../../routes/routes.dart';
 import '../../utills/common_appbar.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 class SellItemScreen extends StatelessWidget {
   SellItemScreen({super.key});
@@ -394,68 +396,22 @@ class SellItemScreen extends StatelessWidget {
                             const SizedBox(
                               height: 14.0,
                             ),
-                            Obx(
-                                  () => DropdownButtonHideUnderline(
-                                child: DropdownButton2<String>(
-                                  onChanged: (newValue) {
-                                    controller.dropDownValue3.value = newValue!;
-                                  },
-                                  value: controller.dropDownValue3.value,
-                                  items:
-                                  controller.colorItems.value.map((items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: AppText(
-                                        text: items,
-                                        style: AppTextStyle.regular,
-                                        color: AppColor.blackColor,
-                                        textSize: 13,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  buttonStyleData: ButtonStyleData(
-                                    height: 44,
-                                    width: Get.width,
-                                    padding: const EdgeInsets.only(
-                                        left: 14.0, right: 16.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(23),
-                                      color: AppColor.TextColor,
-                                    ),
-                                    //elevation: 2,
-                                  ),
-                                  iconStyleData: const IconStyleData(
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                    ),
-                                    iconSize: 20,
-                                    iconEnabledColor: AppColor.blackColor,
-                                    iconDisabledColor: AppColor.blackColor,
-                                  ),
-                                  dropdownStyleData: DropdownStyleData(
-                                    maxHeight: 200,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.white,
-                                        border: Border.all(
-                                            color: AppColor.itemBorderColor)),
-                                    offset: const Offset(-2, 0),
-                                    scrollbarTheme: ScrollbarThemeData(
-                                      radius: const Radius.circular(40),
-                                      thickness:
-                                      MaterialStateProperty.all<double>(6),
-                                      thumbVisibility:
-                                      MaterialStateProperty.all<bool>(true),
-                                    ),
-                                  ),
-                                  menuItemStyleData: const MenuItemStyleData(
-                                    height: 40,
-                                    padding:
-                                    EdgeInsets.only(left: 23, right: 24),
-                                  ),
-                                ),
+                            // Show the color picker in sized box in a raised card
+                            AppTextField(
+                              height: 50,
+                              borderRadius: BorderRadius.circular(23),
+                              containerColor: AppColor.TextColor,
+                              title: "Enter Color",
+                              style: const TextStyle(
+                                  color: AppColor.blackColor,
+                                fontSize: 13,fontWeight: FontWeight.w400
+                              ),
+                              hintStyle: const TextStyle(
+                                  color: AppColor.blackColor,
+                                  fontSize: 13,fontWeight: FontWeight.w400
                               ),
                             ),
+                              //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                             const SizedBox(
                               height: 16.0,
                             ),
@@ -689,69 +645,111 @@ class SellItemScreen extends StatelessWidget {
                             const SizedBox(
                               height: 14.0,
                             ),
-                            Obx(
-                                  () => DropdownButtonHideUnderline(
-                                child: DropdownButton2<String>(
-                                  onChanged: (newValue) {
-                                    controller.dropDownValue7.value = newValue!;
-                                    controller.selectedItemValue.value = true;
-                                  },
-                                  value: controller.dropDownValue7.value,
-                                  items:
-                                  controller.sellItems.value.map((items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: AppText(
-                                        text: items,
-                                        style: AppTextStyle.regular,
-                                        color: AppColor.blackColor,
-                                        textSize: 13,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  buttonStyleData: ButtonStyleData(
-                                    height: 44,
-                                    width: Get.width,
-                                    padding: const EdgeInsets.only(
-                                        left: 14.0, right: 16.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(23),
-                                      color: AppColor.TextColor,
-                                    ),
-                                    //elevation: 2,
+                            Container(
+                              height: 44,
+                              padding: const EdgeInsets.only(
+                                  left: 14.0, right: 16.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(23),
+                                color: AppColor.TextColor,
+                              ),
+                              child: DropdownSearch<String>(
+                              dropdownButtonProps: const DropdownButtonProps(
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: AppColor.blackColor,
                                   ),
-                                  iconStyleData: const IconStyleData(
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                    ),
-                                    iconSize: 20,
-                                    iconEnabledColor: AppColor.blackColor,
-                                    iconDisabledColor: AppColor.blackColor,
+                                selectedIcon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: AppColor.blackColor,size: 15,
+                                ),
+                                padding: EdgeInsets.only(left: 24)
+                              ),
+                                popupProps:  PopupProps.menu(
+                                  constraints: const BoxConstraints(
+                                    maxHeight: 120,
                                   ),
-                                  dropdownStyleData: DropdownStyleData(
-                                    maxHeight: 200,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(18),
-                                        color: AppColor.white,
-                                        border: Border.all(
-                                            color: AppColor.itemBorderColor)),
-                                    offset: const Offset(-2, 0),
-                                    scrollbarTheme: ScrollbarThemeData(
-                                      radius: const Radius.circular(40),
-                                      thickness:
-                                      MaterialStateProperty.all<double>(6),
-                                      thumbVisibility:
-                                      MaterialStateProperty.all<bool>(true),
-                                    ),
-                                  ),
-                                  menuItemStyleData: const MenuItemStyleData(
-                                    height: 40,
-                                    padding:
-                                    EdgeInsets.only(left: 23, right: 24),
+                                   menuProps: MenuProps(
+                                     borderRadius: BorderRadius.circular(23),
+                                   )
+                                ),
+                                items: const ["Auction", 'Fix Price'],
+                                dropdownDecoratorProps: const DropDownDecoratorProps(
+                                  dropdownSearchDecoration: InputDecoration(
+                                    border: InputBorder.none,
+
                                   ),
                                 ),
-                              ),
+                                selectedItem: "Bid",
+                              )
                             ),
+                            // Obx(
+                            //       () => DropdownButtonHideUnderline(
+                            //     child: DropdownButton2<String>(
+                            //       hint: const AppText(text: "Bid",
+                            //         color: AppColor.blackColor,textSize: 13,
+                            //         style: AppTextStyle.regular,
+                            //       ),
+                            //       onChanged: (newValue) {
+                            //         controller.dropDownValue7?.value = newValue ?? "";
+                            //         controller.selectedItemValue.value = true;
+                            //       },
+                            //       value: controller.dropDownValue7?.value,
+                            //       items:
+                            //       controller.sellItems.value.map((items) {
+                            //         return DropdownMenuItem(
+                            //           value: items,
+                            //           child: AppText(
+                            //             text: items,
+                            //             style: AppTextStyle.regular,
+                            //             color: AppColor.blackColor,
+                            //             textSize: 13,
+                            //           ),
+                            //         );
+                            //       }).toList(),
+                            //       buttonStyleData: ButtonStyleData(
+                            //         height: 44,
+                            //         width: Get.width,
+                            //         padding: const EdgeInsets.only(
+                            //             left: 14.0, right: 16.0),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(23),
+                            //           color: AppColor.TextColor,
+                            //         ),
+                            //         //elevation: 2,
+                            //       ),
+                            //       iconStyleData: const IconStyleData(
+                            //         icon: Icon(
+                            //           Icons.keyboard_arrow_down_rounded,
+                            //         ),
+                            //         iconSize: 20,
+                            //         iconEnabledColor: AppColor.blackColor,
+                            //         iconDisabledColor: AppColor.blackColor,
+                            //       ),
+                            //       dropdownStyleData: DropdownStyleData(
+                            //         maxHeight: 200,
+                            //         decoration: BoxDecoration(
+                            //             borderRadius: BorderRadius.circular(18),
+                            //             color: AppColor.white,
+                            //             border: Border.all(
+                            //                 color: AppColor.itemBorderColor)),
+                            //         offset: const Offset(-2, 0),
+                            //         scrollbarTheme: ScrollbarThemeData(
+                            //           radius: const Radius.circular(40),
+                            //           thickness:
+                            //           MaterialStateProperty.all<double>(6),
+                            //           thumbVisibility:
+                            //           MaterialStateProperty.all<bool>(true),
+                            //         ),
+                            //       ),
+                            //       menuItemStyleData: const MenuItemStyleData(
+                            //         height: 40,
+                            //         padding:
+                            //         EdgeInsets.only(left: 23, right: 24),
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             const SizedBox(
                               height: 16.0,
                             ),
@@ -793,14 +791,29 @@ class SellItemScreen extends StatelessWidget {
                             const SizedBox(
                               height: 14.0,
                             ),
-                            AppTextField(
-                              height: 46.0,
-                              title: "Write Here...",
-                              //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                              margin: const EdgeInsets.only(right: 0.0),
-                              borderRadius: BorderRadius.circular(23),
-                              containerColor: AppColor.TextColor,
-                              maxLines: 5,
+                            Container(
+                              decoration: const BoxDecoration(
+                                color:AppColor.TextColor,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(23)),
+                              ),
+                              child: TextFormField(
+                                minLines: 8,
+                                maxLines: null,
+                                cursorColor: AppColor.blackColor,
+                                keyboardType: TextInputType.multiline,
+                                decoration: InputDecoration(
+                                  counterText: "",
+                                  hintText: "Write here...",
+                                  contentPadding:  const EdgeInsets.only(left: 20, top: 20),
+                                  hintStyle: TextStyle(color: Colors.black.withOpacity(0.4)),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+
+
+                              ),
                             ),
                             const SizedBox(
                               height: 31.0,
@@ -833,10 +846,9 @@ class SellItemScreen extends StatelessWidget {
                                 textStyle: const TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                            ),
+                          ]),
+            ),
                     ),
                     SingleChildScrollView(
                       child: Padding(
@@ -990,7 +1002,7 @@ class SellItemScreen extends StatelessWidget {
                               height: 16.0,
                             ),
                             const AppText(
-                              text: "Description",
+                              text: "Base Price",
                               color: AppColor.blackColor,
                               textSize: 13.0,
                               style: AppTextStyle.medium,
@@ -1000,12 +1012,57 @@ class SellItemScreen extends StatelessWidget {
                             ),
                             AppTextField(
                               height: 46.0,
-                              title: "Write Here...",
+                              title: "Enter Price",
                               //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                               margin: const EdgeInsets.only(right: 0.0),
                               borderRadius: BorderRadius.circular(23),
                               containerColor: AppColor.TextColor,
-                              maxLines: 5,
+                            ),
+
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            const AppText(
+                              text: "Description",
+                              color: AppColor.blackColor,
+                              textSize: 13.0,
+                              style: AppTextStyle.medium,
+                            ),
+                            const SizedBox(
+                              height: 14.0,
+                            ),
+                            // AppTextField(
+                            //   title: "Write Here...",
+                            //   contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                            //   borderRadius: BorderRadius.circular(23),
+                            //   containerColor: AppColor.TextColor,
+                            //   maxLines: null,
+                            //   minLines: 20,
+                            //   textInputType: TextInputType.multiline,
+                            // ),
+                            Container(
+                              decoration: const BoxDecoration(
+                                color:AppColor.TextColor,
+                                borderRadius:
+                               BorderRadius.all(Radius.circular(23)),
+                              ),
+                              child: TextFormField(
+                                minLines: 8,
+                                maxLines: null,
+                                cursorColor: AppColor.blackColor,
+                                keyboardType: TextInputType.multiline,
+                                decoration: InputDecoration(
+                                  counterText: "",
+                                  hintText: "Write here...",
+                                  contentPadding:  const EdgeInsets.only(left: 20, top: 20),
+                                  hintStyle: TextStyle(color: Colors.black.withOpacity(0.4)),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+
+
+                              ),
                             ),
                             const SizedBox(
                               height: 31.0,
@@ -1013,6 +1070,7 @@ class SellItemScreen extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 Get.toNamed(Routes.subscriptionScreen);
+
                               },
                               child: CommonButton(
                                 color: AppColor.TextColor,
@@ -1028,7 +1086,11 @@ class SellItemScreen extends StatelessWidget {
                               height: 31.0,
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(Routes.productScreen,arguments: "2");
+                                print("value ");
+
+                              },
                               child: CommonButton(
                                 color: AppColor.appcolor,
                                 height: 57,
@@ -1041,11 +1103,12 @@ class SellItemScreen extends StatelessWidget {
                         ),
                       ),
                     )
-                  ]),
-            )
           ],
         ),
       ),
+      ]
+    )
+    )
     );
   }
 

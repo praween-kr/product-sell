@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_controller.dart';
 import '../../../generated/assets.dart';
@@ -50,17 +51,22 @@ class SettingPaymentScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12.0,),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColor.blackColor
+                GestureDetector(
+                  onTap: (){
+                    Get.toNamed(Routes.paymentScreen);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColor.blackColor
+                        ),
+                        borderRadius: BorderRadius.circular(6.0)
+                    ),
+                    child: const Center(
+                      child:AppText(
+                        text: "Add New Card",
                       ),
-                      borderRadius: BorderRadius.circular(6.0)
-                  ),
-                  child: const Center(
-                    child:AppText(
-                      text: "Add New Card",
                     ),
                   ),
                 ),

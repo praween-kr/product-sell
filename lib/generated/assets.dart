@@ -22,6 +22,7 @@ class Assets {
   static const String assetsFb = 'assets/fb.png';
   static const String assetsFrame = 'assets/Frame.png';
   static const String assetsGirl = 'assets/Girl.png';
+  static const String assetsGirlDenimimg = 'assets/girl_denimimg.png';
   static const String assetsGirlJean = 'assets/girl_jean.png';
   static const String assetsGoogle = 'assets/google.png';
   static const String assetsGraph = 'assets/graph.png';

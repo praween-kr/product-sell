@@ -81,8 +81,11 @@ class OnBoardingScreen extends StatelessWidget {
                               activeDotColor: Colors.white,
                               dotColor: Colors.white.withOpacity(0.3),
                               dotWidth: 25),
-                          onDotClicked: (index) {},
-                        )),
+                          onDotClicked: (index) {
+
+                            },
+                        )
+                    ),
                     GestureDetector(
                         onTap: () {
                           if (controller.pagePosition.value ==

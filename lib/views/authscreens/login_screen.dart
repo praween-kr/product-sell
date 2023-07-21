@@ -25,24 +25,8 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: (){
-                    Get.toNamed(Routes.forgotScreen);
-                  },
-                  child: const Align(
-                    alignment: AlignmentDirectional.topEnd,
-                    child: AppText(
-                      text: "Trouble logging In? ",
-                      color: Colors.black,
-                      underline: true,
-                      underlineColor: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      textSize: 12,
-                    ),
-                  ),
-                ),
                 const SizedBox(
-                  height: 120,
+                  height: 100,
                 ),
                 const AppText(
                   text: "Welcome Back!",
@@ -118,28 +102,52 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
+                  height: 10,
+                ),
+                const SizedBox(
                   height: 15,
                 ),
                 Obx(
                   () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Transform.scale(
-                          scaleY: 0.8,
-                          scaleX: 0.8,
-                          child: CupertinoSwitch(
-                            value: controller.Switch.value,
-                            onChanged: (value) {
-                              controller.Switch.value =
+
+                      Row(
+
+                        children: [
+                          Transform.scale(
+                              scaleY: 0.8,
+                              scaleX: 0.8,
+                              child: CupertinoSwitch(
+                                value: controller.Switch.value,
+                                onChanged: (value) {
+                                  controller.Switch.value =
                                   !controller.Switch.value;
-                            },
-                            activeColor: Colors.red,
-                            trackColor: themeColor,
-                          )),
-                      const AppText(
-                        text: "Remember me",
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        textSize: 13,
+                                },
+                                activeColor: Colors.red,
+                                trackColor: themeColor,
+                              )),
+                          const AppText(
+                            text: "Remember me",
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            textSize: 13,
+                          ),
+
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(Routes.forgotScreen);
+                        },
+                        child: const AppText(
+                          text: "Trouble logging In? ",
+                          color: Colors.black,
+                          underline: true,
+                          underlineColor: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          textSize: 12,
+                        ),
                       ),
                     ],
                   ),

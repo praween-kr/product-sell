@@ -100,16 +100,21 @@ class DenimScreen extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    color: AppColor.appcolor,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: const Icon(
-                                  Icons.message,
-                                  color: Colors.white,
-                                ))
+                            GestureDetector(
+                              onTap: (){
+                                Get.toNamed(Routes.messageScreen);
+                              },
+                              child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.appcolor,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: const Icon(
+                                    Icons.message,
+                                    color: Colors.white,
+                                  )),
+                            )
                           ],
                         )
                       ],

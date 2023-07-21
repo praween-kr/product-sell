@@ -48,17 +48,17 @@ class FilterScreen extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            const Row(
+                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AppText(
+                               const AppText(
                                   text: "\$200.00",
                                   textSize: 15,
                                   fontWeight: FontWeight.w600,
                                 ),
                                 Icon(
                                   Icons.favorite,
-                                  color: AppColor.appcolor,
+                                  color: AppColor.blackColor.withOpacity(0.2),
                                 )
                               ],
                             ),
@@ -66,6 +66,9 @@ class FilterScreen extends StatelessWidget {
                               text: "Dolce & Gabbana",
                               textSize: 10,
                               fontWeight: FontWeight.w400,
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             const AppText(
                               text: "XL/42",

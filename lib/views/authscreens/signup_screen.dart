@@ -1,6 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
@@ -8,11 +8,13 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import '../../common_widget/app_text.dart';
 import '../../routes/routes.dart';
 import '../../utills/colors_file.dart';
+import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
   final RxBool tick = true.obs;
   final RxBool pass = true.obs;
+  int type = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -223,13 +225,16 @@ class SignUpScreen extends StatelessWidget {
                             right: 5,
                           ),
                           child: RichText(
-                            text: const TextSpan(
+                            text:  TextSpan(
                                 text: "By creating an"
                                     " account you have to agree\n with "
                                     "our ",
                                 style: TextStyle(color: blackColor),
                                 children: [
                                   TextSpan(
+                                    recognizer: TapGestureRecognizer()..onTap = () => {
+                                      Get.to( CmsScreen(type: 1))
+                                    },
                                     text: "Terms & Conditions.",
                                     style: TextStyle(
                                         color: Colors.black,

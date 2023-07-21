@@ -8,6 +8,7 @@ class AppTextField extends StatelessWidget {
   String? name;
   int? maxLength;
   String? title;
+  final TextStyle? labelStyle;
   final List<TextInputFormatter>? inputFormatters;
   final TextStyle? style;
   final Color? suffixIconColor;
@@ -27,6 +28,7 @@ class AppTextField extends StatelessWidget {
   StringToVoidFunc? onChanged;
   EdgeInsetsGeometry? contentPadding;
   int? maxLines;
+  int? minLines;
   BorderRadiusGeometry? borderRadius;
   BoxBorder? border;
   final Color? containerColor;
@@ -40,6 +42,7 @@ class AppTextField extends StatelessWidget {
       this.name,
       this.controller,
         this.hintStyle,
+        this.labelStyle,
         this.textAlign,
       this.containerColor,
       this.elevation,
@@ -49,6 +52,7 @@ class AppTextField extends StatelessWidget {
       this.textInputType,
       this.height,
       this.width,
+        this.minLines,
       this.maxLength,
       this.prefix,
       this.contentPadding,
@@ -82,6 +86,7 @@ class AppTextField extends StatelessWidget {
         inputFormatters: inputFormatters,
         maxLength: maxLength,
         maxLines: maxLines,
+        minLines: minLines,
         textAlign: textAlign ?? TextAlign.start,
         readOnly: readOnly ?? false,
         textInputAction: keyBoardType ?? TextInputAction.done,

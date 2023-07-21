@@ -364,11 +364,11 @@ class MenshirtScreen extends StatelessWidget {
               ),
             ),
 
-             Divider(
+            Divider(
               color: const Color(0x66000000).withOpacity(0.1),
               thickness: 1,
             ),
-            const Padding(
+             const Padding(
               padding: EdgeInsets.only(top: 15, left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

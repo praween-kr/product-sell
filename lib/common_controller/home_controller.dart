@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
@@ -36,6 +38,9 @@ class Homecontroller extends GetxController
   var sub = false.obs;
   var track = false.obs;
   var trackupload = false.obs;
+  RxInt productValue = 0.obs;
+  String value= "";
+
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);
@@ -45,7 +50,22 @@ class Homecontroller extends GetxController
   @override
   void onInit() {
     cameraHelper = CameraHelper(this);
+    if(Get.arguments != null){
+       value = Get.arguments;
+    }
 
+    Timer.periodic(const Duration(seconds: 2), (Timer timer) {
+      if (pagePosition < 2) {
+        pagePosition++;
+        pageController.animateToPage(
+          pagePosition.value,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      } else {
+        pagePosition.value = 2;
+      }
+    });
     super.onInit();
     pageController = PageController(initialPage: pagePosition.value);
     onBoardingData = RxList([
@@ -181,20 +201,67 @@ class Homecontroller extends GetxController
                         const SizedBox(
                           height: 20,
                         ),
-                        AppTextField(
-                        // width: 80,height: 60,
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          containerColor: AppColor.textfield,
-                          title: "\$2000",
-                          hintStyle: const TextStyle(
-                            color: AppColor.blackColor,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Poppins",
-
+                        // Center(
+                        //   child: IntrinsicWidth(
+                        //     child: AppTextField(
+                        //       textAlign: TextAlign.center,
+                        //       textInputType: TextInputType.number,
+                        //       inputFormatters: <TextInputFormatter>[
+                        //         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                        //       ],
+                        //       maxLines: 3,
+                        //       containerColor: AppColor.textfield,
+                        //       hintStyle: const TextStyle(
+                        //         color: AppColor.blackColor,
+                        //         fontWeight: FontWeight.w400,
+                        //         fontFamily: "Poppins",
+                        //       ),
+                        //       contentPadding: const EdgeInsets.symmetric(
+                        //           vertical: 20,horizontal: 20
+                        //       ),
+                        //       prefix: const Icon(Icons.attach_money,
+                        //         color: AppColor.blackColor,size: 18,),
+                        //     ),
+                        //   ),
+                        // ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColor.textfield,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 20,
+                          child:  Center(
+                            child: IntrinsicWidth(
+                              child: TextField(
+                                cursorColor: AppColor.blackColor,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp("[0-9]"),
+                                  ),
+                                  LengthLimitingTextInputFormatter(5)
+                                ],
+                                keyboardType: TextInputType.number,
+                                textAlignVertical: TextAlignVertical.center,
+                                style: const TextStyle(
+                                    color: AppColor.blackColor,
+                                    fontWeight: FontWeight.w600,fontSize: 20
+                                ),
+
+                                decoration:  InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(vertical
+                                        : 20,horizontal: 20),
+                                    hintText: "2500",
+                                    hintStyle:  TextStyle(
+                                        color: AppColor.blackColor.withOpacity(0.2),
+                                        fontWeight: FontWeight.w600,fontSize: 20
+                                    ),
+                                    prefixIcon: const Icon(Icons.attach_money_outlined,
+                                      color: AppColor.blackColor,),
+                                    border: InputBorder.none,
+                                    prefixIconConstraints: const BoxConstraints(
+                                      maxWidth: 20,maxHeight: 40,
+                                    )
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(

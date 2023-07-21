@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("data ${data}");
+    print("data ${ controller.touchTap.value}");
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -430,12 +430,12 @@ class HomeScreen extends StatelessWidget {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              const Row(
+                                               Row(
                                                 mainAxisAlignment:
                                                 MainAxisAlignment
                                                     .spaceBetween,
                                                 children: [
-                                                  AppText(
+                                                 const AppText(
                                                     text:
                                                     "\$200.00",
                                                     textSize: 15,
@@ -448,7 +448,7 @@ class HomeScreen extends StatelessWidget {
                                                   Icon(
                                                     Icons.favorite,
                                                     color: AppColor
-                                                        .appcolor,
+                                                        .blackColor.withOpacity(0.2),
                                                   )
                                                 ],
                                               ),
@@ -459,6 +459,9 @@ class HomeScreen extends StatelessWidget {
                                                 color: blackColor,
                                                 fontWeight:
                                                 FontWeight.w400,
+                                              ),
+                                              const SizedBox(
+                                                height: 8,
                                               ),
                                               const AppText(
                                                 text: "XL/42",
@@ -490,7 +493,7 @@ class HomeScreen extends StatelessWidget {
                                 clipBehavior: Clip.none,
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Image.asset(Assets.assetsHomeBid),
+                                  Image.asset( controller.productValue.value==1?Assets.assetsGirlDenimimg:Assets.assetsHomeBid),
                                   Positioned(
                                     bottom: -17,
                                     child: Row(
@@ -536,90 +539,97 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          bottom: Get.height *.14,
+                          bottom: Get.height *.16,
                           left: 20,
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              const AppText(
-                                text: "Men Black Tshirt",
-                                textSize: 18,
-                                fontFamily: "Poppins",
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const AppText(
-                                text: "\$4000.00",
-                                textSize: 18,
-                                color: Colors.white,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  timerDialog();
-                                },
-                                child: CommonButton(
-                                  height: 40,
-                                  radius: 15,
-                                  color: AppColor.appcolor,
-                                  text: "Bid \$2500",
-                                  textStyle: const TextStyle(
-                                    fontSize: 15,
+                          child: Obx(
+                            ()=> Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                Get.toNamed(Routes.menshirtScreen);
+                            },
+                                  child:  AppText(
+                                    text: controller.productValue.value==1?"Girl Denim":"Men Black Tshirt",
+                                    textSize: 18,
                                     fontFamily: "Poppins",
                                     color: Colors.white,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const AppText(
-                                text: "min \$4000.00",
-                                textSize: 10,
-                                color: Colors.white,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  Get.toNamed(Routes.biddingScreen);
-                                },
-                                child: RichText(
-                                    text: const TextSpan(
-                                        text: "20 Bid",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10,
-                                          fontFamily: "Poppins",
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: "Show bid history",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10,
-                                                fontFamily: "Poppins",
-                                                fontWeight:
-                                                FontWeight.w400,
-                                                decoration: TextDecoration
-                                                    .underline),
-                                          )
-                                        ])),
-                              )
-                            ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const AppText(
+                                  text: "\$4000.00",
+                                  textSize: 18,
+                                  color: Colors.white,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    timerDialog();
+                                  },
+                                  child: CommonButton(
+                                    height: 40,
+                                    radius: 15,
+                                    color: AppColor.appcolor,
+                                    text:controller.productValue.value==1?"Buy Now": "Bid \$2500",
+                                    textStyle: const TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: "Poppins",
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                controller.productValue.value==1?Container(): const AppText(
+                                  text: "min \$4000.00",
+                                  textSize: 10,
+                                  color: Colors.white,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                controller.productValue.value==1?Container(): const SizedBox(
+                                  height: 10,
+                                ),
+                                controller.productValue.value==1?Container():  GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(Routes.biddingScreen);
+                                  },
+                                  child: RichText(
+                                      text: const TextSpan(
+                                          text: "20 Bid",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                            fontFamily: "Poppins",
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: "Show bid history",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10,
+                                                  fontFamily: "Poppins",
+                                                  fontWeight:
+                                                  FontWeight.w400,
+                                                  decoration: TextDecoration
+                                                      .underline),
+                                            )
+                                          ])),
+                                )
+                              ],
+                            ),
                           ),
                         )
                       ]):Container()),
