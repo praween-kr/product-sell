@@ -30,6 +30,8 @@ class DenimScreen extends StatelessWidget {
                   controller.upload.value = false;
                   controller.track.value = false;
                   controller.trackupload.value = false;
+                  controller.menu.value = false;
+                  print("menu ${controller.menu.value}");
                   Get.back();
                 },
                 heading: "Girls Denim",
@@ -454,7 +456,6 @@ class DenimScreen extends StatelessWidget {
 
   Future reviewDialog() async {
     print("clicked---- ");
-
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,

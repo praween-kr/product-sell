@@ -498,7 +498,7 @@ class HomeScreen extends StatelessWidget {
                                 clipBehavior: Clip.none,
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Image.asset( controller.productValue.value==1?Assets.assetsGirlDenimimg:Assets.assetsHomeBid),
+                                  Image.asset(Assets.assetsHomeBid),
                                   Positioned(
                                     bottom: -17,
                                     child: Row(
@@ -544,7 +544,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          bottom: Get.height *.16,
+                          bottom: Get.height *.18,
                           left: 20,
                           child:
                                 Column(
@@ -553,7 +553,11 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: (){
-                                Get.toNamed(Routes.menshirtScreen);
+                                   // controller.sub.value = true;
+                                   controller.menu.value = false;
+                                   //  controller.touchTap.value = true;
+                                   Get.toNamed(Routes.menshirtScreen);
+                                   print("menShirt ${controller.menu.value}");
                             },
                                   child:  const AppText(
                                     text: "Men Black Tshirt",
@@ -578,11 +582,9 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    timerDialog();
 
-                                      timerDialog();
-
-
-                                  },
+                                      },
                                   child: CommonButton(
                                     height: 40,
                                     radius: 15,

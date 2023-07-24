@@ -235,7 +235,7 @@ class SignUpScreen extends StatelessWidget {
                                     recognizer: TapGestureRecognizer()..onTap = () => {
                                       Get.to( CmsScreen(type: 1))
                                     },
-                                    text: "Terms & Conditions.",
+                                    text: "Privacy Policy",
                                     style: TextStyle(
                                         color: Colors.black,
                                         decoration: TextDecoration.underline,

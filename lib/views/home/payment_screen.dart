@@ -111,25 +111,30 @@ class PaymentScreen extends StatelessWidget {
                     ]),
                   );
                 }),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-              ),
-              child: DottedBorder(
-                borderPadding: const EdgeInsets.only(top: 20),
-                borderType: BorderType.RRect,
-                radius: const Radius.circular(12),
-                padding: const EdgeInsets.only(top: 20),
-                child: const ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 20),
-                      child: AppText(
-                        text: '+ Add New Card',
-                        fontWeight: FontWeight.w600,
-                        fontFamily: "Poppins",
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(Routes.addNewCardScreen);
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: DottedBorder(
+                  borderPadding: const EdgeInsets.only(top: 20),
+                  borderType: BorderType.RRect,
+                  radius: const Radius.circular(12),
+                  padding: const EdgeInsets.only(top: 20),
+                  child: const ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        child: AppText(
+                          text: '+ Add New Card',
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Poppins",
+                        ),
                       ),
                     ),
                   ),
@@ -142,9 +147,9 @@ class PaymentScreen extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Map<String, dynamic> data = {
-                  "data": "from",
+                  "from": 1,
                 };
-                Get.toNamed(Routes.productScreen, arguments: data);
+                Get.toNamed(Routes.denimScreen, arguments: data);
               },
               child: CommonButton(
                 height: 50,

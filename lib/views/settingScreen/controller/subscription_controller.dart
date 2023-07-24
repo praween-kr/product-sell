@@ -9,4 +9,6 @@ class SubscriptionController extends GetxController{
     super.onInit();
     pageController = PageController(initialPage: pagePosition.value);
   }
+
+
 }

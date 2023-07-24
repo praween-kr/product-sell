@@ -539,7 +539,7 @@ class MenshirtScreen extends StatelessWidget {
                       )
                     : Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
+                            horizontal: 35, vertical: 15),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,

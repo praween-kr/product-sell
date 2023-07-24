@@ -245,7 +245,9 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.subscriptionScreen);
+                        Get.toNamed(Routes.subscriptionScreen,
+                            // arguments: "plan"
+                        );
                       },
                       child: CommonButton(
                         color: AppColor.TextColor,

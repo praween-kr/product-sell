@@ -70,7 +70,7 @@ class AppTextField extends StatelessWidget {
     return Container(
       height: height ?? 60,
       width: width ?? Get.width,
-      margin: margin ?? EdgeInsets.only(left: 0),
+      margin: margin ?? const EdgeInsets.only(left: 0),
       decoration: BoxDecoration(
         color: containerColor ?? Colors.white,
         borderRadius:

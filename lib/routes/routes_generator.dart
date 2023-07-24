@@ -18,8 +18,10 @@ import 'package:oninto_flutter/views/settingScreen/addressScreen/newAddressScree
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/editItem_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/productDetail_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/paymentScreen/addNewCard_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 import '../splash_screen.dart';
@@ -93,6 +95,9 @@ class RoutesGenerator {
       case Routes.signupScreen:
         widgetScreen = SignUpScreen();
         break;
+      case Routes.addNewCardScreen:
+        widgetScreen = AddNewCardScreen();
+        break;
       case Routes.settingScreen:
         widgetScreen = SettingScreen();
         break;
@@ -110,9 +115,11 @@ class RoutesGenerator {
           type: args as int,
         );
         break;
-
-      case Routes.homebidScreen:
+        case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
+        break;
+      case Routes.selectPlanScreen:
+        widgetScreen = SelectPlanScreen();
         break;
       case Routes.favouriteScreen:
         widgetScreen = FavouriteScreen();

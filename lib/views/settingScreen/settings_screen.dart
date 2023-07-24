@@ -257,7 +257,8 @@ class SettingScreen extends GetView<SettingsController> {
     );
   }
   /// CommonRow View
-  Widget commonRow({required IconData icon, Color? color,Color? boxColor,required String title, required Function onClick}){
+  Widget commonRow({required IconData icon, Color? color,Color? boxColor, required String title,
+    required Function onClick}){
     return   GestureDetector(
       onTap: (){
         onClick();

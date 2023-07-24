@@ -57,6 +57,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 AppTextField(
                   title: "jennySmith@gmail.com",
+                  hintStyle: const TextStyle(
+                    color: AppColor.blackColor,
+                    fontSize: 15,fontWeight: FontWeight.w400
+                  ),
                   prefix: const Icon(
                     Icons.email_outlined,
                     color: Colors.black,
@@ -82,21 +86,28 @@ class LoginScreen extends StatelessWidget {
                 Obx(
                   () => AppTextField(
                     title: "*******",
+                    hintStyle: const TextStyle(
+                        color: AppColor.blackColor,
+                        fontSize: 15,fontWeight: FontWeight.w400
+                    ),
                     isObscure: controller.homePass.value,
                     maxLines: 1,
                     contentPadding: const EdgeInsets.only(
-                      top: 30,
+                      top: 35,
                       left: 20,
                     ),
                     style: const TextStyle(color: Colors.black),
-                    prefix: const Icon(Icons.lock_open),
+                    prefix:  Icon(Icons.lock_open, color: AppColor.blackColor.withOpacity(0.6)
+                    ),
                     suffix: GestureDetector(
                       onTap: () {
                         controller.homePass.value = !controller.homePass.value;
                       },
                       child: controller.homePass.value
                           ? const Icon(Icons.remove_red_eye_outlined)
-                          : const Icon(Icons.visibility_off_outlined),
+                          :  Icon(Icons.visibility_off_outlined,
+                      color: AppColor.blackColor.withOpacity(0.4),
+                      ),
                     ),
                     containerColor: AppColor.TextColor,
                   ),
@@ -111,9 +122,7 @@ class LoginScreen extends StatelessWidget {
                   () => Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       Row(
-
                         children: [
                           Transform.scale(
                               scaleY: 0.8,

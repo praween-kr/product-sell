@@ -44,7 +44,7 @@ class CommonAppbarWidget extends StatelessWidget
                     Get.back();
                   },
               child: Container(
-                margin: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(5),
                 padding: const EdgeInsets.only(left: 12),
                 decoration: BoxDecoration(
                     color: AppColor.appcolor,
@@ -52,11 +52,11 @@ class CommonAppbarWidget extends StatelessWidget
                 child: const Icon(Icons.arrow_back_ios),
               ),
             ),
-        actions: [action ?? Icon(Icons.add)],
+        actions: [action ?? const Icon(Icons.add)],
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

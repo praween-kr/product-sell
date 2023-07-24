@@ -14,6 +14,7 @@ class OnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var dim = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
         body: PageView.builder(
       // physics: const NeverScrollableScrollPhysics(),
       onPageChanged: controller.onPageChanged,

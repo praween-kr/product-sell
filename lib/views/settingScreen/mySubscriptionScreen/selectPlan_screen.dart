@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/subscription_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../common_widget/color_constant.dart';
+import '../../../routes/routes.dart';
 import '../../../utills/common_appbar.dart';
 
-class SubscriptionScreen extends StatelessWidget {
-  SubscriptionScreen({super.key});
+class SelectPlanScreen extends StatelessWidget {
+  SelectPlanScreen({super.key});
   final controller = Get.put(SubscriptionController());
 
   @override
   Widget build(BuildContext context) {
-    // String value = "";
-    // /// Button Text Arguments View
-    // if(Get.arguments != null){
-    //   value = Get.arguments;
-    // }
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
@@ -37,14 +32,14 @@ class SubscriptionScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                 const SizedBox(height: 24.0,),
-                 const AppText(text: "Basic",
+                const SizedBox(height: 24.0,),
+                const AppText(text: "Basic",
                   style: AppTextStyle.title,
                   textSize: 20.0,
                   color: AppColor.blackColor,
                 ),
-                 const SizedBox(height: 6.0,),
-                  AppText(text: "For small and medium business",
+                const SizedBox(height: 6.0,),
+                AppText(text: "For small and medium business",
                   style: AppTextStyle.regular,
                   textSize: 15.0,
                   color: AppColor.blackColor.withOpacity(0.4),
@@ -67,14 +62,14 @@ class SubscriptionScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 2.0,),
-                 AppText(text: "per month",
+                AppText(text: "per month",
                   style: AppTextStyle.regular,
                   textSize: 15.0,
                   color: AppColor.blackColor.withOpacity(0.4),
                 ),
                 const SizedBox(height: 30.0,),
                 ListView.builder(
-                  itemCount: 4,
+                    itemCount: 4,
                     shrinkWrap: true,
                     itemBuilder: (context, position){
                       return const Padding(
@@ -101,7 +96,7 @@ class SubscriptionScreen extends StatelessWidget {
                       controller: controller.pageController,
                       count: 3,
                       effect:  ExpandingDotsEffect(
-                        spacing: 15.0,
+                          spacing: 15.0,
                           activeDotColor:AppColor.appcolor,
                           dotColor: AppColor.appcolor.withOpacity(0.4),
                           dotWidth: 10),
@@ -110,37 +105,15 @@ class SubscriptionScreen extends StatelessWidget {
               ],
             ),
           ),
-          // CommonButton(
-          //   color: value == "plan" ? AppColor.appcolor:
-          //   AppColor.TextColor,
-          //   margin: const EdgeInsets.only(right: 30,left: 30,bottom: 30),
-          //   height: 57,
-          //   text:  value ==  "plan"
-          //   ? "Select Plan" : "Your Current Plan",
-          //   textStyle:  TextStyle(
-          //       color: value == "plan" ? AppColor.white:
-          //       AppColor.blackColor.withOpacity(0.4),
-          //       fontSize: 12,fontFamily: "Poppins"),
-          // ),
-          CommonButton(
-            color: AppColor.TextColor,
-            margin: const EdgeInsets.only(right: 30,left: 30,bottom: 30),
-            height: 57,
-            text: "Your Current Plan",
-            textStyle:  TextStyle(
-                color: AppColor.blackColor.withOpacity(0.4),
-                fontSize: 12,fontFamily: "Poppins"),
-          ),
-          const SizedBox(height: 20,),
           GestureDetector(
             onTap: (){
-              Get.toNamed(Routes.selectPlanScreen);
+              Get.toNamed(Routes.settingPaymentScreen);
             },
             child: CommonButton(
               color: AppColor.appcolor,
               margin: const EdgeInsets.only(right: 30,left: 30,bottom: 30),
               height: 57,
-              text: "Change Plan",
+              text: "Select Plan",
               textStyle:  const TextStyle(
                   color: AppColor.white,
                   fontSize: 12,fontFamily: "Poppins"),

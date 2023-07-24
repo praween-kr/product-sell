@@ -24,6 +24,7 @@ class Homecontroller extends GetxController
   RxBool Switch = false.obs;
   RxBool upload = false.obs;
   var tabController = 1.obs;
+  var coOwnerController = 0.obs;
   var messageController = 0.obs;
   var timer = false.obs;
   var imagePath = "".obs;
@@ -50,11 +51,7 @@ class Homecontroller extends GetxController
   @override
   void onInit() {
     cameraHelper = CameraHelper(this);
-    if(Get.arguments != null){
-       tabController.value = Get.arguments;
-    }
-
-    Timer.periodic(const Duration(seconds: 2), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (pagePosition < 2) {
         pagePosition++;
         pageController.animateToPage(
@@ -352,7 +349,6 @@ class Homecontroller extends GetxController
                             Get.back();
                             sub.value = true;
                             Get.toNamed(Routes.menshirtScreen);
-
 
                           },
                           child: CommonButton(

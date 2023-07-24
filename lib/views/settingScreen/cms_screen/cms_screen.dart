@@ -30,7 +30,7 @@ class CmsScreen extends StatelessWidget {
             fontFamily: "Poppins"),
       ),
       body: const Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 27.0),
+        padding: EdgeInsets.only(left: 20.0, top: 27.0,right: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

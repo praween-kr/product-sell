@@ -16,7 +16,9 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("value ==== ${controller.tabController.value }");
+    if(Get.arguments != null){
+      controller.tabController.value = Get.arguments;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
@@ -26,7 +28,7 @@ class ProductScreen extends StatelessWidget {
             Get.back();
           },
           child: Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             padding: const EdgeInsets.only(left: 12),
             decoration: BoxDecoration(
                 color: AppColor.appcolor,
@@ -253,18 +255,17 @@ class ProductScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                  // Homecontroller controller = Get.find();
-                                  // controller.productValue.value = 1;
-                                  // controller.touchTap.value = true;
-                                  // controller.menu.value = true;
-                                  // controller.filter.value = false;
-                                  //
-                                  //   Get.toNamed(Routes.bottomScreen);
-                                  //   Map<String, dynamic> data = {
-                                  //     "from": 1,
-                                  //   };
-                                  //   Get.toNamed(Routes.denimScreen,
-                                  //       arguments: data);
+                                  Homecontroller controller = Get.find();
+                                  controller.productValue.value = 1;
+                                  controller.touchTap.value = true;
+                                  controller.menu.value = true;
+                                  controller.filter.value = false;
+                                  Get.toNamed(Routes.bottomScreen);
+                                    Map<String, dynamic> data = {
+                                      "from": 1,
+                                    };
+                                    Get.toNamed(Routes.denimScreen,
+                                        arguments: data);
                                    },
                                   child: Container(
                                     padding: const EdgeInsets.only(
