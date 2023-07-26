@@ -33,14 +33,15 @@ class Homecontroller extends GetxController
   var menu = false.obs;
   var heartColor = false.obs;
   var touchTap = false.obs;
+
   /// o for menu and 1 for filter selected
-  var selectValue= 0.obs;
+  var selectValue = 0.obs;
   var filter = false.obs;
   var sub = false.obs;
   var track = false.obs;
   var trackupload = false.obs;
   RxInt productValue = 0.obs;
-  String value= "";
+  String value = "";
 
   var controller = SwipableStackController();
 
@@ -125,8 +126,8 @@ class Homecontroller extends GetxController
 
   void onPageChanged(index) {
     pagePosition.value = index;
-    if(index==2){
-      1.delay(()=>Get.offAllNamed(Routes.loginScreen));
+    if (index == 2) {
+      1.delay(() => Get.offAllNamed(Routes.loginScreen));
     }
   }
 
@@ -193,7 +194,6 @@ class Homecontroller extends GetxController
                           color: blackColor,
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w400,
-
                         ),
                         const SizedBox(
                           height: 20,
@@ -226,12 +226,13 @@ class Homecontroller extends GetxController
                             color: AppColor.textfield,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child:  Center(
+                          child: Center(
                             child: IntrinsicWidth(
                               child: TextField(
                                 cursorColor: AppColor.blackColor,
                                 inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.allow(RegExp("[0-9]"),
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp("[0-9]"),
                                   ),
                                   LengthLimitingTextInputFormatter(5)
                                 ],
@@ -239,24 +240,26 @@ class Homecontroller extends GetxController
                                 textAlignVertical: TextAlignVertical.center,
                                 style: const TextStyle(
                                     color: AppColor.blackColor,
-                                    fontWeight: FontWeight.w600,fontSize: 20
-                                ),
-
-                                decoration:  InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(vertical
-                                        : 20,horizontal: 20),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20),
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 20),
                                     hintText: "2500",
-                                    hintStyle:  TextStyle(
-                                        color: AppColor.blackColor.withOpacity(0.2),
-                                        fontWeight: FontWeight.w600,fontSize: 20
+                                    hintStyle: TextStyle(
+                                        color: AppColor.blackColor
+                                            .withOpacity(0.2),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20),
+                                    prefixIcon: const Icon(
+                                      Icons.attach_money_outlined,
+                                      color: AppColor.blackColor,
                                     ),
-                                    prefixIcon: const Icon(Icons.attach_money_outlined,
-                                      color: AppColor.blackColor,),
                                     border: InputBorder.none,
                                     prefixIconConstraints: const BoxConstraints(
-                                      maxWidth: 20,maxHeight: 40,
-                                    )
-                                ),
+                                      maxWidth: 20,
+                                      maxHeight: 40,
+                                    )),
                               ),
                             ),
                           ),
@@ -348,8 +351,8 @@ class Homecontroller extends GetxController
                           onTap: () {
                             Get.back();
                             sub.value = true;
+                            // Get.back();
                             Get.toNamed(Routes.menshirtScreen);
-
                           },
                           child: CommonButton(
                             margin: const EdgeInsets.symmetric(horizontal: 20),

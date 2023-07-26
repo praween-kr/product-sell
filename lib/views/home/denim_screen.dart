@@ -27,11 +27,11 @@ class DenimScreen extends StatelessWidget {
             children: [
               CommonAppbarWidget(
                 onBackPress: () {
-                  controller.upload.value = false;
-                  controller.track.value = false;
-                  controller.trackupload.value = false;
-                  controller.menu.value = false;
-                  print("menu ${controller.menu.value}");
+                  // controller.upload.value = false;
+                  // controller.track.value = false;
+                  // controller.trackupload.value = false;
+                  // controller.menu.value = false;
+                  // print("menu ${controller.menu.value}");
                   Get.back();
                 },
                 heading: "Girls Denim",
@@ -103,7 +103,7 @@ class DenimScreen extends StatelessWidget {
                         Column(
                           children: [
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 Get.toNamed(Routes.messageScreen);
                               },
                               child: Container(
@@ -422,8 +422,9 @@ class DenimScreen extends StatelessWidget {
                               ? trackingDialog()
                               : data?["from"] == 1
                                   ? givereviewDialog()
-                                  : Get.toNamed(Routes.addressScreen,
-                                     );
+                                  : Get.toNamed(
+                                      Routes.addressScreen,
+                                    );
                 },
                 child: Obx(() => CommonButton(
                       height: 50,

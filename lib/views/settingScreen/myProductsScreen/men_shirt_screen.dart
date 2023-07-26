@@ -27,28 +27,29 @@ class MenshirtScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
-        leading: GestureDetector(
-          onTap: () {
-                Get.back();
-                Get.back();
-              },
-          child: Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.only(left: 12),
-            decoration: BoxDecoration(
-                color: AppColor.appcolor,
-                borderRadius: BorderRadius.circular(15)),
-            child: const Icon(Icons.arrow_back_ios),
+          leading: GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            child: Container(
+              margin: const EdgeInsets.all(5),
+              padding: const EdgeInsets.only(left: 12),
+              decoration: BoxDecoration(
+                  color: AppColor.appcolor,
+                  borderRadius: BorderRadius.circular(15)),
+              child: const Icon(Icons.arrow_back_ios),
+            ),
           ),
-        ),
-        heading: "Men Black Tshirt",
-        textStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: "Poppins"),
-        action: Icon(Icons.favorite,color: AppColor.blackColor.withOpacity(0.2),)
-      ),
+          heading: "Men Black Tshirt",
+          textStyle: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: "Poppins"),
+          action: Icon(
+            Icons.favorite,
+            color: AppColor.blackColor.withOpacity(0.2),
+          )),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,7 +274,7 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-             Divider(
+            Divider(
               color: const Color(0x66000000).withOpacity(0.1),
             ),
             const Padding(
@@ -363,12 +364,11 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             Divider(
               color: const Color(0x66000000).withOpacity(0.1),
               thickness: 1,
             ),
-             const Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 15, left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,7 +436,9 @@ class MenshirtScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           children: [
                             AppText(
@@ -487,14 +489,15 @@ class MenshirtScreen extends StatelessWidget {
                 ],
               ),
             ),
-             Padding(
+            Padding(
               padding: const EdgeInsets.only(top: 20, left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const AppText(
                     text: "Item Description",
-                    textSize: 13,fontWeight: FontWeight.w600,
+                    textSize: 13,
+                    fontWeight: FontWeight.w600,
                     fontFamily: "Poppins",
                   ),
                   const SizedBox(
@@ -502,10 +505,10 @@ class MenshirtScreen extends StatelessWidget {
                   ),
                   AppText(
                       text: "Comfort Experience comfort to greates",
-                      textSize: 12,fontWeight: FontWeight.w500,
+                      textSize: 12,
+                      fontWeight: FontWeight.w500,
                       fontFamily: "Poppins",
-                      color: AppColor.blackColor.withOpacity(0.3)
-                  ),
+                      color: AppColor.blackColor.withOpacity(0.3)),
                   const SizedBox(
                     height: 10,
                   ),
@@ -519,7 +522,7 @@ class MenshirtScreen extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 controller.bidHistoryDialog();
               },
               child: Obx(
