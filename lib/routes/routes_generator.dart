@@ -31,6 +31,7 @@ import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/home/sub_category_screen.dart';
 import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
 import '../views/settingScreen/myProductsScreen/gyraados_screen.dart';
@@ -129,6 +130,9 @@ class RoutesGenerator {
         break;
       case Routes.menshirtScreen:
         widgetScreen = MenshirtScreen();
+        break;
+      case Routes.subCategoryScreen:
+        widgetScreen = SubCategoryScreen();
         break;
       case Routes.biddingScreen:
         widgetScreen = const BiddingScreen();

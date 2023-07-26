@@ -226,6 +226,7 @@ class HomeScreen extends StatelessWidget {
               ),
               Obx(() => controller.menu.value
                   ? Container():
+                  /// SearchFiled and Category Grid View
               Column(
                 children: [
                   const SizedBox(
@@ -295,65 +296,65 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               ),
-              /// Touch Button
-              Obx(
-              ()=> controller.menu.value
-                  ? Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            controller.menu.value = true;
-                            controller.touchTap.value = true;
-                            controller.filter.value = false;
-                            controller.selectValue.value = 0;
-                            print("menu value${controller.menu.value}");
-
-                          },
-                          child: controller.selectValue.value == 0
-                              ?Image.asset(
-                            Assets.assetsTouch,
-                            height: 30,
-                            width: 30,
-                          ) :Image.asset(
-                               Assets.assetsTouchIcon,
-                               height: 30,
-                               width: 30,
-                               ),
-                        ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        /// Filter Button
-                        Padding(
-                          padding: const EdgeInsets.only(right: 7.0),
-                          child: GestureDetector(
-                              onTap: () {
-                                controller.filter.value = true;
-                                controller.touchTap.value = false;
-                                controller.selectValue.value=1;
-                                print("menu value${controller.menu.value}");
-                              },
-                              child:  controller.selectValue.value == 1
-                             ? Image.asset(
-                                Assets.assetsSortIcon,
-                                height: 30,
-                                width: 30,
-                              ) :Image.asset(
-                                Assets.assetsSort,
-                                height: 30,
-                                width: 30,
-                              ),
-                            ),
-                        ),
-                      ],
-                  ),
-                )
-                    : Container(),
-              ),
+              // /// Touch Button
+              // Obx(
+              // ()=> controller.menu.value
+              //     ? Padding(
+              //     padding: const EdgeInsets.only(right: 15),
+              //     child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.end,
+              //         crossAxisAlignment: CrossAxisAlignment.end,
+              //         children: [
+              //           GestureDetector(
+              //             onTap: () {
+              //               controller.menu.value = true;
+              //               controller.touchTap.value = true;
+              //               controller.filter.value = false;
+              //               controller.selectValue.value = 0;
+              //               print("menu value${controller.menu.value}");
+              //
+              //             },
+              //             child: controller.selectValue.value == 0
+              //                 ?Image.asset(
+              //               Assets.assetsTouch,
+              //               height: 30,
+              //               width: 30,
+              //             ) :Image.asset(
+              //                  Assets.assetsTouchIcon,
+              //                  height: 30,
+              //                  width: 30,
+              //                  ),
+              //           ),
+              //           const SizedBox(
+              //             width: 6,
+              //           ),
+              //           /// Filter Button
+              //           Padding(
+              //             padding: const EdgeInsets.only(right: 7.0),
+              //             child: GestureDetector(
+              //                 onTap: () {
+              //                   controller.filter.value = true;
+              //                   controller.touchTap.value = false;
+              //                   controller.selectValue.value=1;
+              //                   print("menu value${controller.menu.value}");
+              //                 },
+              //                 child:  controller.selectValue.value == 1
+              //                ? Image.asset(
+              //                   Assets.assetsSortIcon,
+              //                   height: 30,
+              //                   width: 30,
+              //                 ) :Image.asset(
+              //                   Assets.assetsSort,
+              //                   height: 30,
+              //                   width: 30,
+              //                 ),
+              //               ),
+              //           ),
+              //         ],
+              //     ),
+              //   )
+              //       : Container(),
+              // ),
               Obx(
                 ()=> controller.menu.value
                     ? const SizedBox(
@@ -489,161 +490,163 @@ class HomeScreen extends StatelessWidget {
                         ],
                       )
                           : controller.touchTap.value == true  ?
-                      Stack(children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: SwipableStack(
-                            builder: (context, properties) {
-                              return Stack(
-                                clipBehavior: Clip.none,
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  Image.asset(Assets.assetsHomeBid),
-                                  Positioned(
-                                    bottom: -17,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          Assets.assetsDislike,
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                        const SizedBox(
-                                          width: 70,
-                                        ),
-                                        Obx(
-                                           ()=> GestureDetector(
-                                            onTap: (){
-                                              controller.heartColor.value = true;
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
-                                              decoration:  BoxDecoration(
-                                                color: controller.heartColor.value == true?
-                                                AppColor.prdtextColor:
-                                                  AppColor.blackColor,
-                                                shape: BoxShape.circle
-                                              ),
-                                              child: const Center(
-                                                child: Icon(Icons.favorite,color: AppColor.white,size: 30,
-                                                )
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                        Positioned(
-                          bottom: Get.height *.18,
-                          left: 20,
-                          child:
-                                Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: (){
-                                   // controller.sub.value = true;
-                                   controller.menu.value = false;
-                                   //  controller.touchTap.value = true;
-                                   Get.toNamed(Routes.menshirtScreen);
-                                   print("menShirt ${controller.menu.value}");
-                            },
-                                  child:  const AppText(
-                                    text: "Men Black Tshirt",
-                                    textSize: 18,
-                                    fontFamily: "Poppins",
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const AppText(
-                                  text: "\$4000.00",
-                                  textSize: 18,
-                                  color: Colors.white,
-                                  fontFamily: "Poppins",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    timerDialog();
-
-                                      },
-                                  child: CommonButton(
-                                    height: 40,
-                                    radius: 15,
-                                    color: AppColor.appcolor,
-                                    text:
-                                    "Bid \$2500",
-                                    textStyle: const TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: "Poppins",
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                 const AppText(
-                                  text: "min \$4000.00",
-                                  textSize: 10,
-                                  color: Colors.white,
-                                  fontFamily: "Poppins",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                               const SizedBox(
-                                  height: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: (){
-                                    Get.toNamed(Routes.biddingScreen);
-                                  },
-                                  child: RichText(
-                                      text: const TextSpan(
-                                          text: "20 Bid",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 10,
-                                            fontFamily: "Poppins",
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          children: [
-                                            TextSpan(
-                                              text: "Show bid history",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 10,
-                                                  fontFamily: "Poppins",
-                                                  fontWeight:
-                                                  FontWeight.w400,
-                                                  decoration: TextDecoration
-                                                      .underline),
-                                            )
-                                          ])),
-                                )
-                              ],
-                            ),
-
-                        )
-                      ]):Container()),
+                      // Stack(children: [
+                      //   GestureDetector(
+                      //     onTap: () {},
+                      //     child: SwipableStack(
+                      //       builder: (context, properties) {
+                      //         return Stack(
+                      //           clipBehavior: Clip.none,
+                      //           alignment: Alignment.bottomCenter,
+                      //           children: [
+                      //             Image.asset(Assets.assetsHomeBid),
+                      //             Positioned(
+                      //               bottom: -17,
+                      //               child: Row(
+                      //                 crossAxisAlignment:
+                      //                 CrossAxisAlignment.center,
+                      //                 mainAxisAlignment:
+                      //                 MainAxisAlignment.center,
+                      //                 children: [
+                      //                   Image.asset(
+                      //                     Assets.assetsDislike,
+                      //                     height: 50,
+                      //                     width: 50,
+                      //                   ),
+                      //                   const SizedBox(
+                      //                     width: 70,
+                      //                   ),
+                      //                   Obx(
+                      //                      ()=> GestureDetector(
+                      //                       onTap: (){
+                      //                         controller.heartColor.value = true;
+                      //                       },
+                      //                       child: Container(
+                      //                         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                      //                         decoration:  BoxDecoration(
+                      //                           color: controller.heartColor.value == true?
+                      //                           AppColor.prdtextColor:
+                      //                             AppColor.blackColor,
+                      //                           shape: BoxShape.circle
+                      //                         ),
+                      //                         child: const Center(
+                      //                           child: Icon(Icons.favorite,color: AppColor.white,size: 30,
+                      //                           )
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                   )
+                      //                 ],
+                      //               ),
+                      //             )
+                      //           ],
+                      //         );
+                      //       },
+                      //     ),
+                      //   ),
+                      //   Positioned(
+                      //     bottom: Get.height *.18,
+                      //     left: 20,
+                      //     child:
+                      //           Column(
+                      //         crossAxisAlignment:
+                      //         CrossAxisAlignment.start,
+                      //         children: [
+                      //           GestureDetector(
+                      //             onTap: (){
+                      //              // controller.sub.value = true;
+                      //              controller.menu.value = false;
+                      //              //  controller.touchTap.value = true;
+                      //              Get.toNamed(Routes.menshirtScreen);
+                      //              print("menShirt ${controller.menu.value}");
+                      //       },
+                      //             child:  const AppText(
+                      //               text: "Men Black Tshirt",
+                      //               textSize: 18,
+                      //               fontFamily: "Poppins",
+                      //               color: Colors.white,
+                      //               fontWeight: FontWeight.w400,
+                      //             ),
+                      //           ),
+                      //           const SizedBox(
+                      //             height: 10,
+                      //           ),
+                      //           const AppText(
+                      //             text: "\$4000.00",
+                      //             textSize: 18,
+                      //             color: Colors.white,
+                      //             fontFamily: "Poppins",
+                      //             fontWeight: FontWeight.w400,
+                      //           ),
+                      //           const SizedBox(
+                      //             height: 10,
+                      //           ),
+                      //           GestureDetector(
+                      //             onTap: () {
+                      //               timerDialog();
+                      //
+                      //                 },
+                      //             child: CommonButton(
+                      //               height: 40,
+                      //               radius: 15,
+                      //               color: AppColor.appcolor,
+                      //               text:
+                      //               "Bid \$2500",
+                      //               textStyle: const TextStyle(
+                      //                 fontSize: 15,
+                      //                 fontFamily: "Poppins",
+                      //                 color: Colors.white,
+                      //                 fontWeight: FontWeight.w400,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           const SizedBox(
+                      //             height: 10,
+                      //           ),
+                      //            const AppText(
+                      //             text: "min \$4000.00",
+                      //             textSize: 10,
+                      //             color: Colors.white,
+                      //             fontFamily: "Poppins",
+                      //             fontWeight: FontWeight.w400,
+                      //           ),
+                      //          const SizedBox(
+                      //             height: 10,
+                      //           ),
+                      //           GestureDetector(
+                      //             onTap: (){
+                      //               Get.toNamed(Routes.biddingScreen);
+                      //             },
+                      //             child: RichText(
+                      //                 text: const TextSpan(
+                      //                     text: "20 Bid",
+                      //                     style: TextStyle(
+                      //                       color: Colors.white,
+                      //                       fontSize: 10,
+                      //                       fontFamily: "Poppins",
+                      //                       fontWeight: FontWeight.w400,
+                      //                     ),
+                      //                     children: [
+                      //                       TextSpan(
+                      //                         text: "Show bid history",
+                      //                         style: TextStyle(
+                      //                             color: Colors.white,
+                      //                             fontSize: 10,
+                      //                             fontFamily: "Poppins",
+                      //                             fontWeight:
+                      //                             FontWeight.w400,
+                      //                             decoration: TextDecoration
+                      //                                 .underline),
+                      //                       )
+                      //                     ])),
+                      //           )
+                      //         ],
+                      //       ),
+                      //
+                      //   )
+                      // ])
+                        Container()  :Container()
+                  ),
                 )
                     : Expanded(
                      child: GridView.builder(

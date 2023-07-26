@@ -42,8 +42,8 @@ class FavouriteScreen extends StatelessWidget {
                     //  var data = controller.Categorydata[index];
                     return GestureDetector(
                       onTap: () {
-                        controller.sub.value = false;
-                        controller.menu.value = false;
+                        //controller.sub.value = false;
+                        //controller.menu.value = false;
                         Get.toNamed(Routes.menshirtScreen);
                       },
                       child: Column(

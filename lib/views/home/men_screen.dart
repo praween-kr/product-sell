@@ -38,8 +38,7 @@ class MenScreen extends StatelessWidget {
                       onTap: () {
                         controller1.menu.value = true;
                          controller1.touchTap.value= true;
-                        Get.toNamed(Routes.bottomScreen);
-
+                        Get.toNamed(Routes.subCategoryScreen);
                       },
                       child: Column(
                         children: [
