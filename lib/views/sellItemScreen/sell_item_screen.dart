@@ -604,7 +604,10 @@ class SellItemScreen extends StatelessWidget {
                                 color: AppColor.TextColor,
                               ),
                               child: DropdownSearch<String>(
-                              dropdownButtonProps: const DropdownButtonProps(
+                              dropdownButtonProps:   DropdownButtonProps(
+                                onPressed: (){
+                                  controller.selectedItemValue.value = true;
+                                },
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     color: AppColor.blackColor,

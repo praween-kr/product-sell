@@ -6,6 +6,7 @@ import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/views/home/sub_category_screen.dart';
 import '../../../common_widget/color_constant.dart';
 import '../../../utills/colors_file.dart';
 
@@ -29,7 +30,7 @@ class MenshirtScreen extends StatelessWidget {
       appBar: CommonAppbarWidget(
           leading: GestureDetector(
             onTap: () {
-              Get.back();
+              Get.to(()=>SubCategoryScreen());
             },
             child: Container(
               margin: const EdgeInsets.all(5),

@@ -22,8 +22,9 @@ class OnBoardingScreen extends StatelessWidget {
       controller: controller.pageController,
       itemBuilder: (BuildContext context, int index) {
         var data = controller.onBoardingData[index];
-        return Column(children: [
-          Image.asset(
+        return Column(
+            children: [
+              Image.asset(
             data.image,
             fit: BoxFit.contain,
             height: dim.height * 0.6,

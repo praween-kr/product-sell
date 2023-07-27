@@ -56,13 +56,6 @@ class SellItemController extends GetxController implements CameraOnCompleteListe
     'Condition 2',
     'Condition 3',
   ].obs;
-  // RxString dropDownValue7= "".obs;
-  // // List of items in our dropdown menu
-  // RxList<String>sellItems = [
-  //   'Auction',
-  //   'Fix Price',
-  // ].obs;
-
   /// selectedItem view
   RxBool selectedItemValue = false.obs;
 
