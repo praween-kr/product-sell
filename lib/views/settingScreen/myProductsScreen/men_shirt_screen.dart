@@ -30,7 +30,8 @@ class MenshirtScreen extends StatelessWidget {
       appBar: CommonAppbarWidget(
           leading: GestureDetector(
             onTap: () {
-              Get.to(()=>SubCategoryScreen());
+              controller.menu.value = true;
+              Get.back();
             },
             child: Container(
               margin: const EdgeInsets.all(5),
