@@ -55,11 +55,11 @@ class ForgotScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.loginScreen);
+                    Get.toNamed(Routes.verificationScreen);
                   },
                   child: CommonButton(
                     color: AppColor.appcolor,
-                   // margin: const EdgeInsets.only(right: 20,left: 20),
+                    // margin: const EdgeInsets.only(right: 20,left: 20),
                     radius: 20,
                     height: 57,
                     text: "Send",

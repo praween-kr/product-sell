@@ -8,6 +8,8 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 
+import '../../common_widget/common_button.dart';
+
 class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
   final controller = Get.put(SettingsController());
@@ -118,8 +120,14 @@ class SettingScreen extends GetView<SettingsController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 10),
-                    child: Icon(Icons.arrow_forward_ios_outlined,
-                        color: AppColor.blackColor.withOpacity(0.3), size: 15),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.profileScreen);
+                      },
+                      child: Icon(Icons.arrow_forward_ios_outlined,
+                          color: AppColor.blackColor.withOpacity(0.3),
+                          size: 15),
+                    ),
                   )
                 ],
               ),
@@ -167,86 +175,199 @@ class SettingScreen extends GetView<SettingsController> {
                   ),
                   Row(children: [
                     Obx(() => Transform.scale(
-                      scale: 0.8,
-                      child: CupertinoSwitch(
-                        activeColor: AppColor.appcolor,
-                        thumbColor: AppColor.white,
-                        trackColor: Colors.red,
-                        value: controller.on.value,
-                        onChanged: (val) => controller.toggle(),
-                      ),
-                    )),
+                          scale: 0.8,
+                          child: CupertinoSwitch(
+                            activeColor: AppColor.appcolor,
+                            thumbColor: AppColor.white,
+                            trackColor: Colors.red,
+                            value: controller.on.value,
+                            onChanged: (val) => controller.toggle(),
+                          ),
+                        )),
                   ]),
                 ],
               ),
               const SizedBox(
                 height: 17.0,
               ),
-              commonRow(icon: Icons.shopping_cart_rounded, title: "My Products",
-                  onClick: (){
-                Get.toNamed(Routes.productScreen);
-                controller.tabController.value = 1 ;
-              }),
+              commonRow(
+                  icon: Icons.shopping_cart_rounded,
+                  title: "My Products",
+                  onClick: () {
+                    Get.toNamed(Routes.productScreen);
+                    controller.tabController.value = 1;
+                  }),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// Password Row
-              commonRow(icon:  Icons.lock,
+              commonRow(
+                  icon: Icons.lock,
                   title: "Password",
-                  onClick: (){
+                  onClick: () {
                     Get.toNamed(Routes.passwordScreen);
                   }),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// Payment Row
-              commonRow(icon: Icons.payment, title: "Payment", onClick: () {
-                Get.toNamed(Routes.settingPaymentScreen);
-              },),
+              commonRow(
+                icon: Icons.payment,
+                title: "Payment",
+                onClick: () {
+                  Get.toNamed(Routes.settingPaymentScreen);
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// Address Row
-              commonRow(icon: Icons.location_on, title: "Address", onClick: () {
-                Get.toNamed(Routes.addressScreen);
-              },),
+              commonRow(
+                icon: Icons.location_on,
+                title: "Address",
+                onClick: () {
+                  Get.toNamed(Routes.addressScreen);
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// My Subscription Row
-              commonRow(icon: Icons.attach_money, title: "My Subscription", onClick: () {
-                Get.toNamed(Routes.subscriptionScreen);
-              },),
+              commonRow(
+                icon: Icons.attach_money,
+                title: "My Subscription",
+                onClick: () {
+                  Get.toNamed(Routes.subscriptionScreen);
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// Privacy Policy Row
-              commonRow(icon: Icons.event_note_sharp, title: "Privacy Policy", onClick: () {
-                Get.to(CmsScreen(type: 1));
-              },),
+              commonRow(
+                icon: Icons.event_note_sharp,
+                title: "Privacy Policy",
+                onClick: () {
+                  Get.to(CmsScreen(type: 1));
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// Help Center Row
-             commonRow(icon: Icons.headphones, title: "Help Center", onClick: () {
-            Get.to(CmsScreen(type: 2));
-          },),
+              commonRow(
+                icon: Icons.headphones,
+                title: "Help Center",
+                onClick: () {
+                  Get.to(CmsScreen(type: 2));
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// About Us Row
-            commonRow(icon:  Icons.help, title: "About Us", onClick: () {
-              Get.to(CmsScreen(type: 3));
-            },),
+              commonRow(
+                icon: Icons.help,
+                title: "About Us",
+                onClick: () {
+                  Get.to(CmsScreen(type: 3));
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
+
               /// Logout Row
-             commonRow(icon:  Icons.logout_sharp, title: "Logout",
-               color: AppColor.prdtextColor, boxColor: AppColor.prdtextColor,
-               onClick: () {
-               Get.offAllNamed(Routes.loginScreen);
-             },),
+              commonRow(
+                icon: Icons.logout_sharp,
+                title: "Logout",
+                color: AppColor.prdtextColor,
+                boxColor: AppColor.prdtextColor,
+                onClick: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Material(
+                            type: MaterialType.transparency,
+                            child: Align(
+                              //alignment: Alignment.center,
+                              child: Container(
+                                width: 250,
+                                decoration: BoxDecoration(
+                                    color: AppColor.white,
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 20),
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const AppText(
+                                          text:
+                                              "Your product has been submitted successfully!",
+                                          textSize: 15,
+                                          color: AppColor.blackColor,
+                                          lineHeight: 1.6,
+                                          letterSpacing: 0.2,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(
+                                          height: 21.0,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Get.offAllNamed(
+                                                      Routes.loginScreen);
+                                                },
+                                                child: CommonButton(
+                                                  color: AppColor.appcolor,
+                                                  radius: 25,
+                                                  //  margin: const EdgeInsets.only(right: 30),
+                                                  height: 40,
+                                                  text: "Yes",
+                                                  textStyle: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16),
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  Get.back();
+                                                },
+                                                child: CommonButton(
+                                                  color: AppColor.appcolor,
+                                                  radius: 25,
+                                                  //  margin: const EdgeInsets.only(right: 30),
+                                                  height: 40,
+                                                  text: " No ",
+                                                  textStyle: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ));
+                      });
+                },
+              ),
               const SizedBox(
                 height: 17.0,
               ),
@@ -256,11 +377,16 @@ class SettingScreen extends GetView<SettingsController> {
       ),
     );
   }
+
   /// CommonRow View
-  Widget commonRow({required IconData icon, Color? color,Color? boxColor, required String title,
-    required Function onClick}){
-    return   GestureDetector(
-      onTap: (){
+  Widget commonRow(
+      {required IconData icon,
+      Color? color,
+      Color? boxColor,
+      required String title,
+      required Function onClick}) {
+    return GestureDetector(
+      onTap: () {
         onClick();
       },
       child: Card(
@@ -269,11 +395,11 @@ class SettingScreen extends GetView<SettingsController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0, vertical: 10.0),
-              decoration:  BoxDecoration(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              decoration: BoxDecoration(
                   color: boxColor ?? AppColor.appcolor, shape: BoxShape.circle),
-              child:  Center(
+              child: Center(
                 child: Icon(
                   icon,
                   color: AppColor.white,
@@ -287,7 +413,7 @@ class SettingScreen extends GetView<SettingsController> {
             AppText(
               text: title,
               textSize: 13.0,
-              color: color?? AppColor.blackColor,
+              color: color ?? AppColor.blackColor,
               style: AppTextStyle.regular,
             ),
           ],
@@ -295,5 +421,4 @@ class SettingScreen extends GetView<SettingsController> {
       ),
     );
   }
-
 }

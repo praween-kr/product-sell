@@ -33,6 +33,7 @@ class AppTextField extends StatelessWidget {
   BoxBorder? border;
   final Color? containerColor;
   EdgeInsetsGeometry? margin;
+  FocusNode? focusNode;
 
   AppTextField(
       {Key? key,
@@ -41,9 +42,9 @@ class AppTextField extends StatelessWidget {
       this.suffix,
       this.name,
       this.controller,
-        this.hintStyle,
-        this.labelStyle,
-        this.textAlign,
+      this.hintStyle,
+      this.labelStyle,
+      this.textAlign,
       this.containerColor,
       this.elevation,
       this.inputFormatters,
@@ -52,7 +53,7 @@ class AppTextField extends StatelessWidget {
       this.textInputType,
       this.height,
       this.width,
-        this.minLines,
+      this.minLines,
       this.maxLength,
       this.prefix,
       this.contentPadding,
@@ -63,7 +64,8 @@ class AppTextField extends StatelessWidget {
       this.readOnly,
       this.margin,
       this.countryCodePiker,
-      this.keyBoardType})
+      this.keyBoardType,
+      this.focusNode})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -77,31 +79,38 @@ class AppTextField extends StatelessWidget {
             borderRadius ?? const BorderRadius.all(Radius.circular(10)),
         border: border,
       ),
-      child: TextFormField(
-        style: style ??
-            const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15),
-        onChanged: onChanged,
-        controller: controller,
-        inputFormatters: inputFormatters,
-        maxLength: maxLength,
-        maxLines: maxLines,
-        minLines: minLines,
-        textAlign: textAlign ?? TextAlign.start,
-        readOnly: readOnly ?? false,
-        textInputAction: keyBoardType ?? TextInputAction.done,
-        obscureText: isObscure ?? false,
-        keyboardType: textInputType ?? TextInputType.emailAddress,
-        decoration: InputDecoration(
-          counterText: "",
-          hintText: title,
-          suffixIcon: suffix,
-          prefixIcon: prefix,
-          suffixIconColor: suffixIconColor,
-          contentPadding: contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
-          hintStyle: hintStyle ??TextStyle(color: Colors.black.withOpacity(0.4)),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide.none,
+      child: Center(
+        child: TextFormField(
+          style: style ??
+              const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15),
+          onChanged: onChanged,
+          focusNode: focusNode,
+          controller: controller,
+          inputFormatters: inputFormatters,
+          maxLength: maxLength,
+          maxLines: maxLines,
+          minLines: minLines,
+          textAlign: textAlign ?? TextAlign.start,
+          readOnly: readOnly ?? false,
+          textInputAction: keyBoardType ?? TextInputAction.done,
+          obscureText: isObscure ?? false,
+          keyboardType: textInputType ?? TextInputType.emailAddress,
+          decoration: InputDecoration(
+            counterText: "",
+            hintText: title,
+            suffixIcon: suffix,
+            prefixIcon: prefix,
+            suffixIconColor: suffixIconColor,
+            contentPadding:
+                contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
+            hintStyle:
+                hintStyle ?? TextStyle(color: Colors.black.withOpacity(0.4)),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+            ),
           ),
         ),
       ),

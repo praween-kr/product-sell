@@ -17,6 +17,7 @@ class NavBarMsgScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: CommonAppbarWidget(
+        leading: Text(""),
         heading: "Message",
         textStyle: const TextStyle(
             fontSize: 20,
@@ -210,8 +211,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                                   const AppText(
                                                     text: "Men Tshirt",
                                                     textSize: 15.0,
-                                                    color:
-                                                        AppColor.blackColor,
+                                                    color: AppColor.blackColor,
                                                     style: AppTextStyle.title,
                                                   ),
                                                   const SizedBox(
@@ -222,8 +222,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                                     textSize: 12.0,
                                                     color: AppColor.blackColor
                                                         .withOpacity(0.3),
-                                                    style:
-                                                        AppTextStyle.medium,
+                                                    style: AppTextStyle.medium,
                                                   )
                                                 ],
                                               )
@@ -232,12 +231,11 @@ class NavBarMsgScreen extends StatelessWidget {
                                           Row(
                                             children: [
                                               Container(
-                                                padding: const EdgeInsets
-                                                        .symmetric(
-                                                    horizontal: 10.0,
-                                                    vertical: 10.0),
-                                                decoration:
-                                                    const BoxDecoration(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0,
+                                                        vertical: 10.0),
+                                                decoration: const BoxDecoration(
                                                   color: AppColor.appcolor,
                                                   shape: BoxShape.circle,
                                                 ),
@@ -246,8 +244,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                                     text: "2",
                                                     color: AppColor.white,
                                                     textSize: 10.0,
-                                                    style:
-                                                        AppTextStyle.regular,
+                                                    style: AppTextStyle.regular,
                                                   ),
                                                 ),
                                               )

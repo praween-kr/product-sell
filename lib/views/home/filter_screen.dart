@@ -48,10 +48,10 @@ class FilterScreen extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                             Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                               const AppText(
+                                const AppText(
                                   text: "\$200.00",
                                   textSize: 15,
                                   fontWeight: FontWeight.w600,

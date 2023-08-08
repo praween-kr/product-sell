@@ -88,7 +88,7 @@ class RoutesGenerator {
         widgetScreen = SellItemScreen();
         break;
       case Routes.paymentScreen:
-        widgetScreen = const PaymentScreen();
+        widgetScreen = PaymentScreen();
         break;
       case Routes.productScreen:
         widgetScreen = ProductScreen();
@@ -116,7 +116,7 @@ class RoutesGenerator {
           type: args as int,
         );
         break;
-        case Routes.homebidScreen:
+      case Routes.homebidScreen:
         widgetScreen = HomeBidScreen();
         break;
       case Routes.selectPlanScreen:
