@@ -61,6 +61,7 @@ class PaymentScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: const Color(0xffE7F9F5),
                           borderRadius: BorderRadius.circular(10),
+
                           // boxShadow: const [
                           //   BoxShadow(
                           //       offset: Offset(
