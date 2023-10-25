@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
+
 import '../../common_widget/app_text.dart';
 import '../../routes/routes.dart';
 import '../../utills/colors_file.dart';
@@ -29,10 +30,11 @@ class SignUpScreen extends StatelessWidget {
               child: CommonAppbarWidget(
                 leading: GestureDetector(
                   onTap: () {
-                        Get.back();
-                      },
+                    Get.back();
+                  },
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
                     padding: const EdgeInsets.only(left: 12),
                     decoration: BoxDecoration(
                         color: AppColor.appcolor,
@@ -54,7 +56,9 @@ class SignUpScreen extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     textSize: 30,
                   ),
-                  const SizedBox(height: 7,),
+                  const SizedBox(
+                    height: 7,
+                  ),
                   const AppText(
                     text: "Signup your details",
                     color: Color(0x80000000),
@@ -163,7 +167,7 @@ class SignUpScreen extends StatelessWidget {
                           CountryCodePicker(
                             padding: EdgeInsets.zero,
                             textStyle:
-                            TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.white, fontSize: 15),
                             enabled: true,
                             showFlag: false,
                             alignLeft: false,
@@ -177,13 +181,13 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     title: "5555-555-55",
-                    style: const TextStyle(
-                        color: AppColor.blackColor
-                    ),
+                    style: const TextStyle(color: AppColor.blackColor),
                     contentPadding: const EdgeInsets.only(right: 2.0),
                     maxLength: 8,
                   ),
-                  const SizedBox(height: 18,),
+                  const SizedBox(
+                    height: 18,
+                  ),
                   const AppText(
                     text: "Location",
                     color: Color(0x80000000),
@@ -225,18 +229,18 @@ class SignUpScreen extends StatelessWidget {
                             right: 5,
                           ),
                           child: RichText(
-                            text:  TextSpan(
+                            text: TextSpan(
                                 text: "By creating an"
                                     " account you have to agree\n with "
                                     "our ",
-                                style: TextStyle(color: blackColor),
+                                style: const TextStyle(color: blackColor),
                                 children: [
                                   TextSpan(
-                                    recognizer: TapGestureRecognizer()..onTap = () => {
-                                      Get.to( CmsScreen(type: 1))
-                                    },
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () =>
+                                          Get.to(CmsScreen(), arguments: 1),
                                     text: "Privacy Policy",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black,
                                         decoration: TextDecoration.underline,
                                         fontSize: 12),

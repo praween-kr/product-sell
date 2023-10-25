@@ -10,11 +10,11 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+
 import '../../common_widget/color_constant.dart';
 
 class DenimScreen extends StatelessWidget {
-  Map<String, dynamic>? data;
-  DenimScreen({Key? key, required this.data}) : super(key: key);
+  DenimScreen({Key? key}) : super(key: key);
   final controller = Get.put(Homecontroller());
 
   @override
@@ -135,7 +135,9 @@ class DenimScreen extends StatelessWidget {
                         const Icon(Icons.star, color: AppColor.appcolor),
                         GestureDetector(
                           onTap: () {
-                            data?["from"] == 1 ? Container() : reviewDialog();
+                            Get.arguments?["from"] == 1
+                                ? Container()
+                                : reviewDialog();
                           },
                           child: const AppText(
                             text: "/4.5",
@@ -418,9 +420,10 @@ class DenimScreen extends StatelessWidget {
                       ? uploadDialog()
                       : controller.upload.value
                           ? givereviewDialog()
-                          : data?["from"] == 1 && !controller.upload.value
+                          : Get.arguments?["from"] == 1 &&
+                                  !controller.upload.value
                               ? trackingDialog()
-                              : data?["from"] == 1
+                              : Get.arguments?["from"] == 1
                                   ? givereviewDialog()
                                   : Get.toNamed(
                                       Routes.addressScreen,
@@ -436,7 +439,7 @@ class DenimScreen extends StatelessWidget {
                               ? "Edit Tracking"
                               : controller.trackupload.value
                                   ? "Upload"
-                                  : data?["from"] == 1
+                                  : Get.arguments?["from"] == 1
                                       ? "Add Tracking ID"
                                       : "Buy Now",
                       textStyle: const TextStyle(
@@ -926,7 +929,7 @@ class DenimScreen extends StatelessWidget {
                                   color: AppColor.appcolor,
                                 ),
                             ignoreGestures: true,
-                            onRatingUpdate: (rating) => null),
+                            onRatingUpdate: (rating) {}),
                         DottedBorder(
                           borderPadding: const EdgeInsets.only(
                               top: 20, left: 20, right: 20),

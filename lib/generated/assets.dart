@@ -65,4 +65,6 @@ class Assets {
   static const String assetsTshirt = 'assets/Tshirt.png';
   static const String assetsVideo = 'assets/video.png';
 
+  // Lottie
+  static const String lottieLoader = "assets/lottie/loader.json";
 }

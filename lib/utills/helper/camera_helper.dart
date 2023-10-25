@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,10 @@ class CameraHelper {
           padding: const EdgeInsets.symmetric(
             vertical: 15,
           ),
+          decoration: const BoxDecoration(
+              color: Colors.black87,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(Radius.circular(30))),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,10 +188,6 @@ class CameraHelper {
               )
             ],
           ),
-          decoration: const BoxDecoration(
-              color: Colors.black87,
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
         ),
         onTap: () {
           FocusScope.of(context).requestFocus(FocusScopeNode());
@@ -198,11 +199,11 @@ class CameraHelper {
   void openImagePickerNew() {
     showAdaptiveActionSheet(
       context: context,
-      title: Text("Choose Image"),
+      title: const Text("Choose Image"),
       isDismissible: true,
       actions: [
         BottomSheetAction(
-            title: Text(
+            title: const Text(
               'Camera',
               style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w400),
             ),
@@ -215,7 +216,7 @@ class CameraHelper {
               }
             }),
         BottomSheetAction(
-          title: Text(
+          title: const Text(
             'Gallery',
             style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w400),
           ),
@@ -230,7 +231,7 @@ class CameraHelper {
         ),
       ],
       cancelAction: CancelAction(
-          title: Text(
+          title: const Text(
             'Cancel',
             style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w400),
           ),

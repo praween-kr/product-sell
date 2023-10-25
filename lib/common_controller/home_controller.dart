@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:swipable_stack/swipable_stack.dart';
+
 import '../common_widget/app_text.dart';
 import '../common_widget/color_constant.dart';
 import '../common_widget/common_button.dart';
@@ -20,8 +19,8 @@ import '../utills/helper/camera_helper.dart';
 
 class Homecontroller extends GetxController
     implements CameraOnCompleteListener {
-  RxBool homePass = true.obs;
-  RxBool Switch = false.obs;
+  // RxBool homePass = true.obs;
+  // RxBool Switch = false.obs;
   RxBool upload = false.obs;
   var tabController = 1.obs;
   var coOwnerController = 0.obs;

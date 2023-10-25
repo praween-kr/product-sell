@@ -1,18 +1,23 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/utills/app_print.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utills/regex.dart';
+
 import '../../utills/colors_file.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
-  final controller = Get.put(Homecontroller());
+  // final controller = Get.put(Homecontroller());
+  AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +60,47 @@ class LoginScreen extends StatelessWidget {
                 height: 10,
               ),
               AppTextField(
-                title: "jennySmith@gmail.com",
+                title: "example@gmail.com",
+                controller: authController.inputPhoneEmail,
                 hintStyle: const TextStyle(
                     color: AppColor.blackColor,
                     fontSize: 15,
                     fontWeight: FontWeight.w400),
-                prefix: const Icon(
-                  Icons.email_outlined,
-                  color: Colors.black,
+                onChanged: (v) {
+                  authController.usernameIsPhoneType.value =
+                      AppRegex.num0to9.hasMatch(v.trim());
+                },
+                prefix: Obx(
+                  () => authController.usernameIsPhoneType.value
+                      ? Container(
+                          margin: const EdgeInsets.only(right: 15),
+                          decoration: const BoxDecoration(
+                              color: AppColor.appcolor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CountryCodePicker(
+                                padding: EdgeInsets.zero,
+                                textStyle: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                                enabled: true,
+                                showFlag: false,
+                                alignLeft: false,
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                            ],
+                          ),
+                        )
+                      : const Icon(
+                          Icons.email_outlined,
+                          color: Colors.black,
+                        ),
                 ),
                 containerColor: AppColor.TextColor,
                 contentPadding: const EdgeInsets.only(
@@ -84,12 +122,13 @@ class LoginScreen extends StatelessWidget {
               ),
               Obx(
                 () => AppTextField(
+                  controller: authController.inputPassword,
                   title: "*******",
                   hintStyle: const TextStyle(
                       color: AppColor.blackColor,
                       fontSize: 15,
                       fontWeight: FontWeight.w400),
-                  isObscure: controller.homePass.value,
+                  isObscure: authController.passVisible.value,
                   maxLines: 1,
                   contentPadding: const EdgeInsets.only(
                     top: 35,
@@ -100,9 +139,10 @@ class LoginScreen extends StatelessWidget {
                       color: AppColor.blackColor.withOpacity(0.6)),
                   suffix: GestureDetector(
                     onTap: () {
-                      controller.homePass.value = !controller.homePass.value;
+                      authController.passVisible.value =
+                          !authController.passVisible.value;
                     },
-                    child: controller.homePass.value
+                    child: authController.passVisible.value
                         ? const Icon(Icons.remove_red_eye_outlined)
                         : Icon(
                             Icons.visibility_off_outlined,
@@ -128,13 +168,14 @@ class LoginScreen extends StatelessWidget {
                             scaleY: 0.8,
                             scaleX: 0.8,
                             child: CupertinoSwitch(
-                              value: controller.Switch.value,
+                              value: authController.rememberMe.value,
                               onChanged: (value) {
-                                controller.Switch.value =
-                                    !controller.Switch.value;
+                                authController.rememberMe.value =
+                                    !authController.rememberMe.value;
                               },
-                              activeColor: Colors.red,
-                              trackColor: themeColor,
+                              activeColor: themeColor,
+                              trackColor: Colors.grey.shade400,
+                              thumbColor: Colors.grey.shade100,
                             )),
                         const AppText(
                           text: "Remember me",
@@ -164,13 +205,10 @@ class LoginScreen extends StatelessWidget {
                 height: 40,
               ),
               GestureDetector(
-                onTap: () {
-                  // controller.productValue.value = 0;
-                  // controller.touchTap.value = false;
-                  // controller.menu.value = false;
-                  // controller.filter.value = false;
-                  Get.offAllNamed(Routes.bottomScreen);
-                  print(" menu value ${controller.menu.value}");
+                onTap: () async {
+                  AppPrint.info("---");
+                  await authController.signin();
+                  // print(" menu value ${controller.menu.value}");
                 },
                 child: Container(
                   alignment: Alignment.center,

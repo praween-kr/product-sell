@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
+
 import '../../../common_widget/appbar.dart';
 import '../../../utills/colors_file.dart';
 
 class CmsScreen extends StatelessWidget {
-  int type ;
-  CmsScreen({super.key, required this.type});
+  CmsScreen({super.key, required});
   final controller = Get.put(SettingsController());
 
   @override
@@ -16,11 +16,11 @@ class CmsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: CommonAppbarWidget(
-        heading: type == 1
+        heading: Get.arguments == 1
             ? 'Privacy Policy'
-            : type == 2
+            : Get.arguments == 2
                 ? 'Help Center'
-                : type == 3
+                : Get.arguments == 3
                     ? 'About Us'
                     : "Privacy Policy",
         textStyle: const TextStyle(
@@ -30,7 +30,7 @@ class CmsScreen extends StatelessWidget {
             fontFamily: "Poppins"),
       ),
       body: const Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 27.0,right: 20.0),
+        padding: EdgeInsets.only(left: 20.0, top: 27.0, right: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

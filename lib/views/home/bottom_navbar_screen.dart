@@ -10,10 +10,8 @@ import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
 class BottomScreen extends StatelessWidget {
-  Map<String, dynamic>? data;
   BottomScreen({
     Key? key,
-    required this.data,
   }) : super(key: key);
   final controller = Get.put(BottomNavController());
 
@@ -108,9 +106,7 @@ class BottomScreen extends StatelessWidget {
     switch (index) {
       case 0:
         {
-          return HomeScreen(
-            data: {},
-          );
+          return HomeScreen();
         }
 
       case 1:

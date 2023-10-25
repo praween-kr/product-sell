@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
 
 import '../../common_widget/common_button.dart';
 
 class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
+  @override
   final controller = Get.put(SettingsController());
 
   @override
@@ -253,7 +254,7 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.event_note_sharp,
                 title: "Privacy Policy",
                 onClick: () {
-                  Get.to(CmsScreen(type: 1));
+                  Get.to(CmsScreen(), arguments: 1);
                 },
               ),
               const SizedBox(
@@ -265,7 +266,7 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.headphones,
                 title: "Help Center",
                 onClick: () {
-                  Get.to(CmsScreen(type: 2));
+                  Get.to(CmsScreen(), arguments: 2);
                 },
               ),
               const SizedBox(
@@ -277,7 +278,7 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.help,
                 title: "About Us",
                 onClick: () {
-                  Get.to(CmsScreen(type: 3));
+                  Get.to(CmsScreen(), arguments: 3);
                 },
               ),
               const SizedBox(

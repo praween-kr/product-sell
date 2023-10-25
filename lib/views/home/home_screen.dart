@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home_controller.dart';
@@ -7,16 +6,12 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/commontextfield.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../common_widget/app_textfield.dart';
 import '../../utills/colors_file.dart';
 
 class HomeScreen extends StatelessWidget {
-  Map<String, dynamic>? data;
-  HomeScreen({Key? key, required this.data}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
   final controller = Get.put(Homecontroller());
   static String _pincode(String option) => (option).toString();
   List<String> searchHints = [
@@ -368,10 +363,10 @@ class HomeScreen extends StatelessWidget {
                           // ),
                           //
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 14),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
                             child: ClipRRect(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(45)),
+                                  const BorderRadius.all(Radius.circular(45)),
                               child: AppTextField(
                                 height: 45,
                                 controller: controller.searchInput.value,

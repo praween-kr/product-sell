@@ -12,9 +12,7 @@ class BottomNavController extends GetxController {
   RxInt selectedIndex = RxInt(0);
 
   final List<Widget> bottomBarPages = [
-    HomeScreen(
-      data: {},
-    ),
+    HomeScreen(),
     FavouriteScreen(),
     NavBarMsgScreen(),
     SettingScreen(),

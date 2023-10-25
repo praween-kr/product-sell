@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:oninto_flutter/routes/app_routes.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/routes/routes_generator.dart';
+
+import 'service/local/db_helper.dart';
+import 'service/local/local_store_keys.dart';
 
 void main() async {
+  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   String initialRoute = await findIntialRoute();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
@@ -32,13 +37,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Poppins', primaryColor: Colors.transparent),
       title: 'Flutter Demo',
       initialRoute: Routes.splashScreen,
-      onGenerateRoute: RoutesGenerator.generateRoute,
-      onGenerateInitialRoutes: (String initialRouteName) {
-        return [
-          RoutesGenerator.generateRoute(
-              const RouteSettings(name: Routes.splashScreen)),
-        ];
-      },
+      // onGenerateRoute: RoutesGenerator.generateRoute,
+      // onGenerateInitialRoutes: (String initialRouteName) {
+      //   return [
+      //     RoutesGenerator.generateRoute(
+      //         const RouteSettings(name: Routes.splashScreen)),
+      //   ];
+      // },
+      getPages: AppRoutes.routes,
     );
+  }
+
+  static startFirstScreen(String? message) {
+    DbHelper.deleteData(SharedPrefKeys.userInfo);
+    "UserStoredInfo().userInfo = null";
+    Get.offAllNamed(Routes.loginScreen);
+    // SocketHelper().disconnectUser();
+    Get.deleteAll(force: true);
+    // AppLoader.hide();
   }
 }
