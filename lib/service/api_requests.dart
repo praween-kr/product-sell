@@ -44,43 +44,52 @@ class ApiRequests {
     return false;
   }
 
-  /// ---------Sign Up----------
-  // static Future<bool> signup({
-  //   String? profileImage,
-  //   required int role,
-  //   required String firstName,
-  //   required String lastName,
-  //   required String email,
-  //   required String countryCode,
-  //   required String phoneNumber,
-  //   required Function(OtpModel?) resp,
-  // }) async {
-  //   AppLoader.show();
-  //   // final fcmToken = await FirebaseMessaging.instance.getToken();
-  //   var data = await BaseApiCall().postFormReq(AppApis.signup,
-  //       data: {
-  //         "role": role,
-  //         "firstname": firstName,
-  //         "lastname": lastName,
-  //         "country_code": countryCode,
-  //         "phone": phoneNumber,
-  //         "email": email,
-  //         "device_token": "fcmToken",
-  //         "device_type": Platform.isIOS ? 2 : 1,
-  //       },
-  //       attachments: profileImage == '' ? null : {"image": profileImage ?? ''});
+// firstName:User
+// lastName:One
+// email:user1@g.com
+// countryCode:91
+// phone:9696969690
+// password:123456
+// confirmPassword:123456
+// deviceToken:device_token
+// deviceType:1
+  static Future<bool> signup(
+      {required String firstName,
+      required String lastName,
+      required String email,
+      required String countryCode,
+      required String phone}) async {
+    AppLoader.show();
+    // final fcmToken = await FirebaseMessaging.instance.getToken();
+    var data = await BaseApiCall().postReq(AppApis.signUp, data: {
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "countryCode": countryCode,
+      "phone": phone,
+      "deviceType": Platform.isIOS ? 1 : 1,
+      "deviceToken": "device_token",
+      "password": "123456", // temprory
+      "confirmPassword": "123456"
+    });
 
-  //   if (data != null) {
-  //     // DataResponse<OtpModel?> dataResponse = DataResponse.fromJson(
-  //     //     data, (json) => OtpModel.fromJson(json as Map<String, dynamic>));
-  //     // AppLoader.hide();
-  //     // AppToast.show("Please enter static otp '${dataResponse.body?.otp}'");
-  //     // resp(dataResponse.body);
-  //     return true;
-  //   }
-  //   AppLoader.hide();
-  //   return false;
-  // }
+    if (data != null) {
+      DataResponse<UserInfoModel?> dataResponse = DataResponse.fromJson(
+          data, (json) => UserInfoModel.fromJson(json as Map<String, dynamic>));
+      //
+      if (dataResponse.body != null) {
+        AppPrint.all("Signin Req: ${dataResponse.body!.toJson()}");
+        UserStoredInfo().userInfo = dataResponse.body;
+        DbHelper.saveMap(
+            key: SharedPrefKeys.userInfo, data: dataResponse.body!.toJson());
+      }
+      //
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
 }
 
 class AppCMS {

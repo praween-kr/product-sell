@@ -2,6 +2,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
@@ -13,10 +14,11 @@ import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
-  final RxBool tick = true.obs;
+  // final RxBool tick = true.obs;
   final RxBool pass = true.obs;
   int type = 0;
 
+  final AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,82 +77,62 @@ class SignUpScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   AppTextField(
+                    controller: authController.firstName,
                     height: 50,
                     borderRadius: BorderRadius.circular(15),
                     margin: const EdgeInsets.only(right: 20),
-                    title: "jennySmith@gmail.com",
+                    title: "Your first name",
                     prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.TextColor,
-                    contentPadding: const EdgeInsets.only(
-                      top: 30,
-                      left: 20,
-                    ),
+                    contentPadding: const EdgeInsets.only(top: 30, left: 20),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  const SizedBox(height: 18),
                   const AppText(
                     text: "Last Name",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   AppTextField(
+                    controller: authController.lastName,
                     height: 50,
                     borderRadius: BorderRadius.circular(19),
                     margin: const EdgeInsets.only(right: 20),
-                    title: "jennySmith@gmail.com",
+                    title: "Your last name",
                     prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.TextColor,
-                    contentPadding: const EdgeInsets.only(
-                      top: 30,
-                      left: 20,
-                    ),
+                    contentPadding: const EdgeInsets.only(top: 30, left: 20),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  const SizedBox(height: 18),
                   const AppText(
-                    text: "Email",
-                    color: Color(0x80000000),
-                    fontWeight: FontWeight.w400,
-                    textSize: 14,
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                      text: "Email",
+                      color: Color(0x80000000),
+                      fontWeight: FontWeight.w400,
+                      textSize: 14),
+                  const SizedBox(height: 12),
                   AppTextField(
+                    controller: authController.email,
                     height: 50,
                     borderRadius: BorderRadius.circular(19),
                     margin: const EdgeInsets.only(right: 20),
-                    title: "jennySmith@gmail.com",
+                    title: "example@gmail.com",
                     prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.TextColor,
-                    contentPadding: const EdgeInsets.only(
-                      top: 30,
-                      left: 20,
-                    ),
+                    contentPadding: const EdgeInsets.only(top: 30, left: 20),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  const SizedBox(height: 18),
                   const AppText(
                     text: "Phone Number",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   AppTextField(
+                    controller: authController.phone,
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
@@ -161,43 +143,42 @@ class SignUpScreen extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: AppColor.appcolor,
                           borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CountryCodePicker(
                             padding: EdgeInsets.zero,
-                            textStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                            textStyle: const TextStyle(
+                                color: Colors.white, fontSize: 15),
                             enabled: true,
                             showFlag: false,
-                            alignLeft: false,
+                            onChanged: (CountryCode country) {
+                              if (country.dialCode != null) {
+                                authController.countryCode.value =
+                                    country.dialCode!.split('+').last;
+                              }
+                            },
                           ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
+                          const Icon(Icons.arrow_drop_down,
+                              color: Colors.white, size: 25)
                         ],
                       ),
                     ),
-                    title: "5555-555-55",
+                    title: "Phone number",
                     style: const TextStyle(color: AppColor.blackColor),
                     contentPadding: const EdgeInsets.only(right: 2.0),
-                    maxLength: 8,
+                    maxLength: 15,
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  const SizedBox(height: 18),
                   const AppText(
                     text: "Location",
                     color: Color(0x80000000),
                     fontWeight: FontWeight.w400,
                     textSize: 14,
                   ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
+                  const SizedBox(height: 12.0),
                   AppTextField(
+                    controller: authController.location,
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
@@ -210,15 +191,46 @@ class SignUpScreen extends StatelessWidget {
                       color: AppColor.appcolor,
                     ),
                   ),
+                  // AutoCompleteLocation().getLoc(context,
+                  //     locationController: controller.location.value,
+                  //     cordinates: (lng, lat) {
+                  //   controller.latitude.value = lat ?? '';
+                  //   controller.longitude.value = lng ?? '';
+                  //   // homeController.latitudePickUp.value = lat ?? '';
+                  //   // homeController.longitudePickUp.value = lng ?? '';
+                  // }, location: (loc) {
+                  //   controller.location.value.text = loc ?? '';
+                  // }),
+                  // GooglePlacesAutoCompleteTextFormField(
+                  //     textEditingController: TextEditingController(),
+                  //     googleAPIKey: "AIzaSyDGxkyWAlm8QrBJDT22ph0Y0CtxOFDHUL0",
+                  //     proxyURL:
+                  //         "https://your-proxy.com/", // only needed if you build for the web
+                  //     debounceTime: 400, // defaults to 600 ms,
+                  //     countries: const [
+                  //       "de"
+                  //     ], // optional, by default the list is empty (no restrictions)
+                  //     isLatLngRequired:
+                  //         true, // if you require the coordinates from the place details
+                  //     getPlaceDetailWithLatLng: (prediction) {
+                  //       // this method will return latlng with place detail
+                  //       print("placeDetails${prediction.lng}");
+                  //     }, // this callback is called when isLatLngRequired is true
+                  //     itmClick: (prediction) {
+                  //       //  controller.text = prediction.description;
+                  //       //   controller.selection = TextSelection.fromPosition(TextPosition(offset: prediction.description.length));
+                  //     }),
                   const SizedBox(height: 8),
                   Obx(
                     () => Row(
                       children: [
                         GestureDetector(
                           onTap: () {
-                            tick.value = !tick.value;
+                            // tick.value = !tick.value;
+                            authController.agree.value =
+                                !authController.agree.value;
                           },
-                          child: tick.value
+                          child: !authController.agree.value
                               ? const Icon(
                                   Icons.check_box_outline_blank_outlined)
                               : const Icon(Icons.check_box),
@@ -253,8 +265,9 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
                   GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.verificationScreen);
+                    onTap: () async {
+                      // Get.toNamed(Routes.verificationScreen);
+                      await authController.signup();
                     },
                     child: Center(
                       child: Container(

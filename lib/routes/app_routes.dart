@@ -48,22 +48,17 @@ class AppRoutes {
       name: Routes.splashScreen,
       page: () => const SplashScreen(),
     ),
+
+    /// Auth ----------
     GetPage(
         name: Routes.loginScreen,
         page: () => LoginScreen(),
-        binding: LoginBinding()),
+        binding: AuthBinding()),
     GetPage(
-      name: Routes.homeScreen,
-      page: () => HomeScreen(),
-    ),
-    GetPage(
-      name: Routes.bottomScreen,
-      page: () => BottomScreen(),
-    ),
-    GetPage(
-      name: Routes.onboardingScreen,
-      page: () => OnBoardingScreen(),
-    ),
+        name: Routes.signupScreen,
+        page: () => SignUpScreen(),
+        binding: AuthBinding()),
+
     GetPage(
       name: Routes.passwordScreen,
       page: () => PasswordScreen(),
@@ -75,6 +70,20 @@ class AppRoutes {
     GetPage(
       name: Routes.verificationScreen,
       page: () => const VerificationScreen(),
+    ),
+
+    /// Home ----------
+    GetPage(
+      name: Routes.homeScreen,
+      page: () => HomeScreen(),
+    ),
+    GetPage(
+      name: Routes.bottomScreen,
+      page: () => BottomScreen(),
+    ),
+    GetPage(
+      name: Routes.onboardingScreen,
+      page: () => OnBoardingScreen(),
     ),
     GetPage(
       name: Routes.menScreen,
@@ -103,10 +112,6 @@ class AppRoutes {
     GetPage(
       name: Routes.productScreen,
       page: () => ProductScreen(),
-    ),
-    GetPage(
-      name: Routes.signupScreen,
-      page: () => SignUpScreen(),
     ),
     GetPage(
       name: Routes.addNewCardScreen,

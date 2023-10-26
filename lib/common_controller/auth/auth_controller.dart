@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
@@ -49,22 +50,20 @@ class AuthController extends GetxController {
 
   signup() async {
     if (signUpInputValid()) {
-      // bool success = await ApiRequests.signin(
-      //     phoneEmail: inputPhoneEmail.text.trim(),
-      //     password: inputPassword.text.trim());
-      // if (success) {
-      //   if (rememberMe.value) {
-      //     DbHelper.saveMap(key: SharedPrefKeys.authcredentialRemember, data: {
-      //       'username': inputPhoneEmail.text.trim(),
-      //       'password': inputPassword.text.trim()
-      //     });
-      //   }
-      //   clearSignIn();
-      //   AppPrint.info("Signin successfully!");
-      //   //  Get.offAllNamed(Routes.bottomScreen);
-      // } else {
-      //   AppPrint.error("Signin failed!");
-      // }
+      bool success = await ApiRequests.signup(
+          firstName: firstName.text.trim(),
+          lastName: lastName.text.trim(),
+          countryCode: countryCode.value,
+          email: email.text.trim(),
+          phone: phone.text.trim());
+      if (success) {
+        clearSignUp();
+        AppPrint.info("Signup successfully!");
+        Get.toNamed(Routes.verificationScreen);
+        //  Get.offAllNamed(Routes.bottomScreen);
+      } else {
+        AppPrint.error("Signup failed!");
+      }
     }
   }
 
@@ -127,8 +126,17 @@ class AuthController extends GetxController {
     } else if (email.text.trim().length < 8) {
       AppToast.show("Please enter valid phone number");
       return false;
-    } else if (!AppRegex.num0to9.hasMatch(email.text.trim())) {
+    } else if (!AppRegex.num0to9.hasMatch(phone.text.trim())) {
       AppToast.show("Please enter valid phone number");
+      return false;
+    }
+
+    if (location.text.trim() == '') {
+      AppToast.show("Please add location");
+      return false;
+    }
+    if (!agree.value) {
+      AppToast.show("Please agree with our privacy policy");
       return false;
     }
     return true;

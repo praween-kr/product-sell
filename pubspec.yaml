@@ -61,6 +61,7 @@ dependencies:
   lottie: ^2.7.0
   fluttertoast: ^8.2.2
   firebase_messaging: ^14.7.2
+  google_places_autocomplete_text_field: ^0.1.2
 
 
 dev_dependencies:

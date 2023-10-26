@@ -6,4 +6,5 @@ class AppApis {
 
   /// API end points---------
   static String signin = '/login';
+  static String signUp = '/signUp';
 }
