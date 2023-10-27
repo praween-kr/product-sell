@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
 
 import '../../../common_widget/appbar.dart';
 import '../../../utills/colors_file.dart';
 
 class CmsScreen extends StatelessWidget {
   CmsScreen({super.key, required});
-  final controller = Get.put(SettingsController());
+  final SettingsController settingsController = Get.find();
 
   @override
   Widget build(BuildContext context) {

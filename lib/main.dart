@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/routes/app_routes.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 
@@ -50,8 +51,8 @@ class MyApp extends StatelessWidget {
 
   static startFirstScreen(String? message) {
     DbHelper.deleteData(SharedPrefKeys.userInfo);
-    "UserStoredInfo().userInfo = null";
-    Get.offAllNamed(Routes.loginScreen);
+    //"UserStoredInfo().userInfo = null";
+    NavigateTo.login();
     // SocketHelper().disconnectUser();
     Get.deleteAll(force: true);
     // AppLoader.hide();

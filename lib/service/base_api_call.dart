@@ -126,6 +126,27 @@ class BaseApiCall {
     return null;
   }
 
+  putReq(String endPoint,
+      {bool showToast = true, Map<String, dynamic>? data}) async {
+    Response response;
+    try {
+      response = await Dio().put(AppApis.baseUrl + endPoint,
+          data: data, options: Injector.getHeaderToken());
+
+      if (response.statusCode == 200) {
+        showToast ? AppToast.show(response.data['message'] ?? '') : null;
+        return response.data;
+      } else {
+        log("Exp: $response");
+        showToast ? AppToast.show(response.data['message']) : null;
+      }
+      // ignore: deprecated_member_use
+    } on DioError catch (error) {
+      ApiException.onError(error);
+    }
+    return null;
+  }
+
   postFormReq(
     String endPoint, {
     Map<String, String>? attachments,

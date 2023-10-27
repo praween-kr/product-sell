@@ -1,7 +1,8 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
+import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 
 import '../../../common_widget/app_text.dart';
 import '../../../common_widget/appbar.dart';
@@ -12,7 +13,8 @@ import '../../../routes/routes.dart';
 import '../../../utills/colors_file.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+  final GlobleController globleController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -32,174 +34,178 @@ class ProfileScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(25, 30, 24, 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppText(
-                    text: "First Name",
-                    textSize: 15.0,
-                    color: AppColor.blackColor.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 12,),
-                  AppTextField(
-                    height: 57.0,
-                    title: "Jenny",
-                    readOnly: true,
-                    hintStyle: const TextStyle(
+              child: Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
+                      text: "First Name",
+                      textSize: 15.0,
+                      color: AppColor.blackColor.withOpacity(0.5),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    AppTextField(
+                      height: 57.0,
+                      title: globleController.userInfo.value?.firstName ?? '',
+                      readOnly: true,
+                      hintStyle: const TextStyle(
+                          color: AppColor.blackColor, fontSize: 15),
+                      style: const TextStyle(
+                          color: AppColor.blackColor, fontSize: 15),
+                      keyBoardType: TextInputAction.next,
+                      textInputType: TextInputType.name,
+                      contentPadding:
+                          const EdgeInsets.only(top: 8.0, left: 13.0),
+                      //margin: const EdgeInsets.only(right: 35.0),
+                      borderRadius: BorderRadius.circular(19),
+                      containerColor: AppColor.TextColor,
+                      prefix: const Icon(
+                        Icons.person_outline,
+                        size: 30.0,
                         color: AppColor.blackColor,
-                      fontSize: 15
-                    ),
-                    style: const TextStyle(
-                        color: AppColor.blackColor,
-                        fontSize: 15
-                    ),
-                    keyBoardType: TextInputAction.next,
-                    textInputType: TextInputType.name,
-                    contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                    //margin: const EdgeInsets.only(right: 35.0),
-                    borderRadius: BorderRadius.circular(19),
-                    containerColor: AppColor.TextColor,
-                    prefix:  const Icon(Icons.person_outline,size: 30.0,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                  const SizedBox(height: 17,),
-                  AppText(
-                    text: "Last Name",
-                    textSize: 15.0,
-                    color: AppColor.blackColor.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 7,),
-                  AppTextField(
-                    height: 57.0,
-                    title: "Smith",
-                    readOnly: true,
-                    hintStyle: const TextStyle(
-                        color: AppColor.blackColor
-                    ),
-                    keyBoardType: TextInputAction.next,
-                    textInputType: TextInputType.name,
-                    contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                    //margin: const EdgeInsets.only(right: 35.0),
-                    borderRadius: BorderRadius.circular(19),
-                    containerColor: AppColor.TextColor,
-                    prefix:  const Icon(Icons.person_outline,size: 30.0,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                  const SizedBox(height: 22,),
-                  AppText(
-                    text: "Email",
-                    textSize: 15.0,
-                    color: AppColor.blackColor.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 12,),
-                  AppTextField(
-                    height: 57.0,
-                    readOnly: true,
-                    title: "Jennysmith@gmail.com",
-                    hintStyle: const TextStyle(
-                        color: AppColor.blackColor
-                    ),
-                    keyBoardType: TextInputAction.next,
-                    textInputType: TextInputType.emailAddress,
-                    contentPadding: const EdgeInsets.only(bottom: 8.0,left: 13.0),
-                    //margin: const EdgeInsets.only(right: 35.0),
-                    borderRadius: BorderRadius.circular(19),
-                    containerColor: AppColor.TextColor,
-                    prefix:   Image.asset(
-                      Assets.assetsEmail,
-                      scale: 2.2,
-                    ),
-                  ),
-                  const SizedBox(height: 12,),
-                  AppText(
-                    text: "Location",
-                    color: AppColor.blackColor.withOpacity(0.5),
-                    textSize: 15.0,
-                    style: AppTextStyle.medium,
-                  ),
-                  const SizedBox(
-                    height: 14.0,
-                  ),
-                  AppTextField(
-                    height: 50,
-                    readOnly: true,
-                    margin: const EdgeInsets.only(right: 0),
-                    borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
-                    title: "Add",
-                    style: const TextStyle(
-                        color: AppColor.blackColor
-                    ),
-                    hintStyle: const TextStyle(
-                        color: AppColor.blackColor
-                    ),
-                    //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                    suffix: const Icon(
-                      Icons.my_location,
-                      size: 18.0,
-                      color: AppColor.appcolor,
-                    ),
-                  ),
-                  const SizedBox(height: 12,),
-                  AppText(
-                    text: "Phone Number",
-                    textSize: 15.0,
-                    color: AppColor.blackColor.withOpacity(0.5),
-                  ),
-                  const SizedBox(height: 14,),
-                  AppTextField(
-                    height: 50,
-                    readOnly: true,
-                    borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
-                    textInputType: TextInputType.phone,
-                    prefix: Container(
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: const BoxDecoration(
-                          color: AppColor.appcolor,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CountryCodePicker(
-                            textStyle:
-                            TextStyle(color: Colors.white, fontSize: 15),
-                            enabled: true,
-                            showFlag: false,
-                            alignLeft: false,
-                          ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ],
                       ),
                     ),
-                    title: "5555-555-55",
-                    hintStyle: const TextStyle(
-                        color: AppColor.blackColor
+                    const SizedBox(
+                      height: 17,
                     ),
-                    style: const TextStyle(
-                        color: AppColor.blackColor
+                    AppText(
+                      text: "Last Name",
+                      textSize: 15.0,
+                      color: AppColor.blackColor.withOpacity(0.5),
                     ),
-                    maxLength: 8,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    AppTextField(
+                      height: 57.0,
+                      title: globleController.userInfo.value?.lastName ?? '',
+                      readOnly: true,
+                      hintStyle: const TextStyle(color: AppColor.blackColor),
+                      keyBoardType: TextInputAction.next,
+                      textInputType: TextInputType.name,
+                      contentPadding:
+                          const EdgeInsets.only(top: 8.0, left: 13.0),
+                      //margin: const EdgeInsets.only(right: 35.0),
+                      borderRadius: BorderRadius.circular(19),
+                      containerColor: AppColor.TextColor,
+                      prefix: const Icon(
+                        Icons.person_outline,
+                        size: 30.0,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                    const SizedBox(height: 22),
+                    AppText(
+                      text: "Email",
+                      textSize: 15.0,
+                      color: AppColor.blackColor.withOpacity(0.5),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    AppTextField(
+                      height: 57.0,
+                      readOnly: true,
+                      title: globleController.userInfo.value?.email ?? '',
+                      hintStyle: const TextStyle(color: AppColor.blackColor),
+                      keyBoardType: TextInputAction.next,
+                      textInputType: TextInputType.emailAddress,
+                      contentPadding:
+                          const EdgeInsets.only(bottom: 8.0, left: 13.0),
+                      //margin: const EdgeInsets.only(right: 35.0),
+                      borderRadius: BorderRadius.circular(19),
+                      containerColor: AppColor.TextColor,
+                      prefix: Image.asset(
+                        Assets.assetsEmail,
+                        scale: 2.2,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    AppText(
+                      text: "Location",
+                      color: AppColor.blackColor.withOpacity(0.5),
+                      textSize: 15.0,
+                      style: AppTextStyle.medium,
+                    ),
+                    const SizedBox(
+                      height: 14.0,
+                    ),
+                    AppTextField(
+                      height: 50,
+                      readOnly: true,
+                      margin: const EdgeInsets.only(right: 0),
+                      borderRadius: BorderRadius.circular(20),
+                      containerColor: AppColor.TextColor,
+                      title: "Mohali",
+                      style: const TextStyle(color: AppColor.blackColor),
+                      hintStyle: const TextStyle(color: AppColor.blackColor),
+                      //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                      suffix: const Icon(
+                        Icons.my_location,
+                        size: 18.0,
+                        color: AppColor.appcolor,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    AppText(
+                      text: "Phone Number",
+                      textSize: 15.0,
+                      color: AppColor.blackColor.withOpacity(0.5),
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    AppTextField(
+                      height: 50,
+                      readOnly: true,
+                      borderRadius: BorderRadius.circular(20),
+                      containerColor: AppColor.TextColor,
+                      textInputType: TextInputType.phone,
+                      prefix: Container(
+                        margin: const EdgeInsets.only(right: 15),
+                        decoration: const BoxDecoration(
+                            color: AppColor.appcolor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppText(
+                              text:
+                                  "+${globleController.userInfo.value?.countryCode ?? ''}",
+                              color: AppColor.white,
+                              textSize: 15.0,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.medium,
+                            ),
+                          ],
+                        ),
+                      ),
+                      title: globleController.userInfo.value?.phone ?? '',
+                      hintStyle: const TextStyle(color: AppColor.blackColor),
+                      style: const TextStyle(color: AppColor.blackColor),
+                      maxLength: 8,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           GestureDetector(
             onTap: () {
+              Get.find<EditProfileController>().initialData();
               Get.toNamed(Routes.editProfileScreen);
             },
             child: CommonButton(
               color: AppColor.appcolor,
               height: 57,
               text: "Edit Profile",
-              margin: const EdgeInsets.only(left: 25,right: 25,bottom: 30),
+              margin: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
               textStyle: const TextStyle(color: Colors.white, fontSize: 16),
             ),
           )

@@ -8,7 +8,6 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 
 import '../../common_widget/app_text.dart';
-import '../../routes/routes.dart';
 import '../../utills/colors_file.dart';
 import '../settingScreen/cms_screen/cms_screen.dart';
 
@@ -325,7 +324,7 @@ class SignUpScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             Get.back();
-                            Get.toNamed(Routes.loginScreen);
+                            NavigateTo.login();
                           },
                           child: const Padding(
                             padding: EdgeInsets.only(left: 5),

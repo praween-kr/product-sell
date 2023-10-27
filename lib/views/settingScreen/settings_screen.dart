@@ -1,19 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/controller/settings_controller.dart';
 
 import '../../common_widget/common_button.dart';
 
 class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
   @override
-  final controller = Get.put(SettingsController());
+  final SettingsController settingsController = Get.find();
+  final GlobleController globleController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -32,105 +34,104 @@ class SettingScreen extends GetView<SettingsController> {
                 textSize: 18,
                 fontWeight: FontWeight.w600,
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Image.asset(
-                        Assets.assetsPersonIcon,
-                        scale: 1.0,
-                      ),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      Column(
-                        children: [
-                          GestureDetector(
+              const SizedBox(height: 20),
+              Obx(
+                () => GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.profileScreen);
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Image.asset(Assets.assetsPersonIcon, scale: 1.0),
+                            const SizedBox(width: 3),
+                            Column(
+                              children: [
+                                AppText(
+                                  text:
+                                      "${globleController.userInfo.value?.firstName ?? ''} ${globleController.userInfo.value?.lastName ?? ''}",
+                                  textSize: 15.0,
+                                  color: AppColor.blackColor,
+                                  style: AppTextStyle.medium,
+                                ),
+                                const SizedBox(height: 3.0),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      Assets.assetsSendIcon,
+                                      scale: 1.0,
+                                    ),
+                                    const SizedBox(
+                                      width: 3.0,
+                                    ),
+                                    AppText(
+                                      text: "California",
+                                      textSize: 13.0,
+                                      color:
+                                          AppColor.blackColor.withOpacity(0.3),
+                                      style: AppTextStyle.regular,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4.0,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(Routes.insightScreen);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0, vertical: 5.0),
+                                    decoration: BoxDecoration(
+                                        color: AppColor.appcolor,
+                                        borderRadius:
+                                            BorderRadius.circular(7.0)),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          Assets.assetsGraphIcon,
+                                          height: 12.0,
+                                          width: 12.0,
+                                        ),
+                                        const SizedBox(
+                                          width: 2.0,
+                                        ),
+                                        const AppText(
+                                          text: "Insights",
+                                          textSize: 13.0,
+                                          color: AppColor.white,
+                                          style: AppTextStyle.regular,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 10),
+                          child: GestureDetector(
                             onTap: () {
                               Get.toNamed(Routes.profileScreen);
                             },
-                            child: const AppText(
-                              text: "John Smith",
-                              textSize: 15.0,
-                              color: AppColor.blackColor,
-                              style: AppTextStyle.medium,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 3.0,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                Assets.assetsSendIcon,
-                                scale: 1.0,
-                              ),
-                              const SizedBox(
-                                width: 3.0,
-                              ),
-                              AppText(
-                                text: "California",
-                                textSize: 13.0,
+                            child: Icon(Icons.arrow_forward_ios_outlined,
                                 color: AppColor.blackColor.withOpacity(0.3),
-                                style: AppTextStyle.regular,
-                              ),
-                            ],
+                                size: 15),
                           ),
-                          const SizedBox(
-                            height: 4.0,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.insightScreen);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 5.0),
-                              decoration: BoxDecoration(
-                                  color: AppColor.appcolor,
-                                  borderRadius: BorderRadius.circular(7.0)),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    Assets.assetsGraphIcon,
-                                    height: 12.0,
-                                    width: 12.0,
-                                  ),
-                                  const SizedBox(
-                                    width: 2.0,
-                                  ),
-                                  const AppText(
-                                    text: "Insights",
-                                    textSize: 13.0,
-                                    color: AppColor.white,
-                                    style: AppTextStyle.regular,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.profileScreen);
-                      },
-                      child: Icon(Icons.arrow_forward_ios_outlined,
-                          color: AppColor.blackColor.withOpacity(0.3),
-                          size: 15),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 31.0,
@@ -330,8 +331,7 @@ class SettingScreen extends GetView<SettingsController> {
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  Get.offAllNamed(
-                                                      Routes.loginScreen);
+                                                  settingsController.logout();
                                                 },
                                                 child: CommonButton(
                                                   color: AppColor.appcolor,

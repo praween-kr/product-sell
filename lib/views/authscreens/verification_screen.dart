@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatelessWidget {
-  const VerificationScreen({super.key});
+  VerificationScreen({super.key});
+
+  AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,13 @@ class VerificationScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const AppText(
+            AppText(
               text:
-                  "We have sent the code verification \nto your Email address",
+                  "We have sent the code verification \nto your Email address ${authController.verifyEmail.value}",
               textSize: 15,
               lineHeight: 1.3,
               fontWeight: FontWeight.w400,
-              color: Color(0x80000000),
+              color: const Color(0x80000000),
             ),
             const SizedBox(
               height: 20,
@@ -53,6 +54,9 @@ class VerificationScreen extends StatelessWidget {
             ),
             Pinput(
               length: 4,
+              onChanged: (v) {
+                authController.otp.value = v;
+              },
               // preFilledWidget: AppText(
               //     //  text: "_",
               //     // color: AppColor.TextColor,
@@ -65,12 +69,10 @@ class VerificationScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: AppColor.TextColor, width: 2))),
             ),
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.bottomScreen);
+              onTap: () async {
+                await authController.verity();
               },
               child: Container(
                 alignment: Alignment.center,
@@ -111,12 +113,17 @@ class VerificationScreen extends StatelessWidget {
             const SizedBox(
               height: 35,
             ),
-            const Center(
-              child: AppText(
-                text: "Resend code",
-                color: Colors.red,
-                underline: true,
-                underlineColor: Colors.red,
+            Center(
+              child: InkWell(
+                onTap: () async {
+                  await authController.resendOtp();
+                },
+                child: const AppText(
+                  text: "Resend code",
+                  color: Colors.red,
+                  underline: true,
+                  underlineColor: Colors.red,
+                ),
               ),
             )
           ],

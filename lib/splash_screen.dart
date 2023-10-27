@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/model/auth/user_info_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
 import 'package:oninto_flutter/utills/app_print.dart';
+
+import 'common_controller/auth/auth_controller.dart';
+import 'service/local/userInfo_globle.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
       navigate();
-      Get.offAllNamed(Routes.onboardingScreen);
     });
     super.initState();
   }
@@ -26,6 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
   navigate() {
     var userInfo = DbHelper.getMap(SharedPrefKeys.userInfo);
     AppPrint.all("User Info: ${userInfo.toString()}");
+    if (userInfo != null && userInfo['token'] != '') {
+      UserStoredInfo().storeUserInfo(UserInfoModel.fromJson(userInfo));
+      NavigateTo.home();
+    } else {
+      Get.offAllNamed(Routes.onboardingScreen);
+    }
   }
 
   @override

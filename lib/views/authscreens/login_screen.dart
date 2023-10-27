@@ -29,9 +29,7 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 100,
-              ),
+              const SizedBox(height: 100),
               const AppText(
                 text: "Welcome Back!",
                 color: Colors.black,
@@ -56,9 +54,7 @@ class LoginScreen extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 textSize: 14,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               AppTextField(
                 title: "example@gmail.com",
                 controller: authController.inputPhoneEmail,
@@ -68,7 +64,12 @@ class LoginScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400),
                 onChanged: (v) {
                   authController.usernameIsPhoneType.value =
-                      AppRegex.num0to9.hasMatch(v.trim());
+                      AppRegex.num0to9Only.hasMatch(v.trim());
+                  AppPrint.info(
+                      authController.usernameIsPhoneType.value.toString());
+                  if (v == '') {
+                    authController.usernameIsPhoneType.value = false;
+                  }
                 },
                 prefix: Obx(
                   () => authController.usernameIsPhoneType.value
@@ -78,18 +79,26 @@ class LoginScreen extends StatelessWidget {
                               color: AppColor.appcolor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               CountryCodePicker(
                                 padding: EdgeInsets.zero,
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     color: Colors.white, fontSize: 15),
                                 enabled: true,
                                 showFlag: false,
                                 alignLeft: false,
+                                onChanged: (CountryCode country) {
+                                  if (country.dialCode != null) {
+                                    authController.countryCode.value =
+                                        country.dialCode!.split('+').last;
+                                    AppPrint.all(
+                                        authController.countryCode.value);
+                                  }
+                                },
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_drop_down,
                                 color: Colors.white,
                                 size: 25,
@@ -152,12 +161,8 @@ class LoginScreen extends StatelessWidget {
                   containerColor: AppColor.TextColor,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Obx(
                 () => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -45,9 +45,9 @@ import '../views/settingScreen/profileScreen/profileScreen.dart';
 class AppRoutes {
   static List<GetPage<dynamic>> routes = [
     GetPage(
-      name: Routes.splashScreen,
-      page: () => const SplashScreen(),
-    ),
+        name: Routes.splashScreen,
+        page: () => const SplashScreen(),
+        binding: GlobleControllerBinding()),
 
     /// Auth ----------
     GetPage(
@@ -69,7 +69,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.verificationScreen,
-      page: () => const VerificationScreen(),
+      page: () => VerificationScreen(),
     ),
 
     /// Home ----------
@@ -80,6 +80,7 @@ class AppRoutes {
     GetPage(
       name: Routes.bottomScreen,
       page: () => BottomScreen(),
+      bindings: [SettingsBinding()],
     ),
     GetPage(
       name: Routes.onboardingScreen,
@@ -179,11 +180,13 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.profileScreen,
-      page: () => const ProfileScreen(),
+      page: () => ProfileScreen(),
+      binding: EditProfileBinding(),
     ),
     GetPage(
       name: Routes.editProfileScreen,
-      page: () => const EditProfileScreen(),
+      page: () => EditProfileScreen(),
+      binding: EditProfileBinding(),
     ),
     GetPage(
       name: Routes.addressScreen,
@@ -215,153 +218,3 @@ class AppRoutes {
     ),
   ];
 }
-
-// class RoutesGenerator {
-//   static Route<dynamic> generateRoute(RouteSettings settings) {
-//     Widget widgetScreen;
-//     final args = settings.arguments;
-//     switch (settings.name) {
-//       // case Routes.splashScreen:
-//       //   widgetScreen = const SplashScreen();
-//       //   break;
-//       // case Routes.loginScreen:
-//       //   widgetScreen = LoginScreen();
-//       //   break;
-//       // case Routes.homeScreen:
-//       //   widgetScreen = HomeScreen(data: args as Map<String, dynamic>?);
-//       // break;
-//       // case Routes.bottomScreen:
-//       //   widgetScreen = BottomScreen(data: args as Map<String, dynamic>?);
-//       //   break;
-//       // case Routes.onboardingScreen:
-//       //   widgetScreen = OnBoardingScreen();
-//       //   break;
-//       // case Routes.passwordScreen:
-//       //   widgetScreen = PasswordScreen();
-//       //   break;
-//       // case Routes.forgotScreen:
-//       //   widgetScreen = const ForgotScreen();
-//       //   break;
-//       // case Routes.verificationScreen:
-//       //   widgetScreen = const VerificationScreen();
-//       //   break;
-//       // case Routes.menScreen:
-//       //   widgetScreen = MenScreen();
-//       //   break;
-//       // case Routes.filterScreen:
-//       //   widgetScreen = const FilterScreen();
-//       //   break;
-//       // case Routes.subscriptionScreen:
-//       //   widgetScreen = SubscriptionScreen();
-//       //   break;
-//       // case Routes.denimScreen:
-//       //   widgetScreen = DenimScreen(
-//       //     data: args as Map<String, dynamic>,
-//       //   );
-//       //   break;
-//       // case Routes.sellItemScreen:
-//       //   widgetScreen = SellItemScreen();
-//       //   break;
-//       // case Routes.paymentScreen:
-//       //   widgetScreen = PaymentScreen();
-//       //   break;
-//       // case Routes.productScreen:
-//       //   widgetScreen = ProductScreen();
-//       //   break;
-//       // case Routes.signupScreen:
-//       //   widgetScreen = SignUpScreen();
-//       //   break;
-//       // case Routes.addNewCardScreen:
-//       //   widgetScreen = const AddNewCardScreen();
-//       //   break;
-//       // case Routes.settingScreen:
-//       //   widgetScreen = SettingScreen();
-//       //   break;
-//       // case Routes.settingPaymentScreen:
-//       //   widgetScreen = SettingPaymentScreen();
-//       //   break;
-//       // case Routes.categoryScreen:
-//       //   widgetScreen = CategoryScreen();
-//       //   break;
-//       // case Routes.notificationScreen:
-//       //   widgetScreen = const NotificationScreen();
-//       //   break;
-//       // case Routes.cmsScreen:
-//       //   widgetScreen = CmsScreen(
-//       //     type: args as int,
-//       //   );
-//       //   break;
-//       // case Routes.homebidScreen:
-//       //   widgetScreen = HomeBidScreen();
-//       //   break;
-//       // case Routes.selectPlanScreen:
-//       //   widgetScreen = SelectPlanScreen();
-//       //   break;
-//       // case Routes.favouriteScreen:
-//       //   widgetScreen = FavouriteScreen();
-//       //   break;
-//       // case Routes.messageScreen:
-//       //   widgetScreen = const MessageScreen();
-//       //   break;
-//       // case Routes.menshirtScreen:
-//       //   widgetScreen = MenshirtScreen();
-//       //   break;
-//       // case Routes.subCategoryScreen:
-//       //   widgetScreen = SubCategoryScreen();
-//       //   break;
-//       // case Routes.biddingScreen:
-//       //   widgetScreen = const BiddingScreen();
-//       //   break;
-//       // case Routes.gyradosScreen:
-//       //   widgetScreen = GyradosScreen();
-//       //   break;
-//       // case Routes.navbarScreen:
-//       //   widgetScreen = NavBarMsgScreen();
-//       //   break;
-//       // case Routes.gyaradoMsgScreen:
-//       //   widgetScreen = const GyaradoMsgScreen();
-//       //   break;
-//       // case Routes.profileScreen:
-//       //   widgetScreen = const ProfileScreen();
-//       //   break;
-//       // case Routes.editProfileScreen:
-//       //   widgetScreen = const EditProfileScreen();
-//       //   break;
-//       // case Routes.addressScreen:
-//       //   widgetScreen = AddressScreen();
-//       //   break;
-//       // case Routes.newAddressScreen:
-//       //   widgetScreen = const NewAddressScreen();
-//       //   break;
-//       // case Routes.subscriptionScreen:
-//       //   widgetScreen = SubscriptionScreen();
-//       //   break;
-//       // case Routes.insightScreen:
-//       //   widgetScreen = InsightsScreen();
-//       //   break;
-//       case Routes.productDetailScreen:
-//         widgetScreen = const ProductDetailScreen();
-//         break;
-//       case Routes.editItemScreen:
-//         widgetScreen = EditItemScreen();
-//         break;
-//       default:
-//         widgetScreen = _errorRoute();
-//     }
-//     return GetPageRoute(
-//         routeName: settings.name,
-//         page: () => widgetScreen,
-//         transition: Transition.rightToLeft,
-//         settings: settings);
-//   }
-//   static Widget _errorRoute() {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Error'),
-//       ),
-//       body: const Center(
-//         child: Text('No Such screen found in route generator'),
-//       ),
-//     );
-//   }
-// }

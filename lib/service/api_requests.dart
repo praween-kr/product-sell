@@ -19,12 +19,14 @@ class ApiRequests {
       {required String phoneEmail, required String password}) async {
     AppLoader.show();
     // final fcmToken = await FirebaseMessaging.instance.getToken();
-    var data = await BaseApiCall().postReq(AppApis.signin, data: {
+    var bodyData = {
       "phoneEmail": phoneEmail,
       "password": password,
       "deviceType": Platform.isIOS ? 1 : 1,
       "deviceToken": "device_token"
-    });
+    };
+    AppPrint.info("Login Req: $bodyData");
+    var data = await BaseApiCall().postReq(AppApis.signin, data: bodyData);
 
     if (data != null) {
       DataResponse<UserInfoModel?> dataResponse = DataResponse.fromJson(
@@ -32,7 +34,7 @@ class ApiRequests {
       //
       if (dataResponse.body != null) {
         AppPrint.all("Signin Req: ${dataResponse.body!.toJson()}");
-        UserStoredInfo().userInfo = dataResponse.body;
+        UserStoredInfo().storeUserInfo(dataResponse.body);
         DbHelper.saveMap(
             key: SharedPrefKeys.userInfo, data: dataResponse.body!.toJson());
       }
@@ -79,11 +81,114 @@ class ApiRequests {
       //
       if (dataResponse.body != null) {
         AppPrint.all("Signin Req: ${dataResponse.body!.toJson()}");
-        UserStoredInfo().userInfo = dataResponse.body;
+        UserStoredInfo().storeUserInfo(dataResponse.body);
+
         DbHelper.saveMap(
             key: SharedPrefKeys.userInfo, data: dataResponse.body!.toJson());
       }
       //
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// -------Verification--------
+  static Future<bool> verifyWithOtp(
+      {required String email, required String otp}) async {
+    AppLoader.show();
+    var data = await BaseApiCall()
+        .postReq(AppApis.otpVerify, data: {"email": email, "otp": otp});
+    if (data != null) {
+      DataResponse<UserInfoModel?> dataResponse = DataResponse.fromJson(
+          data, (json) => UserInfoModel.fromJson(json as Map<String, dynamic>));
+      //
+      if (dataResponse.body != null) {
+        AppPrint.all("Verify Resp: ${dataResponse.body!.toJson()}");
+        UserStoredInfo().storeUserInfo(dataResponse.body);
+        DbHelper.saveMap(
+            key: SharedPrefKeys.userInfo, data: dataResponse.body!.toJson());
+      }
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// -------Resend Otp--------
+  static Future<bool> resendOtp({required String email}) async {
+    AppLoader.show();
+    var data =
+        await BaseApiCall().postReq(AppApis.resendOtp, data: {"email": email});
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// -------Logout--------
+  static Future<bool> logout() async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.logout, data: {});
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// --------Update Profile---------
+  static Future<bool> updateProfile(
+      {required String firstName,
+      required String lastName,
+      required String email,
+      required String countryCode,
+      required String phone}) async {
+    AppLoader.show();
+    var data = await BaseApiCall().putReq(AppApis.updateProfile, data: {
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "countryCode": countryCode,
+      "phone": phone
+    });
+
+    if (data != null) {
+      Map<String, dynamic> newdata = data['body'] as Map<String, dynamic>;
+      newdata.addAll({"token": UserStoredInfo().userInfo!.token ?? ''});
+
+      AppPrint.all("Update Profile Req: $newdata");
+      if (newdata.isNotEmpty) {
+        UserInfoModel userInfoModel = UserInfoModel.fromJson(newdata);
+        UserStoredInfo().storeUserInfo(userInfoModel);
+        DbHelper.saveMap(
+            key: SharedPrefKeys.userInfo, data: userInfoModel.toJson());
+      }
+
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// -------Change Password--------
+  static Future<bool> changePassword(
+      {required String oldPassword,
+      required String newPassword,
+      required String confirmPassword}) async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.changePassword, data: {
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+      "confirmPassword": confirmPassword
+    });
+    if (data != null) {
       AppLoader.hide();
       return true;
     }

@@ -6,6 +6,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 
 import '../../common_widget/app_textfield.dart';
 import '../../utills/colors_file.dart';
@@ -13,17 +14,17 @@ import '../../utills/colors_file.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
   final controller = Get.put(Homecontroller());
-  static String _pincode(String option) => (option).toString();
-  List<String> searchHints = [
-    "Search test",
-    "Search test 1",
-    "Search test 2",
-    "Search test 3"
-  ];
+  // static String _pincode(String option) => (option).toString();
+  // List<String> searchHints = [
+  //   "Search test",
+  //   "Search test 1",
+  //   "Search test 2",
+  //   "Search test 3"
+  // ];
 
   @override
   Widget build(BuildContext context) {
-    print("data ${controller.touchTap.value}");
+    // print("data ${controller.touchTap.value}");
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -41,23 +42,24 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 5),
-                          child: AppText(
-                            text: "  Hello, jenny",
-                            textSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Obx(
+                            () => AppText(
+                              text:
+                                  "  Hello, ${Get.find<GlobleController>().userInfo.value?.firstName ?? ''} ${Get.find<GlobleController>().userInfo.value?.lastName ?? ''}",
+                              textSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Row(
+                        const SizedBox(height: 2),
+                        const Row(
                           children: [
                             Icon(
                               Icons.location_on,

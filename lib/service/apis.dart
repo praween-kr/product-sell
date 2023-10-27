@@ -7,4 +7,10 @@ class AppApis {
   /// API end points---------
   static String signin = '/login';
   static String signUp = '/signUp';
+  static String otpVerify = "/otpVerify";
+  static String resendOtp = "/resendOtp";
+  static String logout = "/logOut";
+  //Profile
+  static String updateProfile = "/updateProfile";
+  static String changePassword = "/changePassword";
 }

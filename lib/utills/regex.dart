@@ -4,5 +4,6 @@ class AppRegex {
   static RegExp nameReg = RegExp('[a-zA-Z]');
   static String emoji =
       r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])';
-  static RegExp num0to9 = RegExp(r'[0-9]');
+  static RegExp num0to9 = RegExp(r'^[0-9]');
+  static RegExp num0to9Only = RegExp(r'^[0-9]*$');
 }

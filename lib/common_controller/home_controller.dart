@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home_model.dart';
@@ -128,7 +129,7 @@ class Homecontroller extends GetxController
   void onPageChanged(index) {
     pagePosition.value = index;
     if (index == 2) {
-      1.delay(() => Get.offAllNamed(Routes.loginScreen));
+      1.delay(() => NavigateTo.login());
     }
   }
 
@@ -389,4 +390,6 @@ class Homecontroller extends GetxController
           );
         });
   }
+
+  ///-----------------------====================-----------------------
 }

@@ -4,6 +4,7 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
+import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/app_print.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:oninto_flutter/utills/regex.dart';
@@ -26,22 +27,40 @@ class AuthController extends GetxController {
   TextEditingController phone = TextEditingController(text: '');
   TextEditingController location = TextEditingController(text: '');
 
+  //
+  var otp = ''.obs;
+  var verifyEmail = ''.obs;
+
   /// -------- Api Call ----------
   signin() async {
     if (signInputValid()) {
+      String username = inputPhoneEmail.text.trim();
+      if (usernameIsPhoneType.value) {
+        username = "${countryCode.value} $username";
+      }
       bool success = await ApiRequests.signin(
-          phoneEmail: inputPhoneEmail.text.trim(),
-          password: inputPassword.text.trim());
+          phoneEmail: username, password: inputPassword.text.trim());
       if (success) {
         if (rememberMe.value) {
           DbHelper.saveMap(key: SharedPrefKeys.authcredentialRemember, data: {
-            'username': inputPhoneEmail.text.trim(),
-            'password': inputPassword.text.trim()
+            'username': username,
+            'password': inputPassword.text.trim(),
+            'remember': true,
           });
+        } else {
+          DbHelper.deleteData(SharedPrefKeys.authcredentialRemember);
         }
         clearSignIn();
+
         AppPrint.info("Signin successfully!");
-        //  Get.offAllNamed(Routes.bottomScreen);
+        //---Navigation---
+        if (UserStoredInfo().userInfo?.isOtpVerify == 1) {
+          NavigateTo.home();
+        } else {
+          verifyEmail.value = UserStoredInfo().userInfo?.email ?? '';
+          AppToast.show("Please enter static otp 1111");
+          Get.toNamed(Routes.verificationScreen);
+        }
       } else {
         AppPrint.error("Signin failed!");
       }
@@ -59,11 +78,36 @@ class AuthController extends GetxController {
       if (success) {
         clearSignUp();
         AppPrint.info("Signup successfully!");
+        verifyEmail.value = UserStoredInfo().userInfo?.email ?? '';
+        AppToast.show("Please enter static otp 1111");
         Get.toNamed(Routes.verificationScreen);
-        //  Get.offAllNamed(Routes.bottomScreen);
       } else {
         AppPrint.error("Signup failed!");
       }
+    }
+  }
+
+  verity() async {
+    if (otp.value.length < 4) {
+      AppToast.show("Please enter otp");
+    } else {
+      bool success = await ApiRequests.verifyWithOtp(
+          email: verifyEmail.value.trim(), otp: otp.value);
+      if (success) {
+        AppPrint.info("Verify successfully!");
+        NavigateTo.home();
+      } else {
+        AppPrint.error("Verification failed!");
+      }
+    }
+  }
+
+  resendOtp() async {
+    bool success = await ApiRequests.resendOtp(email: verifyEmail.value.trim());
+    if (success) {
+      AppPrint.info("Otp sent successfully!");
+    } else {
+      AppPrint.error("Otp sent failed!");
     }
   }
 
@@ -140,5 +184,41 @@ class AuthController extends GetxController {
       return false;
     }
     return true;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    storeRemeberCredential();
+  }
+
+  /// Remember login credential
+  storeRemeberCredential() {
+    var loginCredential =
+        DbHelper.getMap(SharedPrefKeys.authcredentialRemember);
+    AppPrint.info("loginCredential: $loginCredential");
+    if (loginCredential != null) {
+      inputPhoneEmail.text = loginCredential['username'] ?? '';
+      //
+      if (inputPhoneEmail.text.contains(' ')) {
+        countryCode.value = inputPhoneEmail.text.split(' ').first;
+        inputPhoneEmail.text = inputPhoneEmail.text.split(' ').last;
+        usernameIsPhoneType.value =
+            AppRegex.num0to9Only.hasMatch(inputPhoneEmail.text);
+      }
+      inputPassword.text = loginCredential['password'] ?? '';
+      rememberMe.value = loginCredential['remember'] ?? false;
+    }
+  }
+}
+
+///----------------------Navigation---------------
+class NavigateTo {
+  static home() {
+    Get.offAllNamed(Routes.bottomScreen);
+  }
+
+  static login() {
+    Get.offAllNamed(Routes.loginScreen);
   }
 }
