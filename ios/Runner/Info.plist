@@ -60,6 +60,14 @@
     <key>NSCameraUsageDescription</key>
     <string>Karma Kid will use your device camera to capture photo</string>
     <key>NSMicrophoneUsageDescription</key>
-     <string>Karma Kid will use your microphone access</string>
+    <string>Karma Kid will use your microphone access</string>
+
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access toto current location.</string>    
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to current location.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open and in the background.</string>
 </dict>
 </plist>

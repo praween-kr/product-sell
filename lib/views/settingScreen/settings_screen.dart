@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
@@ -16,6 +17,7 @@ class SettingScreen extends GetView<SettingsController> {
   @override
   final SettingsController settingsController = Get.find();
   final GlobleController globleController = Get.find();
+  final CmsController cmsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +257,8 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.event_note_sharp,
                 title: "Privacy Policy",
                 onClick: () {
-                  Get.to(CmsScreen(), arguments: 1);
+                  cmsController.getcms(CmsType.privacyPolicy);
+                  Get.to(CmsScreen(), arguments: CmsType.privacyPolicy);
                 },
               ),
               const SizedBox(
@@ -267,7 +270,8 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.headphones,
                 title: "Help Center",
                 onClick: () {
-                  Get.to(CmsScreen(), arguments: 2);
+                  cmsController.getcms(CmsType.help);
+                  Get.to(CmsScreen(), arguments: CmsType.help);
                 },
               ),
               const SizedBox(
@@ -279,12 +283,11 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.help,
                 title: "About Us",
                 onClick: () {
-                  Get.to(CmsScreen(), arguments: 3);
+                  cmsController.getcms(CmsType.aboutUs);
+                  Get.to(CmsScreen(), arguments: CmsType.aboutUs);
                 },
               ),
-              const SizedBox(
-                height: 17.0,
-              ),
+              const SizedBox(height: 17.0),
 
               /// Logout Row
               commonRow(

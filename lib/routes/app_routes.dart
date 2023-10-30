@@ -53,11 +53,11 @@ class AppRoutes {
     GetPage(
         name: Routes.loginScreen,
         page: () => LoginScreen(),
-        binding: AuthBinding()),
+        bindings: [AuthBinding(), CmsBinding()]),
     GetPage(
         name: Routes.signupScreen,
         page: () => SignUpScreen(),
-        binding: AuthBinding()),
+        bindings: [AuthBinding(), CmsBinding()]),
 
     GetPage(
       name: Routes.passwordScreen,
@@ -80,7 +80,7 @@ class AppRoutes {
     GetPage(
       name: Routes.bottomScreen,
       page: () => BottomScreen(),
-      bindings: [SettingsBinding()],
+      bindings: [SettingsBinding(), CmsBinding(), AddressBinding()],
     ),
     GetPage(
       name: Routes.onboardingScreen,
@@ -118,10 +118,7 @@ class AppRoutes {
       name: Routes.addNewCardScreen,
       page: () => const AddNewCardScreen(),
     ),
-    GetPage(
-      name: Routes.settingScreen,
-      page: () => SettingScreen(),
-    ),
+    GetPage(name: Routes.settingScreen, page: () => SettingScreen()),
     GetPage(
       name: Routes.settingPaymentScreen,
       page: () => SettingPaymentScreen(),
@@ -191,10 +188,12 @@ class AppRoutes {
     GetPage(
       name: Routes.addressScreen,
       page: () => AddressScreen(),
+      binding: AddressBinding(),
     ),
     GetPage(
       name: Routes.newAddressScreen,
-      page: () => const NewAddressScreen(),
+      page: () => NewAddressScreen(),
+      binding: AddressBinding(),
     ),
     GetPage(
       name: Routes.subscriptionScreen,

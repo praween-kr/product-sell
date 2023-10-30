@@ -13,4 +13,7 @@ class AppApis {
   //Profile
   static String updateProfile = "/updateProfile";
   static String changePassword = "/changePassword";
+
+  //CMS
+  static String getCMS = "/getcms";
 }

@@ -24,31 +24,14 @@ class BaseApiCall {
     _dio = Injector().getDio();
   }
 
-  // /// Get Headers
-  // static Map<String, dynamic> getHeaders(
-  //         {bool token = true, bool sctKey = true}) =>
-  //     !token
-  //         ? sctKey
-  //             ? {
-  //                 "Content-Type": "application/json",
-  //                 "secret_key": AppKeys.apiSecretKey,
-  //                 "publish_key": AppKeys.apiPublishKey,
-  //               }
-  //             : {"Content-Type": "application/json"}
-  //         : {
-  //             "Content-Type": "application/json",
-  //             "Authorization":
-  //                 "Bearer ${UserStoredInfo().userInfo?.token ?? ''}",
-  //             "secret_key": AppKeys.apiSecretKey,
-  //             "publish_key": AppKeys.apiPublishKey,
-  //           };
-
   // Base api call...
   getReq(String endPoint,
       {bool showToast = true,
       Map<String, dynamic>? urlEncodedData,
       Map<String, dynamic>? params,
-      Map<String, List<dynamic>>? multiParams}) async {
+      String? id,
+      Map<String, List<dynamic>>? multiParams,
+      bool hideBaseUrl = false}) async {
     //
 
     try {
@@ -77,9 +60,12 @@ class BaseApiCall {
           }
         }
       }
+      if (id != null) {
+        newEndPoint += "/$id";
+      }
       if (urlEncodedData == null) {
         final response = await _dio.get(
-          AppApis.baseUrl + newEndPoint,
+          hideBaseUrl ? newEndPoint : AppApis.baseUrl + newEndPoint,
           options: Injector
               .getHeaderToken(), //Options(headers: getHeaders(token: token, sctKey: sctKey)),
         );

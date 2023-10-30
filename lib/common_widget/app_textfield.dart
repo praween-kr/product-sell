@@ -34,6 +34,7 @@ class AppTextField extends StatelessWidget {
   final Color? containerColor;
   EdgeInsetsGeometry? margin;
   FocusNode? focusNode;
+  Function? onClick;
 
   AppTextField(
       {Key? key,
@@ -65,7 +66,8 @@ class AppTextField extends StatelessWidget {
       this.margin,
       this.countryCodePiker,
       this.keyBoardType,
-      this.focusNode})
+      this.focusNode,
+      this.onClick})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -81,11 +83,13 @@ class AppTextField extends StatelessWidget {
       ),
       child: Center(
         child: TextFormField(
+          onTap: onClick == null ? null : () => onClick!(),
           style: style ??
               const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15),
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ),
           onChanged: onChanged,
           focusNode: focusNode,
           controller: controller,
@@ -108,9 +112,7 @@ class AppTextField extends StatelessWidget {
                 contentPadding ?? const EdgeInsets.only(left: 20, top: 20),
             hintStyle:
                 hintStyle ?? TextStyle(color: Colors.black.withOpacity(0.4)),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide.none,
-            ),
+            border: const OutlineInputBorder(borderSide: BorderSide.none),
           ),
         ),
       ),

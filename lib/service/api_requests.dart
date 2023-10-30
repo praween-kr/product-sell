@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:oninto_flutter/model/auth/cms_model.dart';
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
+import 'package:oninto_flutter/model/g_place_model.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
@@ -195,13 +197,41 @@ class ApiRequests {
     AppLoader.hide();
     return false;
   }
-}
 
-class AppCMS {
-  String? id;
-  String? title;
-  String? description;
-  String? role;
+  /// -------Get CMS--------
+  static Future<bool> getCMS(
+      {required String type,
+      required Function(CmsModel?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var resp =
+        await BaseApiCall().getReq(AppApis.getCMS, id: type, showToast: false);
+    if (resp != null) {
+      DataResponse<CmsModel> dataResponse = DataResponse.fromJson(
+          resp, (json) => CmsModel.fromJson(json as Map<String, dynamic>));
+      data(dataResponse.body);
+      loading(false);
+      return false;
+    }
+    loading(false);
+    return false;
+  }
 
-  AppCMS({this.id, this.title, this.description, this.role});
+  static gPlaceSearch(String query,
+      {required Function(List<PlaceResults>) addresses,
+      required Function(bool) loading}) async {
+    loading(true);
+    String googleKey = "AIzaSyDGxkyWAlm8QrBJDT22ph0Y0CtxOFDHUL0";
+    String api =
+        "https://maps.googleapis.com/maps/api/place/textsearch/json?query=$query&key=$googleKey";
+    var resp =
+        await BaseApiCall().getReq(api, showToast: false, hideBaseUrl: true);
+    AppPrint.all("Google Place: $resp");
+    GooglePlaces googlePlaces = GooglePlaces.fromJson(resp);
+    if (googlePlaces.status == "OK") {
+      addresses(googlePlaces.results ?? []);
+    }
+
+    loading(false);
+  }
 }

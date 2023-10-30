@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
+import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
@@ -248,8 +249,12 @@ class SignUpScreen extends StatelessWidget {
                                 children: [
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () =>
-                                          Get.to(CmsScreen(), arguments: 1),
+                                      ..onTap = () {
+                                        Get.find<CmsController>()
+                                            .getcms(CmsType.privacyPolicy);
+                                        Get.to(CmsScreen(),
+                                            arguments: CmsType.privacyPolicy);
+                                      },
                                     text: "Privacy Policy",
                                     style: const TextStyle(
                                         color: Colors.black,
