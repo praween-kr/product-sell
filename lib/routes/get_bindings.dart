@@ -47,3 +47,10 @@ class AddressBinding extends Bindings {
     Get.lazyPut(() => AddressController());
   }
 }
+
+class CategoriesBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => CategoriesBinding());
+  }
+}

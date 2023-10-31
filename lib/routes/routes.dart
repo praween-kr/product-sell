@@ -8,7 +8,7 @@ class Routes {
   static const String onboardingScreen = "/OnBoardingScreen";
   static const String forgotScreen = "/ForgotScreen";
   static const String verificationScreen = "/VerificationScreen";
-  static const String menScreen = "/MenScreen";
+  static const String subCategories = "/SubCategories";
   static const String filterScreen = "/FilterScreen";
   static const String denimScreen = "/DenimScreen";
   static const String paymentScreen = "/PaymentScreen";

@@ -2,7 +2,7 @@ class AppApis {
   /// Base URL
   static String baseUrl = 'http://202.164.42.227:9898/user';
 
-  static String imageBaseUrl = 'http://202.164.42.227:9898';
+  static String imageBaseUrl = 'http://202.164.42.227:9898/uploads/category/';
 
   /// API end points---------
   static String signin = '/login';
@@ -16,4 +16,12 @@ class AppApis {
 
   //CMS
   static String getCMS = "/getcms";
+
+  // Address
+  static String addAddress = "/addUserAddress";
+  static String getAddresses = "/listOfAddress";
+
+  // Categories
+  static String categoryList = "/categoryList";
+  static String subCategoriesList = "/subCategorys";
 }

@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_widget/app_text.dart';
+import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utills/empty_widget.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
 
-import '../../common_widget/app_text.dart';
-import '../../common_widget/appbar.dart';
-
-class CategoryScreen extends StatelessWidget {
-  CategoryScreen({super.key});
-  final controller = Get.put(Homecontroller());
+class SubCategoriesScreen extends StatelessWidget {
+  SubCategoriesScreen({super.key});
+  // final controller = Get.put(MenListController());
+  // final bottomcontroller = Get.put(BottomNavController());
+  // final controller1 = Get.put(Homecontroller());
   final CategoriesController _categoriesController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: CommonAppbarWidget(
+        headingChild: Obx(
+          () => Text(
+            _categoriesController.selectedCategory.value?.name ?? "",
+            style: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w600, fontSize: 15),
+          ),
+        ),
+      ),
       body: Column(
         children: [
-          CommonAppbarWidget(
-            heading: "Categories",
-          ),
           Expanded(
             child: Obx(
-              () => _categoriesController.loadingData.value
+              () => _categoriesController.loadingSubData.value
                   ? const Center(child: CircularProgressIndicator())
-                  : _categoriesController.categoriesList.isEmpty
+                  : _categoriesController.subCategoriesList.isEmpty
                       ? EmptyWidgets.simple()
                       : GridView.builder(
                           physics: const ClampingScrollPhysics(),
@@ -38,17 +44,15 @@ class CategoryScreen extends StatelessWidget {
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3, childAspectRatio: 0.75),
                           itemCount:
-                              _categoriesController.categoriesList.length,
+                              _categoriesController.subCategoriesList.length,
                           itemBuilder: (context, index) {
                             var data =
-                                _categoriesController.categoriesList[index];
+                                _categoriesController.subCategoriesList[index];
                             return GestureDetector(
                               onTap: () {
-                                _categoriesController.getSubCategories(
-                                    (data.id ?? '').toString());
-                                _categoriesController.selectedCategory.value =
-                                    data;
-                                Get.toNamed(Routes.subCategories);
+                                // controller1.menu.value = true;
+                                // controller1.touchTap.value = true;
+                                Get.toNamed(Routes.subCategoryScreen);
                               },
                               child: Column(
                                 children: [
@@ -69,13 +73,11 @@ class CategoryScreen extends StatelessWidget {
                                             width: 60,
                                             fit: BoxFit.cover),
                                       )),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+                                  const SizedBox(height: 10),
                                   AppText(
                                     text: data.name ?? '',
-                                    color: const Color.fromARGB(255, 6, 4, 4),
-                                    textSize: 12,
+                                    color: Colors.black,
+                                    textSize: 14,
                                   )
                                 ],
                               ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/utills/google/app_map_view.dart';
+import 'package:oninto_flutter/utills/google/pick_location_map.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../../../common_widget/appbar.dart';
@@ -22,7 +23,7 @@ class NewAddressScreen extends StatelessWidget {
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
       appBar: CommonAppbarWidget(
-        heading: "Addresses",
+        heading: "Add New Address",
         textStyle: const TextStyle(
             fontSize: 20,
             color: blackColor,
@@ -39,17 +40,22 @@ class NewAddressScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppTextField(
-                      maxLength: 1,
                       onClick: () => Get.to(
                         () => SearchGoogleAddress(
                           onChanged: (place) {
-                            addressController.googleSearchQuery.text =
+                            addressController.location.text =
                                 place.address ?? '';
+                            addressController.cordinates.value =
+                                place.cordinates?.location == null
+                                    ? null
+                                    : LatLng(
+                                        place.cordinates?.location!.lat ?? 0.0,
+                                        place.cordinates?.location?.lng ?? 0.0);
                           },
                         ),
                       ),
                       readOnly: true,
-                      controller: addressController.googleSearchQuery,
+                      controller: addressController.location,
                       height: 46.0,
                       title: "Address Title",
                       contentPadding:
@@ -57,14 +63,28 @@ class NewAddressScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(40),
                       containerColor: AppColor.TextColor,
-                      onChanged: (query) async {
-                        await addressController.searchGooglePlaces();
-                      },
                       prefix: Icon(
                         Icons.location_on,
                         size: 18.0,
                         color: AppColor.blackColor.withOpacity(0.3),
                       ),
+                      suffix: const Icon(
+                        Icons.search,
+                        size: 22.0,
+                        color: themeColor,
+                      ),
+                    ),
+                    Obx(
+                      () => addressController.cordinates.value == null
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: Text(
+                                "Latitude: ${addressController.cordinates.value?.latitude}, Longitude: ${addressController.cordinates.value?.latitude}",
+                                style: const TextStyle(
+                                    fontSize: 11, color: Colors.grey),
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 24.0),
                     const AppText(
@@ -74,24 +94,29 @@ class NewAddressScreen extends StatelessWidget {
                       color: AppColor.blackColor,
                     ),
                     const SizedBox(height: 13.0),
-                    // Align(
-                    //   alignment: Alignment.center,
-                    //   child: Image.asset(
-                    //     Assets.assetsLocationImage,
-                    //     height: 100,
-                    //   ),
-                    // ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: SizedBox(
+                      child: Container(
+                        color: Colors.grey.shade300,
                         height: Get.height * 0.2,
                         width: Get.width * 0.85,
-                        child: const AppMapView(),
+                        child: PickLocationMap(
+                          onChanged: (location) {
+                            addressController.location.text =
+                                location?.location ?? '';
+                            addressController.cordinates.value =
+                                location == null
+                                    ? null
+                                    : LatLng(location.lat, location.lag);
+                          },
+
+                          // AppMapView(
+                          //     initialLatLong:
+                          //         addressController.cordinates.value),
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
+                    const SizedBox(height: 20.0),
                     const AppText(
                       text: "Street",
                       style: AppTextStyle.medium,
@@ -102,8 +127,9 @@ class NewAddressScreen extends StatelessWidget {
                       height: 14.0,
                     ),
                     AppTextField(
+                      controller: addressController.street,
                       height: 46.0,
-                      title: "Add",
+                      title: "Street",
                       style: const TextStyle(fontSize: 13),
                       contentPadding:
                           const EdgeInsets.only(top: 8.0, left: 13.0),
@@ -124,8 +150,9 @@ class NewAddressScreen extends StatelessWidget {
                       height: 14.0,
                     ),
                     AppTextField(
+                      controller: addressController.houseNo,
                       height: 46.0,
-                      title: "Add",
+                      title: "House no.",
                       style: const TextStyle(fontSize: 13),
                       contentPadding:
                           const EdgeInsets.only(top: 8.0, left: 13.0),
@@ -146,8 +173,9 @@ class NewAddressScreen extends StatelessWidget {
                       height: 14.0,
                     ),
                     AppTextField(
+                      controller: addressController.landmark,
                       height: 46.0,
-                      title: "Add",
+                      title: "Landmark",
                       style: const TextStyle(fontSize: 13),
                       contentPadding:
                           const EdgeInsets.only(top: 8.0, left: 13.0),
@@ -162,7 +190,7 @@ class NewAddressScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Get.back();
+              addressController.saveAddress();
             },
             child: CommonButton(
               color: AppColor.appcolor,

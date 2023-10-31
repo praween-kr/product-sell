@@ -54,18 +54,18 @@ class Homecontroller extends GetxController
   @override
   void onInit() {
     cameraHelper = CameraHelper(this);
-    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (pagePosition < 2) {
-        pagePosition++;
-        pageController.animateToPage(
-          pagePosition.value,
-          duration: const Duration(milliseconds: 350),
-          curve: Curves.easeIn,
-        );
-      } else {
-        pagePosition.value = 2;
-      }
-    });
+    // Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+    //   if (pagePosition < 2) {
+    //     pagePosition++;
+    //     pageController.animateToPage(
+    //       pagePosition.value,
+    //       duration: const Duration(milliseconds: 350),
+    //       curve: Curves.easeIn,
+    //     );
+    //   } else {
+    //     pagePosition.value = 2;
+    //   }
+    // });
     super.onInit();
     pageController = PageController(initialPage: pagePosition.value);
     onBoardingData = RxList([

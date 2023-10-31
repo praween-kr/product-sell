@@ -6,6 +6,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
+
 import '../../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -16,14 +17,14 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(Get.arguments != null){
+    if (Get.arguments != null) {
       controller.tabController.value = Get.arguments;
     }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
         leading: GestureDetector(
-          onTap: (){
+          onTap: () {
             Get.back();
             Get.back();
           },
@@ -42,11 +43,10 @@ class ProductScreen extends StatelessWidget {
             color: blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
-        action:  PopupMenuButton(
+        action: PopupMenuButton(
           tooltip: "",
           shape: const RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.all(Radius.circular(22))),
+              borderRadius: BorderRadius.all(Radius.circular(22))),
           offset: const Offset(0, 20),
           icon: Container(
             height: 30,
@@ -55,21 +55,20 @@ class ProductScreen extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: AppColor.appcolor),
             ),
-            child: const Icon(Icons.filter_alt_rounded,
-                color: AppColor.appcolor),
+            child:
+                const Icon(Icons.filter_alt_rounded, color: AppColor.appcolor),
           ),
           onSelected: (value) {
             value();
           },
           itemBuilder: (context) => [
             PopupMenuItem(
-             // padding: EdgeInsets.zero,
+              // padding: EdgeInsets.zero,
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: AppText(
                       text: "Sort by",
                       textAlign: TextAlign.center,
@@ -87,7 +86,7 @@ class ProductScreen extends StatelessWidget {
               },
             ),
             PopupMenuItem(
-             // padding: EdgeInsets.zero,
+              // padding: EdgeInsets.zero,
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: AppText(
@@ -114,7 +113,7 @@ class ProductScreen extends StatelessWidget {
               value: () {},
             ),
             PopupMenuItem(
-             // padding: EdgeInsets.zero,
+              // padding: EdgeInsets.zero,
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: AppText(
@@ -130,9 +129,9 @@ class ProductScreen extends StatelessWidget {
         ),
       ),
       body: Obx(
-      ()=> DefaultTabController(
+        () => DefaultTabController(
           length: 3,
-          initialIndex: controller.tabController.value ,
+          initialIndex: controller.tabController.value,
           child: Column(
             children: [
               Obx(() => TabBar(
@@ -145,11 +144,11 @@ class ProductScreen extends StatelessWidget {
                             : Colors.transparent;
                       }),
                       onTap: (index) {
-                       controller.tabController.value = index;
-                       },
+                        controller.tabController.value = index;
+                      },
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      indicator:
-                          BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
                       // indicatorColor: Colors.grey,
                       // labelColor: Colors.black,
                       // unselectedLabelColor: Colors.grey,
@@ -237,9 +236,7 @@ class ProductScreen extends StatelessWidget {
                     children: [
                       GridView.builder(
                           physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.only(
-                            top: 20
-                          ),
+                          padding: const EdgeInsets.only(top: 20),
                           // padding:
                           //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                           gridDelegate:
@@ -255,21 +252,24 @@ class ProductScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                  Homecontroller controller = Get.find();
-                                  controller.productValue.value = 1;
-                                  controller.touchTap.value = true;
-                                  controller.menu.value = true;
-                                  controller.filter.value = false;
-                                  Get.toNamed(Routes.bottomScreen);
+                                    Homecontroller controller = Get.find();
+                                    controller.productValue.value = 1;
+                                    controller.touchTap.value = true;
+                                    controller.menu.value = true;
+                                    controller.filter.value = false;
+                                    Get.toNamed(Routes.bottomScreen);
                                     Map<String, dynamic> data = {
                                       "from": 1,
                                     };
                                     Get.toNamed(Routes.denimScreen,
                                         arguments: data);
-                                   },
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.only(
-                                        bottom: 10, left: 20, right: 20, top: 7),
+                                        bottom: 10,
+                                        left: 20,
+                                        right: 20,
+                                        top: 7),
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(19),
@@ -334,163 +334,165 @@ class ProductScreen extends StatelessWidget {
                               ],
                             );
                           }),
-                       GridView.builder(
-                            physics: const ClampingScrollPhysics(),
-                            padding:
-                                const EdgeInsets.only(top: 20, left: 20, right: 20),
-                            // padding:
-                            //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 0.78,
-                                    mainAxisSpacing: 30,
-                                    crossAxisSpacing: 30),
-                            itemCount: 6,
-                            itemBuilder: (context, index) {
-                              //  var data = controller.Categorydata[index];
-                              return GestureDetector(
-                                onTap: (){
-                                  if( index %2 ==0){
-
-                                  }else{
-                                   Get.toNamed(Routes.productDetailScreen);
-                                  }
-
-                              },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(19),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                            color: Color(0xff17000000),
-                                            offset: Offset(0, 3),
-                                            blurRadius: 6)
-                                      ]),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Stack(children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
-                                          child: Image.asset(
-                                            Assets.assetsMobile,
-                                            height: 130,
-                                            width: 130,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                        Positioned(
-                                            left: 5,
-                                            top: 5,
-                                            right: 0,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                index %2 ==0?Container(
-                                                    height: 20,
-                                                    width: 50,
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            const Color(0xff30E165),
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                10)),
-                                                    child: const Center(
-                                                      child: AppText(
-                                                        text: "Sold",
-                                                        textSize: 10,
-                                                        color: Colors.white,
-                                                      ),
-                                                    )):Container(),
-                                                const Icon(Icons.more_vert,
-                                                    color: Colors.white)
-                                              ],
-                                            )),
-                                      ]),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      const Padding(
-                                        padding:
-                                            EdgeInsets.only(left: 10, right: 10),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                AppText(
-                                                  text: "10 mins ago",
-                                                  textSize: 12,
-                                                  color: Color(0x4d000000),
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                AppText(
-                                                  text: "Girl Denim",
-                                                  textSize: 13,
-                                                  color: Color(0xff000000),
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                AppText(
-                                                  text: "\$2000",
-                                                  textSize: 18,
-                                                  color: Color(0xff000000),
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.favorite,
-                                                  color: AppColor.appcolor,
-                                                  size: 12,
-                                                ),
-                                                AppText(
-                                                  text: "12",
-                                                  textSize: 12,
-                                                  color: Color(0x4d000000),
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                Icon(
-                                                  Icons.remove_red_eye_outlined,
-                                                  color: AppColor.appcolor,
-                                                  size: 12,
-                                                ),
-                                                AppText(
-                                                  text: "199",
-                                                  textSize: 13,
-                                                  color: Color(0x4d000000),
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
                       GridView.builder(
                           physics: const ClampingScrollPhysics(),
-                          padding:
-                              const EdgeInsets.only(top: 20, left: 20, right: 20),
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 20, right: 20),
+                          // padding:
+                          //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.78,
+                                  mainAxisSpacing: 30,
+                                  crossAxisSpacing: 30),
+                          itemCount: 6,
+                          itemBuilder: (context, index) {
+                            //  var data = controller.Categorydata[index];
+                            return GestureDetector(
+                              onTap: () {
+                                if (index % 2 == 0) {
+                                } else {
+                                  Get.toNamed(Routes.productDetailScreen);
+                                }
+                              },
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(19),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          color: Color(0xff17000000),
+                                          offset: Offset(0, 3),
+                                          blurRadius: 6)
+                                    ]),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Stack(children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.asset(
+                                          Assets.assetsMobile,
+                                          height: 130,
+                                          width: 130,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      Positioned(
+                                          left: 5,
+                                          top: 5,
+                                          right: 0,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              index % 2 == 0
+                                                  ? Container(
+                                                      height: 20,
+                                                      width: 50,
+                                                      decoration: BoxDecoration(
+                                                          color: const Color(
+                                                              0xff30E165),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10)),
+                                                      child: const Center(
+                                                        child: AppText(
+                                                          text: "Sold",
+                                                          textSize: 10,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ))
+                                                  : Container(),
+                                              const Icon(Icons.more_vert,
+                                                  color: Colors.white)
+                                            ],
+                                          )),
+                                    ]),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 10, right: 10),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              AppText(
+                                                text: "10 mins ago",
+                                                textSize: 12,
+                                                color: Color(0x4d000000),
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                              SizedBox(
+                                                height: 4,
+                                              ),
+                                              AppText(
+                                                text: "Girl Denim",
+                                                textSize: 13,
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              SizedBox(
+                                                height: 4,
+                                              ),
+                                              AppText(
+                                                text: "\$2000",
+                                                textSize: 18,
+                                                color: Color(0xff000000),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            children: [
+                                              Icon(
+                                                Icons.favorite,
+                                                color: AppColor.appcolor,
+                                                size: 12,
+                                              ),
+                                              AppText(
+                                                text: "12",
+                                                textSize: 12,
+                                                color: Color(0x4d000000),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              Icon(
+                                                Icons.remove_red_eye_outlined,
+                                                color: AppColor.appcolor,
+                                                size: 12,
+                                              ),
+                                              AppText(
+                                                text: "199",
+                                                textSize: 13,
+                                                color: Color(0x4d000000),
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                      GridView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 20, right: 20),
                           // padding:
                           //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                           gridDelegate:
@@ -507,7 +509,8 @@ class ProductScreen extends StatelessWidget {
                                 Get.toNamed(Routes.gyradosScreen);
                               },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(19),
@@ -518,14 +521,16 @@ class ProductScreen extends StatelessWidget {
                                           blurRadius: 6)
                                     ]),
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Stack(children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           child: Image.asset(
                                             Assets.assetsGyradox,
                                             height: 130,
@@ -539,7 +544,8 @@ class ProductScreen extends StatelessWidget {
                                             right: 0,
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Container(
                                                     height: 20,
@@ -548,8 +554,8 @@ class ProductScreen extends StatelessWidget {
                                                         color: const Color(
                                                             0xff30E165),
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                10)),
+                                                            BorderRadius
+                                                                .circular(10)),
                                                     child: const Center(
                                                       child: AppText(
                                                         text: "Sold",

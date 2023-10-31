@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:oninto_flutter/model/auth/cms_model.dart';
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
 import 'package:oninto_flutter/model/g_place_model.dart';
+import 'package:oninto_flutter/model/home/category_model.dart';
+import 'package:oninto_flutter/model/settings/address_model.dart';
+import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
@@ -216,6 +219,93 @@ class ApiRequests {
     loading(false);
     return false;
   }
+
+  /// -------- Add Address --------
+  static addAddress(
+      {required String location,
+      required String latitude,
+      required String longitude,
+      required String street,
+      required String houseNo,
+      required String landMark}) async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.addAddress, data: {
+      "location": location,
+      "latitude": latitude,
+      "longitude": longitude,
+      "street": street,
+      "houseNo": houseNo,
+      "landMark": landMark,
+    });
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// -------- Add Address --------
+  static getAddresses(
+      {required Function(List<AddressModel>) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata =
+        await BaseApiCall().getReq(AppApis.getAddresses, showToast: false);
+    if (respdata != null) {
+      PageResponse<AddressModel> pageResponse =
+          PageResponse<AddressModel>.fromJson(respdata,
+              (json) => AddressModel.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  /// -------- Categories List --------
+  static getCategories(
+      {required Function(List<CategoryModel>) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata =
+        await BaseApiCall().getReq(AppApis.categoryList, showToast: false);
+    if (respdata != null) {
+      PageResponse<CategoryModel> pageResponse =
+          PageResponse<CategoryModel>.fromJson(respdata,
+              (json) => CategoryModel.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  /// -------- Categories List --------
+  static getSubCategories(String categoryId,
+      {required Function(List<CategoryModel>) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.subCategoriesList, showToast: false, id: categoryId);
+    if (respdata != null) {
+      PageResponse<CategoryModel> pageResponse =
+          PageResponse<CategoryModel>.fromJson(respdata,
+              (json) => CategoryModel.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  ///----------------------------
 
   static gPlaceSearch(String query,
       {required Function(List<PlaceResults>) addresses,

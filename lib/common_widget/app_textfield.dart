@@ -95,7 +95,7 @@ class AppTextField extends StatelessWidget {
           controller: controller,
           inputFormatters: inputFormatters,
           maxLength: maxLength,
-          maxLines: maxLines,
+          maxLines: maxLines ?? 1,
           minLines: minLines,
           textAlign: textAlign ?? TextAlign.start,
           readOnly: readOnly ?? false,

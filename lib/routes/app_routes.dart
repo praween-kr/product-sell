@@ -8,8 +8,8 @@ import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
 import 'package:oninto_flutter/views/home/denim_screen.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
-import 'package:oninto_flutter/views/home/men_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/home/sub_categories_screen.dart';
 import 'package:oninto_flutter/views/insight_screen/insight_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
@@ -77,18 +77,25 @@ class AppRoutes {
       name: Routes.homeScreen,
       page: () => HomeScreen(),
     ),
+
     GetPage(
       name: Routes.bottomScreen,
       page: () => BottomScreen(),
-      bindings: [SettingsBinding(), CmsBinding(), AddressBinding()],
+      bindings: [
+        SettingsBinding(),
+        CmsBinding(),
+        AddressBinding(),
+        CategoriesBinding()
+      ],
     ),
     GetPage(
       name: Routes.onboardingScreen,
       page: () => OnBoardingScreen(),
     ),
     GetPage(
-      name: Routes.menScreen,
-      page: () => MenScreen(),
+      name: Routes.subCategories,
+      page: () => SubCategoriesScreen(),
+      // bindings: [CategoriesBinding()]
     ),
     GetPage(
       name: Routes.filterScreen,
@@ -118,7 +125,11 @@ class AppRoutes {
       name: Routes.addNewCardScreen,
       page: () => const AddNewCardScreen(),
     ),
-    GetPage(name: Routes.settingScreen, page: () => SettingScreen()),
+    GetPage(
+      name: Routes.settingScreen,
+      page: () => SettingScreen(),
+      bindings: [AddressBinding()],
+    ),
     GetPage(
       name: Routes.settingPaymentScreen,
       page: () => SettingPaymentScreen(),
@@ -126,6 +137,7 @@ class AppRoutes {
     GetPage(
       name: Routes.categoryScreen,
       page: () => CategoryScreen(),
+      binding: CategoriesBinding(),
     ),
     GetPage(
       name: Routes.notificationScreen,
@@ -158,6 +170,7 @@ class AppRoutes {
     GetPage(
       name: Routes.subCategoryScreen,
       page: () => SubCategoryScreen(),
+      binding: CategoriesBinding(),
     ),
     GetPage(
       name: Routes.biddingScreen,

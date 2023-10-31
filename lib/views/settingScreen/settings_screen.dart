@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
+import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
@@ -233,6 +234,7 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.location_on,
                 title: "Address",
                 onClick: () {
+                  Get.find<AddressController>().getAddresses();
                   Get.toNamed(Routes.addressScreen);
                 },
               ),

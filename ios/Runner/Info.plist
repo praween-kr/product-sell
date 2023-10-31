@@ -69,5 +69,6 @@
 	<string>This app needs access to current location.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open and in the background.</string>
+
 </dict>
 </plist>
