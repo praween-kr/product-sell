@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
+import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
@@ -52,5 +54,19 @@ class CategoriesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => CategoriesBinding());
+  }
+}
+
+class SellItemBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => SellItemController());
+  }
+}
+
+class HomeBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => Homecontroller());
   }
 }

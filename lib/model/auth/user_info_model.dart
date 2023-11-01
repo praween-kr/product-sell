@@ -30,6 +30,9 @@ class UserInfoModel {
   String? createdAt;
   String? updatedAt;
   String? token;
+  String? location;
+  String? latitude;
+  String? longitude;
 
   UserInfoModel(
       {this.id,
@@ -62,7 +65,10 @@ class UserInfoModel {
       this.updated,
       this.createdAt,
       this.updatedAt,
-      this.token});
+      this.token,
+      this.location,
+      this.latitude,
+      this.longitude});
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -96,6 +102,9 @@ class UserInfoModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     token = json['token'];
+    location = json['location'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   Map<String, dynamic> toJson() {
@@ -131,6 +140,9 @@ class UserInfoModel {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['token'] = token;
+    data['location'] = location;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
     return data;
   }
 }

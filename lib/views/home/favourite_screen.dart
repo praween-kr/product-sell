@@ -4,11 +4,12 @@ import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+
 import '../../generated/assets.dart';
 
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

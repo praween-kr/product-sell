@@ -24,4 +24,7 @@ class AppApis {
   // Categories
   static String categoryList = "/categoryList";
   static String subCategoriesList = "/subCategorys";
+
+  // Home
+  static String homeData = "/homeScreen";
 }

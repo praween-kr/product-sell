@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swipable_stack/swipable_stack.dart';
+
 import '../../common_controller/home_controller.dart';
 import '../../common_widget/app_text.dart';
 import '../../common_widget/appbar.dart';
@@ -12,7 +13,7 @@ import '../../utills/colors_file.dart';
 
 class SubCategoryScreen extends StatelessWidget {
   SubCategoryScreen({super.key});
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +130,7 @@ class SubCategoryScreen extends StatelessWidget {
                                       fontFamily: "Poppins",
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+                                  const SizedBox(height: 10),
 
                                   /// Filter Click List View
                                   Expanded(
@@ -280,7 +279,7 @@ class SubCategoryScreen extends StatelessWidget {
                                                           child: Container(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     horizontal:
                                                                         10,
                                                                     vertical:

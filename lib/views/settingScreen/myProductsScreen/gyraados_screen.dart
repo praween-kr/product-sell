@@ -11,7 +11,7 @@ import 'package:oninto_flutter/utills/common_appbar.dart';
 
 class GyradosScreen extends StatelessWidget {
   GyradosScreen({super.key});
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

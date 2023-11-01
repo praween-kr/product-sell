@@ -82,10 +82,11 @@ class AppRoutes {
       name: Routes.bottomScreen,
       page: () => BottomScreen(),
       bindings: [
+        HomeBinding(),
+        CategoriesBinding(),
         SettingsBinding(),
         CmsBinding(),
         AddressBinding(),
-        CategoriesBinding()
       ],
     ),
     GetPage(
@@ -112,6 +113,7 @@ class AppRoutes {
     GetPage(
       name: Routes.sellItemScreen,
       page: () => SellItemScreen(),
+      binding: SellItemBinding(),
     ),
     GetPage(
       name: Routes.paymentScreen,
@@ -148,9 +150,9 @@ class AppRoutes {
       page: () => CmsScreen(),
     ),
     GetPage(
-      name: Routes.homebidScreen,
-      page: () => HomeBidScreen(),
-    ),
+        name: Routes.homebidScreen,
+        page: () => HomeBidScreen(),
+        binding: HomeBinding()),
     GetPage(
       name: Routes.selectPlanScreen,
       page: () => SelectPlanScreen(),

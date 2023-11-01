@@ -2,11 +2,13 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../common_widget/app_text.dart';
 import '../../utills/colors_file.dart';
@@ -178,6 +180,15 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12.0),
                   AppTextField(
+                    onClick: () =>
+                        Get.to(() => SearchGoogleAddress(onChanged: (location) {
+                              authController.location.text =
+                                  location.address ?? '';
+                              authController.cordinates.value = LatLng(
+                                  location.cordinates?.location?.lat ?? 0.0,
+                                  location.cordinates?.location?.lng ?? 0.0);
+                            })),
+                    readOnly: true,
                     controller: authController.location,
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
@@ -191,35 +202,82 @@ class SignUpScreen extends StatelessWidget {
                       color: AppColor.appcolor,
                     ),
                   ),
-                  // AutoCompleteLocation().getLoc(context,
-                  //     locationController: controller.location.value,
-                  //     cordinates: (lng, lat) {
-                  //   controller.latitude.value = lat ?? '';
-                  //   controller.longitude.value = lng ?? '';
-                  //   // homeController.latitudePickUp.value = lat ?? '';
-                  //   // homeController.longitudePickUp.value = lng ?? '';
-                  // }, location: (loc) {
-                  //   controller.location.value.text = loc ?? '';
-                  // }),
-                  // GooglePlacesAutoCompleteTextFormField(
-                  //     textEditingController: TextEditingController(),
-                  //     googleAPIKey: "AIzaSyDGxkyWAlm8QrBJDT22ph0Y0CtxOFDHUL0",
-                  //     proxyURL:
-                  //         "https://your-proxy.com/", // only needed if you build for the web
-                  //     debounceTime: 400, // defaults to 600 ms,
-                  //     countries: const [
-                  //       "de"
-                  //     ], // optional, by default the list is empty (no restrictions)
-                  //     isLatLngRequired:
-                  //         true, // if you require the coordinates from the place details
-                  //     getPlaceDetailWithLatLng: (prediction) {
-                  //       // this method will return latlng with place detail
-                  //       print("placeDetails${prediction.lng}");
-                  //     }, // this callback is called when isLatLngRequired is true
-                  //     itmClick: (prediction) {
-                  //       //  controller.text = prediction.description;
-                  //       //   controller.selection = TextSelection.fromPosition(TextPosition(offset: prediction.description.length));
-                  //     }),
+                  const SizedBox(height: 18),
+                  const AppText(
+                    text: "Password",
+                    color: Color(0x80000000),
+                    fontWeight: FontWeight.w400,
+                    textSize: 14,
+                  ),
+                  const SizedBox(height: 12),
+                  Obx(
+                    () => AppTextField(
+                        isObscure: authController.passwordVisibile.value,
+                        controller: authController.password,
+                        height: 50,
+                        borderRadius: BorderRadius.circular(19),
+                        margin: const EdgeInsets.only(right: 20),
+                        title: "Password",
+                        prefix: const Icon(Icons.lock_outline_sharp),
+                        containerColor: AppColor.TextColor,
+                        contentPadding:
+                            const EdgeInsets.only(top: 30, left: 20),
+                        suffix: IconButton(
+                          icon: authController.passwordVisibile.value
+                              ? Icon(
+                                  Icons.visibility_off,
+                                  size: 20,
+                                  color: AppColor.blackColor.withOpacity(0.3),
+                                )
+                              : Icon(
+                                  Icons.visibility,
+                                  size: 20,
+                                  color: AppColor.blackColor.withOpacity(0.3),
+                                ),
+                          onPressed: () {
+                            authController.passwordVisibile.value =
+                                !authController.passwordVisibile.value;
+                          },
+                        )),
+                  ),
+                  const SizedBox(height: 18),
+                  const AppText(
+                      text: "Confirm Password",
+                      color: Color(0x80000000),
+                      fontWeight: FontWeight.w400,
+                      textSize: 14),
+                  const SizedBox(height: 12),
+                  Obx(
+                    () => AppTextField(
+                        isObscure: authController.confirmPasswordVisible.value,
+                        controller: authController.confirmPassword,
+                        height: 50,
+                        borderRadius: BorderRadius.circular(19),
+                        margin: const EdgeInsets.only(right: 20),
+                        title: "Confirm password",
+                        prefix: const Icon(Icons.lock_outline_sharp),
+                        containerColor: AppColor.TextColor,
+                        contentPadding:
+                            const EdgeInsets.only(top: 30, left: 20),
+                        suffix: IconButton(
+                          icon: authController.confirmPasswordVisible.value
+                              ? Icon(
+                                  Icons.visibility_off,
+                                  size: 20,
+                                  color: AppColor.blackColor.withOpacity(0.3),
+                                )
+                              : Icon(
+                                  Icons.visibility,
+                                  size: 20,
+                                  color: AppColor.blackColor.withOpacity(0.3),
+                                ),
+                          onPressed: () {
+                            authController.confirmPasswordVisible.value =
+                                !authController.confirmPasswordVisible.value;
+                          },
+                        )),
+                  ),
+                  ///////
                   const SizedBox(height: 8),
                   Obx(
                     () => Row(

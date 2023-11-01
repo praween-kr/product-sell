@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
@@ -26,6 +27,11 @@ class AuthController extends GetxController {
   TextEditingController email = TextEditingController(text: '');
   TextEditingController phone = TextEditingController(text: '');
   TextEditingController location = TextEditingController(text: '');
+  var cordinates = Rx<LatLng?>(null);
+  TextEditingController password = TextEditingController(text: '');
+  TextEditingController confirmPassword = TextEditingController(text: '');
+  var passwordVisibile = true.obs;
+  var confirmPasswordVisible = true.obs;
 
   //
   var otp = ''.obs;
@@ -57,7 +63,7 @@ class AuthController extends GetxController {
         if (UserStoredInfo().userInfo?.isOtpVerify == 1) {
           NavigateTo.home();
         } else {
-          verifyEmail.value = UserStoredInfo().userInfo?.email ?? '';
+          // verifyEmail.value = UserStoredInfo().userInfo?.email ?? '';
           AppToast.show("Please enter static otp 1111");
           Get.toNamed(Routes.verificationScreen);
         }
@@ -74,7 +80,11 @@ class AuthController extends GetxController {
           lastName: lastName.text.trim(),
           countryCode: countryCode.value,
           email: email.text.trim(),
-          phone: phone.text.trim());
+          phone: phone.text.trim(),
+          location: location.text.trim(),
+          cordinates: cordinates.value,
+          password: password.text.trim(),
+          confirmPassword: confirmPassword.text.trim());
       if (success) {
         clearSignUp();
         AppPrint.info("Signup successfully!");
@@ -128,6 +138,9 @@ class AuthController extends GetxController {
     countryCode.value = "93";
     location.clear();
     agree.value = false;
+    cordinates.value = null;
+    password.clear();
+    confirmPassword.clear();
   }
 
   /// -------- Validations ---------
@@ -177,6 +190,18 @@ class AuthController extends GetxController {
 
     if (location.text.trim() == '') {
       AppToast.show("Please add location");
+      return false;
+    }
+    if (password.text.trim() == '') {
+      AppToast.show("Please enter password");
+      return false;
+    }
+    if (confirmPassword.text.trim() == '') {
+      AppToast.show("Please enter confirm password");
+      return false;
+    }
+    if (password.text.trim() != confirmPassword.text.trim()) {
+      AppToast.show("Password and confirm password does not match");
       return false;
     }
     if (!agree.value) {

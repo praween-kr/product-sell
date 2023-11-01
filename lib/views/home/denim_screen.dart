@@ -15,7 +15,7 @@ import '../../common_widget/color_constant.dart';
 
 class DenimScreen extends StatelessWidget {
   DenimScreen({Key? key}) : super(key: key);
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

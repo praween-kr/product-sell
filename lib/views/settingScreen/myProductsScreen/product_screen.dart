@@ -13,7 +13,7 @@ class ProductScreen extends StatelessWidget {
   ProductScreen({
     Key? key,
   }) : super(key: key);
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -7,8 +7,9 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/model/home_model.dart';
+import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
@@ -48,24 +49,24 @@ class Homecontroller extends GetxController
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);
-  RxList<HomeModel> Categorydata = RxList([]);
+  RxList Categorydata = RxList([]);
   RxInt pagePosition = RxInt(0);
 
   @override
   void onInit() {
     cameraHelper = CameraHelper(this);
-    // Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-    //   if (pagePosition < 2) {
-    //     pagePosition++;
-    //     pageController.animateToPage(
-    //       pagePosition.value,
-    //       duration: const Duration(milliseconds: 350),
-    //       curve: Curves.easeIn,
-    //     );
-    //   } else {
-    //     pagePosition.value = 2;
-    //   }
-    // });
+    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (pagePosition < 2) {
+        pagePosition++;
+        pageController.animateToPage(
+          pagePosition.value,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      } else {
+        pagePosition.value = 2;
+      }
+    });
     super.onInit();
     pageController = PageController(initialPage: pagePosition.value);
     onBoardingData = RxList([
@@ -82,48 +83,52 @@ class Homecontroller extends GetxController
           title: "Sold Your Product",
           description: AppStrings.Onboarding),
     ]);
-    Categorydata = RxList([
-      HomeModel(
-        image: Assets.assetsGirl,
-        Name: "Women",
-      ),
-      HomeModel(
-        image: Assets.assetsShirt,
-        Name: "Men",
-      ),
-      HomeModel(
-        image: Assets.assetsKids,
-        Name: "Kids",
-      ),
-      HomeModel(
-        image: Assets.assetsRoom,
-        Name: "Home & living",
-      ),
-      HomeModel(
-        image: Assets.assetsElectronic,
-        Name: "Electronic",
-      ),
-      HomeModel(
-        image: Assets.assetsBeauty,
-        Name: "Beauty",
-      ),
-      HomeModel(
-        image: Assets.assetsAmericanBall,
-        Name: "Sports",
-      ),
-      HomeModel(
-        image: Assets.assetsDog,
-        Name: "Pets",
-      ),
-      HomeModel(
-        image: Assets.assetsCard,
-        Name: "Cards",
-      ),
-      HomeModel(
-        image: Assets.assetsCar,
-        Name: "Vehicle",
-      ),
-    ]);
+
+    //
+    getHomeData();
+
+    // Categorydata = RxList([
+    //   HomeModel(
+    //     image: Assets.assetsGirl,
+    //     Name: "Women",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsShirt,
+    //     Name: "Men",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsKids,
+    //     Name: "Kids",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsRoom,
+    //     Name: "Home & living",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsElectronic,
+    //     Name: "Electronic",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsBeauty,
+    //     Name: "Beauty",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsAmericanBall,
+    //     Name: "Sports",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsDog,
+    //     Name: "Pets",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsCard,
+    //     Name: "Cards",
+    //   ),
+    //   HomeModel(
+    //     image: Assets.assetsCar,
+    //     Name: "Vehicle",
+    //   ),
+    // ]);
   }
 
   void onPageChanged(index) {
@@ -146,7 +151,7 @@ class Homecontroller extends GetxController
   @override
   void onClose() {
     // TODO: implement onClose
-    //pageController.dispose();
+    pageController.dispose();
     super.onClose();
   }
 
@@ -392,4 +397,14 @@ class Homecontroller extends GetxController
   }
 
   ///-----------------------====================-----------------------
+  var homeData = Rx<HomeModel?>(null);
+  var loadingData = false.obs;
+
+  getHomeData() async {
+    await ApiRequests.getHomeData(data: (data) {
+      homeData.value = data;
+    }, loading: (loading) {
+      loadingData.value = loading;
+    });
+  }
 }

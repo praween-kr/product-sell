@@ -134,22 +134,35 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 14.0,
                     ),
-                    AppTextField(
-                      height: 50,
-                      readOnly: true,
-                      margin: const EdgeInsets.only(right: 0),
-                      borderRadius: BorderRadius.circular(20),
-                      containerColor: AppColor.TextColor,
-                      title: "Mohali",
-                      style: const TextStyle(color: AppColor.blackColor),
-                      hintStyle: const TextStyle(color: AppColor.blackColor),
-                      //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                      suffix: const Icon(
-                        Icons.my_location,
-                        size: 18.0,
-                        color: AppColor.appcolor,
-                      ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 14),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: AppText(
+                          text: globleController.userInfo.value?.location ?? '',
+                          color: AppColor.blackColor,
+                          fontWeight: FontWeight.w400,
+                          lineHeight: 1.2),
                     ),
+                    // AppTextField(
+                    //   maxLines: 5,
+                    //   height: 50,
+                    //   readOnly: true,
+                    //   margin: const EdgeInsets.only(right: 0),
+                    //   borderRadius: BorderRadius.circular(20),
+                    //   containerColor: AppColor.TextColor,
+                    //   title: globleController.userInfo.value?.location ?? '',
+                    //   style: const TextStyle(color: AppColor.blackColor),
+                    //   hintStyle: const TextStyle(color: AppColor.blackColor),
+                    //   //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                    //   suffix: const Icon(
+                    //     Icons.my_location,
+                    //     size: 18.0,
+                    //     color: AppColor.appcolor,
+                    //   ),
+                    // ),
                     const SizedBox(height: 12),
                     AppText(
                       text: "Phone Number",

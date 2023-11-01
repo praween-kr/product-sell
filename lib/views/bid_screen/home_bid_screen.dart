@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:swipable_stack/swipable_stack.dart';
+
 import '../../common_widget/app_text.dart';
 import '../../common_widget/color_constant.dart';
 import '../../generated/assets.dart';
@@ -10,7 +11,7 @@ class HomeBidScreen extends StatelessWidget {
   HomeBidScreen({
     Key? key,
   }) : super(key: key);
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +98,7 @@ class HomeBidScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Icon(Icons.add),
+              const Icon(Icons.add),
               Container(
                 height: 30,
                 width: 30,

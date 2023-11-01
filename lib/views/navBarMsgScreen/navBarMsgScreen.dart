@@ -10,14 +10,14 @@ import 'package:oninto_flutter/utills/common_appbar.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: CommonAppbarWidget(
-        leading: Text(""),
+        leading: const Text(""),
         heading: "Message",
         textStyle: const TextStyle(
             fontSize: 20,

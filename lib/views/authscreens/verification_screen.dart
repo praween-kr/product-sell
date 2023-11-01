@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
 import 'package:pinput/pinput.dart';
 
@@ -13,6 +14,7 @@ class VerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("ppsss--->> ${UserStoredInfo().userInfo?.email ?? ''}");
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(),
@@ -63,6 +65,8 @@ class VerificationScreen extends StatelessWidget {
               //     ),
               defaultPinTheme: PinTheme(
                   height: 80,
+                  textStyle: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w600),
                   width: 80,
                   decoration: BoxDecoration(
                       color: AppColor.TextColor,

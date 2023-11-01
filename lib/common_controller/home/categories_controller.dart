@@ -16,9 +16,6 @@ class CategoriesController extends GetxController {
         categoriesList.value = data;
       },
       loading: (loading) async {
-        if (!loading) {
-          await Future.delayed(const Duration(seconds: 3));
-        }
         loadingData.value = loading;
       },
     );
@@ -31,9 +28,6 @@ class CategoriesController extends GetxController {
         subCategoriesList.value = data;
       },
       loading: (loading) async {
-        if (!loading) {
-          await Future.delayed(const Duration(seconds: 3));
-        }
         loadingSubData.value = loading;
       },
     );

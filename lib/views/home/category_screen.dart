@@ -6,13 +6,14 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utills/empty_widget.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
+import 'package:oninto_flutter/utills/shimmer_widget.dart';
 
 import '../../common_widget/app_text.dart';
 import '../../common_widget/appbar.dart';
 
 class CategoryScreen extends StatelessWidget {
   CategoryScreen({super.key});
-  final controller = Get.put(Homecontroller());
+  final Homecontroller controller = Get.find();
   final CategoriesController _categoriesController = Get.find();
 
   @override
@@ -27,13 +28,13 @@ class CategoryScreen extends StatelessWidget {
           Expanded(
             child: Obx(
               () => _categoriesController.loadingData.value
-                  ? const Center(child: CircularProgressIndicator())
+                  ? ShimmerWidgets.gridView()
                   : _categoriesController.categoriesList.isEmpty
                       ? EmptyWidgets.simple()
                       : GridView.builder(
                           physics: const ClampingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
+                              horizontal: 5, vertical: 14),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3, childAspectRatio: 0.75),
@@ -53,7 +54,6 @@ class CategoryScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Container(
-                                      // margin: const EdgeInsets.only(top: 20),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10, vertical: 10),
                                       decoration: BoxDecoration(
@@ -65,13 +65,11 @@ class CategoryScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10),
                                         child: AppImage.view(
                                             "${AppApis.imageBaseUrl}${data.image ?? ''}",
-                                            height: 60,
-                                            width: 60,
+                                            height: 75,
+                                            width: 70,
                                             fit: BoxFit.cover),
                                       )),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
+                                  const SizedBox(height: 10),
                                   AppText(
                                     text: data.name ?? '',
                                     color: const Color.fromARGB(255, 6, 4, 4),

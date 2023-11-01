@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/auth/cms_model.dart';
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
 import 'package:oninto_flutter/model/g_place_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
+import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/settings/address_model.dart';
 import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
@@ -51,24 +53,19 @@ class ApiRequests {
     return false;
   }
 
-// firstName:User
-// lastName:One
-// email:user1@g.com
-// countryCode:91
-// phone:9696969690
-// password:123456
-// confirmPassword:123456
-// deviceToken:device_token
-// deviceType:1
   static Future<bool> signup(
       {required String firstName,
       required String lastName,
       required String email,
       required String countryCode,
-      required String phone}) async {
+      required String phone,
+      required String location,
+      required LatLng? cordinates,
+      required String password,
+      required String confirmPassword}) async {
     AppLoader.show();
     // final fcmToken = await FirebaseMessaging.instance.getToken();
-    var data = await BaseApiCall().postReq(AppApis.signUp, data: {
+    Map<String, dynamic> reqdata = {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
@@ -76,16 +73,21 @@ class ApiRequests {
       "phone": phone,
       "deviceType": Platform.isIOS ? 1 : 1,
       "deviceToken": "device_token",
-      "password": "123456", // temprory
-      "confirmPassword": "123456"
-    });
+      "location": location,
+      "latitude": cordinates?.latitude ?? 0.0,
+      "longitude": cordinates?.longitude ?? 0.0,
+      "password": password,
+      "confirmPassword": confirmPassword
+    };
+    AppPrint.all("Signup Req: $reqdata");
+    var data = await BaseApiCall().postReq(AppApis.signUp, data: reqdata);
 
+    AppPrint.all("Signup Resp: $data");
     if (data != null) {
       DataResponse<UserInfoModel?> dataResponse = DataResponse.fromJson(
           data, (json) => UserInfoModel.fromJson(json as Map<String, dynamic>));
       //
       if (dataResponse.body != null) {
-        AppPrint.all("Signin Req: ${dataResponse.body!.toJson()}");
         UserStoredInfo().storeUserInfo(dataResponse.body);
 
         DbHelper.saveMap(
@@ -305,6 +307,25 @@ class ApiRequests {
     return false;
   }
 
+  /// -------- Home Data --------
+  static getHomeData(
+      {required Function(HomeModel?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata =
+        await BaseApiCall().getReq(AppApis.homeData, showToast: false);
+    if (respdata != null) {
+      DataResponse<HomeModel> dataResponse = DataResponse<HomeModel>.fromJson(
+          respdata, (json) => HomeModel.fromJson(json as Map<String, dynamic>));
+
+      data(dataResponse.body);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
   ///----------------------------
 
   static gPlaceSearch(String query,
@@ -316,7 +337,7 @@ class ApiRequests {
         "https://maps.googleapis.com/maps/api/place/textsearch/json?query=$query&key=$googleKey";
     var resp =
         await BaseApiCall().getReq(api, showToast: false, hideBaseUrl: true);
-    AppPrint.all("Google Place: $resp");
+    // AppPrint.all("Google Place: $resp");
     GooglePlaces googlePlaces = GooglePlaces.fromJson(resp);
     if (googlePlaces.status == "OK") {
       addresses(googlePlaces.results ?? []);
