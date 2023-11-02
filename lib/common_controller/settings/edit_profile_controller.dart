@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
@@ -13,6 +14,7 @@ class EditProfileController extends GetxController {
   var countryCode = "93".obs;
   TextEditingController phone = TextEditingController(text: '');
   TextEditingController location = TextEditingController(text: '');
+  var cordinates = Rx<LatLng?>(null);
 
   initialData() {
     GlobleController gc = Get.find();
@@ -21,7 +23,11 @@ class EditProfileController extends GetxController {
     email.text = gc.userInfo.value?.email ?? '';
     countryCode.value = gc.userInfo.value?.countryCode ?? '';
     phone.text = gc.userInfo.value?.phone ?? '';
-    location.text = '';
+    location.text = gc.userInfo.value?.location ?? '';
+    cordinates.value = gc.userInfo.value?.latitude == null
+        ? null
+        : LatLng(double.parse(gc.userInfo.value?.latitude ?? "0.0"),
+            double.parse(gc.userInfo.value?.latitude ?? '0.0'));
   }
 
   //---- API Call ------
@@ -32,7 +38,9 @@ class EditProfileController extends GetxController {
           lastName: lastName.text.trim(),
           countryCode: countryCode.value,
           email: email.text.trim(),
-          phone: phone.text.trim());
+          phone: phone.text.trim(),
+          location: location.text.trim(),
+          cordinates: cordinates.value);
       if (success) {
         //
         Get.back();
@@ -60,6 +68,11 @@ class EditProfileController extends GetxController {
       return false;
     }
 
+    if (location.text.trim() == '') {
+      AppToast.show("Please add location");
+      return false;
+    }
+
     if (phone.text.trim() == '') {
       AppToast.show("Please enter phone number");
       return false;
@@ -70,11 +83,6 @@ class EditProfileController extends GetxController {
       AppToast.show("Please enter valid phone number");
       return false;
     }
-
-    // if (location.text.trim() == '') {
-    //   AppToast.show("Please add location");
-    //   return false;
-    // }
 
     return true;
   }

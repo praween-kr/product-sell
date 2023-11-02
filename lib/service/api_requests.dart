@@ -150,19 +150,25 @@ class ApiRequests {
   }
 
   /// --------Update Profile---------
-  static Future<bool> updateProfile(
-      {required String firstName,
-      required String lastName,
-      required String email,
-      required String countryCode,
-      required String phone}) async {
+  static Future<bool> updateProfile({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String countryCode,
+    required String phone,
+    required String location,
+    required LatLng? cordinates,
+  }) async {
     AppLoader.show();
     var data = await BaseApiCall().putReq(AppApis.updateProfile, data: {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
       "countryCode": countryCode,
-      "phone": phone
+      "phone": phone,
+      "location": location,
+      "latitude": cordinates?.latitude ?? 0.0,
+      "longitude": cordinates?.longitude ?? 0.0,
     });
 
     if (data != null) {

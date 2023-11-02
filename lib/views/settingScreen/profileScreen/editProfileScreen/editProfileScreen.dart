@@ -1,8 +1,10 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../../../common_widget/app_text.dart';
 import '../../../../common_widget/app_textfield.dart';
@@ -136,9 +138,7 @@ class EditProfileScreen extends StatelessWidget {
                       scale: 2.2,
                     ),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  const SizedBox(height: 18),
                   AppText(
                     text: "Location",
                     color: AppColor.blackColor.withOpacity(0.5),
@@ -147,12 +147,21 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 14.0),
                   AppTextField(
+                    onClick: () =>
+                        Get.to(() => SearchGoogleAddress(onChanged: (location) {
+                              editProfileController.location.text =
+                                  location.address ?? '';
+                              editProfileController.cordinates.value = LatLng(
+                                  location.cordinates?.location?.lat ?? 0.0,
+                                  location.cordinates?.location?.lng ?? 0.0);
+                            })),
+                    readOnly: true,
                     controller: editProfileController.location,
                     height: 50,
                     margin: const EdgeInsets.only(right: 0),
                     borderRadius: BorderRadius.circular(20),
                     containerColor: AppColor.TextColor,
-                    title: "Add",
+                    title: "Location",
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor,
                         fontSize: 15,
@@ -205,7 +214,7 @@ class EditProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    title: "5555-555-55",
+                    title: "Phone number",
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor,
                         fontSize: 15,
