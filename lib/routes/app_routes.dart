@@ -92,6 +92,7 @@ class AppRoutes {
     GetPage(
       name: Routes.onboardingScreen,
       page: () => OnBoardingScreen(),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.subCategories,

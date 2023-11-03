@@ -405,6 +405,11 @@ class HomeScreen extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
               onPressed: () {
+                if (CategoriesController().initialized) {
+                  Get.find<CategoriesController>().getCategories();
+                } else {
+                  Get.put(CategoriesController()).getCategories();
+                }
                 Get.toNamed(Routes.sellItemScreen);
               },
               backgroundColor: AppColor.appcolor,

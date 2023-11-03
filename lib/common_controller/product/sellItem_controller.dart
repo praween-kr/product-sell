@@ -1,17 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:oninto_flutter/utills/helper/camera_helper.dart';
 
 import '../../common_widget/color_constant.dart';
 
-class SellItemController extends GetxController
-    implements CameraOnCompleteListener {
+class SellItemController extends GetxController {
   var tabController = 0.obs;
 
   /// dropDown View
@@ -62,17 +60,6 @@ class SellItemController extends GetxController
   late CameraHelper cameraHelper;
   RxString imagePath = "".obs;
 
-  @override
-  void onInit() {
-    cameraHelper = CameraHelper(this);
-    super.onInit();
-  }
-
-  @override
-  void onSuccessFile(File file, String fileType) {
-    imagePath.value = file.path;
-  }
-
   void reset() {
     imagePath.value = "";
   }
@@ -116,14 +103,29 @@ class SellItemController extends GetxController
   }
 
   /// ----------- FORM AND API ------------------------------ ///
+  var categoriesList = <CategoryModel>[].obs;
+  var subCategoriesList = <CategoryModel>[].obs;
+
+  ///
   var singleImage = ''.obs;
   var multipleImages = <String>[].obs;
+  var selectedImageForUpdate = (-1).obs;
   var title = TextEditingController(text: '');
   var location = TextEditingController(text: '');
   var cordinates = Rx<LatLng?>(null);
+  var description = TextEditingController(text: '');
+  // physical product
   var shares = TextEditingController(text: '');
   var basePrice = TextEditingController(text: '');
-  var description = TextEditingController(text: '');
+  // co-owner
+  var selectedCategory = Rx<CategoryModel?>(null);
+  var selectedSubCategory = Rx<CategoryModel?>(null);
+  var itemSize = TextEditingController(text: '');
+  var itemColor = TextEditingController(text: '');
+  var brand = TextEditingController(text: '');
+  var condition = ''.obs;
+  var sellOption = ''.obs;
+  var price = TextEditingController(text: '');
 
   // Api call
   addSellItem() async {
@@ -143,7 +145,7 @@ class SellItemController extends GetxController
     description.clear();
   }
 
-  fieldsValidations() {
+  bool fieldsValidations() {
     if (singleImage.value == '') {
       AppToast.show("Please add item image");
       return false;
@@ -160,13 +162,55 @@ class SellItemController extends GetxController
       AppToast.show("Please add location");
       return false;
     }
-    if (basePrice.text.trim() == '') {
+    // physical product
+    if (tabController.value == 0 && shares.text.trim() == '') {
+      AppToast.show("Please enter shares");
+      return false;
+    }
+    if (tabController.value == 0 && basePrice.text.trim() == '') {
       AppToast.show("Please enter base price");
       return false;
     }
+    // co-owner
+    if (tabController.value == 1 && selectedCategory.value == null) {
+      AppToast.show("Please select category");
+      return false;
+    }
+    if (tabController.value == 1 && selectedSubCategory.value == null) {
+      AppToast.show("Please select sub category");
+      return false;
+    }
+    if (tabController.value == 1 && itemColor.text.trim() == '') {
+      AppToast.show("Please enter color");
+      return false;
+    }
+    if (tabController.value == 1 && itemSize.text.trim() == '') {
+      AppToast.show("Please enter size");
+      return false;
+    }
+    if (tabController.value == 1 && brand.text.trim() == '') {
+      AppToast.show("Please enter brand");
+      return false;
+    }
+    if (tabController.value == 1 && condition.value.trim() == '') {
+      AppToast.show("Please select condition");
+      return false;
+    }
+    if (tabController.value == 1 && sellOption.value.trim() == '') {
+      AppToast.show("Please select sell option");
+      return false;
+    }
+    if (tabController.value == 1 && price.text.trim() == '') {
+      AppToast.show("Please enter price");
+      return false;
+    }
+
+    //---
     if (description.text.trim() == '') {
       AppToast.show("Please enter description");
       return false;
     }
+
+    return true;
   }
 }
