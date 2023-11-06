@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
+import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:oninto_flutter/utills/helper/camera_helper.dart';
 
@@ -34,7 +34,7 @@ class SellItemController extends GetxController {
     'Color 2',
     'Color 3',
   ].obs;
-  RxString sizeDropValue = 'Small'.obs;
+  // RxString sizeDropValue = 'Small'.obs;
   // List of items in our dropdown menu
   RxList<String> sizeItems =
       ['Small', 'Medium', 'Large', 'Extra Large', 'Extra Extra Large'].obs;
@@ -45,7 +45,7 @@ class SellItemController extends GetxController {
     'Brand 2',
     'Brand 3',
   ].obs;
-  RxString dropDownValue6 = 'Excellent'.obs;
+  // RxString dropDownValue6 = 'Excellent'.obs;
   // List of items in our dropdown menu
   RxList<String> conditionItems = [
     'Excellent',
@@ -65,9 +65,10 @@ class SellItemController extends GetxController {
   }
 
   /// datePicker View
-  TextEditingController startDateController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
-  void pickDate(BuildContext context, int value) async {
+  // TextEditingController startDateController = TextEditingController();
+  // TextEditingController endDateController = TextEditingController();
+  void pickDate(BuildContext context, int value,
+      {required Function(DateTime?) onChanged}) async {
     DateTime? pickedDate = await showDatePicker(
         builder: (context, Widget? child) {
           return Theme(
@@ -88,18 +89,18 @@ class SellItemController extends GetxController {
         firstDate: DateTime.now(),
         //DateTime.now() - not to allow to choose before today.
         lastDate: DateTime(2040));
-
-    if (pickedDate != null) {
-      print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-      String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-      print(formattedDate);
-      if (value == 0) {
-        startDateController.text =
-            formattedDate; //set output date to TextField value
-      } else {
-        endDateController.text = formattedDate;
-      }
-    } else {}
+    onChanged(pickedDate);
+    // if (pickedDate != null) {
+    //   // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+    //   // String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+    //   // print(formattedDate);
+    //   // if (value == 0) {
+    //   //   startDateController.text =
+    //   //       formattedDate; //set output date to TextField value
+    //   // } else {
+    //   //   endDateController.text = formattedDate;
+    //   // }
+    // } else {}
   }
 
   /// ----------- FORM AND API ------------------------------ ///
@@ -108,7 +109,7 @@ class SellItemController extends GetxController {
 
   ///
   var singleImage = ''.obs;
-  var multipleImages = <String>[].obs;
+  var multipleImages = <AttachmentModel>[].obs;
   var selectedImageForUpdate = (-1).obs;
   var title = TextEditingController(text: '');
   var location = TextEditingController(text: '');
@@ -120,17 +121,25 @@ class SellItemController extends GetxController {
   // co-owner
   var selectedCategory = Rx<CategoryModel?>(null);
   var selectedSubCategory = Rx<CategoryModel?>(null);
-  var itemSize = TextEditingController(text: '');
+  var itemSize = 'Medium'.obs;
   var itemColor = TextEditingController(text: '');
   var brand = TextEditingController(text: '');
-  var condition = ''.obs;
-  var sellOption = ''.obs;
+  var condition = 'Excellent'.obs;
+  var sellOption = 'Auction'.obs;
+  var startDate = Rx<DateTime?>(null);
+  var endDate = Rx<DateTime?>(null);
   var price = TextEditingController(text: '');
+
+  var selloptionsList = ["Auction", 'Fix Price'];
 
   // Api call
   addSellItem() async {
     if (fieldsValidations()) {
-      //
+      if (tabController.value == 1) {
+        await _addPhysicalProduct();
+      } else {
+        await _addCoOwnerProduct();
+      }
     }
   }
 
@@ -184,7 +193,7 @@ class SellItemController extends GetxController {
       AppToast.show("Please enter color");
       return false;
     }
-    if (tabController.value == 1 && itemSize.text.trim() == '') {
+    if (tabController.value == 1 && itemSize.value.trim() == '') {
       AppToast.show("Please enter size");
       return false;
     }
@@ -213,4 +222,45 @@ class SellItemController extends GetxController {
 
     return true;
   }
+
+  /// APi
+  _addPhysicalProduct() async {
+    await ApiRequests.addPhysicalProduct(
+        mainImage: singleImage.value,
+        images: multipleImages.map((element) => element.path).toList(),
+        title: title.text.trim(),
+        location: location.text.trim(),
+        latitude: "0.0",
+        longitude: "0.0",
+        category: (selectedCategory.value?.id ?? '').toString(),
+        subcategory: (selectedSubCategory.value?.id ?? '').toString(),
+        color: itemColor.text.trim(),
+        size: itemSize.value.trim(),
+        brand: brand.text.trim(),
+        condition: condition.value.trim(),
+        selloption: sellOption.value.trim(),
+        price: price.text.trim(),
+        description: description.text.trim());
+  }
+
+  _addCoOwnerProduct() async {
+    await ApiRequests.addCoOwnerProduct(
+        mainImage: singleImage.value,
+        images: multipleImages.map((element) => element.path).toList(),
+        title: title.text.trim(),
+        location: location.text.trim(),
+        latitude: "0.0",
+        longitude: "0.0",
+        basePrice: basePrice.text.trim(),
+        description: description.text.trim(),
+        shares: int.parse(shares.text.trim() == '' ? '0' : shares.text.trim()));
+  }
+}
+
+class AttachmentModel {
+  final String path;
+  String? thumb;
+  final String type; // 0-image, 1-file, 2-video
+
+  AttachmentModel({required this.path, required this.type, this.thumb});
 }

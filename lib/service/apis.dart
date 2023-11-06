@@ -27,4 +27,8 @@ class AppApis {
 
   // Home
   static String homeData = "/homeScreen";
+
+  // Add Product or Sell Item
+  static String addPhysicalProduct = "/addPhysicalProduct";
+  static String addCownerProduct = "/addCownerProduct";
 }

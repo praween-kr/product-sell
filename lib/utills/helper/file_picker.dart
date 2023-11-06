@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:oninto_flutter/utills/app_print.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 enum AttachmentPicker {
   IMG_GALLERY,
@@ -17,7 +20,7 @@ enum AttachmentPicker {
 }
 
 class AppPicker {
-  image(Function(String?) onChanged) {
+  image(Function(String?, AttachmentPicker?, String?) onChanged) {
     Get.bottomSheet(Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ClipRRect(
@@ -32,16 +35,41 @@ class AppPicker {
               listTile(
                   onClick: () async {
                     Get.back();
-                    onChanged(await (picker(AttachmentPicker.IMG_GALLERY)));
+                    onChanged(await (picker(AttachmentPicker.IMG_GALLERY)),
+                        AttachmentPicker.IMG_GALLERY, null);
                   },
                   title: "Gallery",
                   icon: Icons.photo),
               listTile(
                   onClick: () async {
                     Get.back();
-                    onChanged(await (picker(AttachmentPicker.IMG_CAMERA)));
+                    onChanged(await (picker(AttachmentPicker.IMG_CAMERA)),
+                        AttachmentPicker.IMG_GALLERY, null);
                   },
                   title: "Camera",
+                  icon: Icons.camera_alt_rounded),
+              listTile(
+                  onClick: () async {
+                    Get.back();
+                    onChanged(await (picker(AttachmentPicker.FILE)),
+                        AttachmentPicker.FILE, null);
+                  },
+                  title: "File",
+                  icon: Icons.camera_alt_rounded),
+              listTile(
+                  onClick: () async {
+                    Get.back();
+                    var path = await (picker(AttachmentPicker.VIDEO_GALLERY));
+                    final fileName = await VideoThumbnail.thumbnailFile(
+                        video: path,
+                        thumbnailPath: (await getTemporaryDirectory()).path,
+                        imageFormat: ImageFormat.WEBP,
+                        maxHeight: 64,
+                        quality: 75);
+                    AppPrint.all(fileName.toString());
+                    onChanged(path, AttachmentPicker.VIDEO_GALLERY, fileName);
+                  },
+                  title: "Video",
                   icon: Icons.camera_alt_rounded),
               //
               const SizedBox(height: 14),

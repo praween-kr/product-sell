@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
@@ -49,9 +48,9 @@ class SellItemScreen extends StatelessWidget {
                   flex: 1,
                   child: tabButton(
                     title: "Physical Product",
-                    selected: controller.tabController.value == 0,
+                    selected: controller.tabController.value == 1,
                     onClick: () {
-                      controller.tabController.value = 0;
+                      controller.tabController.value = 1;
                     },
                   ),
                 ),
@@ -60,9 +59,9 @@ class SellItemScreen extends StatelessWidget {
                   flex: 1,
                   child: tabButton(
                     title: "Co-Owner",
-                    selected: controller.tabController.value == 1,
+                    selected: controller.tabController.value == 0,
                     onClick: () {
-                      controller.tabController.value = 1;
+                      controller.tabController.value = 0;
                     },
                   ),
                 ),
@@ -85,8 +84,10 @@ class SellItemScreen extends StatelessWidget {
                         w: double.infinity,
                         url: controller.singleImage.value,
                         onClick: () {
-                          AppPicker().image((path) {
+                          AppPicker().image((path, type, thumb) {
+                            // if (type == AttachmentPicker.VIDEO_GALLERY) {
                             controller.singleImage.value = path ?? '';
+                            // }
                           });
                         },
                       ),
@@ -105,12 +106,19 @@ class SellItemScreen extends StatelessWidget {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, position) {
-                          String url = controller.multipleImages.length < 4
+                          List<AttachmentModel> list =
+                              controller.multipleImages;
+                          String url = list.length < 4
                               ? ''
-                              : controller.multipleImages[position];
+                              : list[position].type == '2'
+                                  ? list[position].thumb ?? ''
+                                  : list[position].path;
+                          //
                           if (controller.multipleImages.length < 4) {
                             if (position < controller.multipleImages.length) {
-                              url = controller.multipleImages[position];
+                              url = list[position].type == '2'
+                                  ? list[position].thumb ?? ''
+                                  : list[position].path;
                             }
                           }
                           int length = controller.multipleImages.length < 4
@@ -132,15 +140,22 @@ class SellItemScreen extends StatelessWidget {
                                   controller.selectedImageForUpdate.value =
                                       position;
                                 }
-                                AppPicker().image((path) {
+                                AppPicker().image((path, type, thumb) {
                                   if (path != null) {
                                     if (controller
                                             .selectedImageForUpdate.value ==
                                         position) {
                                       controller.multipleImages.replaceRange(
-                                          position, position + 1, [path]);
+                                          position, position + 1, [
+                                        AttachmentModel(
+                                            path: path, type: '0', thumb: thumb)
+                                      ]);
                                     } else {
-                                      controller.multipleImages.add(path);
+                                      controller.multipleImages.add(
+                                          AttachmentModel(
+                                              path: path,
+                                              type: '0',
+                                              thumb: thumb));
                                     }
                                     controller.multipleImages.refresh();
                                   }
@@ -158,9 +173,10 @@ class SellItemScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: GestureDetector(
                       onTap: () {
-                        AppPicker().image((path) {
+                        AppPicker().image((path, type, thumb) {
                           if (path != null) {
-                            controller.multipleImages.add(path);
+                            controller.multipleImages.add(AttachmentModel(
+                                path: path, type: '0', thumb: thumb));
                             controller.multipleImages.refresh();
                           }
                         });
@@ -285,75 +301,78 @@ class SellItemScreen extends StatelessWidget {
                                   style: AppTextStyle.medium,
                                 ),
                                 const SizedBox(height: 14.0),
-                                Obx(
-                                  () => DropdownButtonHideUnderline(
-                                    child: DropdownButton2<CategoryModel>(
-                                      onChanged: (newValue) {
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton2<CategoryModel>(
+                                    onChanged: (newValue) {
+                                      if (newValue?.id != null) {
                                         controller.selectedCategory.value =
                                             newValue!;
 
                                         categoriesController.getSubCategories(
                                             (newValue.id ?? '').toString());
-                                      },
-                                      value: controller.selectedCategory.value,
-                                      items: categoriesController.categoriesList
-                                          .map((items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: AppText(
-                                            text: items.name ?? '',
-                                            style: AppTextStyle.regular,
-                                            color: AppColor.blackColor,
-                                            textSize: 13,
-                                          ),
-                                        );
-                                      }).toList(),
-                                      buttonStyleData: ButtonStyleData(
-                                        height: 44,
-                                        width: Get.width,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15.0, vertical: 5.0),
-                                        decoration: BoxDecoration(
+                                        controller.selectedSubCategory.value =
+                                            null;
+                                      }
+                                    },
+                                    value: controller.selectedCategory.value,
+                                    items: (categoriesController
+                                                .categoriesList.isEmpty
+                                            ? [CategoryModel()]
+                                            : categoriesController
+                                                .categoriesList)
+                                        .map((items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: AppText(
+                                          text: items.name ?? '',
+                                          style: AppTextStyle.regular,
+                                          color: AppColor.blackColor,
+                                          textSize: 13,
+                                        ),
+                                      );
+                                    }).toList(),
+                                    buttonStyleData: ButtonStyleData(
+                                      height: 44,
+                                      width: Get.width,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0, vertical: 5.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(23),
+                                        color: AppColor.TextColor,
+                                      ),
+                                      //elevation: 2,
+                                    ),
+                                    iconStyleData: const IconStyleData(
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                      ),
+                                      iconSize: 20,
+                                      iconEnabledColor: AppColor.blackColor,
+                                      iconDisabledColor: AppColor.blackColor,
+                                    ),
+                                    dropdownStyleData: DropdownStyleData(
+                                      maxHeight: 200,
+                                      decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(23),
-                                          color: AppColor.TextColor,
-                                        ),
-                                        //elevation: 2,
+                                          color: AppColor.white,
+                                          border: Border.all(
+                                              color: AppColor.itemBorderColor)),
+                                      offset: const Offset(-2, 0),
+                                      scrollbarTheme: ScrollbarThemeData(
+                                        radius: const Radius.circular(40),
+                                        thickness:
+                                            MaterialStateProperty.all<double>(
+                                                6),
+                                        thumbVisibility:
+                                            MaterialStateProperty.all<bool>(
+                                                true),
                                       ),
-                                      iconStyleData: const IconStyleData(
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                        ),
-                                        iconSize: 20,
-                                        iconEnabledColor: AppColor.blackColor,
-                                        iconDisabledColor: AppColor.blackColor,
-                                      ),
-                                      dropdownStyleData: DropdownStyleData(
-                                        maxHeight: 200,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(23),
-                                            color: AppColor.white,
-                                            border: Border.all(
-                                                color:
-                                                    AppColor.itemBorderColor)),
-                                        offset: const Offset(-2, 0),
-                                        scrollbarTheme: ScrollbarThemeData(
-                                          radius: const Radius.circular(40),
-                                          thickness:
-                                              MaterialStateProperty.all<double>(
-                                                  6),
-                                          thumbVisibility:
-                                              MaterialStateProperty.all<bool>(
-                                                  true),
-                                        ),
-                                      ),
-                                      menuItemStyleData:
-                                          const MenuItemStyleData(
-                                        height: 40,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                      ),
+                                    ),
+                                    menuItemStyleData: const MenuItemStyleData(
+                                      height: 40,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                     ),
                                   ),
                                 ),
@@ -369,8 +388,10 @@ class SellItemScreen extends StatelessWidget {
                                   () => DropdownButtonHideUnderline(
                                     child: DropdownButton2<CategoryModel>(
                                       onChanged: (newValue) {
-                                        controller.selectedSubCategory.value =
-                                            newValue;
+                                        if (newValue?.id != null) {
+                                          controller.selectedSubCategory.value =
+                                              newValue;
+                                        }
                                       },
                                       value:
                                           controller.selectedSubCategory.value,
@@ -383,11 +404,13 @@ class SellItemScreen extends StatelessWidget {
                                         return DropdownMenuItem(
                                           value: items,
                                           child: AppText(
-                                            text: items.name ?? '',
-                                            style: AppTextStyle.regular,
-                                            color: AppColor.blackColor,
-                                            textSize: 13,
-                                          ),
+                                              text: items.name ??
+                                                  'No sub category',
+                                              style: AppTextStyle.regular,
+                                              color: items.name == null
+                                                  ? AppColor.grey
+                                                  : AppColor.blackColor,
+                                              textSize: 13),
                                         );
                                       }).toList(),
                                       buttonStyleData: ButtonStyleData(
@@ -473,10 +496,9 @@ class SellItemScreen extends StatelessWidget {
                                   () => DropdownButtonHideUnderline(
                                     child: DropdownButton2<String>(
                                       onChanged: (newValue) {
-                                        controller.sizeDropValue.value =
-                                            newValue!;
+                                        controller.itemSize.value = newValue!;
                                       },
-                                      value: controller.sizeDropValue.value,
+                                      value: controller.itemSize.value,
                                       items: controller.sizeItems.value
                                           .map((items) {
                                         return DropdownMenuItem(
@@ -573,10 +595,9 @@ class SellItemScreen extends StatelessWidget {
                                   () => DropdownButtonHideUnderline(
                                     child: DropdownButton2<String>(
                                       onChanged: (newValue) {
-                                        controller.dropDownValue6.value =
-                                            newValue!;
+                                        controller.condition.value = newValue!;
                                       },
-                                      value: controller.dropDownValue6.value,
+                                      value: controller.condition.value,
                                       items: controller.conditionItems.value
                                           .map((items) {
                                         return DropdownMenuItem(
@@ -646,54 +667,90 @@ class SellItemScreen extends StatelessWidget {
                                   style: AppTextStyle.medium,
                                 ),
                                 const SizedBox(height: 14.0),
-                                Container(
-                                    height: 44,
-                                    padding: const EdgeInsets.only(
-                                        left: 14.0, right: 16.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(23),
-                                      color: AppColor.TextColor,
-                                    ),
-                                    child: DropdownSearch<String>(
-                                      dropdownButtonProps: DropdownButtonProps(
-                                          onPressed: () {
-                                            controller.selectedItemValue.value =
-                                                true;
-                                          },
-                                          icon: const Icon(
-                                            Icons.keyboard_arrow_down_rounded,
+                                Obx(
+                                  () => DropdownButtonHideUnderline(
+                                    child: DropdownButton2<String>(
+                                      onChanged: (newValue) {
+                                        controller.sellOption.value = newValue!;
+                                      },
+                                      value: controller.sellOption.value,
+                                      items: controller.selloptionsList
+                                          .map((items) {
+                                        return DropdownMenuItem(
+                                          value: items,
+                                          child: AppText(
+                                            text: items,
+                                            style: AppTextStyle.regular,
                                             color: AppColor.blackColor,
+                                            textSize: 13,
                                           ),
-                                          selectedIcon: const Icon(
-                                              Icons.keyboard_arrow_down_rounded,
-                                              color: AppColor.blackColor,
-                                              size: 15),
-                                          padding:
-                                              const EdgeInsets.only(left: 24)),
-                                      popupProps: PopupProps.menu(
-                                          constraints: const BoxConstraints(
-                                            maxHeight: 120,
-                                          ),
-                                          menuProps: MenuProps(
+                                        );
+                                      }).toList(),
+                                      buttonStyleData: ButtonStyleData(
+                                        height: 44,
+                                        width: Get.width,
+                                        padding: const EdgeInsets.only(
+                                            left: 14.0, right: 16.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(23),
+                                          color: AppColor.TextColor,
+                                        ),
+                                        //elevation: 2,
+                                      ),
+                                      iconStyleData: const IconStyleData(
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                        ),
+                                        iconSize: 20,
+                                        iconEnabledColor: AppColor.blackColor,
+                                        iconDisabledColor: AppColor.blackColor,
+                                      ),
+                                      dropdownStyleData: DropdownStyleData(
+                                        maxHeight: 200,
+                                        decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(23),
-                                          )),
-                                      items: const ["Auction", 'Fix Price'],
-                                      dropdownDecoratorProps:
-                                          const DropDownDecoratorProps(
-                                        dropdownSearchDecoration:
-                                            InputDecoration(
-                                          border: InputBorder.none,
+                                            color: AppColor.white,
+                                            border: Border.all(
+                                                color:
+                                                    AppColor.itemBorderColor)),
+                                        offset: const Offset(-2, 0),
+                                        scrollbarTheme: ScrollbarThemeData(
+                                          radius: const Radius.circular(40),
+                                          thickness:
+                                              MaterialStateProperty.all<double>(
+                                                  6),
+                                          thumbVisibility:
+                                              MaterialStateProperty.all<bool>(
+                                                  true),
                                         ),
                                       ),
-                                      selectedItem: "Bid",
-                                    )),
-                                const SizedBox(height: 16.0),
-                                Obx(() =>
-                                    controller.selectedItemValue.value == true
-                                        ? columnData(context)
-                                        : Container()),
+                                      menuItemStyleData:
+                                          const MenuItemStyleData(
+                                        height: 40,
+                                        padding: EdgeInsets.only(
+                                            left: 23, right: 24),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(height: 14.0),
+                                Obx(() => controller.sellOption.value ==
+                                        'Auction'
+                                    ? startEndDatesPicker(
+                                        context,
+                                        initialDate1:
+                                            controller.startDate.value,
+                                        initialDate2: controller.endDate.value,
+                                        date1: (DateTime? selected) {
+                                          controller.startDate.value = selected;
+                                        },
+                                        date2: (DateTime? selected) {
+                                          controller.endDate.value = selected;
+                                        },
+                                      )
+                                    : Container()),
                                 const AppText(
                                     text: "Price",
                                     color: AppColor.blackColor,
@@ -846,70 +903,74 @@ class SellItemScreen extends StatelessWidget {
   }
 
   ///Start and End Date View
-  Widget columnData(BuildContext context) {
+  Widget startEndDatesPicker(BuildContext context,
+      {required Function(DateTime?) date1,
+      required Function(DateTime?) date2,
+      required DateTime? initialDate1,
+      required DateTime? initialDate2}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const AppText(
-          text: "Start Date",
-          color: AppColor.blackColor,
-          textSize: 13.0,
-          style: AppTextStyle.medium,
-        ),
-        const SizedBox(
-          height: 16.0,
-        ),
+            text: "Start Date",
+            color: AppColor.blackColor,
+            textSize: 13.0,
+            style: AppTextStyle.medium),
+        const SizedBox(height: 16.0),
         AppTextField(
           readOnly: true,
-          controller: controller.startDateController,
+          controller: TextEditingController(
+            text:
+                "${initialDate1?.day ?? 'DD'}-${initialDate1?.month ?? 'MM'}-${initialDate1?.year ?? 'YYYY'}",
+          ),
           height: 46.0,
           title: "Start Date",
+          style: TextStyle(color: initialDate1 == null ? AppColor.grey : null),
           hintStyle: const TextStyle(color: AppColor.blackColor, fontSize: 13),
           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
           margin: const EdgeInsets.only(right: 0.0),
           borderRadius: BorderRadius.circular(23),
           containerColor: AppColor.TextColor,
           suffix: IconButton(
-              onPressed: () => controller.pickDate(context, 0),
-              icon: Icon(
-                Icons.calendar_month_outlined,
-                size: 16,
-                color: AppColor.blackColor.withOpacity(0.3),
-              )),
+              onPressed: () =>
+                  controller.pickDate(context, 0, onChanged: date1),
+              icon: Icon(Icons.calendar_month_outlined,
+                  size: 16, color: AppColor.blackColor.withOpacity(0.3))),
         ),
-        const SizedBox(
-          height: 14.0,
-        ),
+        const SizedBox(height: 14.0),
         const AppText(
-          text: "End Date",
-          color: AppColor.blackColor,
-          textSize: 13.0,
-          style: AppTextStyle.medium,
-        ),
-        const SizedBox(
-          height: 16.0,
-        ),
+            text: "End Date",
+            color: AppColor.blackColor,
+            textSize: 13.0,
+            style: AppTextStyle.medium),
+        const SizedBox(height: 16.0),
         AppTextField(
-          controller: controller.endDateController,
+          controller: TextEditingController(
+              text:
+                  "${initialDate2?.day ?? 'DD'}-${initialDate2?.month ?? 'MM'}-${initialDate2?.year ?? 'YYYY'}"),
           readOnly: true,
           height: 46.0,
           title: "End Date",
-          hintStyle: const TextStyle(color: AppColor.blackColor, fontSize: 13),
+          style: TextStyle(color: initialDate2 == null ? AppColor.grey : null),
+          hintStyle: TextStyle(
+              color: initialDate2?.day == null
+                  ? AppColor.grey
+                  : AppColor.blackColor,
+              fontSize: 13),
           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
           margin: const EdgeInsets.only(right: 0.0),
           borderRadius: BorderRadius.circular(23),
           containerColor: AppColor.TextColor,
           suffix: IconButton(
-              onPressed: () => controller.pickDate(context, 2),
+              onPressed: () =>
+                  controller.pickDate(context, 2, onChanged: date2),
               icon: Icon(
                 Icons.calendar_month_outlined,
                 size: 16,
                 color: AppColor.blackColor.withOpacity(0.3),
               )),
         ),
-        const SizedBox(
-          height: 29.0,
-        ),
+        const SizedBox(height: 14),
       ],
     );
   }

@@ -332,6 +332,108 @@ class ApiRequests {
     return false;
   }
 
+  /// ---- Add Physical Product -------
+//   name:Test
+// location:Mohali
+// latitude:30.7046
+// longitude:76.7179
+// categoryId:12
+// subCategoryId:7
+// color:red
+// brand:Tesla
+// productCondition:new
+// sellOption:Fix Price
+// price:100
+// description:This is test description
+// boostCode:
+// startDate:2023-10-12
+// endDate:2024-01-01
+  static addPhysicalProduct({
+    required String mainImage,
+    required List<String> images,
+    required String title,
+    required String location,
+    required String latitude,
+    required String longitude,
+    required String category,
+    required String subcategory,
+    required String color,
+    required String size,
+    required String brand,
+    required String condition,
+    required String selloption,
+    DateTime? startDate,
+    DateTime? endDate,
+    required String price,
+    required String description,
+  }) async {
+    Map<String, dynamic> mapData = {
+      "name": title,
+      "location": location,
+      "latitude": latitude,
+      "longitude": longitude,
+      "categoryId": category,
+      "subCategoryId": subcategory,
+      "color": color,
+      "brand": brand,
+      "productCondition": category,
+      "sellOption": selloption,
+      "price": price,
+      "description": description,
+      "startDate": startDate == null
+          ? ''
+          : "${startDate.year}-${startDate.month}-${startDate.day}",
+      "endDate": endDate == null
+          ? ''
+          : "${endDate.year}-${endDate.month}-${endDate.day}",
+      "boostCode": "",
+    };
+    AppPrint.all("Add Product Resp: $mapData");
+  }
+
+// name:
+// location:
+// latitude:
+// longitude:
+// description:
+// boostCode:
+// share:
+  static addCoOwnerProduct({
+    required String mainImage,
+    required List<String> images,
+    required String title,
+    required String location,
+    required String latitude,
+    required String longitude,
+    required String basePrice,
+    required String description,
+    required int shares,
+  }) async {
+    Map<String, dynamic> mapData = {
+      "name": title,
+      "location": location,
+      "latitude": latitude,
+      "longitude": longitude,
+      "price": basePrice,
+      "description": description,
+      "boostCode": "",
+      "share": shares,
+    };
+    AppPrint.all("Add Product Req: $mapData");
+    AppLoader.show();
+    var data = await BaseApiCall().postFormReq(AppApis.addCownerProduct,
+        data: mapData, attachments: {}, multiAttachment: {});
+    AppPrint.all("Add Product Resp: $data");
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// ---- Add Co-Owner Product -------
+
   ///----------------------------
 
   static gPlaceSearch(String query,
