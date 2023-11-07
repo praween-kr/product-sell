@@ -28,7 +28,7 @@ class AddressController extends GetxController {
 
   saveAddress() async {
     if (validation()) {
-      bool success = ApiRequests.addAddress(
+      bool success = await ApiRequests.addAddress(
           location: location.text.trim(),
           latitude: (cordinates.value?.latitude).toString(),
           longitude: (cordinates.value?.longitude).toString(),

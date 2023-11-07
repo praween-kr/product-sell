@@ -22,7 +22,8 @@ class Routes {
   static const String biddingScreen = "/BiddingScreen";
   static const String messageScreen = "/MessageScreen";
   static const String passwordScreen = "/PasswordScreen";
-  static const String gyradosScreen = "/GyradosScreen";
+  static const String coOwnerProductDetailsScreen =
+      "/CoOwnerProductDetailsScreen";
   static const String addressScreen = "/AddressScreen";
   static const String cmsScreen = "/CmsScreen";
   static const String navBarMessage = "/NavBarMessage";

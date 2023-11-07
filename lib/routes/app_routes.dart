@@ -35,10 +35,10 @@ import '../views/home/home_screen.dart';
 import '../views/home/sub_category_screen.dart';
 import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
-import '../views/settingScreen/myProductsScreen/gyraados_screen.dart';
+import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/men_shirt_screen.dart';
 import '../views/settingScreen/myProductsScreen/message_screen.dart';
-import '../views/settingScreen/myProductsScreen/product_screen.dart';
+import '../views/settingScreen/myProductsScreen/my_product_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
 import '../views/settingScreen/profileScreen/profileScreen.dart';
 
@@ -84,6 +84,7 @@ class AppRoutes {
       bindings: [
         HomeBinding(),
         CategoriesBinding(),
+        ProductBinding(),
         SettingsBinding(),
         CmsBinding(),
         AddressBinding(),
@@ -123,6 +124,7 @@ class AppRoutes {
     GetPage(
       name: Routes.productScreen,
       page: () => ProductScreen(),
+      binding: ProductBinding(),
     ),
     GetPage(
       name: Routes.addNewCardScreen,
@@ -180,9 +182,9 @@ class AppRoutes {
       page: () => const BiddingScreen(),
     ),
     GetPage(
-      name: Routes.gyradosScreen,
-      page: () => GyradosScreen(),
-    ),
+        name: Routes.coOwnerProductDetailsScreen,
+        page: () => CoOwnerProductDetailsScreen(),
+        binding: ProductBinding()),
     GetPage(
       name: Routes.navbarScreen,
       page: () => NavBarMsgScreen(),
@@ -222,6 +224,7 @@ class AppRoutes {
     GetPage(
       name: Routes.productDetailScreen,
       page: () => const ProductDetailScreen(),
+      binding: ProductBinding(),
     ),
     GetPage(
       name: Routes.editItemScreen,

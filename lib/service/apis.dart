@@ -1,8 +1,13 @@
+class ImageBaseUrls {
+  static String base = "http://202.164.42.227:9898";
+  //
+  static String category = "$base/uploads/category/";
+  static String product = "$base/uploads/product/";
+}
+
 class AppApis {
   /// Base URL
   static String baseUrl = 'http://202.164.42.227:9898/user';
-
-  static String imageBaseUrl = 'http://202.164.42.227:9898/uploads/category/';
 
   /// API end points---------
   static String signin = '/login';
@@ -31,4 +36,5 @@ class AppApis {
   // Add Product or Sell Item
   static String addPhysicalProduct = "/addPhysicalProduct";
   static String addCownerProduct = "/addCownerProduct";
+  static String productDetatils = "/viewSingleProduct";
 }

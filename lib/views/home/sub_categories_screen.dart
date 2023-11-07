@@ -76,7 +76,7 @@ class SubCategoriesScreen extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: AppImage.view(
-                                            "${AppApis.imageBaseUrl}${data.image ?? ''}",
+                                            "${ImageBaseUrls.category}${data.image ?? ''}",
                                             height: 75,
                                             width: 70,
                                             fit: BoxFit.cover),

@@ -24,7 +24,7 @@ class Homecontroller extends GetxController
   // RxBool homePass = true.obs;
   // RxBool Switch = false.obs;
   RxBool upload = false.obs;
-  var tabController = 1.obs;
+
   var coOwnerController = 0.obs;
   var messageController = 0.obs;
   var timer = false.obs;

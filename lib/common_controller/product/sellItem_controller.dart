@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
@@ -109,6 +108,7 @@ class SellItemController extends GetxController {
 
   ///
   var singleImage = ''.obs;
+  var singleImageType = ''.obs;
   var multipleImages = <AttachmentModel>[].obs;
   var selectedImageForUpdate = (-1).obs;
   var title = TextEditingController(text: '');
@@ -135,10 +135,15 @@ class SellItemController extends GetxController {
   // Api call
   addSellItem() async {
     if (fieldsValidations()) {
+      bool success = false;
       if (tabController.value == 1) {
-        await _addPhysicalProduct();
+        success = await _addPhysicalProduct();
       } else {
-        await _addCoOwnerProduct();
+        success = await _addCoOwnerProduct();
+      }
+      if (success) {
+        Get.back();
+        clearFields();
       }
     }
   }
@@ -149,18 +154,30 @@ class SellItemController extends GetxController {
     title.clear();
     location.clear();
     cordinates.value = null;
+    description.clear();
+    //Physical
     shares.clear();
     basePrice.clear();
-    description.clear();
+    //Co-owner
+    selectedCategory.value = null;
+    selectedSubCategory.value = null;
+    itemSize.value = 'Medium';
+    itemColor.clear();
+    brand.clear();
+    condition.value = 'Excellent';
+    sellOption.value = 'Auction';
+    selectedCategory.value = null;
+    selectedSubCategory.value = null;
+    price.clear();
   }
 
   bool fieldsValidations() {
-    if (singleImage.value == '') {
-      AppToast.show("Please add item image");
-      return false;
-    }
+    // if (singleImage.value == '') {
+    //   AppToast.show("Please add item image");
+    //   return false;
+    // }
     if (multipleImages.isEmpty) {
-      AppToast.show("Please add one more item image");
+      AppToast.show("Please add images");
       return false;
     }
     if (title.text.trim() == '') {
@@ -225,13 +242,21 @@ class SellItemController extends GetxController {
 
   /// APi
   _addPhysicalProduct() async {
-    await ApiRequests.addPhysicalProduct(
-        mainImage: singleImage.value,
-        images: multipleImages.map((element) => element.path).toList(),
+    List<String> imgs = [];
+    List<String> videos = [];
+    for (var element in multipleImages) {
+      if (element.type == '2') {
+        videos.add(element.path);
+      } else {
+        imgs.add(element.path);
+      }
+    }
+    return await ApiRequests.addPhysicalProduct(
+        images: imgs,
+        videos: videos,
         title: title.text.trim(),
         location: location.text.trim(),
-        latitude: "0.0",
-        longitude: "0.0",
+        cordinates: cordinates.value ?? const LatLng(0.0, 0.0),
         category: (selectedCategory.value?.id ?? '').toString(),
         subcategory: (selectedSubCategory.value?.id ?? '').toString(),
         color: itemColor.text.trim(),
@@ -244,13 +269,21 @@ class SellItemController extends GetxController {
   }
 
   _addCoOwnerProduct() async {
-    await ApiRequests.addCoOwnerProduct(
-        mainImage: singleImage.value,
-        images: multipleImages.map((element) => element.path).toList(),
+    List<String> imgs = [];
+    List<String> videos = [];
+    for (var element in multipleImages) {
+      if (element.type == '2') {
+        videos.add(element.path);
+      } else {
+        imgs.add(element.path);
+      }
+    }
+    return await ApiRequests.addCoOwnerProduct(
+        images: imgs,
+        videos: videos,
         title: title.text.trim(),
         location: location.text.trim(),
-        latitude: "0.0",
-        longitude: "0.0",
+        cordinates: cordinates.value ?? const LatLng(0.0, 0.0),
         basePrice: basePrice.text.trim(),
         description: description.text.trim(),
         shares: int.parse(shares.text.trim() == '' ? '0' : shares.text.trim()));

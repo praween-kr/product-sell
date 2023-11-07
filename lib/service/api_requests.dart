@@ -6,6 +6,7 @@ import 'package:oninto_flutter/model/auth/user_info_model.dart';
 import 'package:oninto_flutter/model/g_place_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
+import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/settings/address_model.dart';
 import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
@@ -333,28 +334,12 @@ class ApiRequests {
   }
 
   /// ---- Add Physical Product -------
-//   name:Test
-// location:Mohali
-// latitude:30.7046
-// longitude:76.7179
-// categoryId:12
-// subCategoryId:7
-// color:red
-// brand:Tesla
-// productCondition:new
-// sellOption:Fix Price
-// price:100
-// description:This is test description
-// boostCode:
-// startDate:2023-10-12
-// endDate:2024-01-01
   static addPhysicalProduct({
-    required String mainImage,
     required List<String> images,
+    required List<String> videos,
     required String title,
     required String location,
-    required String latitude,
-    required String longitude,
+    required LatLng cordinates,
     required String category,
     required String subcategory,
     required String color,
@@ -370,8 +355,8 @@ class ApiRequests {
     Map<String, dynamic> mapData = {
       "name": title,
       "location": location,
-      "latitude": latitude,
-      "longitude": longitude,
+      "latitude": cordinates.latitude,
+      "longitude": cordinates.longitude,
       "categoryId": category,
       "subCategoryId": subcategory,
       "color": color,
@@ -388,23 +373,29 @@ class ApiRequests {
           : "${endDate.year}-${endDate.month}-${endDate.day}",
       "boostCode": "",
     };
-    AppPrint.all("Add Product Resp: $mapData");
+    AppPrint.all(
+        "Add Product Req: data--> $mapData images---> $images videos---> $videos");
+    AppLoader.show();
+    var data = await BaseApiCall().postFormReq(
+      AppApis.addPhysicalProduct,
+      data: mapData,
+      multiAttachment: {'images': images}, //, 'video': videos
+    );
+    AppPrint.all("Add Product Resp: $data");
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
   }
 
-// name:
-// location:
-// latitude:
-// longitude:
-// description:
-// boostCode:
-// share:
   static addCoOwnerProduct({
-    required String mainImage,
     required List<String> images,
+    required List<String> videos,
     required String title,
     required String location,
-    required String latitude,
-    required String longitude,
+    required LatLng cordinates,
     required String basePrice,
     required String description,
     required int shares,
@@ -412,8 +403,8 @@ class ApiRequests {
     Map<String, dynamic> mapData = {
       "name": title,
       "location": location,
-      "latitude": latitude,
-      "longitude": longitude,
+      "latitude": cordinates.latitude,
+      "longitude": cordinates.longitude,
       "price": basePrice,
       "description": description,
       "boostCode": "",
@@ -422,13 +413,33 @@ class ApiRequests {
     AppPrint.all("Add Product Req: $mapData");
     AppLoader.show();
     var data = await BaseApiCall().postFormReq(AppApis.addCownerProduct,
-        data: mapData, attachments: {}, multiAttachment: {});
-    AppPrint.all("Add Product Resp: $data");
+        data: mapData, multiAttachment: {'images': images}); //, 'video': videos
+    AppPrint.all(
+        "Add Product Req: data--> $mapData images---> $images videos---> $videos");
     if (data != null) {
       AppLoader.hide();
       return true;
     }
     AppLoader.hide();
+    return false;
+  }
+
+  static productDetails(String productId,
+      {required Function(ProductDetails?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.productDetatils, showToast: false, id: productId);
+    if (respdata != null) {
+      DataResponse<ProductDetails> dataResponse =
+          DataResponse<ProductDetails>.fromJson(respdata,
+              (json) => ProductDetails.fromJson(json as Map<String, dynamic>));
+
+      data(dataResponse.body);
+      loading(false);
+      return true;
+    }
+    loading(false);
     return false;
   }
 

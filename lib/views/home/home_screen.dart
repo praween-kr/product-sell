@@ -280,7 +280,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 15),
                                 AppImage.view(
-                                    "${AppApis.imageBaseUrl}${(controller.homeData.value?.image ?? [
+                                    "${ImageBaseUrls.category}${(controller.homeData.value?.image ?? [
                                           ImageModel()
                                         ]).first.image ?? ''}",
                                     height: Get.height * 0.22,
@@ -376,7 +376,7 @@ class HomeScreen extends StatelessWidget {
                                                         BorderRadius.circular(
                                                             10),
                                                     child: AppImage.view(
-                                                        "${AppApis.imageBaseUrl}${data?.image ?? ''}",
+                                                        "${ImageBaseUrls.category}${data?.image ?? ''}",
                                                         height: 70,
                                                         width: 70,
                                                         fit: BoxFit.cover),

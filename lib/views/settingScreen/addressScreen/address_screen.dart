@@ -6,6 +6,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/settings/address_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/utills/empty_widget.dart';
 
 import '../../../common_widget/common_button.dart';
 import '../../../utills/colors_file.dart';
@@ -42,20 +43,22 @@ class AddressScreen extends StatelessWidget {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
-                          physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          itemCount: addressController.addresses.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            AddressModel address =
-                                addressController.addresses[index];
-                            return addressCard(
-                                address: address,
-                                onClick: () {
-                                  //
-                                });
-                          }),
+                      : addressController.addresses.isEmpty
+                          ? EmptyWidgets.simple()
+                          : ListView.builder(
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              itemCount: addressController.addresses.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                AddressModel address =
+                                    addressController.addresses[index];
+                                return addressCard(
+                                    address: address,
+                                    onClick: () {
+                                      //
+                                    });
+                              }),
                 ),
               ),
             ),

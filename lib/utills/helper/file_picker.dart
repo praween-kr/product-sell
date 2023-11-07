@@ -16,7 +16,9 @@ enum AttachmentPicker {
   IMG_VIDEO,
   VIDEO_CAMERA,
   VIDEO_GALLERY,
-  FILE
+  FILE,
+  IMG,
+  VIDEO
 }
 
 class AppPicker {
@@ -36,7 +38,7 @@ class AppPicker {
                   onClick: () async {
                     Get.back();
                     onChanged(await (picker(AttachmentPicker.IMG_GALLERY)),
-                        AttachmentPicker.IMG_GALLERY, null);
+                        AttachmentPicker.IMG, null);
                   },
                   title: "Gallery",
                   icon: Icons.photo),
@@ -44,7 +46,7 @@ class AppPicker {
                   onClick: () async {
                     Get.back();
                     onChanged(await (picker(AttachmentPicker.IMG_CAMERA)),
-                        AttachmentPicker.IMG_GALLERY, null);
+                        AttachmentPicker.IMG, null);
                   },
                   title: "Camera",
                   icon: Icons.camera_alt_rounded),
@@ -67,7 +69,7 @@ class AppPicker {
                         maxHeight: 64,
                         quality: 75);
                     AppPrint.all(fileName.toString());
-                    onChanged(path, AttachmentPicker.VIDEO_GALLERY, fileName);
+                    onChanged(path, AttachmentPicker.VIDEO, fileName);
                   },
                   title: "Video",
                   icon: Icons.camera_alt_rounded),
@@ -190,7 +192,7 @@ class AppPicker {
     // File
     if (type == AttachmentPicker.FILE) {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
-          type: FileType.any,
+          type: FileType.custom,
           allowedExtensions: [
             'pdf',
             'docx',

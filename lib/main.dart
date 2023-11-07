@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
-import 'package:oninto_flutter/routes/app_routes.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 
+import 'routes/app_routes.dart';
 import 'service/local/db_helper.dart';
 import 'service/local/local_store_keys.dart';
 
@@ -38,14 +38,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Poppins', primaryColor: Colors.transparent),
       title: 'Flutter Demo',
       initialRoute: Routes.splashScreen,
-      // onGenerateRoute: RoutesGenerator.generateRoute,
-      // onGenerateInitialRoutes: (String initialRouteName) {
-      //   return [
-      //     RoutesGenerator.generateRoute(
-      //         const RouteSettings(name: Routes.splashScreen)),
-      //   ];
-      // },
       getPages: AppRoutes.routes,
+      // home: AppVideoPlayer(
+      //   video:
+      //       "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4",
+      // ),
     );
   }
 

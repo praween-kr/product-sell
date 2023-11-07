@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
@@ -12,6 +13,7 @@ import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/helper/file_picker.dart';
+import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../routes/routes.dart';
 import '../../utills/common_appbar.dart';
@@ -80,15 +82,13 @@ class SellItemScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Obx(
                       () => imagePickWidget(
+                        bigSize: true,
                         h: Get.height * 0.26,
                         w: double.infinity,
                         url: controller.singleImage.value,
+                        type: controller.singleImageType.value,
                         onClick: () {
-                          AppPicker().image((path, type, thumb) {
-                            // if (type == AttachmentPicker.VIDEO_GALLERY) {
-                            controller.singleImage.value = path ?? '';
-                            // }
-                          });
+                          _addMoreAttachments();
                         },
                       ),
                     ),
@@ -108,17 +108,22 @@ class SellItemScreen extends StatelessWidget {
                         itemBuilder: (context, position) {
                           List<AttachmentModel> list =
                               controller.multipleImages;
-                          String url = list.length < 4
-                              ? ''
-                              : list[position].type == '2'
-                                  ? list[position].thumb ?? ''
-                                  : list[position].path;
+                          String urlType = '';
+                          String url = '';
+                          if (list.length >= 4) {
+                            url = list[position].type == '2'
+                                ? list[position].thumb ?? ''
+                                : list[position].path;
+                            urlType = list[position].type;
+                          }
+
                           //
                           if (controller.multipleImages.length < 4) {
                             if (position < controller.multipleImages.length) {
                               url = list[position].type == '2'
                                   ? list[position].thumb ?? ''
                                   : list[position].path;
+                              urlType = list[position].type;
                             }
                           }
                           int length = controller.multipleImages.length < 4
@@ -129,39 +134,19 @@ class SellItemScreen extends StatelessWidget {
                                 left: position == 0 ? 20 : 0,
                                 right: position == length - 1 ? 20 : 0),
                             child: imagePickWidget(
-                              radius: 8,
-                              w: 65,
-                              h: double.infinity,
-                              iconSize: 18,
-                              url: url,
-                              onClick: () {
-                                if (position <
-                                    controller.multipleImages.length) {
-                                  controller.selectedImageForUpdate.value =
-                                      position;
-                                }
-                                AppPicker().image((path, type, thumb) {
-                                  if (path != null) {
-                                    if (controller
-                                            .selectedImageForUpdate.value ==
-                                        position) {
-                                      controller.multipleImages.replaceRange(
-                                          position, position + 1, [
-                                        AttachmentModel(
-                                            path: path, type: '0', thumb: thumb)
-                                      ]);
-                                    } else {
-                                      controller.multipleImages.add(
-                                          AttachmentModel(
-                                              path: path,
-                                              type: '0',
-                                              thumb: thumb));
-                                    }
-                                    controller.multipleImages.refresh();
-                                  }
-                                });
-                              },
-                            ),
+                                radius: 8,
+                                w: 65,
+                                h: double.infinity,
+                                iconSize: 20,
+                                url: url,
+                                onDoubleClick: () {
+                                  controller.singleImage.value = url;
+                                  controller.singleImageType.value = urlType;
+                                },
+                                onClick: () {
+                                  _addAttachment(position);
+                                },
+                                type: urlType),
                           );
                         },
                       ),
@@ -173,13 +158,7 @@ class SellItemScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: GestureDetector(
                       onTap: () {
-                        AppPicker().image((path, type, thumb) {
-                          if (path != null) {
-                            controller.multipleImages.add(AttachmentModel(
-                                path: path, type: '0', thumb: thumb));
-                            controller.multipleImages.refresh();
-                          }
-                        });
+                        _addMoreAttachments();
                       },
                       child: CommonButton(
                           color: AppColor.appcolor,
@@ -228,6 +207,15 @@ class SellItemScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: AppTextField(
+                      onClick: () => Get.to(
+                        () => SearchGoogleAddress(onChanged: (location) {
+                          controller.location.text = location.address ?? '';
+                          controller.cordinates.value = LatLng(
+                              location.cordinates?.location?.lat ?? 0.0,
+                              location.cordinates?.location?.lng ?? 0.0);
+                        }),
+                      ),
+                      readOnly: true,
                       controller: controller.location,
                       height: 46.0,
                       title: "Add",
@@ -861,14 +849,69 @@ class SellItemScreen extends StatelessWidget {
     );
   }
 
+  ///--------
+  _addAttachment(int position) {
+    if (position < controller.multipleImages.length) {
+      controller.selectedImageForUpdate.value = position;
+    }
+    AppPicker().image((path, type, thumb) {
+      String typeKey = "0";
+      if (type == AttachmentPicker.IMG) {
+        typeKey = "0";
+      } else if (type == AttachmentPicker.VIDEO) {
+        typeKey = "2";
+      } else {
+        typeKey = "1";
+      }
+      if (path != null) {
+        if (controller.selectedImageForUpdate.value == position) {
+          controller.multipleImages.replaceRange(position, position + 1,
+              [AttachmentModel(path: path, type: typeKey, thumb: thumb)]);
+        } else {
+          controller.multipleImages
+              .add(AttachmentModel(path: path, type: typeKey, thumb: thumb));
+        }
+        controller.singleImage.value = typeKey == '2' ? thumb ?? '' : path;
+        controller.singleImageType.value = typeKey;
+        controller.multipleImages.refresh();
+      }
+    });
+  }
+
+  _addMoreAttachments() {
+    AppPicker().image((path, type, thumb) {
+      String typeKey = "0";
+      if (type == AttachmentPicker.IMG) {
+        typeKey = "0";
+      } else if (type == AttachmentPicker.VIDEO) {
+        typeKey = "2";
+      } else {
+        typeKey = "1";
+      }
+      if (path != null) {
+        controller.multipleImages
+            .add(AttachmentModel(path: path, type: typeKey, thumb: thumb));
+        controller.multipleImages.refresh();
+        controller.singleImage.value = typeKey == '2' ? thumb ?? '' : path;
+        controller.singleImageType.value = typeKey;
+      }
+    });
+  }
+
+  ///--------
+
   Widget imagePickWidget(
       {double? h,
       double? w,
       double? radius,
       double? iconSize,
       required Function onClick,
-      required String url}) {
+      Function? onDoubleClick,
+      required String url,
+      String type = '0',
+      bool bigSize = false}) {
     return GestureDetector(
+      onDoubleTap: onDoubleClick == null ? null : () => onDoubleClick(),
       onTap: () => onClick(),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 20)),
@@ -879,21 +922,43 @@ class SellItemScreen extends StatelessWidget {
               width: w,
               height: h,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
+                color:
+                    (type == '1' ? themeColor : Colors.grey).withOpacity(0.2),
                 borderRadius: BorderRadius.circular(17.0),
               ),
-              child:
-                  url == '' ? null : Image.file(File(url), fit: BoxFit.cover),
+              child: url == '' || type == '1'
+                  ? null
+                  : Image.file(File(url), fit: BoxFit.cover),
             ),
             url == ''
                 ? const SizedBox.shrink()
                 : Container(
                     color: Colors.white.withOpacity(0.3), width: w, height: h),
             Center(
-              child: Icon(
-                Icons.camera_alt,
-                size: iconSize ?? Get.width * 0.12,
-                color: AppColor.blackColor.withOpacity(url == '' ? 0.2 : 0.8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    type == '1'
+                        ? Icons.file_copy
+                        : type == '2'
+                            ? Icons.play_circle
+                            : Icons.camera_alt,
+                    size: iconSize ?? Get.width * 0.12,
+                    color:
+                        AppColor.blackColor.withOpacity(url == '' ? 0.2 : 0.8),
+                  ),
+                  bigSize && type == '1'
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            url.split('/').last,
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                        )
+                      : const SizedBox.shrink()
+                ],
               ),
             ),
           ],

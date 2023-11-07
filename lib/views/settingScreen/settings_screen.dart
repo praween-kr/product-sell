@@ -223,7 +223,12 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.location_on,
                 title: "Address",
                 onClick: () {
-                  Get.find<AddressController>().getAddresses();
+                  if (AddressController().initialized) {
+                    Get.find<AddressController>().getAddresses();
+                  } else {
+                    Get.put(AddressController()).getAddresses();
+                  }
+
                   Get.toNamed(Routes.addressScreen);
                 },
               ),
