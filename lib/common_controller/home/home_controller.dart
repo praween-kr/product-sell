@@ -8,16 +8,17 @@ import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
+import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-import '../common_widget/app_text.dart';
-import '../common_widget/color_constant.dart';
-import '../common_widget/common_button.dart';
-import '../model/onboard_model.dart';
-import '../utills/helper/camera_helper.dart';
+import '../../common_widget/app_text.dart';
+import '../../common_widget/color_constant.dart';
+import '../../common_widget/common_button.dart';
+import '../../model/onboard_model.dart';
+import '../../utills/helper/camera_helper.dart';
 
 class Homecontroller extends GetxController
     implements CameraOnCompleteListener {
@@ -34,8 +35,6 @@ class Homecontroller extends GetxController
   var menu = false.obs;
   var heartColor = false.obs;
   var touchTap = false.obs;
-
-  var searchInput = Rx<TextEditingController>(TextEditingController(text: ''));
 
   /// o for menu and 1 for filter selected
   var selectValue = 0.obs;
@@ -58,11 +57,8 @@ class Homecontroller extends GetxController
     Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (pagePosition < 2) {
         pagePosition++;
-        pageController.animateToPage(
-          pagePosition.value,
-          duration: const Duration(milliseconds: 350),
-          curve: Curves.easeIn,
-        );
+        pageController.animateToPage(pagePosition.value,
+            duration: const Duration(milliseconds: 350), curve: Curves.easeIn);
       } else {
         pagePosition.value = 2;
       }
@@ -399,6 +395,9 @@ class Homecontroller extends GetxController
   ///-----------------------====================-----------------------
   var homeData = Rx<HomeModel?>(null);
   var loadingData = false.obs;
+  var searchAndFilterApplied = false.obs;
+  //
+  var searchInput = TextEditingController(text: '');
 
   getHomeData() async {
     await ApiRequests.getHomeData(data: (data) {
@@ -406,5 +405,18 @@ class Homecontroller extends GetxController
     }, loading: (loading) {
       loadingData.value = loading;
     });
+  }
+
+  var products = <ProductModel>[].obs;
+  getSearchProducts() async {
+    searchAndFilterApplied.value = true;
+    await ApiRequests.getProducts(
+        searchKey: searchInput.text.trim(),
+        data: (data) {
+          products.value = data;
+        },
+        loading: (loading) {
+          loadingData.value = loading;
+        });
   }
 }

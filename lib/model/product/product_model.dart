@@ -2,7 +2,7 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 
 import 'product_image_model.dart';
 
-class ProductDetails {
+class ProductModel {
   int? id;
   int? isApproved;
   int? status;
@@ -45,13 +45,10 @@ class ProductDetails {
   int? weightUnit;
   String? createdAt;
   String? updatedAt;
-  double? averageRating;
-  int? favorite;
-  CategoryModel? category;
   List<ProductImages>? productImages;
-  List<void>? productSizes;
+  CategoryModel? category;
 
-  ProductDetails(
+  ProductModel(
       {this.id,
       this.isApproved,
       this.status,
@@ -94,13 +91,10 @@ class ProductDetails {
       this.weightUnit,
       this.createdAt,
       this.updatedAt,
-      this.averageRating,
-      this.favorite,
-      this.category,
       this.productImages,
-      this.productSizes});
+      this.category});
 
-  ProductDetails.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     isApproved = json['isApproved'];
     status = json['status'];
@@ -143,23 +137,15 @@ class ProductDetails {
     weightUnit = json['weightUnit'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    averageRating = json['averageRating'];
-    favorite = json['favorite'];
-    category = json['category'] != null
-        ? CategoryModel.fromJson(json['category'])
-        : null;
     if (json['product_images'] != null) {
       productImages = <ProductImages>[];
       json['product_images'].forEach((v) {
         productImages!.add(ProductImages.fromJson(v));
       });
     }
-    if (json['product_sizes'] != null) {
-      productSizes = <Null>[];
-      json['product_sizes'].forEach((v) {
-        //productSizes!.add(new Null.fromJson(v));
-      });
-    }
+    category = json['category'] != null
+        ? CategoryModel.fromJson(json['category'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -206,16 +192,11 @@ class ProductDetails {
     data['weightUnit'] = weightUnit;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    data['averageRating'] = averageRating;
-    data['favorite'] = favorite;
-    if (category != null) {
-      data['category'] = category!.toJson();
-    }
     if (productImages != null) {
       data['product_images'] = productImages!.map((v) => v.toJson()).toList();
     }
-    if (productSizes != null) {
-      // data['product_sizes'] = productSizes!.map((v) => v.toJson()).toList();
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
     return data;
   }

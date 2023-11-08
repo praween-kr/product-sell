@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../common_widget/app_text.dart';

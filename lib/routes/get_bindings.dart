@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/product_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';

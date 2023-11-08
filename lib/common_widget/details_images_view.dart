@@ -15,7 +15,6 @@ class _DetailsImagesViewState extends State<DetailsImagesView> {
   String seletedImage = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.images.isNotEmpty) {
       setState(() {
@@ -26,93 +25,55 @@ class _DetailsImagesViewState extends State<DetailsImagesView> {
 
   @override
   Widget build(BuildContext context) {
-    print("dd: $seletedImage");
-
     return Container(
+      width: double.infinity,
       color: Colors.grey.shade300,
       child: Stack(children: [
-        // AppImage.view(""),
         SizedBox(
             height: Get.height * 0.35,
             child: AppImage.view("${ImageBaseUrls.product}$seletedImage",
-                fit: BoxFit.cover, width: double.infinity)
-            // Image.asset(
-            //   Assets.assetsParker,
-            //   fit: BoxFit.cover,
-            // )
-            ),
+                fit: BoxFit.cover, width: double.infinity)),
         Positioned(
-            left: 20,
+            left: 10,
             bottom: 10,
-            // top: MediaQuery.of(context).size.height * 0.25,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: widget.images
-                    .map((e) => Padding(
-                          padding: const EdgeInsets.only(right: 14),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                seletedImage = e;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                    color: seletedImage == e
-                                        ? Colors.green
-                                        : Colors.grey,
-                                    width: 3),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(6),
-                                child: AppImage.view(
-                                  "${ImageBaseUrls.product}$e",
-                                  fit: BoxFit.cover,
-                                  height: 75,
-                                  width: 80,
+            child: SizedBox(
+              width: Get.width * 1.0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    children: widget.images
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.only(right: 14),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    seletedImage = e;
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                        color: seletedImage == e
+                                            ? Colors.green
+                                            : Colors.grey,
+                                        width: 1.5),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(11),
+                                    child: AppImage.view(
+                                      "${ImageBaseUrls.product}$e",
+                                      fit: BoxFit.cover,
+                                      height: 75,
+                                      width: 80,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ))
-                    .toList()
-                // [
-                //   Image.asset(
-                //     Assets.assetsGyrados,
-                //     height: 80,
-                //     width: 80,
-                //   ),
-                //   const SizedBox(
-                //     width: 10,
-                //   ),
-                //   Image.asset(
-                //     Assets.assetsGyrados1,
-                //     height: 80,
-                //     width: 80,
-                //   ),
-                //   const SizedBox(
-                //     width: 10,
-                //   ),
-                //   Stack(children: [
-                //     Image.asset(
-                //       Assets.assetsPokemon,
-                //       height: 80,
-                //       width: 80,
-                //     ),
-                //     Padding(
-                //       padding: const EdgeInsets.all(20),
-                //       child: Image.asset(
-                //         Assets.assetsVideo,
-                //         height: 40,
-                //         width: 40,
-                //       ),
-                //     ),
-                //   ]),
-                // ],
-                )),
+                            ))
+                        .toList()),
+              ),
+            )),
       ]),
     );
   }

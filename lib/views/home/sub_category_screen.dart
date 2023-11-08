@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-import '../../common_controller/home_controller.dart';
+import '../../common_controller/home/home_controller.dart';
 import '../../common_widget/app_text.dart';
 import '../../common_widget/appbar.dart';
 import '../../common_widget/color_constant.dart';

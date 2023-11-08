@@ -74,6 +74,7 @@ dependencies:
   path_provider: ^2.1.1
   chewie: ^1.7.1
   video_player: ^2.8.1
+  timeago: ^3.3.0
 
 
 dev_dependencies:

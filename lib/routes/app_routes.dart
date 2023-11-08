@@ -102,7 +102,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.filterScreen,
-      page: () => const FilterScreen(),
+      page: () => FilterScreen(),
     ),
     GetPage(
       name: Routes.subscriptionScreen,

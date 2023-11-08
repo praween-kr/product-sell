@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/product_controller.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
+import 'package:oninto_flutter/utills/common_widgets.dart';
+import 'package:oninto_flutter/utills/shimmer_widget.dart';
 
 import '../../../common_widget/appbar.dart';
 
@@ -14,7 +14,6 @@ class ProductScreen extends StatelessWidget {
   ProductScreen({
     Key? key,
   }) : super(key: key);
-  final Homecontroller controller = Get.find();
   final ProductController _productController = Get.find();
 
   @override
@@ -78,13 +77,11 @@ class ProductScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  Divider(
-                    thickness: 1,
-                  ),
+                  Divider(thickness: 1),
                 ],
               ),
               value: () {
-                Get.toNamed(Routes.filterScreen);
+                // Get.toNamed(Routes.filterScreen);
               },
             ),
             PopupMenuItem(
@@ -99,7 +96,10 @@ class ProductScreen extends StatelessWidget {
                 ),
               ),
 
-              value: () {},
+              value: () {
+                _productController.getMyProducts(sold: true, filter: true);
+                Get.toNamed(Routes.filterScreen);
+              },
             ),
             PopupMenuItem(
               //padding: EdgeInsets.zero,
@@ -112,7 +112,10 @@ class ProductScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              value: () {},
+              value: () {
+                _productController.getMyProducts(newAdded: true, filter: true);
+                Get.toNamed(Routes.filterScreen);
+              },
             ),
             PopupMenuItem(
               // padding: EdgeInsets.zero,
@@ -125,7 +128,10 @@ class ProductScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              value: () {},
+              value: () {
+                _productController.getMyProducts(pending: true, filter: true);
+                Get.toNamed(Routes.filterScreen);
+              },
             ),
           ],
         ),
@@ -136,392 +142,160 @@ class ProductScreen extends StatelessWidget {
           initialIndex: _productController.tabController.value,
           child: Column(
             children: [
-              Obx(
-                () => TabBar(
-                  splashFactory: NoSplash.splashFactory,
-                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    return states.contains(MaterialState.focused)
-                        ? null
-                        : Colors.transparent;
-                  }),
-                  onTap: (index) {
-                    _productController.tabController.value = index;
-                  },
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  indicator:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  indicatorWeight: 1,
-                  tabs: [
-                    tabbutton("Buy",
-                        selected: _productController.tabController.value == 0),
-                    tabbutton("Sell",
-                        selected: _productController.tabController.value == 1),
-                    tabbutton("Co-owner",
-                        selected: _productController.tabController.value == 2),
-                  ],
-                ),
+              TabBar(
+                splashFactory: NoSplash.splashFactory,
+                overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  return states.contains(MaterialState.focused)
+                      ? null
+                      : Colors.transparent;
+                }),
+                onTap: (index) async {
+                  _productController.tabController.value = index;
+                  await _productController.getMyProducts();
+                },
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                indicator:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                indicatorWeight: 1,
+                tabs: [
+                  tabbutton("Buy",
+                      selected: _productController.tabController.value == 0),
+                  tabbutton("Sell",
+                      selected: _productController.tabController.value == 1),
+                  tabbutton("Co-owner",
+                      selected: _productController.tabController.value == 2),
+                ],
               ),
               Expanded(
                 child: TabBarView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      GridView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.only(top: 20),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 1.1,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 2),
-                          itemCount: 6,
-                          itemBuilder: (context, index) {
-                            //  var data = controller.Categorydata[index];
-                            return Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Homecontroller controller = Get.find();
-                                    controller.productValue.value = 1;
-                                    controller.touchTap.value = true;
-                                    controller.menu.value = true;
-                                    controller.filter.value = false;
-                                    Get.toNamed(Routes.bottomScreen);
-                                    Map<String, dynamic> data = {
-                                      "from": 1,
-                                    };
-                                    Get.toNamed(Routes.denimScreen,
-                                        arguments: data);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        bottom: 10,
-                                        left: 20,
-                                        right: 20,
-                                        top: 7),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(19),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Color(0xff17000000),
-                                              offset: Offset(0, 3),
-                                              blurRadius: 6)
-                                        ]),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Stack(children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: Image.asset(
-                                              Assets.assetsGirlJean,
-                                              fit: BoxFit.cover,
-                                              height: 100,
-                                              width: 100,
-                                            ),
-                                          ),
-                                          const Positioned(
-                                              right: 0,
-                                              top: 5,
-                                              child: Icon(Icons.more_vert,
-                                                  color: Colors.white)),
-                                        ]),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        const AppText(
-                                          text: "10 mins ago",
-                                          textSize: 12,
-                                          color: Color(0x4d000000),
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        const AppText(
-                                          text: "Girl Denim",
-                                          textSize: 13,
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-                                        const AppText(
-                                          text: "\$2000",
-                                          textSize: 18,
-                                          color: Color(0xff000000),
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
-                      GridView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.only(
-                              top: 20, left: 20, right: 20),
-                          // padding:
-                          //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.78,
-                                  mainAxisSpacing: 30,
-                                  crossAxisSpacing: 30),
-                          itemCount: 6,
-                          itemBuilder: (context, index) {
-                            //  var data = controller.Categorydata[index];
-                            return productItemCard(
-                              onClick: () {
-                                if (index % 2 == 0) {
-                                  //
-                                } else {
-                                  Get.toNamed(Routes.productDetailScreen);
-                                }
-                              },
-                            );
-                          }),
-                      GridView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          padding: const EdgeInsets.only(
-                              top: 20, left: 20, right: 20),
-                          // padding:
-                          //     const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.76,
-                                  mainAxisSpacing: 30,
-                                  crossAxisSpacing: 30),
-                          itemCount: 6,
-                          itemBuilder: (context, index) {
-                            //  var data = controller.Categorydata[index];
-                            return GestureDetector(
-                              onTap: () {
-                                _productController.getProductDetails('19');
-                                Get.toNamed(Routes.coOwnerProductDetailsScreen);
-                              },
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(19),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          color: Color(0xff17000000),
-                                          offset: Offset(0, 3),
-                                          blurRadius: 6)
-                                    ]),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Stack(children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          child: Image.asset(
-                                            Assets.assetsGyradox,
-                                            height: 130,
-                                            width: 130,
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                        Positioned(
-                                            left: 5,
-                                            top: 5,
-                                            right: 0,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                    height: 20,
-                                                    width: 50,
-                                                    decoration: BoxDecoration(
-                                                        color: const Color(
-                                                            0xff30E165),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    child: const Center(
-                                                      child: AppText(
-                                                        text: "Sold",
-                                                        textSize: 10,
-                                                        color: Colors.white,
-                                                      ),
-                                                    )),
-                                              ],
-                                            )),
-                                      ]),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AppText(
-                                            text: "10 mins ago",
-                                            textSize: 12,
-                                            color: Color(0x4d000000),
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-                                          AppText(
-                                            text: "Gyarados EX",
-                                            textSize: 13,
-                                            color: Color(0xff000000),
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-                                          AppText(
-                                            text: "\$300",
-                                            textSize: 18,
-                                            color: Color(0xff000000),
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          SizedBox(
-                                            height: 1,
-                                          ),
-                                          AppText(
-                                            text: "Sold on : 29 May 2023",
-                                            textSize: 10,
-                                            color: Color(0x4d000000),
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                    ]),
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _productController.loadingdata.value
+                        ? ShimmerWidgets.productGridView()
+                        : _productController.myBuyProducts.isEmpty
+                            ? const Center(
+                                child: Text("No data"),
+                              )
+                            : GridView.builder(
+                                physics: const ClampingScrollPhysics(),
+                                padding: const EdgeInsets.only(
+                                    top: 20, left: 20, right: 20),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.74,
+                                        mainAxisSpacing: 30,
+                                        crossAxisSpacing: 30),
+                                itemCount:
+                                    _productController.myBuyProducts.length,
+                                itemBuilder: (context, index) {
+                                  //  var data = controller.Categorydata[index];
+                                  var product =
+                                      _productController.myBuyProducts[index];
+                                  return CommonWidgets.productGridCard(
+                                    productImage: (product.productImages ?? [])
+                                            .isNotEmpty
+                                        ? product.productImages!.first.image ??
+                                            ''
+                                        : '',
+                                    lastUpdate: product.updatedAt ?? '',
+                                    price: double.parse(product.price ?? '0.0'),
+                                    title: product.name ?? '',
+                                    onClick: () {
+                                      _productController.getProductDetails(
+                                          (product.id ?? '').toString());
+                                      Get.toNamed(
+                                          Routes.coOwnerProductDetailsScreen);
+                                    },
+                                  );
+                                }),
+                    _productController.loadingdata.value
+                        ? ShimmerWidgets.productGridView()
+                        : _productController.mySellProducts.isEmpty
+                            ? const Center(
+                                child: Text("No data"),
+                              )
+                            : GridView.builder(
+                                physics: const ClampingScrollPhysics(),
+                                padding: const EdgeInsets.only(
+                                    top: 20, left: 20, right: 20),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.74,
+                                        mainAxisSpacing: 30,
+                                        crossAxisSpacing: 30),
+                                itemCount:
+                                    _productController.mySellProducts.length,
+                                itemBuilder: (context, index) {
+                                  //  var data = controller.Categorydata[index];
+                                  var product =
+                                      _productController.mySellProducts[index];
+                                  return CommonWidgets.productGridCard(
+                                    productImage: (product.productImages ?? [])
+                                            .isNotEmpty
+                                        ? product.productImages!.first.image ??
+                                            ''
+                                        : '',
+                                    lastUpdate: product.updatedAt ?? '',
+                                    price: double.parse(product.price ?? '0.0'),
+                                    title: product.name ?? '',
+                                    views: 1200,
+                                    likes: 15200,
+                                    onClick: () {
+                                      _productController.getProductDetails(
+                                          (product.id ?? '').toString());
+                                      Get.toNamed(
+                                          Routes.coOwnerProductDetailsScreen);
+                                    },
+                                  );
+                                }),
+                    _productController.loadingdata.value
+                        ? ShimmerWidgets.productGridView()
+                        : _productController.myCoWonerProducts.isEmpty
+                            ? const Center(
+                                child: Text("No data"),
+                              )
+                            : GridView.builder(
+                                physics: const ClampingScrollPhysics(),
+                                padding: const EdgeInsets.only(
+                                    top: 20, left: 20, right: 20),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.74,
+                                        mainAxisSpacing: 30,
+                                        crossAxisSpacing: 30),
+                                itemCount:
+                                    _productController.myCoWonerProducts.length,
+                                itemBuilder: (context, index) {
+                                  //  var data = controller.Categorydata[index];
+                                  var product = _productController
+                                      .myCoWonerProducts[index];
+                                  return CommonWidgets.productGridCard(
+                                    productImage: (product.productImages ?? [])
+                                            .isNotEmpty
+                                        ? product.productImages!.first.image ??
+                                            ''
+                                        : '',
+                                    lastUpdate: product.updatedAt ?? '',
+                                    price: double.parse(product.price ?? '0.0'),
+                                    title: product.name ?? '',
+                                    soldOn: product.createdAt ?? '',
+                                    onClick: () {
+                                      _productController.getProductDetails(
+                                          (product.id ?? '').toString());
+                                      Get.toNamed(
+                                          Routes.coOwnerProductDetailsScreen);
+                                    },
+                                  );
+                                }),
+                  ],
+                ),
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget productItemCard({required Function onClick}) {
-    return GestureDetector(
-      onTap: () => onClick(),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(19),
-            boxShadow: const [
-              BoxShadow(
-                  color: Color(0xff17000000),
-                  offset: Offset(0, 3),
-                  blurRadius: 6)
-            ]),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(Assets.assetsMobile,
-                    height: 130, width: 130, fit: BoxFit.fill),
-              ),
-              Positioned(
-                  left: 5,
-                  top: 5,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      4 % 2 == 0
-                          ? Container(
-                              height: 20,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  color: const Color(0xff30E165),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: const Center(
-                                child: AppText(
-                                    text: "Sold",
-                                    textSize: 10,
-                                    color: Colors.white),
-                              ))
-                          : Container(),
-                      const Icon(Icons.more_vert, color: Colors.white)
-                    ],
-                  )),
-            ]),
-            const SizedBox(height: 5),
-            const Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppText(
-                          text: "10 mins ago",
-                          textSize: 12,
-                          color: Color(0x4d000000),
-                          fontWeight: FontWeight.w400),
-                      SizedBox(height: 4),
-                      AppText(
-                          text: "Girl Denim",
-                          textSize: 13,
-                          color: Color(0xff000000),
-                          fontWeight: FontWeight.w500),
-                      SizedBox(height: 4),
-                      AppText(
-                          text: "\$2000",
-                          textSize: 18,
-                          color: Color(0xff000000),
-                          fontWeight: FontWeight.w500),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Icon(Icons.favorite, color: AppColor.appcolor, size: 12),
-                      AppText(
-                          text: "12",
-                          textSize: 12,
-                          color: Color(0x4d000000),
-                          fontWeight: FontWeight.w500),
-                      Icon(Icons.remove_red_eye_outlined,
-                          color: AppColor.appcolor, size: 12),
-                      AppText(
-                          text: "199",
-                          textSize: 13,
-                          color: Color(0x4d000000),
-                          fontWeight: FontWeight.w500),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -94,6 +94,90 @@ class ShimmerWidgets {
         },
       );
 
+  static Widget productGridView(
+          {int count = 6, ScrollPhysics? physics, bool shrinkWrap = false}) =>
+      GridView.builder(
+        shrinkWrap: shrinkWrap,
+        physics: physics ?? const ClampingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 0.75),
+        itemCount: count,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    card(h: Get.width * 0.5),
+                    card(h: Get.width * 0.48, color: AppColor.white, p: 2),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          card(h: Get.width * 0.3),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                text(h: 8, w: Get.width * 0.2),
+                                text(h: 8, w: 25),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: text(h: 8, w: Get.width * 0.26)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      );
+
+  static Widget productListView({bool scrollHide = false, int textLine = 3}) =>
+      ListView.separated(
+        shrinkWrap: scrollHide,
+        physics: scrollHide ? const NeverScrollableScrollPhysics() : null,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              card(w: double.infinity, h: 170, radius: 14),
+              const SizedBox(width: 14),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      text(w: Get.width * 0.2),
+                      Icon(Icons.favorite,
+                          color: Colors.grey.shade300, size: 28),
+                    ],
+                  ),
+                  text(w: Get.width * 0.1),
+                  text(w: Get.width * 0.3),
+                ],
+              )
+            ],
+          ),
+        ),
+        separatorBuilder: (_, __) => const SizedBox(height: 0),
+        itemCount: 3,
+      );
+
   /// Home shimmer
   static home() => SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
@@ -124,10 +208,84 @@ class ShimmerWidgets {
         ),
       );
 
+  /// Product Details shimmer
+  static product() => SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                card(h: Get.height * 0.35, w: double.infinity, radius: 0),
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          3,
+                          (index) => Padding(
+                                padding: const EdgeInsets.only(right: 10.0),
+                                child: SizedBox(
+                                  width: 70,
+                                  child: Stack(
+                                    children: [
+                                      card(h: 70, color: AppColor.white),
+                                      card(h: 67, p: 2),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    text(w: Get.width * 0.3, h: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                          7,
+                          (index) => text(
+                              w: index == 6 ? Get.width * 0.5 : double.infinity,
+                              h: 12,
+                              color: Colors.grey.shade200)),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(flex: 1, child: text(h: 12)),
+                  SizedBox(width: Get.width * 0.15),
+                  Expanded(flex: 1, child: text(h: 12)),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+
   /// Single Line List View
 
   ////============================
-  static Widget text({double? w, double? h, Color? color}) =>
+  static Widget text({
+    double? w,
+    double? h,
+    Color? color,
+  }) =>
       Shimmer.fromColors(
         baseColor: color ?? Colors.grey.shade300,
         highlightColor: Colors.grey.shade100,

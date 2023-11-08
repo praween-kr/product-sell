@@ -37,4 +37,6 @@ class AppApis {
   static String addPhysicalProduct = "/addPhysicalProduct";
   static String addCownerProduct = "/addCownerProduct";
   static String productDetatils = "/viewSingleProduct";
+  static String myProducts = "/buySellMyProductCownerProduct";
+  static String getProducts = "/othersUsersProducts";
 }

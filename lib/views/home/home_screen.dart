@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
-import 'package:oninto_flutter/common_controller/home_controller.dart';
+import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
@@ -10,6 +10,7 @@ import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/utills/common_widgets.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
 import 'package:oninto_flutter/utills/shimmer_widget.dart';
 
@@ -254,7 +255,6 @@ class HomeScreen extends StatelessWidget {
                             child: Column(
                               children: [
                                 const SizedBox(height: 10),
-
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 14),
@@ -262,8 +262,12 @@ class HomeScreen extends StatelessWidget {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(45)),
                                     child: AppTextField(
+                                      keyBoardType: TextInputAction.search,
+                                      onFieldSubmitted: (value) async {
+                                        await controller.getSearchProducts();
+                                      },
                                       height: 45,
-                                      controller: controller.searchInput.value,
+                                      controller: controller.searchInput,
                                       title: "Search",
                                       hintStyle: const TextStyle(
                                           color: AppColor.blackColor,
@@ -278,121 +282,216 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                controller.searchAndFilterApplied.value
+                                    ? Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 18),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                                child: AppText(
+                                              text: "Search & filter applied",
+                                              textSize: 12,
+                                              color: Colors.grey.shade700,
+                                            )),
+                                            IconButton(
+                                              splashRadius: 22,
+                                              iconSize: 14,
+                                              icon: Icon(Icons.clear,
+                                                  size: 20,
+                                                  color: Colors.grey.shade700),
+                                              onPressed: () {
+                                                controller
+                                                    .searchAndFilterApplied
+                                                    .value = false;
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
                                 const SizedBox(height: 15),
-                                AppImage.view(
-                                    "${ImageBaseUrls.category}${(controller.homeData.value?.image ?? [
-                                          ImageModel()
-                                        ]).first.image ?? ''}",
-                                    height: Get.height * 0.22,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 20),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const AppText(
-                                        text: "Shop by category",
-                                        fontWeight: FontWeight.w600,
-                                        textSize: 16,
-                                        color: Colors.black,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          if (CategoriesController()
-                                              .initialized) {
-                                            Get.find<CategoriesController>()
-                                                .getCategories();
-                                          } else {
-                                            Get.put(CategoriesController())
-                                                .getCategories();
-                                          }
-                                          Get.toNamed(Routes.categoryScreen);
-                                        },
-                                        child: const AppText(
-                                            text: "See all",
-                                            fontWeight: FontWeight.w400,
-                                            textSize: 12,
-                                            color: Color(0x80000000)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
 
-                                /// ----Categories data----
-                                const SizedBox(height: 14),
-                                Obx(
-                                  () => GridView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 5),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              childAspectRatio: 0.9),
-                                      itemCount: (controller
-                                                  .homeData.value?.category ??
-                                              [])
-                                          .length,
-                                      itemBuilder: (context, index) {
-                                        var data = controller
-                                            .homeData.value?.category?[index];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            CategoriesController cc;
-                                            if (CategoriesController()
-                                                .initialized) {
-                                              cc = Get.find<
-                                                  CategoriesController>();
-                                            } else {
-                                              cc = Get.put(
-                                                  CategoriesController());
-                                            }
-                                            cc.getSubCategories(
-                                                (data?.id ?? '').toString());
-                                            cc.selectedCategory.value = data;
-                                            Get.toNamed(Routes.subCategories);
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 10),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: Colors.grey,
-                                                          width: 1)),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child: AppImage.view(
-                                                        "${ImageBaseUrls.category}${data?.image ?? ''}",
-                                                        height: 70,
-                                                        width: 70,
-                                                        fit: BoxFit.cover),
-                                                  )),
-                                              const SizedBox(height: 10),
-                                              AppText(
-                                                text: data?.name ?? '',
-                                                color: const Color.fromARGB(
-                                                    255, 6, 4, 4),
-                                                textSize: 12,
-                                              )
-                                            ],
+                                /// --------Category Body-----------
+                                controller.searchAndFilterApplied.value
+                                    ? GridView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        padding: const EdgeInsets.only(
+                                            top: 20, left: 20, right: 20),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                childAspectRatio: 0.65,
+                                                mainAxisSpacing: 30,
+                                                crossAxisSpacing: 30),
+                                        itemCount: controller.products.length,
+                                        itemBuilder: (context, index) {
+                                          //  var data = controller.Categorydata[index];
+                                          var product =
+                                              controller.products[index];
+                                          return CommonWidgets.productGridCard2(
+                                            productImage:
+                                                (product.productImages ?? [])
+                                                        .isNotEmpty
+                                                    ? product.productImages!
+                                                            .first.image ??
+                                                        ''
+                                                    : '',
+                                            lastUpdate: product.updatedAt ?? '',
+                                            price: double.parse(
+                                                product.price ?? '0.0'),
+                                            title: product.name ?? '',
+                                            onClick: () {
+                                              // _productController
+                                              //     .getProductDetails(
+                                              //         (product.id ?? '')
+                                              //             .toString());
+                                              // Get.toNamed(Routes
+                                              //     .coOwnerProductDetailsScreen);
+                                            },
+                                          );
+                                        })
+                                    : Column(
+                                        children: [
+                                          AppImage.view(
+                                              "${ImageBaseUrls.category}${(controller.homeData.value?.image ?? [
+                                                    ImageModel()
+                                                  ]).first.image ?? ''}",
+                                              height: Get.height * 0.22,
+                                              width: double.infinity,
+                                              fit: BoxFit.cover),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20, right: 20, top: 20),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const AppText(
+                                                  text: "Shop by category",
+                                                  fontWeight: FontWeight.w600,
+                                                  textSize: 16,
+                                                  color: Colors.black,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (CategoriesController()
+                                                        .initialized) {
+                                                      Get.find<
+                                                              CategoriesController>()
+                                                          .getCategories();
+                                                    } else {
+                                                      Get.put(CategoriesController())
+                                                          .getCategories();
+                                                    }
+                                                    Get.toNamed(
+                                                        Routes.categoryScreen);
+                                                  },
+                                                  child: const AppText(
+                                                      text: "See all",
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      textSize: 12,
+                                                      color: Color(0x80000000)),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        );
-                                      }),
-                                ),
+
+                                          /// ----Categories data----
+                                          const SizedBox(height: 14),
+                                          Obx(
+                                            () => GridView.builder(
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                shrinkWrap: true,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5,
+                                                        vertical: 5),
+                                                gridDelegate:
+                                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 3,
+                                                        childAspectRatio: 0.9),
+                                                itemCount: (controller.homeData
+                                                            .value?.category ??
+                                                        [])
+                                                    .length,
+                                                itemBuilder: (context, index) {
+                                                  var data = controller.homeData
+                                                      .value?.category?[index];
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      CategoriesController cc;
+                                                      if (CategoriesController()
+                                                          .initialized) {
+                                                        cc = Get.find<
+                                                            CategoriesController>();
+                                                      } else {
+                                                        cc = Get.put(
+                                                            CategoriesController());
+                                                      }
+                                                      cc.getSubCategories(
+                                                          (data?.id ?? '')
+                                                              .toString());
+                                                      cc.selectedCategory
+                                                          .value = data;
+                                                      Get.toNamed(
+                                                          Routes.subCategories);
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        10,
+                                                                    vertical:
+                                                                        10),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                border: Border.all(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    width: 1)),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              child: AppImage.view(
+                                                                  "${ImageBaseUrls.category}${data?.image ?? ''}",
+                                                                  height: 70,
+                                                                  width: 70,
+                                                                  fit: BoxFit
+                                                                      .cover),
+                                                            )),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        AppText(
+                                                          text:
+                                                              data?.name ?? '',
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255, 6, 4, 4),
+                                                          textSize: 12,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                }),
+                                          ),
+                                        ],
+                                      ),
                               ],
                             ),
                           ),

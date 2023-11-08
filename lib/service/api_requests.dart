@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:oninto_flutter/model/g_place_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
+import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/model/settings/address_model.dart';
 import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
@@ -390,6 +392,7 @@ class ApiRequests {
     return false;
   }
 
+  /// ---- Add Co Owner Product -------
   static addCoOwnerProduct({
     required List<String> images,
     required List<String> videos,
@@ -424,6 +427,7 @@ class ApiRequests {
     return false;
   }
 
+  /// ---- Product Details -------
   static productDetails(String productId,
       {required Function(ProductDetails?) data,
       required Function(bool) loading}) async {
@@ -443,7 +447,100 @@ class ApiRequests {
     return false;
   }
 
-  /// ---- Add Co-Owner Product -------
+  /// ---- Get My Products -------
+  // type 1 for myProduct 2 for CownerProducts 3 for buy product and 4 for sell product that my added product is sell
+  // for filter keys is (sold,new_added,pending) with values is 1 when we apply any filter
+  static getMyProducts({
+    required Function(List<ProductModel>) data,
+    required Function(bool) loading,
+    required int type,
+    bool sold = false,
+    bool newAdded = false,
+    bool pending = false,
+  }) async {
+    Map<String, dynamic> reqData = {"type": type};
+    if (sold) {
+      reqData.addAll({"sold": 1});
+    }
+    if (newAdded) {
+      reqData.addAll({"new_added": 1});
+    }
+
+    if (pending) {
+      reqData.addAll({"pending": 1});
+    }
+
+    AppPrint.all("text::: R-- ${jsonEncode(reqData)}");
+
+    ///
+    loading(true);
+    var respdata = await BaseApiCall()
+        .postReq(AppApis.myProducts, showToast: false, data: reqData);
+    AppPrint.all("text::: ${jsonEncode(respdata)}");
+    if (respdata != null) {
+      PageResponse<ProductModel> pageResponse =
+          PageResponse<ProductModel>.fromJson(respdata,
+              (json) => ProductModel.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+// For filter send keys is (endingSoon,highestPrice,lowestPrice,mostBid,leastBid,recentBid) with value 1
+  static getProducts({
+    required Function(List<ProductModel>) data,
+    required Function(bool) loading,
+    String? searchKey,
+    bool endingSoon = false,
+    bool highestPrice = false,
+    bool lowestPrice = false,
+    bool mostBid = false,
+    bool leastBid = false,
+    bool recentBid = false,
+  }) async {
+    Map<String, dynamic> reqData = {"search": searchKey ?? ''};
+    if (endingSoon) {
+      reqData.addAll({"endingSoon": 1});
+    }
+    if (highestPrice) {
+      reqData.addAll({"highestPrice": 1});
+    }
+    if (lowestPrice) {
+      reqData.addAll({"lowestPrice": 1});
+    }
+    if (mostBid) {
+      reqData.addAll({"mostBid": 1});
+    }
+    if (leastBid) {
+      reqData.addAll({"leastBid": 1});
+    }
+    if (recentBid) {
+      reqData.addAll({"recentBid": 1});
+    }
+
+    AppPrint.all("text::: R-- ${jsonEncode(reqData)}");
+
+    ///
+    loading(true);
+    var respdata = await BaseApiCall()
+        .postReq(AppApis.getProducts, showToast: false, data: reqData);
+    AppPrint.all("text::: ${jsonEncode(respdata)}");
+    if (respdata != null) {
+      PageResponse<ProductModel> pageResponse =
+          PageResponse<ProductModel>.fromJson(respdata,
+              (json) => ProductModel.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
 
   ///----------------------------
 

@@ -35,6 +35,7 @@ class AppTextField extends StatelessWidget {
   EdgeInsetsGeometry? margin;
   FocusNode? focusNode;
   Function? onClick;
+  void Function(String)? onFieldSubmitted;
 
   AppTextField(
       {Key? key,
@@ -67,7 +68,8 @@ class AppTextField extends StatelessWidget {
       this.countryCodePiker,
       this.keyBoardType,
       this.focusNode,
-      this.onClick})
+      this.onClick,
+      this.onFieldSubmitted})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -83,6 +85,7 @@ class AppTextField extends StatelessWidget {
       ),
       child: Center(
         child: TextFormField(
+          onFieldSubmitted: onFieldSubmitted,
           onTap: onClick == null ? null : () => onClick!(),
           style: style ??
               const TextStyle(

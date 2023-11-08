@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
+import 'package:oninto_flutter/common_controller/product/product_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
@@ -19,6 +20,7 @@ class SettingScreen extends GetView<SettingsController> {
   final SettingsController settingsController = Get.find();
   final GlobleController globleController = Get.find();
   final CmsController cmsController = Get.find();
+  final ProductController _productController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -181,15 +183,14 @@ class SettingScreen extends GetView<SettingsController> {
                   ]),
                 ],
               ),
-              const SizedBox(
-                height: 17.0,
-              ),
+              const SizedBox(height: 17.0),
               commonRow(
                   icon: Icons.shopping_cart_rounded,
                   title: "My Products",
                   onClick: () {
-                    Get.toNamed(Routes.productScreen);
                     controller.tabController.value = 1;
+                    _productController.getMyProducts();
+                    Get.toNamed(Routes.productScreen);
                   }),
               const SizedBox(
                 height: 17.0,
