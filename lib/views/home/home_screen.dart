@@ -128,75 +128,47 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              value: () {
-                                Get.toNamed(Routes.filterScreen);
-                              },
-                            ),
-                            PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: AppText(
-                                  text: "Lowest Lot #",
-                                  textAlign: TextAlign.center,
-                                  textSize: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
                               value: () {},
                             ),
-                            PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: AppText(
-                                  text: "Highest Price",
-                                  textAlign: TextAlign.center,
-                                  textSize: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              value: () {},
-                            ),
-                            PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: AppText(
-                                  text: "Ending Soonest",
-                                  textAlign: TextAlign.center,
-                                  textSize: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              value: () {},
-                            ),
-                            PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: AppText(
-                                  text: "Lowest Price",
-                                  textAlign: TextAlign.center,
-                                  textSize: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              value: () {},
-                            ),
-                            PopupMenuItem(
-                              padding: EdgeInsets.zero,
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: AppText(
-                                  text: "Most Bid",
-                                  textAlign: TextAlign.center,
-                                  textSize: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              value: () {},
-                            ),
+                            // popupMenuItem(
+                            //     title: "Lowest Lot #", onClick: () {
+                            //       controller.filterProducts(l)
+                            //     }),
+                            popupMenuItem(
+                                title: "Highest Price",
+                                onClick: () {
+                                  controller.filterProducts(highestPrice: true);
+                                  Get.toNamed(Routes.filterScreen,
+                                      arguments: {'from': 'home'});
+                                }),
+                            popupMenuItem(
+                                title: "Ending Soonest",
+                                onClick: () {
+                                  controller.filterProducts(endingSoon: true);
+                                  Get.toNamed(Routes.filterScreen,
+                                      arguments: {'from': 'home'});
+                                }),
+                            popupMenuItem(
+                                title: "Lowest Price",
+                                onClick: () {
+                                  controller.filterProducts(lowestPrice: true);
+                                  Get.toNamed(Routes.filterScreen,
+                                      arguments: {'from': 'home'});
+                                }),
+                            popupMenuItem(
+                                title: "Most Bid",
+                                onClick: () {
+                                  controller.filterProducts(mostBid: true);
+                                  Get.toNamed(Routes.filterScreen,
+                                      arguments: {'from': 'home'});
+                                }),
+                            popupMenuItem(
+                                title: "Resent Bid",
+                                onClick: () {
+                                  controller.filterProducts(recentBid: true);
+                                  Get.toNamed(Routes.filterScreen,
+                                      arguments: {'from': 'home'});
+                                }),
                           ],
                         ),
                         GestureDetector(
@@ -264,7 +236,7 @@ class HomeScreen extends StatelessWidget {
                                     child: AppTextField(
                                       keyBoardType: TextInputAction.search,
                                       onFieldSubmitted: (value) async {
-                                        await controller.getSearchProducts();
+                                        await controller.searchProducts();
                                       },
                                       height: 45,
                                       controller: controller.searchInput,
@@ -303,6 +275,7 @@ class HomeScreen extends StatelessWidget {
                                                   size: 20,
                                                   color: Colors.grey.shade700),
                                               onPressed: () {
+                                                controller.searchInput.clear();
                                                 controller
                                                     .searchAndFilterApplied
                                                     .value = false;
@@ -521,6 +494,23 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  PopupMenuItem<Function> popupMenuItem(
+      {required String title, required Function onClick}) {
+    return PopupMenuItem(
+      padding: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: AppText(
+          text: title,
+          textAlign: TextAlign.center,
+          textSize: 12,
+          color: Colors.black,
+        ),
+      ),
+      value: () => onClick(),
     );
   }
 

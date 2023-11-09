@@ -11,8 +11,10 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
+import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/helper/file_picker.dart';
+import 'package:oninto_flutter/utills/image_view.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../routes/routes.dart';
@@ -41,36 +43,39 @@ class SellItemScreen extends StatelessWidget {
             fontFamily: "Poppins"),
       ),
       body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: Obx(
-            () => Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: tabButton(
-                    title: "Physical Product",
-                    selected: controller.tabController.value == 1,
-                    onClick: () {
-                      controller.tabController.value = 1;
-                    },
+        Get.arguments == 'edit'
+            ? const SizedBox.shrink()
+            : Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Obx(
+                  () => Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: tabButton(
+                          title: "Physical Product",
+                          selected: controller.tabController.value == 1,
+                          onClick: () {
+                            controller.tabController.value = 1;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        flex: 1,
+                        child: tabButton(
+                          title: "Co-Owner",
+                          selected: controller.tabController.value == 0,
+                          onClick: () {
+                            controller.tabController.value = 0;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  flex: 1,
-                  child: tabButton(
-                    title: "Co-Owner",
-                    selected: controller.tabController.value == 0,
-                    onClick: () {
-                      controller.tabController.value = 0;
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
         Expanded(
           child: SingleChildScrollView(
             child: Padding(
@@ -85,6 +90,7 @@ class SellItemScreen extends StatelessWidget {
                         bigSize: true,
                         h: Get.height * 0.26,
                         w: double.infinity,
+                        isNetwork: controller.isNetworkTypeImg.value,
                         url: controller.singleImage.value,
                         type: controller.singleImageType.value,
                         onClick: () {
@@ -106,6 +112,7 @@ class SellItemScreen extends StatelessWidget {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, position) {
+                          bool network = false;
                           List<AttachmentModel> list =
                               controller.multipleImages;
                           String urlType = '';
@@ -115,6 +122,7 @@ class SellItemScreen extends StatelessWidget {
                                 ? list[position].thumb ?? ''
                                 : list[position].path;
                             urlType = list[position].type;
+                            network = list[position].isNetwork;
                           }
 
                           //
@@ -124,6 +132,7 @@ class SellItemScreen extends StatelessWidget {
                                   ? list[position].thumb ?? ''
                                   : list[position].path;
                               urlType = list[position].type;
+                              network = list[position].isNetwork;
                             }
                           }
                           int length = controller.multipleImages.length < 4
@@ -134,6 +143,7 @@ class SellItemScreen extends StatelessWidget {
                                 left: position == 0 ? 20 : 0,
                                 right: position == length - 1 ? 20 : 0),
                             child: imagePickWidget(
+                                isNetwork: network,
                                 radius: 8,
                                 w: 65,
                                 h: double.infinity,
@@ -142,6 +152,7 @@ class SellItemScreen extends StatelessWidget {
                                 onDoubleClick: () {
                                   controller.singleImage.value = url;
                                   controller.singleImageType.value = urlType;
+                                  controller.isNetworkTypeImg.value = network;
                                 },
                                 onClick: () {
                                   _addAttachment(position);
@@ -390,6 +401,9 @@ class SellItemScreen extends StatelessWidget {
                                                   .subCategoriesList)
                                           .map((items) {
                                         return DropdownMenuItem(
+                                          enabled: controller
+                                                  .selectedCategory.value !=
+                                              null,
                                           value: items,
                                           child: AppText(
                                               text: items.name ??
@@ -826,7 +840,12 @@ class SellItemScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: GestureDetector(
                       onTap: () async {
-                        await controller.addSellItem();
+                        if (Get.arguments == 'edit') {
+                          await controller.editSellItem();
+                        } else {
+                          await controller.addSellItem();
+                        }
+
                         // customDialog(context, () {
                         //   Get.toNamed(Routes.productScreen, arguments: 2);
                         // });
@@ -834,7 +853,7 @@ class SellItemScreen extends StatelessWidget {
                       child: CommonButton(
                         color: AppColor.appcolor,
                         height: 57,
-                        text: "Submit",
+                        text: Get.arguments == 'edit' ? "Edit" : "Submit",
                         textStyle:
                             const TextStyle(color: Colors.white, fontSize: 16),
                       ),
@@ -900,16 +919,18 @@ class SellItemScreen extends StatelessWidget {
 
   ///--------
 
-  Widget imagePickWidget(
-      {double? h,
-      double? w,
-      double? radius,
-      double? iconSize,
-      required Function onClick,
-      Function? onDoubleClick,
-      required String url,
-      String type = '0',
-      bool bigSize = false}) {
+  Widget imagePickWidget({
+    bool isNetwork = false,
+    double? h,
+    double? w,
+    double? radius,
+    double? iconSize,
+    required Function onClick,
+    Function? onDoubleClick,
+    required String url,
+    String type = '0',
+    bool bigSize = false,
+  }) {
     return GestureDetector(
       onDoubleTap: onDoubleClick == null ? null : () => onDoubleClick(),
       onTap: () => onClick(),
@@ -928,7 +949,10 @@ class SellItemScreen extends StatelessWidget {
               ),
               child: url == '' || type == '1'
                   ? null
-                  : Image.file(File(url), fit: BoxFit.cover),
+                  : isNetwork
+                      ? AppImage.view("${ImageBaseUrls.product}$url",
+                          fit: BoxFit.cover)
+                      : Image.file(File(url), fit: BoxFit.cover),
             ),
             url == ''
                 ? const SizedBox.shrink()

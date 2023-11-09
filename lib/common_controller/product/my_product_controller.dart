@@ -3,7 +3,7 @@ import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 
-class ProductController extends GetxController {
+class MyProductController extends GetxController {
   var loadingdata = false.obs;
   var tabController = 0.obs;
   // My Products List
@@ -11,8 +11,9 @@ class ProductController extends GetxController {
   var myBuyProducts = <ProductModel>[].obs;
   var mySellProducts = <ProductModel>[].obs;
   var myCoWonerProducts = <ProductModel>[].obs;
+  var myPhysicalProducts = <ProductModel>[].obs;
   //Product Details
-  var productDetails = Rx<ProductDetails?>(null);
+  var productDetailsData = Rx<ProductDetailsData?>(null);
 
   /// ------ API Call ------
   getMyProducts(
@@ -27,7 +28,7 @@ class ProductController extends GetxController {
       type = 4;
     } else if (tabController.value == 2) {
       type = 2;
-    } else {
+    } else if (tabController.value == 3) {
       type = 1;
     }
     await ApiRequests.getMyProducts(
@@ -48,6 +49,8 @@ class ProductController extends GetxController {
             mySellProducts.value = data;
           } else if (type == 2) {
             myCoWonerProducts.value = data;
+          } else if (type == 1) {
+            myPhysicalProducts.value = data;
           }
         }
       },
@@ -56,7 +59,7 @@ class ProductController extends GetxController {
 
   getProductDetails(String productId) async {
     await ApiRequests.productDetails(productId, data: (data) {
-      productDetails.value = data;
+      productDetailsData.value = data;
     }, loading: (loading) {
       loadingdata.value = loading;
     });

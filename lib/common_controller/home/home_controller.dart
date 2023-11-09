@@ -408,10 +408,44 @@ class Homecontroller extends GetxController
   }
 
   var products = <ProductModel>[].obs;
-  getSearchProducts() async {
+  //
+  searchProducts() async {
     searchAndFilterApplied.value = true;
+    await _getSearchProducts();
+  }
+
+  filterProducts(
+      {bool endingSoon = false,
+      bool highestPrice = false,
+      bool lowestPrice = false,
+      bool mostBid = false,
+      bool leastBid = false,
+      bool recentBid = false}) async {
+    await _getSearchProducts(
+      endingSoon: endingSoon,
+      highestPrice: highestPrice,
+      leastBid: leastBid,
+      lowestPrice: lowestPrice,
+      mostBid: mostBid,
+      recentBid: recentBid,
+    );
+  }
+
+  _getSearchProducts(
+      {bool endingSoon = false,
+      bool highestPrice = false,
+      bool lowestPrice = false,
+      bool mostBid = false,
+      bool leastBid = false,
+      bool recentBid = false}) async {
     await ApiRequests.getProducts(
         searchKey: searchInput.text.trim(),
+        endingSoon: endingSoon,
+        highestPrice: highestPrice,
+        leastBid: leastBid,
+        lowestPrice: lowestPrice,
+        mostBid: mostBid,
+        recentBid: recentBid,
         data: (data) {
           products.value = data;
         },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/product/product_controller.dart';
+import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
@@ -11,7 +11,7 @@ import 'package:oninto_flutter/utills/shimmer_widget.dart';
 
 class CoOwnerProductDetailsScreen extends StatelessWidget {
   CoOwnerProductDetailsScreen({super.key});
-  final ProductController _productController = Get.find();
+  final MyProductController _myProductController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,12 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
       appBar: CommonAppbarWidget(
         // heading: "Gyarados Ex",
         headingChild: Obx(
-          () => _productController.loadingdata.value
+          () => _myProductController.loadingdata.value
               ? ShimmerWidgets.text(w: Get.width * 0.4)
               : Text(
-                  _productController.productDetails.value?.name ?? '',
+                  _myProductController
+                          .productDetailsData.value?.details?.name ??
+                      '',
                   style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
@@ -37,14 +39,14 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
             fontFamily: "Poppins"),
       ),
       body: Obx(
-        () => _productController.loadingdata.value
+        () => _myProductController.loadingdata.value
             ? ShimmerWidgets.product()
             : SingleChildScrollView(
                 child: Column(
                   children: [
                     DetailsImagesView(
-                        images: (_productController
-                                    .productDetails.value?.productImages ??
+                        images: (_myProductController.productDetailsData.value
+                                    ?.details?.productImages ??
                                 [])
                             .map((e) => e.image ?? '')
                             .toList()),
@@ -55,16 +57,16 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppText(
-                              text: _productController
-                                      .productDetails.value?.name ??
+                              text: _myProductController.productDetailsData
+                                      .value?.details?.name ??
                                   '',
                               textSize: 14,
                               fontFamily: "Poppins",
                               fontWeight: FontWeight.w500),
                           const SizedBox(height: 5),
                           AppText(
-                            text: _productController
-                                    .productDetails.value?.description ??
+                            text: _myProductController.productDetailsData.value
+                                    ?.details?.description ??
                                 '',
                             textSize: 11,
                             fontFamily: "Poppins",
@@ -107,7 +109,7 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
                                   textSize: 14),
                               AppText(
                                   text:
-                                      "Available Shares: ${_productController.productDetails.value?.share ?? 0}/${_productController.productDetails.value?.share ?? 0}",
+                                      "Available Shares: ${_myProductController.productDetailsData.value?.details?.share ?? 0}/${_myProductController.productDetailsData.value?.details?.share ?? 0}",
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
                                   textSize: 14),

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/common_controller/product/product_controller.dart';
+import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
@@ -75,6 +75,6 @@ class HomeBinding extends Bindings {
 class ProductBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ProductController());
+    Get.lazyPut(() => MyProductController());
   }
 }

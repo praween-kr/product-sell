@@ -204,6 +204,77 @@ class BaseApiCall {
     return null;
   }
 
+  putFormReq(
+    String endPoint, {
+    Map<String, String>? attachments,
+    Map<String, List<String>>? multiAttachment,
+    // String? attachmentKey,
+    Map<String, dynamic>? data,
+    showToast = true,
+  }) async {
+    // dio!.interceptors.add(DioInterceptor());
+    Map<String, dynamic> map = data ?? {};
+
+    debugPrint(
+        "POST REQ WITH ATCHMENT [$endPoint] ===> $data | FILE: $attachments-|-$multiAttachment  ");
+    try {
+      // Add multipart single attachment
+      if (attachments != null) {
+        for (String key in attachments.keys) {
+          String? attachment = attachments[key];
+          String attachmentKey = key;
+          //
+          if ((attachment ?? '') != '' && attachmentKey != '') {
+            File file = File(attachment!);
+            String fileType =
+                attachment.substring(attachment.lastIndexOf(".") + 1);
+            map[attachmentKey] = await MultipartFile.fromFile(file.path,
+                filename: attachment.split("/").last,
+                contentType: MediaType(getFileType(attachment)!, fileType));
+          }
+        }
+      }
+      // Add multipart multiple attachments
+      if (multiAttachment != null) {
+        for (String key in multiAttachment.keys) {
+          List<String> ats = multiAttachment[key] ?? [];
+
+          List<MultipartFile> filesList = [];
+          for (String fileData in ats) {
+            if ((fileData) != '') {
+              filesList.add(await getFormFile(fileData));
+              // formData.files.add(MapEntry(atsKey, await getFormFile(fileData)));
+            }
+          }
+          map.addAll({key: filesList});
+        }
+      }
+      // Conver
+      FormData formData = FormData.fromMap(map);
+      print("Form Post Request Data===> ${formData.fields}");
+      Response response = await _dio.put(AppApis.baseUrl + endPoint,
+          data: FormData.fromMap(map),
+          options: Injector
+              .getHeaderToken() // Options(headers: getHeaders(token: token, sctKey: sctKey)),
+          );
+      log("POST RESP WITH ATCHMENT [$endPoint] ===> ${response.data}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (showToast) {
+          AppToast.show(response.data['message']);
+        }
+
+        return response.data;
+      } else {
+        log("Exp: $response");
+        AppToast.show(response.data['message']);
+      }
+      // ignore: deprecated_member_use
+    } on DioError catch (error) {
+      ApiException.onError(error);
+    }
+    return null;
+  }
+
   // Base api call...
   deleteReq(String endPoint,
       {bool showToast = true, String? id, Map<String, dynamic>? data}) async {

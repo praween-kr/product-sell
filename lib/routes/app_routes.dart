@@ -17,7 +17,7 @@ import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.
 import 'package:oninto_flutter/views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/editItem_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/myProductsScreen/productDetail_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_physical_product_details.dart';
 import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
@@ -38,7 +38,7 @@ import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
 import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/men_shirt_screen.dart';
 import '../views/settingScreen/myProductsScreen/message_screen.dart';
-import '../views/settingScreen/myProductsScreen/my_product_screen.dart';
+import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
 import '../views/settingScreen/profileScreen/profileScreen.dart';
 
@@ -222,8 +222,8 @@ class AppRoutes {
       page: () => InsightsScreen(),
     ),
     GetPage(
-      name: Routes.productDetailScreen,
-      page: () => const ProductDetailScreen(),
+      name: Routes.myPhysicalProductDetailScreen,
+      page: () => MyPysicalProductDetailScreen(),
       binding: ProductBinding(),
     ),
     GetPage(

@@ -35,6 +35,7 @@ class AppApis {
 
   // Add Product or Sell Item
   static String addPhysicalProduct = "/addPhysicalProduct";
+  static String editPhysicalProduct = "/editProduct";
   static String addCownerProduct = "/addCownerProduct";
   static String productDetatils = "/viewSingleProduct";
   static String myProducts = "/buySellMyProductCownerProduct";

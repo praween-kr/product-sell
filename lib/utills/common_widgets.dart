@@ -190,7 +190,7 @@ class CommonWidgets {
                     borderRadius: BorderRadius.circular(20),
                     child: AppImage.view(
                         "${ImageBaseUrls.product}$productImage",
-                        height: Get.width * 0.44,
+                        height: Get.width * 0.4,
                         width: double.infinity,
                         fit: BoxFit.cover),
                   ),
@@ -220,7 +220,7 @@ class CommonWidgets {
                       )),
                 ]),
               ),
-              // const SizedBox(height: 5),
+              const SizedBox(height: 5),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),

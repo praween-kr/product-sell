@@ -392,6 +392,91 @@ class ApiRequests {
     return false;
   }
 
+  static editPhysicalProduct({
+    required String id,
+    List<String>? images,
+    List<String>? videos,
+    String? title,
+    String? location,
+    LatLng? cordinates,
+    String? category,
+    String? subcategory,
+    String? color,
+    String? size,
+    String? brand,
+    String? condition,
+    String? selloption,
+    DateTime? startDate,
+    DateTime? endDate,
+    String? price,
+    String? description,
+  }) async {
+    Map<String, dynamic> mapData = {"id": id};
+    if (title != null) {
+      mapData.addAll({"name": title});
+    }
+    if (location != null) {
+      mapData.addAll({"location": location});
+    }
+    if (cordinates != null) {
+      mapData.addAll(
+          {"latitude": cordinates.latitude, "longitude": cordinates.longitude});
+    }
+    if (category != null) {
+      mapData.addAll({"categoryId": category});
+    }
+    if (subcategory != null) {
+      mapData.addAll({"subCategoryId": subcategory});
+    }
+    if (color != null) {
+      mapData.addAll({"color": color});
+    }
+    if (brand != null) {
+      mapData.addAll({"brand": brand});
+    }
+    if (condition != null) {
+      mapData.addAll({"productCondition": condition});
+    }
+    if (selloption != null) {
+      mapData.addAll({"sellOption": selloption});
+    }
+    if (price != null) {
+      mapData.addAll({"price": price});
+    }
+    if (description != null) {
+      mapData.addAll({"description": description});
+    }
+    if (startDate != null) {
+      mapData.addAll({
+        "startDate": "${startDate.year}-${startDate.month}-${startDate.day}"
+      });
+    }
+    if (endDate != null) {
+      mapData.addAll(
+          {"endDate": "${endDate.year}-${endDate.month}-${endDate.day}"});
+    }
+    // if(price!=null){
+    //   mapData.addAll({"boostCode": price});
+    // }
+
+    AppPrint.all(
+        "Add Product Req: data--> $mapData images---> $images videos---> $videos");
+    AppLoader.show();
+    var data = await BaseApiCall().putFormReq(
+      AppApis.editPhysicalProduct,
+      data: mapData,
+      multiAttachment:
+          images == null ? null : {'images': images}, //, 'video': videos
+    );
+    AppPrint.all("Add Product Resp: $data");
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
   /// ---- Add Co Owner Product -------
   static addCoOwnerProduct({
     required List<String> images,
@@ -429,15 +514,17 @@ class ApiRequests {
 
   /// ---- Product Details -------
   static productDetails(String productId,
-      {required Function(ProductDetails?) data,
+      {required Function(ProductDetailsData?) data,
       required Function(bool) loading}) async {
     loading(true);
     var respdata = await BaseApiCall()
         .getReq(AppApis.productDetatils, showToast: false, id: productId);
     if (respdata != null) {
-      DataResponse<ProductDetails> dataResponse =
-          DataResponse<ProductDetails>.fromJson(respdata,
-              (json) => ProductDetails.fromJson(json as Map<String, dynamic>));
+      DataResponse<ProductDetailsData> dataResponse =
+          DataResponse<ProductDetailsData>.fromJson(
+              respdata,
+              (json) =>
+                  ProductDetailsData.fromJson(json as Map<String, dynamic>));
 
       data(dataResponse.body);
       loading(false);

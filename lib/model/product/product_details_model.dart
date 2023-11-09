@@ -2,6 +2,28 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 
 import 'product_image_model.dart';
 
+class ProductDetailsData {
+  ProductDetails? details;
+  int? favoriteCount;
+
+  ProductDetailsData({this.details, this.favoriteCount});
+
+  ProductDetailsData.fromJson(Map<String, dynamic> json) {
+    details =
+        json['result'] != null ? ProductDetails.fromJson(json['result']) : null;
+    favoriteCount = json['favoriteCount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (details != null) {
+      data['result'] = details!.toJson();
+    }
+    data['favoriteCount'] = favoriteCount;
+    return data;
+  }
+}
+
 class ProductDetails {
   int? id;
   int? isApproved;
