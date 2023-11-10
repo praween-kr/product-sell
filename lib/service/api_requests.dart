@@ -395,6 +395,7 @@ class ApiRequests {
   static editPhysicalProduct({
     required String id,
     List<String>? images,
+    List<String>? oldImagesId,
     List<String>? videos,
     String? title,
     String? location,
@@ -454,6 +455,13 @@ class ApiRequests {
     if (endDate != null) {
       mapData.addAll(
           {"endDate": "${endDate.year}-${endDate.month}-${endDate.day}"});
+    }
+    if (oldImagesId != null) {
+      String ids = "";
+      for (int i = 0; i < oldImagesId.length; i++) {
+        ids += "${oldImagesId[i]}${(i == oldImagesId.length - 1) ? '' : ','}";
+      }
+      mapData.addAll({"old_images_id": "[$ids]"});
     }
     // if(price!=null){
     //   mapData.addAll({"boostCode": price});

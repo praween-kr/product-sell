@@ -145,7 +145,8 @@ class SubCategoryScreen extends StatelessWidget {
                                             Map<String, dynamic> data = {
                                               "from": 0,
                                             };
-                                            Get.toNamed(Routes.denimScreen,
+                                            Get.toNamed(
+                                                Routes.productDetailsScreen,
                                                 arguments: data);
                                           },
                                           child: Column(

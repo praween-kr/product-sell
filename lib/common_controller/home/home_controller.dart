@@ -8,6 +8,7 @@ import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
+import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
@@ -408,10 +409,19 @@ class Homecontroller extends GetxController
   }
 
   var products = <ProductModel>[].obs;
+  var productDetailsData = Rx<ProductDetailsData?>(null);
   //
   searchProducts() async {
     searchAndFilterApplied.value = true;
     await _getSearchProducts();
+  }
+
+  getProductDetails(String productId) async {
+    await ApiRequests.productDetails(productId, data: (data) {
+      productDetailsData.value = data;
+    }, loading: (loading) {
+      loadingData.value = loading;
+    });
   }
 
   filterProducts(

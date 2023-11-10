@@ -10,7 +10,7 @@ class Routes {
   static const String verificationScreen = "/VerificationScreen";
   static const String subCategories = "/SubCategories";
   static const String filterScreen = "/FilterScreen";
-  static const String denimScreen = "/DenimScreen";
+  static const String productDetailsScreen = "/product_details_screen";
   static const String paymentScreen = "/PaymentScreen";
   static const String productScreen = "/ProductScreen";
   static const String signupScreen = "/SignupScreen";

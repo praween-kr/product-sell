@@ -5,10 +5,10 @@ import 'package:oninto_flutter/views/authscreens/forgetpassword_screens.dart';
 import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
 import 'package:oninto_flutter/views/authscreens/signup_screen.dart';
 import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
-import 'package:oninto_flutter/views/home/denim_screen.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/filter_screen.dart';
 import 'package:oninto_flutter/views/home/payment_screen.dart';
+import 'package:oninto_flutter/views/home/product_details_screen.dart';
 import 'package:oninto_flutter/views/home/sub_categories_screen.dart';
 import 'package:oninto_flutter/views/insight_screen/insight_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
@@ -109,8 +109,8 @@ class AppRoutes {
       page: () => SubscriptionScreen(),
     ),
     GetPage(
-      name: Routes.denimScreen,
-      page: () => DenimScreen(),
+      name: Routes.productDetailsScreen,
+      page: () => ProductDetailsScreen(),
     ),
     GetPage(
       name: Routes.sellItemScreen,

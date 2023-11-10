@@ -12,6 +12,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
+import 'package:oninto_flutter/utills/app_print.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/helper/file_picker.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
@@ -26,6 +27,8 @@ class SellItemScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppPrint.all(
+        "productIdForEdit.value: ${controller.productIdForEdit.value}");
     CategoriesController categoriesController;
     if (CategoriesController().initialized) {
       categoriesController = Get.find<CategoriesController>();
@@ -884,6 +887,13 @@ class SellItemScreen extends StatelessWidget {
       }
       if (path != null) {
         if (controller.selectedImageForUpdate.value == position) {
+          if (controller.multipleImages[position].isNetwork) {
+            controller.oldImagesIdList
+                .add(controller.multipleImages[position].id.toString());
+          }
+          AppPrint.all(
+              "controller.oldImagesIdList: ${controller.oldImagesIdList}");
+          //
           controller.multipleImages.replaceRange(position, position + 1,
               [AttachmentModel(path: path, type: typeKey, thumb: thumb)]);
         } else {
@@ -930,10 +940,12 @@ class SellItemScreen extends StatelessWidget {
     required String url,
     String type = '0',
     bool bigSize = false,
+    Function? onLongClick,
   }) {
     return GestureDetector(
       onDoubleTap: onDoubleClick == null ? null : () => onDoubleClick(),
       onTap: () => onClick(),
+      onLongPress: onLongClick == null ? null : () => onLongClick(),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 20)),
         child: Stack(

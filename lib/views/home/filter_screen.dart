@@ -65,7 +65,9 @@ class FilterScreen extends StatelessWidget {
                                         Routes.myPhysicalProductDetailScreen);
                                   } else {
                                     Map<String, dynamic> data = {"from": 0};
-                                    Get.toNamed(Routes.denimScreen,
+                                    _homecontroller.getProductDetails(
+                                        (product.id ?? '').toString());
+                                    Get.toNamed(Routes.productDetailsScreen,
                                         arguments: data);
                                   }
                                 }

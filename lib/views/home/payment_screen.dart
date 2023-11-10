@@ -7,6 +7,7 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+
 import '../../common_widget/color_constant.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -104,7 +105,7 @@ class PaymentScreen extends StatelessWidget {
                                               color: Colors.white,
                                             ),
                                           )
-                                        : SizedBox.shrink()
+                                        : const SizedBox.shrink()
                                   ],
                                 ),
                                 const SizedBox(
@@ -162,7 +163,7 @@ class PaymentScreen extends StatelessWidget {
                 Map<String, dynamic> data = {
                   "from": 1,
                 };
-                Get.toNamed(Routes.denimScreen, arguments: data);
+                Get.toNamed(Routes.productDetailsScreen, arguments: data);
               },
               child: CommonButton(
                 height: 50,

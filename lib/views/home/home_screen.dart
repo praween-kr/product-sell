@@ -22,7 +22,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Ddddd");
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -217,7 +216,11 @@ class HomeScreen extends StatelessWidget {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    await controller.getHomeData();
+                    if (controller.searchAndFilterApplied.value) {
+                      await controller.searchProducts();
+                    } else {
+                      await controller.getHomeData();
+                    }
                   },
                   child: Obx(
                     () => controller.loadingData.value
@@ -319,12 +322,11 @@ class HomeScreen extends StatelessWidget {
                                                 product.price ?? '0.0'),
                                             title: product.name ?? '',
                                             onClick: () {
-                                              // _productController
-                                              //     .getProductDetails(
-                                              //         (product.id ?? '')
-                                              //             .toString());
-                                              // Get.toNamed(Routes
-                                              //     .coOwnerProductDetailsScreen);
+                                              controller.getProductDetails(
+                                                  (product.id ?? '')
+                                                      .toString());
+                                              Get.toNamed(
+                                                  Routes.productDetailsScreen);
                                             },
                                           );
                                         })

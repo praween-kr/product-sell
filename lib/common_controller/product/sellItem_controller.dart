@@ -95,6 +95,8 @@ class SellItemController extends GetxController {
 
   var selloptionsList = ["Auction", 'Fix Price'];
 
+  var oldImagesIdList = <String>[].obs;
+
   ///
 
   // var multipleImagesURL = <AttachmentModel>[].obs;
@@ -160,7 +162,8 @@ class SellItemController extends GetxController {
             path: e.image ?? '',
             type: e.thumbnail == null ? '0' : '2',
             thumb: e.thumbnail,
-            isNetwork: true))
+            isNetwork: true,
+            id: e.id))
         .toList();
     //
     title.text = product?.name ?? '';
@@ -329,6 +332,7 @@ class SellItemController extends GetxController {
     return await ApiRequests.editPhysicalProduct(
         id: productIdForEdit.value,
         images: imgs,
+        oldImagesId: oldImagesIdList,
         videos: videos,
         title: title.text.trim(),
         location: location.text.trim(),
@@ -352,10 +356,12 @@ class AttachmentModel {
   String? thumb;
   final String type; // 0-image, 1-file, 2-video
   bool isNetwork;
+  int? id;
 
   AttachmentModel(
       {required this.path,
       required this.type,
       this.thumb,
-      this.isNetwork = false});
+      this.isNetwork = false,
+      this.id});
 }
