@@ -164,6 +164,8 @@ class CommonWidgets {
           required String title,
           required double price,
           required String productImage,
+          bool isFavourite = false,
+          Function? favouriteClick,
           String? soldOn,
           int? likes,
           int? views}) =>
@@ -247,10 +249,18 @@ class CommonWidgets {
                                       maxlines: 1,
                                     ),
                                   ),
-                                  const Icon(
-                                    Icons.favorite,
-                                    size: 20,
-                                    color: themeColor, // Colors.grey.shade400,
+                                  GestureDetector(
+                                    onTap: favouriteClick == null
+                                        ? null
+                                        : () => favouriteClick(),
+                                    child: Icon(
+                                      isFavourite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      size: 20,
+                                      color:
+                                          themeColor, // Colors.grey.shade400,
+                                    ),
                                   ),
                                 ],
                               ),

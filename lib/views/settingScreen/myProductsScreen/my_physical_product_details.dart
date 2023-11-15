@@ -60,7 +60,10 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
       ),
       body: Obx(() => RefreshIndicator(
             onRefresh: () async {
-              await _myProductController.getMyProducts();
+              await _myProductController.getProductDetails(
+                  (_myProductController.productDetailsData.value?.details?.id ??
+                          '')
+                      .toString());
             },
             child: _myProductController.loadingdata.value
                 ? ShimmerWidgets.product()
@@ -385,7 +388,17 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                       .productDetailsData.value?.details);
 
                                   Get.toNamed(Routes.sellItemScreen,
-                                      arguments: 'edit');
+                                          arguments: 'edit')!
+                                      .then((value) async {
+                                    await _myProductController
+                                        .getProductDetails((_myProductController
+                                                    .productDetailsData
+                                                    .value
+                                                    ?.details
+                                                    ?.id ??
+                                                '')
+                                            .toString());
+                                  });
                                 },
                                 child: CommonButton(
                                   color: AppColor.appcolor,

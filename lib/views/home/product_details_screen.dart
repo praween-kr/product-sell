@@ -132,9 +132,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
+                                const SizedBox(height: 5),
                                 AppText(
                                   text:
                                       "\$${controller.productDetailsData.value?.details?.price ?? '0.0'}",
@@ -149,9 +147,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                   color: Color(0x32000000),
                                   fontWeight: FontWeight.w500,
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                                const SizedBox(height: 10),
                                 Obx(
                                   () => controller.track.value ||
                                           controller.trackupload.value
@@ -208,9 +204,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
+                                const SizedBox(height: 5),
                                 Row(
                                   children: [
                                     const AppText(
@@ -230,9 +224,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
+                                const SizedBox(height: 5),
                                 Row(
                                   children: [
                                     const AppText(
@@ -256,9 +248,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          const Divider(
-                            color: Color(0x66000000),
-                          ),
+                          const Divider(color: Color(0x66000000)),
                           const Padding(
                             padding: EdgeInsets.only(top: 20, left: 20),
                             child: Column(
@@ -438,7 +428,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                   color: AppColor.appcolor,
                                 )),
                           ),
-                          const SizedBox(height: 10)
+                          const SizedBox(height: 10),
                         ],
                       ),
                     ),

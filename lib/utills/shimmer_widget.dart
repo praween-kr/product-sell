@@ -25,7 +25,10 @@ class ShimmerWidgets {
           bool circularImg = false}) =>
       ListView.separated(
         shrinkWrap: scrollHide,
-        physics: scrollHide ? const NeverScrollableScrollPhysics() : null,
+        physics: scrollHide
+            ? const NeverScrollableScrollPhysics()
+            : const ClampingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
         itemBuilder: (context, index) => Container(
           margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
           decoration: cardDecoration(radius: 20),
@@ -67,7 +70,9 @@ class ShimmerWidgets {
           {int count = 12, ScrollPhysics? physics, bool shrinkWrap = false}) =>
       GridView.builder(
         shrinkWrap: shrinkWrap,
-        physics: physics ?? const ClampingScrollPhysics(),
+        physics: physics ??
+            const ClampingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3, childAspectRatio: 0.75),
@@ -98,7 +103,9 @@ class ShimmerWidgets {
           {int count = 6, ScrollPhysics? physics, bool shrinkWrap = false}) =>
       GridView.builder(
         shrinkWrap: shrinkWrap,
-        physics: physics ?? const ClampingScrollPhysics(),
+        physics: physics ??
+            const ClampingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, childAspectRatio: 0.75),
@@ -147,7 +154,10 @@ class ShimmerWidgets {
   static Widget productListView({bool scrollHide = false, int textLine = 3}) =>
       ListView.separated(
         shrinkWrap: scrollHide,
-        physics: scrollHide ? const NeverScrollableScrollPhysics() : null,
+        physics: scrollHide
+            ? const NeverScrollableScrollPhysics()
+            : const ClampingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 34, vertical: 8),
           child: Column(
@@ -180,7 +190,8 @@ class ShimmerWidgets {
 
   /// Home shimmer
   static home() => SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         child: Column(
           children: [
             Padding(
@@ -210,7 +221,8 @@ class ShimmerWidgets {
 
   /// Product Details shimmer
   static product() => SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         child: Column(
           children: [
             Stack(

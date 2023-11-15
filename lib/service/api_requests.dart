@@ -637,6 +637,20 @@ class ApiRequests {
     return false;
   }
 
+  /// -------- Add Address --------
+  static addProductAsFavourite(String productId,
+      {required Function(bool) loading}) async {
+    loading(true);
+    var data = await BaseApiCall().postReq(AppApis.addProductAsFavourite,
+        data: {"productId": productId}, showToast: false);
+    if (data != null) {
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
   ///----------------------------
 
   static gPlaceSearch(String query,

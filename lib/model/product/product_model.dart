@@ -47,6 +47,7 @@ class ProductModel {
   String? updatedAt;
   List<ProductImages>? productImages;
   CategoryModel? category;
+  int? isFavourite;
 
   ProductModel(
       {this.id,
@@ -92,7 +93,8 @@ class ProductModel {
       this.createdAt,
       this.updatedAt,
       this.productImages,
-      this.category});
+      this.category,
+      this.isFavourite});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -146,6 +148,7 @@ class ProductModel {
     category = json['category'] != null
         ? CategoryModel.fromJson(json['category'])
         : null;
+    isFavourite = json['isFavourite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -198,6 +201,7 @@ class ProductModel {
     if (category != null) {
       data['category'] = category!.toJson();
     }
+    data['isFavourite'] = isFavourite;
     return data;
   }
 }

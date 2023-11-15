@@ -12,6 +12,7 @@ import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
+import 'package:oninto_flutter/utills/app_print.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
@@ -424,20 +425,18 @@ class Homecontroller extends GetxController
     });
   }
 
-  filterProducts(
-      {bool endingSoon = false,
-      bool highestPrice = false,
-      bool lowestPrice = false,
-      bool mostBid = false,
-      bool leastBid = false,
-      bool recentBid = false}) async {
+  // 1-> endingSoon, 2-> highestPrice, 3-> lowestPrice, 4-> mostBid, 5-> leastBid, 6-> recentBid
+  var selectedFilterKey = 1.obs;
+  var filtering = false.obs;
+
+  filterProducts() async {
     await _getSearchProducts(
-      endingSoon: endingSoon,
-      highestPrice: highestPrice,
-      leastBid: leastBid,
-      lowestPrice: lowestPrice,
-      mostBid: mostBid,
-      recentBid: recentBid,
+      endingSoon: selectedFilterKey.value == 1,
+      highestPrice: selectedFilterKey.value == 2,
+      leastBid: selectedFilterKey.value == 3,
+      lowestPrice: selectedFilterKey.value == 4,
+      mostBid: selectedFilterKey.value == 5,
+      recentBid: selectedFilterKey.value == 6,
     );
   }
 
@@ -460,7 +459,21 @@ class Homecontroller extends GetxController
           products.value = data;
         },
         loading: (loading) {
-          loadingData.value = loading;
+          filtering.value = loading;
         });
+  }
+
+  var localFavourites = <int>[].obs;
+
+  addProductAsFavourite(String productId) async {
+    bool success = await ApiRequests.addProductAsFavourite(
+      productId,
+      loading: (loading) {
+        //
+      },
+    );
+    if (success) {
+      AppPrint.info("Add product as a favourite");
+    }
   }
 }

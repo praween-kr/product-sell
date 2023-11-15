@@ -40,4 +40,7 @@ class AppApis {
   static String productDetatils = "/viewSingleProduct";
   static String myProducts = "/buySellMyProductCownerProduct";
   static String getProducts = "/othersUsersProducts";
+
+  // Add Favourite
+  static String addProductAsFavourite = "/addFavouriteProduct";
 }

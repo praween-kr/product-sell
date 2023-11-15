@@ -103,9 +103,7 @@ class HomeScreen extends StatelessWidget {
                             child: const Icon(Icons.filter_alt_rounded,
                                 color: AppColor.appcolor),
                           ),
-                          onSelected: (value) {
-                            value();
-                          },
+                          onSelected: (value) => value(),
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               padding: EdgeInsets.zero,
@@ -122,9 +120,7 @@ class HomeScreen extends StatelessWidget {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  Divider(
-                                    thickness: 1,
-                                  ),
+                                  Divider(thickness: 1),
                                 ],
                               ),
                               value: () {},
@@ -135,39 +131,19 @@ class HomeScreen extends StatelessWidget {
                             //     }),
                             popupMenuItem(
                                 title: "Highest Price",
-                                onClick: () {
-                                  controller.filterProducts(highestPrice: true);
-                                  Get.toNamed(Routes.filterScreen,
-                                      arguments: {'from': 'home'});
-                                }),
+                                onClick: () => _navigateToFilter(2)),
                             popupMenuItem(
                                 title: "Ending Soonest",
-                                onClick: () {
-                                  controller.filterProducts(endingSoon: true);
-                                  Get.toNamed(Routes.filterScreen,
-                                      arguments: {'from': 'home'});
-                                }),
+                                onClick: () => _navigateToFilter(1)),
                             popupMenuItem(
                                 title: "Lowest Price",
-                                onClick: () {
-                                  controller.filterProducts(lowestPrice: true);
-                                  Get.toNamed(Routes.filterScreen,
-                                      arguments: {'from': 'home'});
-                                }),
+                                onClick: () => _navigateToFilter(4)),
                             popupMenuItem(
                                 title: "Most Bid",
-                                onClick: () {
-                                  controller.filterProducts(mostBid: true);
-                                  Get.toNamed(Routes.filterScreen,
-                                      arguments: {'from': 'home'});
-                                }),
+                                onClick: () => _navigateToFilter(5)),
                             popupMenuItem(
                                 title: "Resent Bid",
-                                onClick: () {
-                                  controller.filterProducts(recentBid: true);
-                                  Get.toNamed(Routes.filterScreen,
-                                      arguments: {'from': 'home'});
-                                }),
+                                onClick: () => _navigateToFilter(6)),
                           ],
                         ),
                         GestureDetector(
@@ -183,11 +159,8 @@ class HomeScreen extends StatelessWidget {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                const Icon(
-                                  Icons.notifications,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
+                                const Icon(Icons.notifications,
+                                    color: Colors.white, size: 25),
                                 Obx(
                                   () => (controller.homeData.value
                                                   ?.notificationCount ??
@@ -198,9 +171,8 @@ class HomeScreen extends StatelessWidget {
                                           top: 5,
                                           right: 7,
                                           child: CircleAvatar(
-                                            backgroundColor: Colors.red,
-                                            radius: 3,
-                                          )),
+                                              backgroundColor: Colors.red,
+                                              radius: 3)),
                                 )
                               ],
                             ),
@@ -217,6 +189,7 @@ class HomeScreen extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: () async {
                     if (controller.searchAndFilterApplied.value) {
+                      controller.localFavourites.clear();
                       await controller.searchProducts();
                     } else {
                       await controller.getHomeData();
@@ -226,7 +199,8 @@ class HomeScreen extends StatelessWidget {
                     () => controller.loadingData.value
                         ? ShimmerWidgets.home()
                         : SingleChildScrollView(
-                            physics: const ClampingScrollPhysics(),
+                            physics: const ClampingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
                             child: Column(
                               children: [
                                 const SizedBox(height: 10),
@@ -309,25 +283,47 @@ class HomeScreen extends StatelessWidget {
                                           //  var data = controller.Categorydata[index];
                                           var product =
                                               controller.products[index];
-                                          return CommonWidgets.productGridCard2(
-                                            productImage:
-                                                (product.productImages ?? [])
-                                                        .isNotEmpty
-                                                    ? product.productImages!
-                                                            .first.image ??
-                                                        ''
-                                                    : '',
-                                            lastUpdate: product.updatedAt ?? '',
-                                            price: double.parse(
-                                                product.price ?? '0.0'),
-                                            title: product.name ?? '',
-                                            onClick: () {
-                                              controller.getProductDetails(
-                                                  (product.id ?? '')
-                                                      .toString());
-                                              Get.toNamed(
-                                                  Routes.productDetailsScreen);
-                                            },
+                                          return Obx(
+                                            () =>
+                                                CommonWidgets.productGridCard2(
+                                              isFavourite: controller
+                                                  .localFavourites
+                                                  .contains(product.id),
+                                              favouriteClick: () {
+                                                if (product.status == 0 &&
+                                                    product.id != null) {
+                                                  if (controller.localFavourites
+                                                      .contains(product.id)) {}
+                                                  controller.localFavourites
+                                                      .add(product.id!);
+                                                  controller.localFavourites
+                                                      .refresh();
+                                                }
+                                                controller
+                                                    .addProductAsFavourite(
+                                                        (product.id ?? '')
+                                                            .toString());
+                                              },
+                                              productImage:
+                                                  (product.productImages ?? [])
+                                                          .isNotEmpty
+                                                      ? product.productImages!
+                                                              .first.image ??
+                                                          ''
+                                                      : '',
+                                              lastUpdate:
+                                                  product.updatedAt ?? '',
+                                              price: double.parse(
+                                                  product.price ?? '0.0'),
+                                              title: product.name ?? '',
+                                              onClick: () {
+                                                controller.getProductDetails(
+                                                    (product.id ?? '')
+                                                        .toString());
+                                                Get.toNamed(Routes
+                                                    .productDetailsScreen);
+                                              },
+                                            ),
                                           );
                                         })
                                     : Column(
@@ -514,6 +510,12 @@ class HomeScreen extends StatelessWidget {
       ),
       value: () => onClick(),
     );
+  }
+
+  _navigateToFilter(int filterKey) async {
+    controller.selectedFilterKey.value = filterKey;
+    controller.filterProducts();
+    Get.toNamed(Routes.filterScreen, arguments: {'from': 'home'});
   }
 
   Future timerDialog() async {

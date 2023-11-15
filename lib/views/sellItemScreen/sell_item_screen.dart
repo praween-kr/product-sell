@@ -158,7 +158,12 @@ class SellItemScreen extends StatelessWidget {
                                   controller.isNetworkTypeImg.value = network;
                                 },
                                 onClick: () {
-                                  _addAttachment(position);
+                                  if (position <
+                                      controller.multipleImages.length) {
+                                    _addAndRemoveAttachment(position);
+                                  } else {
+                                    _addAttachment(position);
+                                  }
                                 },
                                 type: urlType),
                           );
@@ -872,6 +877,70 @@ class SellItemScreen extends StatelessWidget {
   }
 
   ///--------
+  _addAndRemoveAttachment(int position) {
+    Get.bottomSheet(ClipRRect(
+      child: Container(
+        decoration: const BoxDecoration(color: Colors.white),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 14),
+            GestureDetector(
+              onTap: () {
+                Get.back();
+                _addAttachment(position);
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Text(
+                      "Change",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14),
+                    )),
+                    Icon(Icons.change_circle),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.back();
+                if (controller.multipleImages[position].isNetwork) {
+                  controller.oldImagesIdList
+                      .add(controller.multipleImages[position].id.toString());
+                }
+                controller.multipleImages.removeAt(position);
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Text(
+                      "Remove",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14),
+                    )),
+                    Icon(Icons.close),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    ));
+  }
+
   _addAttachment(int position) {
     if (position < controller.multipleImages.length) {
       controller.selectedImageForUpdate.value = position;
