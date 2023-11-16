@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
 
 import 'date_time_formates.dart';
+import 'favourite_button.dart';
 import 'image_view.dart';
 
 class CommonWidgets {
@@ -249,19 +249,11 @@ class CommonWidgets {
                                       maxlines: 1,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: favouriteClick == null
-                                        ? null
-                                        : () => favouriteClick(),
-                                    child: Icon(
-                                      isFavourite
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      size: 20,
-                                      color:
-                                          themeColor, // Colors.grey.shade400,
-                                    ),
-                                  ),
+                                  FavouriteButton(
+                                      onClick: favouriteClick == null
+                                          ? () {}
+                                          : () => favouriteClick(),
+                                      isFavourite: isFavourite),
                                 ],
                               ),
                               const SizedBox(height: 4),

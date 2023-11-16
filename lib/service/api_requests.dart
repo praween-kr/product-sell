@@ -10,6 +10,7 @@ import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/model/settings/address_model.dart';
+import 'package:oninto_flutter/model/settings/my_favourite_product_model.dart';
 import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
@@ -639,11 +640,40 @@ class ApiRequests {
 
   /// -------- Add Address --------
   static addProductAsFavourite(String productId,
-      {required Function(bool) loading}) async {
+      {required Function(bool) loading, required Function(bool) status}) async {
     loading(true);
     var data = await BaseApiCall().postReq(AppApis.addProductAsFavourite,
         data: {"productId": productId}, showToast: false);
+    if (data['body'] == 1) {
+      status(false);
+    } else {
+      if (data['body'] != null) {
+        if (data['body']['id'] != null) {
+          status(true);
+        }
+      }
+    }
     if (data != null) {
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  /// ---- Get Favourite Products -------
+  static getFavouriteProducts(
+      {required Function(List<MyFavProduct>) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.myFavouriteProducts, showToast: false);
+    if (respdata != null) {
+      PageResponse<MyFavProduct> pageResponse =
+          PageResponse<MyFavProduct>.fromJson(respdata,
+              (json) => MyFavProduct.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
       loading(false);
       return true;
     }

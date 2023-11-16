@@ -35,8 +35,8 @@ import '../views/home/home_screen.dart';
 import '../views/home/sub_category_screen.dart';
 import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
+import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.dart';
-import '../views/settingScreen/myProductsScreen/men_shirt_screen.dart';
 import '../views/settingScreen/myProductsScreen/message_screen.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
@@ -85,6 +85,7 @@ class AppRoutes {
         HomeBinding(),
         CategoriesBinding(),
         ProductBinding(),
+        FavouritesBinding(),
         SettingsBinding(),
         CmsBinding(),
         AddressBinding(),
@@ -163,14 +164,15 @@ class AppRoutes {
     GetPage(
       name: Routes.favouriteScreen,
       page: () => FavouriteScreen(),
+      binding: FavouritesBinding(),
     ),
     GetPage(
       name: Routes.messageScreen,
       page: () => const MessageScreen(),
     ),
     GetPage(
-      name: Routes.menshirtScreen,
-      page: () => MenshirtScreen(),
+      name: Routes.bidingProductDetatils,
+      page: () => BidingProductDetailsScreen(),
     ),
     GetPage(
       name: Routes.subCategoryScreen,

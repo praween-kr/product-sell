@@ -311,6 +311,19 @@ class ShimmerWidgets {
           ),
         ),
       );
+  static Widget favourite({
+    double? s,
+    Color? color,
+  }) =>
+      Shimmer.fromColors(
+        baseColor: color ?? Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Icon(
+          Icons.favorite,
+          color: color ?? Colors.grey.shade300,
+          size: s,
+        ),
+      );
   static Widget card(
           {double? w,
           double? h,

@@ -72,6 +72,7 @@ class ProductDetails {
   CategoryModel? category;
   List<ProductImages>? productImages;
   List<void>? productSizes;
+  int? isFavourite;
 
   ProductDetails(
       {this.id,
@@ -120,7 +121,8 @@ class ProductDetails {
       this.favorite,
       this.category,
       this.productImages,
-      this.productSizes});
+      this.productSizes,
+      this.isFavourite});
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -182,6 +184,7 @@ class ProductDetails {
         //productSizes!.add(new Null.fromJson(v));
       });
     }
+    isFavourite = json['isFavourite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -239,6 +242,7 @@ class ProductDetails {
     if (productSizes != null) {
       // data['product_sizes'] = productSizes!.map((v) => v.toJson()).toList();
     }
+    data['isFavourite'] = isFavourite;
     return data;
   }
 }

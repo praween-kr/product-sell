@@ -266,66 +266,74 @@ class HomeScreen extends StatelessWidget {
 
                                 /// --------Category Body-----------
                                 controller.searchAndFilterApplied.value
-                                    ? GridView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        padding: const EdgeInsets.only(
-                                            top: 20, left: 20, right: 20),
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                childAspectRatio: 0.65,
-                                                mainAxisSpacing: 30,
-                                                crossAxisSpacing: 30),
-                                        itemCount: controller.products.length,
-                                        itemBuilder: (context, index) {
-                                          //  var data = controller.Categorydata[index];
-                                          var product =
-                                              controller.products[index];
-                                          return Obx(
-                                            () =>
-                                                CommonWidgets.productGridCard2(
-                                              isFavourite: controller
-                                                  .localFavourites
-                                                  .contains(product.id),
-                                              favouriteClick: () {
-                                                if (product.status == 0 &&
-                                                    product.id != null) {
-                                                  if (controller.localFavourites
-                                                      .contains(product.id)) {}
-                                                  controller.localFavourites
-                                                      .add(product.id!);
-                                                  controller.localFavourites
-                                                      .refresh();
-                                                }
-                                                controller
-                                                    .addProductAsFavourite(
-                                                        (product.id ?? '')
-                                                            .toString());
-                                              },
-                                              productImage:
-                                                  (product.productImages ?? [])
-                                                          .isNotEmpty
-                                                      ? product.productImages!
-                                                              .first.image ??
-                                                          ''
-                                                      : '',
-                                              lastUpdate:
-                                                  product.updatedAt ?? '',
-                                              price: double.parse(
-                                                  product.price ?? '0.0'),
-                                              title: product.name ?? '',
-                                              onClick: () {
-                                                controller.getProductDetails(
-                                                    (product.id ?? '')
-                                                        .toString());
-                                                Get.toNamed(Routes
-                                                    .productDetailsScreen);
-                                              },
-                                            ),
-                                          );
-                                        })
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 12.0),
+                                        child: GridView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            padding: const EdgeInsets.only(
+                                                top: 20, left: 20, right: 20),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 2,
+                                                    childAspectRatio: 0.65,
+                                                    mainAxisSpacing: 30,
+                                                    crossAxisSpacing: 30),
+                                            itemCount:
+                                                controller.products.length,
+                                            itemBuilder: (context, index) {
+                                              //  var data = controller.Categorydata[index];
+                                              var product =
+                                                  controller.products[index];
+                                              return Obx(
+                                                () => CommonWidgets
+                                                    .productGridCard2(
+                                                  isFavourite: controller
+                                                                  .localFavourites[
+                                                              (product.id ?? '')
+                                                                  .toString()] !=
+                                                          null
+                                                      ? controller.localFavourites[
+                                                              (product.id ?? '')
+                                                                  .toString()] ??
+                                                          false
+                                                      : product.isFavourite ==
+                                                          1,
+                                                  favouriteClick: () {
+                                                    controller
+                                                        .addProductAsFavourite(
+                                                            (product.id ?? '')
+                                                                .toString());
+                                                  },
+                                                  productImage:
+                                                      (product.productImages ??
+                                                                  [])
+                                                              .isNotEmpty
+                                                          ? product
+                                                                  .productImages!
+                                                                  .first
+                                                                  .image ??
+                                                              ''
+                                                          : '',
+                                                  lastUpdate:
+                                                      product.updatedAt ?? '',
+                                                  price: double.parse(
+                                                      product.price ?? '0.0'),
+                                                  title: product.name ?? '',
+                                                  onClick: () {
+                                                    controller
+                                                        .getProductDetails(
+                                                            (product.id ?? '')
+                                                                .toString());
+                                                    Get.toNamed(Routes
+                                                        .productDetailsScreen);
+                                                  },
+                                                ),
+                                              );
+                                            }),
+                                      )
                                     : Column(
                                         children: [
                                           AppImage.view(
@@ -579,7 +587,7 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             Get.back();
                             controller.bidHistoryDialog();
-                            Get.toNamed(Routes.menshirtScreen);
+                            Get.toNamed(Routes.bidingProductDetatils);
                           },
                           child: CommonButton(
                             margin: const EdgeInsets.symmetric(horizontal: 20),

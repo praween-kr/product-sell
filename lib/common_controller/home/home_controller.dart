@@ -370,7 +370,7 @@ class Homecontroller extends GetxController
                               Get.back();
                               sub.value = true;
                               // Get.back();
-                              Get.toNamed(Routes.menshirtScreen);
+                              Get.toNamed(Routes.bidingProductDetatils);
                             },
                             child: CommonButton(
                               margin:
@@ -463,17 +463,17 @@ class Homecontroller extends GetxController
         });
   }
 
-  var localFavourites = <int>[].obs;
+  var localFavourites = <String, bool>{}.obs;
 
   addProductAsFavourite(String productId) async {
     bool success = await ApiRequests.addProductAsFavourite(
       productId,
-      loading: (loading) {
-        //
+      loading: (loading) {},
+      status: (status) {
+        AppPrint.info("Add product as a favourite- $status");
+        localFavourites.addAll({productId: status});
+        localFavourites.refresh();
       },
     );
-    if (success) {
-      AppPrint.info("Add product as a favourite");
-    }
   }
 }

@@ -326,11 +326,11 @@ class SubCategoryScreen extends StatelessWidget {
                                                 // controller.sub.value = true;
                                                 controller.menu.value = false;
                                                 //  controller.touchTap.value = true;
-                                                Get.toNamed(
-                                                    Routes.menshirtScreen);
+                                                Get.toNamed(Routes
+                                                    .bidingProductDetatils);
                                               },
                                               child: const AppText(
-                                                text: "Men Black Tshirt",
+                                                text: "Men Black Tshirt**",
                                                 textSize: 18,
                                                 fontFamily: "Poppins",
                                                 color: Colors.white,
@@ -537,7 +537,7 @@ class SubCategoryScreen extends StatelessWidget {
                           onTap: () {
                             Get.back();
                             // controller.bidHistoryDialog();
-                            Get.toNamed(Routes.menshirtScreen);
+                            Get.toNamed(Routes.bidingProductDetatils);
                           },
                           child: CommonButton(
                             margin: const EdgeInsets.symmetric(horizontal: 20),

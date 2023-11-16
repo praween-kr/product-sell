@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
+import 'package:oninto_flutter/common_controller/favourites_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
@@ -76,5 +77,12 @@ class ProductBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => MyProductController());
+  }
+}
+
+class FavouritesBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => FavouritesController());
   }
 }

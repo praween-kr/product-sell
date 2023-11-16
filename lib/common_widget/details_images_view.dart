@@ -30,7 +30,7 @@ class _DetailsImagesViewState extends State<DetailsImagesView> {
       color: Colors.grey.shade300,
       child: Stack(children: [
         SizedBox(
-            height: Get.height * 0.35,
+            height: Get.height * 0.42,
             child: AppImage.view("${ImageBaseUrls.product}$seletedImage",
                 fit: BoxFit.cover, width: double.infinity)),
         Positioned(

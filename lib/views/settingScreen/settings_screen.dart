@@ -10,9 +10,8 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utills/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
-
-import '../../common_widget/common_button.dart';
 
 class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
@@ -292,82 +291,13 @@ class SettingScreen extends GetView<SettingsController> {
                 title: "Logout",
                 color: AppColor.prdtextColor,
                 boxColor: AppColor.prdtextColor,
-                onClick: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Material(
-                            type: MaterialType.transparency,
-                            child: Align(
-                              //alignment: Alignment.center,
-                              child: Container(
-                                width: 250,
-                                decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                    borderRadius: BorderRadius.circular(25)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 20),
-                                  child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const AppText(
-                                          text:
-                                              "Your product has been submitted successfully!",
-                                          textSize: 15,
-                                          color: AppColor.blackColor,
-                                          lineHeight: 1.6,
-                                          letterSpacing: 0.2,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        const SizedBox(
-                                          height: 21.0,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  settingsController.logout();
-                                                },
-                                                child: CommonButton(
-                                                  color: AppColor.appcolor,
-                                                  radius: 25,
-                                                  //  margin: const EdgeInsets.only(right: 30),
-                                                  height: 40,
-                                                  text: "Yes",
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Get.back();
-                                                },
-                                                child: CommonButton(
-                                                  color: AppColor.appcolor,
-                                                  radius: 25,
-                                                  //  margin: const EdgeInsets.only(right: 30),
-                                                  height: 40,
-                                                  text: " No ",
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ),
-                            ));
-                      });
-                },
+                onClick: () => AppDialogs.confirm(
+                  context,
+                  msg: "Are you sure\nwant to Logout?",
+                  clickOnYes: () {
+                    settingsController.logout();
+                  },
+                ),
               ),
               const SizedBox(
                 height: 17.0,
