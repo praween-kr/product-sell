@@ -31,8 +31,8 @@ import '../views/bid_screen/home_bid_screen.dart';
 import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
+import '../views/home/category_wise_products_screen.dart';
 import '../views/home/home_screen.dart';
-import '../views/home/sub_category_screen.dart';
 import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
 import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
@@ -175,8 +175,8 @@ class AppRoutes {
       page: () => BidingProductDetailsScreen(),
     ),
     GetPage(
-      name: Routes.subCategoryScreen,
-      page: () => SubCategoryScreen(),
+      name: Routes.categoriesWiseProductsScreen,
+      page: () => CategoryWiseProductsScreen(),
       binding: CategoriesBinding(),
     ),
     GetPage(

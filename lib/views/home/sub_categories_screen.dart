@@ -52,10 +52,12 @@ class SubCategoriesScreen extends StatelessWidget {
                                 _categoriesController.subCategoriesList[index];
                             return GestureDetector(
                               onTap: () {
-                                controller.menu.value = true;
-                                controller.touchTap.value = true;
+                                // _categoriesController.menu.value = true;
+                                // _categoriesController.touchTap.value = true;
                                 // Get.toNamed(Routes.productDetailScreen);
-                                Get.toNamed(Routes.subCategoryScreen);
+                                _categoriesController.getProducts();
+                                Get.toNamed(
+                                    Routes.categoriesWiseProductsScreen);
                                 // Map<String, dynamic> data = {
                                 //   "from": 0,
                                 // };

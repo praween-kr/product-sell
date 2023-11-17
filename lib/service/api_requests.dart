@@ -597,6 +597,10 @@ class ApiRequests {
     bool mostBid = false,
     bool leastBid = false,
     bool recentBid = false,
+    String? categoryId,
+    String? subCategoryId,
+    int? limit,
+    int? pageno,
   }) async {
     Map<String, dynamic> reqData = {"search": searchKey ?? ''};
     if (endingSoon) {
@@ -616,6 +620,18 @@ class ApiRequests {
     }
     if (recentBid) {
       reqData.addAll({"recentBid": 1});
+    }
+    if (categoryId != null) {
+      reqData.addAll({"categoryId1": categoryId});
+    }
+    if (subCategoryId != null) {
+      reqData.addAll({"subCategoryId1": subCategoryId});
+    }
+    if (limit != null) {
+      reqData.addAll({"limit": limit});
+    }
+    if (pageno != null) {
+      reqData.addAll({"skip": pageno});
     }
 
     AppPrint.all("text::: R-- ${jsonEncode(reqData)}");
