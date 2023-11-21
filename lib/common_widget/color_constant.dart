@@ -22,6 +22,7 @@ class AppColor {
   static const chatColor = Color(0xff3F3F3F);
   static const itemBorderColor = Color(0xffB1ADAD);
   static const grey = Color.fromARGB(255, 133, 136, 146);
+  static const red = Color(0xFFF51303);
 
   static const TextStyle defaultDateTextStyle = TextStyle(
     color: text1,

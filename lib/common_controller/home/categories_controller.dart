@@ -64,11 +64,13 @@ class CategoriesController extends GetxController {
     await ApiRequests.getProducts(
         categoryId: categoryId,
         subCategoryId: subCategoryId,
+        limit: limit,
+        pageno: pageno,
         data: (data) async {
           if (pageno != null) {
             if (data.isEmpty) {
               noMoreData.value = true;
-              await Future.delayed(const Duration(seconds: 3));
+              await Future.delayed(const Duration(seconds: 5));
               noMoreData.value = false;
             } else {
               products.addAll(data);

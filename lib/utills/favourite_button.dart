@@ -3,10 +3,21 @@ import 'package:oninto_flutter/utills/colors_file.dart';
 
 class FavouriteButton extends StatefulWidget {
   FavouriteButton(
-      {super.key, required this.onClick, required this.isFavourite, this.size});
+      {super.key,
+      required this.onClick,
+      required this.isFavourite,
+      this.size,
+      this.activeColor,
+      this.unactiveColor,
+      this.activeIcon,
+      this.unactiveIcon});
   final Function onClick;
   final bool isFavourite;
+  Color? activeColor;
+  Color? unactiveColor;
   double? size;
+  IconData? activeIcon;
+  IconData? unactiveIcon;
 
   @override
   State<FavouriteButton> createState() => _FavouriteButtonState();
@@ -34,8 +45,10 @@ class _FavouriteButtonState extends State<FavouriteButton>
         scale: Tween(begin: 0.7, end: 1.0).animate(
             CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
         child: widget.isFavourite
-            ? Icon(Icons.favorite, size: widget.size, color: themeColor)
-            : Icon(Icons.favorite_border, size: widget.size, color: themeColor),
+            ? Icon(widget.activeIcon ?? Icons.favorite,
+                size: widget.size, color: widget.activeColor ?? themeColor)
+            : Icon(widget.unactiveIcon ?? Icons.favorite_border,
+                size: widget.size, color: widget.unactiveColor ?? themeColor),
       ),
     );
   }

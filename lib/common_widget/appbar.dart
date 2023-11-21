@@ -53,10 +53,10 @@ class CommonAppbarWidget extends StatelessWidget
                 decoration: BoxDecoration(
                     color: AppColor.appcolor,
                     borderRadius: BorderRadius.circular(15)),
-                child: const Icon(Icons.arrow_back_ios),
+                child: const Icon(Icons.arrow_back_ios, color: Colors.white),
               ),
             ),
-        actions: [action ?? const Icon(Icons.add)],
+        actions: action == null ? [] : [action ?? const Icon(Icons.add)],
       ),
     );
   }

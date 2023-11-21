@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
+import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utills/app_print.dart';
+import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:oninto_flutter/utills/empty_widget.dart';
 import 'package:oninto_flutter/utills/favourite_button.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
@@ -39,7 +41,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: AppColor.appcolor,
                 borderRadius: BorderRadius.circular(15)),
-            child: const Icon(Icons.arrow_back_ios),
+            child: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
         ),
       ),
@@ -195,54 +197,17 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                         )
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 40, top: 10),
-                          child: Stack(children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: Obx(
-                                () => SwipableStack(
-                                  onSwipeCompleted: (index, direction) {
-                                    AppPrint.all(
-                                        "Swipe Completed: $index, $direction ${_categoriesController.products.length}");
-                                  },
-                                  onWillMoveNext: (index, swipeDirection) {
-                                    AppPrint.all(
-                                        "onWillMoveNext: $index, $swipeDirection ${_categoriesController.products.length}");
-                                    return index !=
-                                        _categoriesController.products.length -
-                                            1;
-                                  },
-                                  itemCount:
-                                      _categoriesController.products.length,
-                                  builder: (context, properties) {
-                                    var product = _categoriesController
-                                        .products[properties.index];
-                                    String img = "";
-                                    if ((product.productImages ?? [])
-                                        .isNotEmpty) {
-                                      img =
-                                          product.productImages?.first.image ??
-                                              '';
-                                    }
-                                    return SizedBox(
+                          child: Obx(
+                            () => Stack(children: [
+                              _categoriesController.products.isEmpty
+                                  ? SizedBox(
                                       height: Get.height,
                                       child: Stack(
                                         clipBehavior: Clip.none,
                                         alignment: Alignment.bottomCenter,
                                         children: [
-                                          AppBlureWidget.child(
-                                            height: Get.height,
-                                            child: AppImage.view(
-                                                "${ImageBaseUrls.product}$img",
-                                                fit: BoxFit.contain,
-                                                width: double.infinity),
-                                            blureChild: AppImage.view(
-                                                "${ImageBaseUrls.product}$img",
-                                                fit: BoxFit.cover,
-                                                height: Get.height),
-                                          ),
-                                          // Details
                                           Container(
-                                            height: Get.height * 0.45,
+                                            height: double.infinity,
                                             width: double.infinity,
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
@@ -250,13 +215,11 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                 end: Alignment.topCenter,
                                                 colors: <Color>[
                                                   Colors.black.withOpacity(0.6),
-                                                  Colors.black.withOpacity(0.3),
+                                                  // Colors.black.withOpacity(0.3),
                                                   Colors.black.withOpacity(0.0),
                                                 ],
                                                 tileMode: TileMode.mirror,
                                               ),
-                                              // color:
-                                              //     Colors.black.withOpacity(0.3),
                                               borderRadius:
                                                   const BorderRadius.only(
                                                 bottomRight:
@@ -265,169 +228,305 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          Positioned(
-                                            bottom: Get.height * .1,
-                                            left: 20,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                          EmptyWidgets.simple(),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await _categoriesController
+                                                  .getProducts();
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 80.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 14,
+                                                      vertical: 12),
+                                              decoration: BoxDecoration(
+                                                  color: AppColor.appcolor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: const Icon(
+                                                Icons.refresh,
+                                                color: Colors.white,
+                                                size: 28,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () {},
+                                      child: SwipableStack(
+                                        onSwipeCompleted: (index, direction) {
+                                          AppPrint.all(
+                                              "Swipe Completed: $index, $direction ${_categoriesController.products.length}");
+                                        },
+                                        onWillMoveNext:
+                                            (index, swipeDirection) {
+                                          // if (!(index !=
+                                          //     _categoriesController
+                                          //             .products.length -
+                                          //         1)) {
+                                          //   _categoriesController.getProducts(
+                                          //       limit: 1,
+                                          //       pageno: _categoriesController
+                                          //           .products.length);
+                                          // }
+                                          return index !=
+                                              _categoriesController
+                                                      .products.length -
+                                                  1;
+                                        },
+                                        builder: (context, properties) {
+                                          var product =
+                                              _categoriesController.products[
+                                                  properties.index %
+                                                      _categoriesController
+                                                          .products.length];
+                                          String img = "";
+                                          if ((product.productImages ?? [])
+                                              .isNotEmpty) {
+                                            img = product.productImages?.first
+                                                    .image ??
+                                                '';
+                                          }
+                                          return SizedBox(
+                                            height: Get.height,
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              alignment: Alignment.bottomCenter,
                                               children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    // controller.sub.value = true;
-                                                    _categoriesController
-                                                        .listViewTab
-                                                        .value = false;
-                                                    //  controller.touchTap.value = true;
-                                                    Get.toNamed(Routes
-                                                        .bidingProductDetatils);
-                                                  },
-                                                  child: AppText(
-                                                    text: product.name ?? '',
-                                                    textSize: 18,
-                                                    fontFamily: "Poppins",
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
+                                                AppBlureWidget.child(
+                                                  height: Get.height,
+                                                  child: AppImage.view(
+                                                      "${ImageBaseUrls.product}$img",
+                                                      fit: BoxFit.contain,
+                                                      width: double.infinity),
+                                                  blureChild: AppImage.view(
+                                                      "${ImageBaseUrls.product}$img",
+                                                      fit: BoxFit.cover,
+                                                      height: Get.height),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                AppText(
-                                                  text:
-                                                      "\$${product.price ?? '0.0'}",
-                                                  textSize: 18,
-                                                  color: Colors.white,
-                                                  fontFamily: "Poppins",
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    timerDialog();
-                                                  },
-                                                  child: CommonButton(
-                                                    height: 40,
-                                                    radius: 15,
-                                                    color: AppColor.appcolor,
-                                                    text: "Bid \$2500",
-                                                    textStyle: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontFamily: "Poppins",
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                // Details
+                                                Container(
+                                                  height: Get.height * 0.45,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin: Alignment
+                                                          .bottomCenter,
+                                                      end: Alignment.topCenter,
+                                                      colors: <Color>[
+                                                        Colors.black
+                                                            .withOpacity(0.6),
+                                                        Colors.black
+                                                            .withOpacity(0.3),
+                                                        Colors.black
+                                                            .withOpacity(0.0),
+                                                      ],
+                                                      tileMode: TileMode.mirror,
+                                                    ),
+                                                    // color:
+                                                    //     Colors.black.withOpacity(0.3),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(28),
+                                                      bottomLeft:
+                                                          Radius.circular(28),
                                                     ),
                                                   ),
                                                 ),
-                                                const SizedBox(height: 10),
-                                                AppText(
-                                                  text:
-                                                      "min \$${product.minimumSellingPrice ?? '0.0'}",
-                                                  textSize: 10,
-                                                  color: Colors.white,
-                                                  fontFamily: "Poppins",
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                                const SizedBox(height: 10),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Get.toNamed(
-                                                        Routes.biddingScreen);
-                                                  },
-                                                  child: RichText(
-                                                      text: const TextSpan(
-                                                          text: "20 Bid",
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 10,
+                                                Positioned(
+                                                  bottom: Get.height * .1,
+                                                  left: 20,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          // controller.sub.value = true;
+                                                          _categoriesController
+                                                              .listViewTab
+                                                              .value = false;
+                                                          //  controller.touchTap.value = true;
+                                                          Get.toNamed(Routes
+                                                              .bidingProductDetatils);
+                                                        },
+                                                        child: AppText(
+                                                          text: product.name ??
+                                                              '',
+                                                          textSize: 18,
+                                                          fontFamily: "Poppins",
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      AppText(
+                                                        text:
+                                                            "\$${product.price ?? '0.0'}",
+                                                        textSize: 18,
+                                                        color: Colors.white,
+                                                        fontFamily: "Poppins",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          timerDialog();
+                                                        },
+                                                        child: CommonButton(
+                                                          height: 40,
+                                                          radius: 15,
+                                                          color:
+                                                              AppColor.appcolor,
+                                                          text: "Bid \$2500",
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 15,
                                                             fontFamily:
                                                                 "Poppins",
+                                                            color: Colors.white,
                                                             fontWeight:
                                                                 FontWeight.w400,
                                                           ),
-                                                          children: [
-                                                        TextSpan(
-                                                          text:
-                                                              "Show bid history",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 10,
-                                                              fontFamily:
-                                                                  "Poppins",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline),
-                                                        )
-                                                      ])),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      AppText(
+                                                        text:
+                                                            "min \$${product.minimumSellingPrice ?? '0.0'}",
+                                                        textSize: 10,
+                                                        color: Colors.white,
+                                                        fontFamily: "Poppins",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          Get.toNamed(Routes
+                                                              .biddingScreen);
+                                                        },
+                                                        child: RichText(
+                                                            text: const TextSpan(
+                                                                text: "20 Bid",
+                                                                style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 10,
+                                                                  fontFamily:
+                                                                      "Poppins",
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                ),
+                                                                children: [
+                                                              TextSpan(
+                                                                text:
+                                                                    "Show bid history",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontFamily:
+                                                                        "Poppins",
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .underline),
+                                                              )
+                                                            ])),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
 
-                                          /// like and Dislike Heart View
-                                          Positioned(
-                                            bottom: -17,
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                    Assets.assetsDislike,
-                                                    height: 50,
-                                                    width: 50),
-                                                const SizedBox(width: 70),
-                                                Obx(
-                                                  () => GestureDetector(
-                                                    onTap: () {
-                                                      _categoriesController
-                                                          .heartColor
-                                                          .value = true;
-                                                    },
-                                                    child: Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 10,
-                                                          vertical: 15),
-                                                      decoration: BoxDecoration(
-                                                          color: _categoriesController
-                                                                      .heartColor
-                                                                      .value ==
-                                                                  true
-                                                              ? AppColor
-                                                                  .prdtextColor
-                                                              : AppColor
-                                                                  .blackColor,
-                                                          shape:
-                                                              BoxShape.circle),
-                                                      child: const Center(
-                                                          child: Icon(
-                                                              Icons.favorite,
-                                                              color: AppColor
-                                                                  .white,
-                                                              size: 30)),
+                                                /// like and Dislike Heart View
+                                                Positioned(
+                                                  bottom: -17,
+                                                  child: Obx(
+                                                    () => Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        likeDeslikeBtn(
+                                                          icon: const IconData(
+                                                              0xf032e,
+                                                              fontFamily:
+                                                                  'MaterialIcons'),
+                                                          isFav: !_isFavourite(
+                                                              _categoriesController,
+                                                              product),
+                                                          onClick: () {
+                                                            if (_isFavourite(
+                                                                _categoriesController,
+                                                                product)) {
+                                                              _categoriesController
+                                                                  .addProductAsFavourite(
+                                                                      (product.id ??
+                                                                              '')
+                                                                          .toString());
+                                                            }
+                                                          },
+                                                        ),
+                                                        SizedBox(
+                                                            width: Get.width *
+                                                                0.18),
+                                                        likeDeslikeBtn(
+                                                          color: AppColor.red,
+                                                          icon: Icons.favorite,
+                                                          isFav: _isFavourite(
+                                                              _categoriesController,
+                                                              product),
+                                                          onClick: () {
+                                                            if (!_isFavourite(
+                                                                _categoriesController,
+                                                                product)) {
+                                                              _categoriesController
+                                                                  .addProductAsFavourite(
+                                                                (product.id ??
+                                                                        '')
+                                                                    .toString(),
+                                                              );
+                                                            }
+                                                          },
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 )
                                               ],
                                             ),
-                                          )
-                                        ],
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ]),
+                                    ),
+                              _categoriesController.loadingData.value ||
+                                      _categoriesController
+                                          .nextPageIsLoading.value
+                                  ? AppLoader.showWidget()
+                                  : const SizedBox.shrink(),
+                            ]),
+                          ),
                         ),
                 ),
               ),
@@ -487,6 +586,50 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  bool _isFavourite(CategoriesController cc, ProductModel product) =>
+      (cc.localFavourites[(product.id ?? '').toString()] != null
+          ? cc.localFavourites[(product.id ?? '').toString()] ?? false
+          : product.isFavourite == 1);
+
+  Widget likeDeslikeBtn(
+      {required bool isFav,
+      required Function onClick,
+      IconData? icon,
+      Color? color}) {
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+          decoration: BoxDecoration(
+              color: color ?? AppColor.blackColor, shape: BoxShape.circle),
+          child: FavouriteButton(
+            activeIcon: icon,
+            activeColor: AppColor.white,
+            size: 28,
+            isFavourite: true,
+            onClick: () => onClick(),
+          ),
+        ),
+        isFav
+            ? const SizedBox.shrink()
+            : Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                decoration: BoxDecoration(
+                    color: AppColor.white.withOpacity(0.6),
+                    shape: BoxShape.circle),
+                child: FavouriteButton(
+                  activeIcon: icon,
+                  activeColor: AppColor.white,
+                  size: 28,
+                  isFavourite: true,
+                  onClick: () => onClick(),
+                ),
+              ),
+      ],
     );
   }
 
