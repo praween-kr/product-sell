@@ -43,28 +43,31 @@ class AddressScreen extends StatelessWidget {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : addressController.addresses.isEmpty
-                          ? EmptyWidgets.simple()
-                          : ListView.builder(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              itemCount: addressController.addresses.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                AddressModel address =
-                                    addressController.addresses[index];
-                                return addressCard(
-                                    address: address,
-                                    onClick: () {
-                                      //
-                                    });
-                              }),
+                      : SizedBox(
+                          height: double.infinity,
+                          child: addressController.addresses.isEmpty
+                              ? EmptyWidgets.simple()
+                              : ListView.builder(
+                                  physics: const BouncingScrollPhysics(
+                                      parent: AlwaysScrollableScrollPhysics()),
+                                  itemCount: addressController.addresses.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    AddressModel address =
+                                        addressController.addresses[index];
+                                    return addressCard(
+                                        address: address,
+                                        onClick: () {
+                                          //
+                                        });
+                                  }),
+                        ),
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 35.0),
+            padding: const EdgeInsets.only(bottom: 20.0),
             child: Column(
               children: [
                 GestureDetector(
