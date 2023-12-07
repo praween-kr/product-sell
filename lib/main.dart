@@ -1,3 +1,5 @@
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,8 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   String initialRoute = await findIntialRoute();
+
+  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
@@ -38,11 +42,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Poppins', primaryColor: Colors.transparent),
       title: 'Flutter Demo',
       initialRoute: Routes.splashScreen,
+      supportedLocales: const [
+        Locale("en"),
+      ],
+      localizationsDelegates: const [
+        CountryLocalizations.delegate,
+      ],
       getPages: AppRoutes.routes,
-      // home: AppVideoPlayer(
-      //   video:
-      //       "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4",
-      // ),
+
+      // home: const SwapperWidget(),
     );
   }
 

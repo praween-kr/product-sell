@@ -29,12 +29,16 @@ class ApiRequests {
   static Future<bool> signin(
       {required String phoneEmail, required String password}) async {
     AppLoader.show();
+    // FirebaseMessaging.instance.getToken().then((value) {
+    //   print("FCM Token: $value");
+    // });
+
     // final fcmToken = await FirebaseMessaging.instance.getToken();
     var bodyData = {
       "phoneEmail": phoneEmail,
       "password": password,
       "deviceType": Platform.isIOS ? 1 : 1,
-      "deviceToken": "device_token"
+      "deviceToken": "device_toaken" //token ?? ''
     };
     AppPrint.info("Login Req: $bodyData");
     var data = await BaseApiCall().postReq(AppApis.signin, data: bodyData);
@@ -68,7 +72,9 @@ class ApiRequests {
       required String password,
       required String confirmPassword}) async {
     AppLoader.show();
-    // final fcmToken = await FirebaseMessaging.instance.getToken();
+    // final fcmToken = await FirebaseMessaging.instance.getToken().then((value) {
+    //   print("FCM Token: $value");
+    // });
     Map<String, dynamic> reqdata = {
       "firstName": firstName,
       "lastName": lastName,
@@ -76,7 +82,7 @@ class ApiRequests {
       "countryCode": countryCode,
       "phone": phone,
       "deviceType": Platform.isIOS ? 1 : 1,
-      "deviceToken": "device_token",
+      "deviceToken": "device_token", //token ?? '',
       "location": location,
       "latitude": cordinates?.latitude ?? 0.0,
       "longitude": cordinates?.longitude ?? 0.0,
@@ -164,6 +170,7 @@ class ApiRequests {
     required LatLng? cordinates,
   }) async {
     AppLoader.show();
+    print("location.text.trim(): $location");
     var data = await BaseApiCall().putReq(AppApis.updateProfile, data: {
       "firstName": firstName,
       "lastName": lastName,

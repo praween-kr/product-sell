@@ -30,7 +30,7 @@ class NotificationScreen extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return Container(
-                        padding: EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 20),
                         child: Row(
                           children: [
                             Image.asset(
@@ -45,29 +45,25 @@ class NotificationScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AppText(
-                                  text:
-                                      "Men's Tshirt Bidding Time extend for 15 Minutes",
-                                  textSize: 11,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+                                    text:
+                                        "Men's Tshirt Bidding Time extend for 15 Minutes",
+                                    textSize: 11),
+                                SizedBox(height: 10),
                                 AppText(
-                                  text: "Feb 23, 2023 | 12:00 PM",
-                                  textSize: 10,
-                                ),
+                                    text: "Feb 23, 2023 | 12:00 PM",
+                                    textSize: 10),
                               ],
                             ),
                           ],
                         ),
                       );
                     }),
-                onLeftSwipe: () {
-                  const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  );
-                },
+                // onLeftSwipe: () {
+                //   const Icon(
+                //     Icons.delete,
+                //     color: Colors.red,
+                //   );
+                // },
               ),
             ),
           ],

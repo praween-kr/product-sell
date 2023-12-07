@@ -55,14 +55,10 @@ class SubCategoriesScreen extends StatelessWidget {
                                 // _categoriesController.menu.value = true;
                                 // _categoriesController.touchTap.value = true;
                                 // Get.toNamed(Routes.productDetailScreen);
+                                //-----
                                 _categoriesController.getProducts();
                                 Get.toNamed(
                                     Routes.categoriesWiseProductsScreen);
-                                // Map<String, dynamic> data = {
-                                //   "from": 0,
-                                // };
-                                // Get.toNamed(Routes.denimScreen,
-                                //     arguments: data);
                               },
                               child: Column(
                                 children: [

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "227272123288",
+    "project_id": "ownitoo-5ecfe",
+    "storage_bucket": "ownitoo-5ecfe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227272123288:android:d7d5597cd64a9f330901ed",
+        "android_client_info": {
+          "package_name": "com.app.ownitoo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsS7PMqr_QU4sgTUYKsrb04kC0qDHjuho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

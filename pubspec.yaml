@@ -60,7 +60,7 @@ dependencies:
   get_storage: ^2.1.1
   lottie: ^2.7.0
   fluttertoast: ^8.2.2
-  firebase_messaging: ^14.7.2
+  firebase_messaging: ^14.7.6
   google_places_autocomplete_text_field: ^0.1.2
   flutter_html: ^3.0.0-beta.2
   http: ^1.1.0
@@ -75,6 +75,10 @@ dependencies:
   chewie: ^1.7.1
   video_player: ^2.8.1
   timeago: ^3.3.0
+  rename: ^3.0.1
+  firebase_core: ^2.24.0
+  firebase_auth: ^4.15.0
+  socket_io_client: ^2.0.3+1
 
 
 dev_dependencies:

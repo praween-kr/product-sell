@@ -125,27 +125,35 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    AppText(
-                      text: "Location",
-                      color: AppColor.blackColor.withOpacity(0.5),
-                      textSize: 15.0,
-                      style: AppTextStyle.medium,
-                    ),
-                    const SizedBox(
-                      height: 14.0,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 14),
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: AppText(
-                          text: globleController.userInfo.value?.location ?? '',
-                          color: AppColor.blackColor,
-                          fontWeight: FontWeight.w400,
-                          lineHeight: 1.2),
-                    ),
+                    globleController.userInfo.value?.location == null
+                        ? const SizedBox.shrink()
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: "Location",
+                                color: AppColor.blackColor.withOpacity(0.5),
+                                textSize: 15.0,
+                                style: AppTextStyle.medium,
+                              ),
+                              const SizedBox(height: 14.0),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 14),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: AppText(
+                                    text: globleController
+                                            .userInfo.value?.location ??
+                                        '',
+                                    color: AppColor.blackColor,
+                                    fontWeight: FontWeight.w400,
+                                    lineHeight: 1.2),
+                              ),
+                            ],
+                          ),
                     // AppTextField(
                     //   maxLines: 5,
                     //   height: 50,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 
 class AppPrint {
@@ -13,6 +11,7 @@ class AppPrint {
   }
 
   static all(String text) {
-    log(text);
+    //log(text);
+    debugPrint(text);
   }
 }

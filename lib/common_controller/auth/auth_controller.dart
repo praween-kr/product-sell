@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
@@ -63,7 +64,7 @@ class AuthController extends GetxController {
         if (UserStoredInfo().userInfo?.isOtpVerify == 1) {
           NavigateTo.home();
         } else {
-          // verifyEmail.value = UserStoredInfo().userInfo?.email ?? '';
+          verifyEmail.value = UserStoredInfo().userInfo?.email ?? '';
           AppToast.show("Please enter static otp 1111");
           Get.toNamed(Routes.verificationScreen);
         }
@@ -240,6 +241,7 @@ class AuthController extends GetxController {
 ///----------------------Navigation---------------
 class NavigateTo {
   static home() {
+    AppSocket().init();
     Get.offAllNamed(Routes.bottomScreen);
   }
 
