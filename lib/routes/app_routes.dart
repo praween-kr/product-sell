@@ -33,11 +33,11 @@ import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/category_wise_products_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/message/message_screen.dart';
 import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
 import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.dart';
-import '../views/settingScreen/myProductsScreen/message_screen.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
 import '../views/settingScreen/profileScreen/profileScreen.dart';
@@ -168,7 +168,8 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.messageScreen,
-      page: () => const MessageScreen(),
+      page: () => MessageScreen(),
+      binding: ChatMsgBinding(),
     ),
     GetPage(
       name: Routes.bidingProductDetatils,

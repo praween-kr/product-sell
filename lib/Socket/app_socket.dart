@@ -44,6 +44,7 @@ class AppSocket {
     _socketIO?.onConnect((data) {
       isConnected = true;
       socketPrint("Socket===> Connected Success... ${socket()?.connected}");
+      SocketEmits.sendMessage(receiverId: "5207", productId: "27", msg: "Hi");
       //
       // SocketEmits.connectUser();
       _initListener();
@@ -87,6 +88,7 @@ class AppSocket {
       //
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerConnectUser}), ${jsonEncode(data)}");
+
       // if (!data.toString().contains("longitude")) {
       //   ChatMsgController cmc = Get.find();
       //   cmc.listenerUserConnected(data as Map<String, dynamic>);
@@ -120,8 +122,8 @@ class AppSocket {
           "Listener:---------> (${SocketKeys.listenerChatHistories}), ${jsonEncode({
             "msgs": data
           })}");
-      MessagesModel messages = MessagesModel.fromJson({"msgs": data});
-      cmc.listenerChatHistories(messages.mssages ?? []);
+      // MessagesModel messages = MessagesModel.fromJson({"msgs": data});
+      // cmc.listenerChatHistories(messages.mssages ?? []);
     });
     // Clear chat---------------
     _socketIO?.on(SocketKeys.listenerClearChat, (data) {
@@ -187,11 +189,16 @@ class SocketEmits {
 
   // Send new message ---------------
   static sendMessage(
-      {required String receiverId, String? type, required String msg}) {
+      {required String receiverId,
+      String? type,
+      required String msg,
+      required String productId}) {
+    socketPrint("dkfldsjf");
     Map<String, dynamic> req = HashMap();
-    req['sender_id'] = UserStoredInfo().userInfo?.id ?? '';
-    req['receiver_id'] = receiverId;
-    req['type'] = type ?? MessageType.text;
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['receiverId'] = receiverId;
+    req['message_type'] = type ?? MessageType.text;
+    req['productId'] = productId;
     req['message'] = msg;
     socketPrint(
         "Emit:---------> sendMessage-(${SocketKeys.emitSendMessage}), $req",

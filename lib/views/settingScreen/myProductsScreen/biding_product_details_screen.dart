@@ -12,6 +12,7 @@ import 'package:oninto_flutter/utills/common_appbar.dart';
 import 'package:oninto_flutter/utills/date_time_formates.dart';
 import 'package:oninto_flutter/utills/favourite_button.dart';
 import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utills/widgets/dialogs.dart';
 
 import '../../../common_widget/color_constant.dart';
 import '../../../utills/colors_file.dart';
@@ -20,17 +21,21 @@ class BidingProductDetailsScreen extends StatelessWidget {
   BidingProductDetailsScreen({super.key}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.menu.value) {
-        controller.bidHistoryDialog();
+        AppDialogs.bidHistoryDialog(
+          confirm: () => Get.toNamed(Routes.bidingProductDetatils),
+          seeAll: () => Get.toNamed(Routes.biddingScreen),
+        );
       } else {
         return;
       }
     });
   }
-  final Homecontroller controller = Get.find();
+  final HomeCatProductcontroller controller = Get.find();
   final FavouritesController _favouritesController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    print("dddd: ${_favouritesController.productDetailsData}");
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -575,7 +580,11 @@ class BidingProductDetailsScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              controller.bidHistoryDialog();
+                              AppDialogs.bidHistoryDialog(
+                                confirm: () =>
+                                    Get.toNamed(Routes.bidingProductDetatils),
+                                seeAll: () => Get.toNamed(Routes.biddingScreen),
+                              );
                             },
                             child: Obx(
                               () => controller.sub.value

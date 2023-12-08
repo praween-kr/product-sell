@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 
-import '../../../common_widget/app_text.dart';
-import '../../../common_widget/color_constant.dart';
+import '../../common_widget/app_text.dart';
+import '../../common_widget/color_constant.dart';
 
 class MessageScreen extends StatelessWidget {
-  const MessageScreen({super.key});
+  MessageScreen({super.key});
+
+  final ChatMsgController _chatMsgController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -16,20 +20,12 @@ class MessageScreen extends StatelessWidget {
       appBar: CommonAppbarWidget(
         heading: 'Men Tshirt',
         textStyle: const TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
-          color: Colors.black,
-        ),
-        action: const Icon(
-          Icons.more_vert,
-          color: AppColor.blackColor,
-        ),
+            fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
+        action: const Icon(Icons.more_vert, color: AppColor.blackColor),
       ),
       body: Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
                 physics: const ClampingScrollPhysics(),
@@ -204,7 +200,7 @@ class MessageScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20, right: 20),
             decoration: const BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
-                  color: Color(0xff1C000000),
+                  color: Color(0xff1c000000),
                   offset: Offset(0, -10),
                   blurRadius: 30)
             ]),
@@ -213,6 +209,7 @@ class MessageScreen extends StatelessWidget {
               children: [
                 Flexible(
                   child: AppTextField(
+                    controller: _chatMsgController.newMessageInput,
                     title: "Type here ……..",
                     style: const TextStyle(
                       fontSize: 12,
@@ -221,18 +218,13 @@ class MessageScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Image.asset(
-                  Assets.assetsAttachment,
-                  height: 20,
-                  width: 20,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Icon(
-                  Icons.send,
-                  color: AppColor.appcolor,
-                )
+                Image.asset(Assets.assetsAttachment, height: 20, width: 20),
+                const SizedBox(width: 5),
+                InkWell(
+                    onTap: () {
+                      _chatMsgController.sendNewMessage("5208");
+                    },
+                    child: const Icon(Icons.send, color: AppColor.appcolor))
               ],
             ),
           )

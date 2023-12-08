@@ -13,7 +13,7 @@ import 'package:oninto_flutter/utills/widgets/dialogs.dart';
 
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
-  final Homecontroller controller = Get.find();
+  final HomeCatProductcontroller controller = Get.find();
   final FavouritesController _favouritesController = Get.find();
 
   @override

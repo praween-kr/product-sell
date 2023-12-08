@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_controller/favourites_controller.dart';
@@ -69,7 +70,7 @@ class SellItemBinding extends Bindings {
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => Homecontroller());
+    Get.lazyPut(() => HomeCatProductcontroller());
   }
 }
 
@@ -84,5 +85,12 @@ class FavouritesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => FavouritesController());
+  }
+}
+
+class ChatMsgBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => ChatMsgController());
   }
 }

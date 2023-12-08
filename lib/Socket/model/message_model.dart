@@ -1,87 +1,86 @@
-class MessagesModel {
-  List<Message>? mssages;
-
-  MessagesModel({this.mssages});
-
-  MessagesModel.fromJson(Map<String, dynamic> json) {
-    if (json['msgs'] != null) {
-      mssages = <Message>[];
-      json['msgs'].forEach((v) {
-        mssages!.add(Message.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (mssages != null) {
-      data['msgs'] = mssages!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
 class Message {
-  String? sId;
-  String? senderId;
-  String? receiverId;
-  int? constantId;
+  int? id;
+  int? senderId;
+  int? receiverId;
+  int? productId;
+  String? senderType;
+  String? receiverType;
   String? message;
-  String? thumbnail;
-  String? isRead;
-  String? type;
-  String? deletedBy;
+  int? deletedId;
+  int? chatConstantId;
+  int? readStatus;
+  int? messageType;
+  int? created;
+  int? updated;
   String? createdAt;
   String? updatedAt;
-  int? senderOnline;
-  int? iV;
+  int? product;
 
   Message(
-      {this.sId,
+      {this.id,
       this.senderId,
       this.receiverId,
-      this.constantId,
+      this.productId,
+      this.senderType,
+      this.receiverType,
       this.message,
-      this.thumbnail,
-      this.isRead,
-      this.type,
-      this.deletedBy,
+      this.deletedId,
+      this.chatConstantId,
+      this.readStatus,
+      this.messageType,
+      this.created,
+      this.updated,
       this.createdAt,
       this.updatedAt,
-      this.senderOnline,
-      this.iV});
+      this.product});
 
   Message.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    senderId = json['sender_id'];
-    receiverId = json['receiver_id'];
-    constantId = json['constant_id'];
+    id = json['id'];
+    senderId = json['senderId'];
+    receiverId = json['receiverId'];
+    productId = json['productId'];
+    senderType = json['senderType'];
+    receiverType = json['receiverType'];
     message = json['message'];
-    thumbnail = json['thumbnail'];
-    isRead = json['readStatus'];
-    type = json['type'];
-    deletedBy = json['deleted_by'];
+    deletedId = json['deletedId'];
+    chatConstantId = json['chatConstantId'];
+    readStatus = json['readStatus'];
+    messageType = json['messageType'];
+    created = json['created'];
+    updated = json['updated'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    senderOnline = json['senderOnline'];
-    iV = json['__v'];
+    if (json['product'] != null && json['product']['id'] != null) {
+      product = json['product']['id'];
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    data['sender_id'] = senderId;
-    data['receiver_id'] = receiverId;
-    data['constant_id'] = constantId;
+    data['id'] = id;
+    data['senderId'] = senderId;
+    data['receiverId'] = receiverId;
+    data['productId'] = productId;
+    data['senderType'] = senderType;
+    data['receiverType'] = receiverType;
     data['message'] = message;
-    data['thumbnail'] = thumbnail;
-    data['readStatus'] = isRead;
-    data['type'] = type;
-    data['deleted_by'] = deletedBy;
+    data['deletedId'] = deletedId;
+    data['chatConstantId'] = chatConstantId;
+    data['readStatus'] = readStatus;
+    data['messageType'] = messageType;
+    data['created'] = created;
+    data['updated'] = updated;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    data['senderOnline'] = senderOnline;
-    data['__v'] = iV;
+    // if (sender != null) {
+    //   data['sender'] = sender!.toJson();
+    // }
+    // if (receiver != null) {
+    //   data['receiver'] = receiver!.toJson();
+    // }
+    // if (product != null) {
+    //   data['product'] = product!.toJson();
+    // }
     return data;
   }
 }

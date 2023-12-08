@@ -10,7 +10,7 @@ import 'package:oninto_flutter/utills/common_appbar.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});
-  final Homecontroller controller = Get.find();
+  final HomeCatProductcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

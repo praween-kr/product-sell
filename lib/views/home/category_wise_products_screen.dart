@@ -5,12 +5,14 @@ import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utills/app_print.dart';
+import 'package:oninto_flutter/utills/app_timer.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:oninto_flutter/utills/empty_widget.dart';
 import 'package:oninto_flutter/utills/favourite_button.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
 import 'package:oninto_flutter/utills/shimmer_widget.dart';
 import 'package:oninto_flutter/utills/widgets/blure_widget.dart';
+import 'package:oninto_flutter/utills/widgets/dialogs.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../common_widget/app_text.dart';
@@ -170,14 +172,15 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                   onClick: () {
                                                     Map<String, dynamic> data =
                                                         {"from": 0};
-                                                    if (Homecontroller()
+                                                    if (HomeCatProductcontroller()
                                                         .initialized) {
-                                                      Get.find<Homecontroller>()
+                                                      Get.find<
+                                                              HomeCatProductcontroller>()
                                                           .getProductDetails(
                                                               (product.id ?? '')
                                                                   .toString());
                                                     } else {
-                                                      Get.put(Homecontroller())
+                                                      Get.put(HomeCatProductcontroller())
                                                           .getProductDetails(
                                                               (product.id ?? '')
                                                                   .toString());
@@ -379,7 +382,26 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                     const SizedBox(height: 10),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        timerDialog();
+                                                        timerDialog(
+                                                            endTime: DateTime.parse(
+                                                                "2023-12-10 18:37:00"),
+                                                            bidNow: () {
+                                                              Get.back();
+                                                              AppDialogs
+                                                                  .bidHistoryDialog(
+                                                                confirm: () {
+                                                                  Get.back();
+                                                                  _bidNow((product
+                                                                              .id ??
+                                                                          '')
+                                                                      .toString());
+                                                                },
+                                                                seeAll: () {
+                                                                  Get.toNamed(Routes
+                                                                      .biddingScreen);
+                                                                },
+                                                              );
+                                                            });
                                                       },
                                                       child: CommonButton(
                                                         height: 40,
@@ -585,6 +607,16 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           ? cc.localFavourites[(product.id ?? '').toString()] ?? false
           : product.isFavourite == 1);
 
+  _bidNow(String productId) {
+    Map<String, dynamic> data = {"from": 0};
+    if (HomeCatProductcontroller().initialized) {
+      Get.find<HomeCatProductcontroller>().getProductDetails(productId);
+    } else {
+      Get.put(HomeCatProductcontroller()).getProductDetails(productId);
+    }
+    Get.toNamed(Routes.productDetailsScreen, arguments: data);
+  }
+
   Widget likeDeslikeBtn(
       {required bool isFav,
       required Function onClick,
@@ -687,7 +719,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
     );
   }
 
-  Future timerDialog() async {
+  Future timerDialog(
+      {required Function bidNow, required DateTime endTime}) async {
     print("clicked---- ");
     return showDialog(
         barrierDismissible: true,
@@ -696,75 +729,9 @@ class CategoryWiseProductsScreen extends StatelessWidget {
         builder: (BuildContext context) {
           return Material(
             type: MaterialType.transparency,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    margin: const EdgeInsets.only(left: 30, right: 30),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black,
-                            offset: Offset(
-                              0.0,
-                              0.0,
-                            ),
-                            blurRadius: 5.0,
-                            spreadRadius: 0.0,
-                          ), //BoxShadow
-                          BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(0.0, 0.0),
-                            blurRadius: 0.0,
-                            spreadRadius: 0.0,
-                          ), //BoxShadow
-                        ],
-                        // borderRadius: BorderRadius.all(Radius.circular(17)),
-                        color: Colors.white),
-                    padding: const EdgeInsets.only(
-                        top: 10, bottom: 20, right: 20, left: 20),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          Assets.assetsClock,
-                          height: 100,
-                          width: 100,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const AppText(
-                          text: "00:00:10",
-                          color: Color(0xffFF0505),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Poppins",
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                            // controller.bidHistoryDialog();
-                            Get.toNamed(Routes.bidingProductDetatils);
-                          },
-                          child: CommonButton(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            color: AppColor.appcolor,
-                            text: "Bid Now",
-                            radius: 15,
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Poppins",
-                                fontSize: 15,
-                                color: Colors.white),
-                          ),
-                        )
-                      ],
-                    )),
-              ],
+            child: AppTimer(
+              bidNow: bidNow,
+              endTime: endTime,
             ),
           );
         });

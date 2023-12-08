@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
+import 'package:oninto_flutter/utills/app_print.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 
 import 'apis.dart';
@@ -93,6 +94,7 @@ class BaseApiCall {
 
   postReq(String endPoint,
       {bool showToast = true, Map<String, dynamic>? data}) async {
+    AppPrint.all("POST REQUEST: $endPoint -> $data");
     Response response;
     try {
       response = await Dio().post(AppApis.baseUrl + endPoint,
@@ -114,6 +116,7 @@ class BaseApiCall {
 
   putReq(String endPoint,
       {bool showToast = true, Map<String, dynamic>? data}) async {
+    AppPrint.all("PUT REQUEST: $endPoint -> $data");
     Response response;
     try {
       response = await Dio().put(AppApis.baseUrl + endPoint,
@@ -141,6 +144,8 @@ class BaseApiCall {
     Map<String, dynamic>? data,
     showToast = true,
   }) async {
+    AppPrint.all(
+        "FORM POST REQUEST: $endPoint -> $data [Attachment]: $attachments list: {$multiAttachment}");
     // dio!.interceptors.add(DioInterceptor());
     Map<String, dynamic> map = data ?? {};
 
@@ -212,6 +217,9 @@ class BaseApiCall {
     Map<String, dynamic>? data,
     showToast = true,
   }) async {
+    AppPrint.all(
+        "FORM PUT REQUEST: $endPoint -> $data [Attachment]: $attachments list: {$multiAttachment}");
+
     // dio!.interceptors.add(DioInterceptor());
     Map<String, dynamic> map = data ?? {};
 

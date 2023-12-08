@@ -19,10 +19,11 @@ import '../../common_widget/color_constant.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({Key? key}) : super(key: key);
-  final Homecontroller controller = Get.find();
+  final HomeCatProductcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    print("product data: ${controller.productDetailsData.value}");
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: CommonAppbarWidget(

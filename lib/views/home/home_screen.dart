@@ -13,12 +13,13 @@ import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/common_widgets.dart';
 import 'package:oninto_flutter/utills/image_view.dart';
 import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utills/widgets/dialogs.dart';
 
 import '../../common_widget/app_textfield.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  final Homecontroller controller = Get.find();
+  final HomeCatProductcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -586,8 +587,11 @@ class HomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             Get.back();
-                            controller.bidHistoryDialog();
-                            Get.toNamed(Routes.bidingProductDetatils);
+                            AppDialogs.bidHistoryDialog(
+                              confirm: () =>
+                                  Get.toNamed(Routes.bidingProductDetatils),
+                              seeAll: () => Get.toNamed(Routes.biddingScreen),
+                            );
                           },
                           child: CommonButton(
                             margin: const EdgeInsets.symmetric(horizontal: 20),

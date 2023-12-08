@@ -68,17 +68,19 @@ class ChatMsgController extends GetxController {
 
   // Listener Send Message----------
   listenerNewMessage(Message? data) {
-    if (UserStoredInfo().userInfo?.id.toString() == data?.receiverId) {
-      readUnread(data?.senderId ?? '');
+    if (UserStoredInfo().userInfo?.id.toString() ==
+        data?.receiverId.toString()) {
+      readUnread((data?.senderId ?? '').toString());
     }
     // socketPrint("Listener:---------> (send_message_listener) ===> $data");
     if (data != null) {
       // messages.add(data);
       // messages.refresh();
-      if (UserStoredInfo().userInfo?.id.toString() == data.senderId) {
-        SocketEmits.getChatHistories(data.receiverId ?? '');
+      if (UserStoredInfo().userInfo?.id.toString() ==
+          data.senderId.toString()) {
+        SocketEmits.getChatHistories((data.receiverId ?? '').toString());
       } else {
-        SocketEmits.getChatHistories(data.senderId ?? '');
+        SocketEmits.getChatHistories((data.senderId ?? '').toString());
       }
     }
     // socketPrint("listenerNewMessage---> $data");
@@ -112,7 +114,7 @@ class ChatMsgController extends GetxController {
   listenerReadUnread(String sender, String reciver) {
     if (UserStoredInfo().userInfo?.id.toString() == reciver) {
       for (int i = messages.length - 1; i >= 0; i--) {
-        if (messages[i].isRead == '1') {
+        if (messages[i].readStatus == 1) {
           break;
         } else {
           newReadedMsg.add(sender);
@@ -163,7 +165,8 @@ class ChatMsgController extends GetxController {
           SocketEmits.sendMessage(
               receiverId: receiverId,
               msg: newMessageInput.text,
-              type: newMessageType.value);
+              type: newMessageType.value,
+              productId: '1');
         }
       } else if (newMessageAttachment.value != '') {
         // await ApiRequests.messageAttachmentUpload(

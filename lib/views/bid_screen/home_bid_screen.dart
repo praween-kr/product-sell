@@ -11,7 +11,7 @@ class HomeBidScreen extends StatelessWidget {
   HomeBidScreen({
     Key? key,
   }) : super(key: key);
-  final Homecontroller controller = Get.find();
+  final HomeCatProductcontroller controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
