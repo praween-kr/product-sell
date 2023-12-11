@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/home/home_controller.dart';
+import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
+import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
@@ -10,7 +11,8 @@ import 'package:oninto_flutter/utills/common_appbar.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});
-  final HomeCatProductcontroller controller = Get.find();
+  // final HomeCatProductcontroller controller = Get.find();
+  final ChatMsgController _chatMsgController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class NavBarMsgScreen extends StatelessWidget {
                           : Colors.transparent;
                     }),
                     onTap: (index) {
-                      controller.messageController.value = index;
+                      _chatMsgController.messageController.value = index;
                     },
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     indicator:
@@ -55,13 +57,16 @@ class NavBarMsgScreen extends StatelessWidget {
                         width: 148,
                         margin: const EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(
-                            color: controller.messageController.value == 0
-                                ? AppColor.appcolor
-                                : Colors.white,
+                            color:
+                                _chatMsgController.messageController.value == 0
+                                    ? AppColor.appcolor
+                                    : Colors.white,
                             border: Border.all(
-                              color: controller.messageController.value == 0
-                                  ? AppColor.appcolor
-                                  : Colors.grey.shade300,
+                              color:
+                                  _chatMsgController.messageController.value ==
+                                          0
+                                      ? AppColor.appcolor
+                                      : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
                         child: Center(
@@ -69,9 +74,10 @@ class NavBarMsgScreen extends StatelessWidget {
                             text: "Community",
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: controller.messageController.value == 0
-                                ? Colors.white
-                                : Colors.grey.shade500,
+                            color:
+                                _chatMsgController.messageController.value == 0
+                                    ? Colors.white
+                                    : Colors.grey.shade500,
                           ),
                         ),
                       ),
@@ -80,13 +86,16 @@ class NavBarMsgScreen extends StatelessWidget {
                         width: 148,
                         margin: const EdgeInsets.only(top: 10),
                         decoration: BoxDecoration(
-                            color: controller.messageController.value == 1
-                                ? AppColor.appcolor
-                                : Colors.white,
+                            color:
+                                _chatMsgController.messageController.value == 1
+                                    ? AppColor.appcolor
+                                    : Colors.white,
                             border: Border.all(
-                              color: controller.messageController.value == 1
-                                  ? AppColor.appcolor
-                                  : Colors.grey.shade300,
+                              color:
+                                  _chatMsgController.messageController.value ==
+                                          1
+                                      ? AppColor.appcolor
+                                      : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
                         child: Center(
@@ -94,9 +103,10 @@ class NavBarMsgScreen extends StatelessWidget {
                             text: "Messages",
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: controller.messageController.value == 1
-                                ? Colors.white
-                                : Colors.grey.shade500,
+                            color:
+                                _chatMsgController.messageController.value == 1
+                                    ? Colors.white
+                                    : Colors.grey.shade500,
                           ),
                         ),
                       ),
@@ -105,170 +115,177 @@ class NavBarMsgScreen extends StatelessWidget {
               child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    ListView.builder(
-                        itemCount: 2,
-                        shrinkWrap: true,
-                        itemBuilder: (context, position) {
-                          return Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 35.0, vertical: 15.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(Routes.gyaradoMsgScreen);
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                            Assets.assetsCrowd,
-                                            height: 57.0,
-                                            width: 57.0,
-                                          ),
-                                          const SizedBox(
-                                            width: 12.0,
-                                          ),
-                                          const AppText(
-                                            text: "Gyarado EX",
-                                            textSize: 15.0,
-                                            color: AppColor.blackColor,
-                                            style: AppTextStyle.medium,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0,
-                                                vertical: 10.0),
-                                            decoration: const BoxDecoration(
-                                              color: AppColor.appcolor,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: const Center(
-                                              child: AppText(
-                                                text: "2",
-                                                color: AppColor.white,
-                                                textSize: 10.0,
-                                                style: AppTextStyle.regular,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Divider(
-                                color: AppColor.blackColor.withOpacity(0.1),
-                                height: 1.0,
-                                thickness: 1.0,
-                              )
-                            ],
-                          );
-                        }),
-                    ListView.builder(
-                        itemCount: 4,
-                        shrinkWrap: true,
-                        itemBuilder: (context, position) {
-                          return Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 35.0, vertical: 15.0),
-                                child: Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(Routes.messageScreen);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                Assets.assetsGirlJean,
-                                                height: 57.0,
-                                                width: 57.0,
-                                              ),
-                                              const SizedBox(
-                                                width: 12.0,
-                                              ),
-                                              Column(
-                                                children: [
-                                                  const AppText(
-                                                    text: "Men Tshirt",
-                                                    textSize: 15.0,
-                                                    color: AppColor.blackColor,
-                                                    style: AppTextStyle.title,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 7.0,
-                                                  ),
-                                                  AppText(
-                                                    text: "Send Images",
-                                                    textSize: 12.0,
-                                                    color: AppColor.blackColor
-                                                        .withOpacity(0.3),
-                                                    style: AppTextStyle.medium,
-                                                  )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10.0,
-                                                        vertical: 10.0),
-                                                decoration: const BoxDecoration(
-                                                  color: AppColor.appcolor,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: const Center(
-                                                  child: AppText(
-                                                    text: "2",
-                                                    color: AppColor.white,
-                                                    textSize: 10.0,
-                                                    style: AppTextStyle.regular,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                color: AppColor.blackColor.withOpacity(0.1),
-                                height: 1.0,
-                                thickness: 1.0,
-                              )
-                            ],
-                          );
-                        })
+                    communities(),
+                    Obx(() => products(_chatMsgController.users))
                   ]),
             )
           ],
         ),
       ),
     );
+  }
+
+  Widget products(List<ChatProductUser> productUsers) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        await _chatMsgController.getUsers();
+        await Future.delayed(const Duration(seconds: 1));
+      },
+      child: ListView.builder(
+          itemCount: productUsers.length + 1,
+          shrinkWrap: true,
+          itemBuilder: (context, position) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 35.0, vertical: 15.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.messageScreen);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Image.asset(
+                                  Assets.assetsGirlJean,
+                                  height: 57.0,
+                                  width: 57.0,
+                                ),
+                                const SizedBox(
+                                  width: 12.0,
+                                ),
+                                Column(
+                                  children: [
+                                    const AppText(
+                                      text: "Men Tshirt",
+                                      textSize: 15.0,
+                                      color: AppColor.blackColor,
+                                      style: AppTextStyle.title,
+                                    ),
+                                    const SizedBox(
+                                      height: 7.0,
+                                    ),
+                                    AppText(
+                                      text: "Send Images",
+                                      textSize: 12.0,
+                                      color:
+                                          AppColor.blackColor.withOpacity(0.3),
+                                      style: AppTextStyle.medium,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 10.0),
+                                  decoration: const BoxDecoration(
+                                    color: AppColor.appcolor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Center(
+                                    child: AppText(
+                                      text: "2",
+                                      color: AppColor.white,
+                                      textSize: 10.0,
+                                      style: AppTextStyle.regular,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: AppColor.blackColor.withOpacity(0.1),
+                  height: 1.0,
+                  thickness: 1.0,
+                )
+              ],
+            );
+          }),
+    );
+  }
+
+  ListView communities() {
+    return ListView.builder(
+        itemCount: 2,
+        shrinkWrap: true,
+        itemBuilder: (context, position) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 35.0, vertical: 15.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.gyaradoMsgScreen);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            Assets.assetsCrowd,
+                            height: 57.0,
+                            width: 57.0,
+                          ),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          const AppText(
+                            text: "Gyarado EX",
+                            textSize: 15.0,
+                            color: AppColor.blackColor,
+                            style: AppTextStyle.medium,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            decoration: const BoxDecoration(
+                              color: AppColor.appcolor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Center(
+                              child: AppText(
+                                text: "2",
+                                color: AppColor.white,
+                                textSize: 10.0,
+                                style: AppTextStyle.regular,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Divider(
+                color: AppColor.blackColor.withOpacity(0.1),
+                height: 1.0,
+                thickness: 1.0,
+              )
+            ],
+          );
+        });
   }
 }

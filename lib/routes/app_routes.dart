@@ -88,6 +88,7 @@ class AppRoutes {
         FavouritesBinding(),
         SettingsBinding(),
         CmsBinding(),
+        ChatMsgBinding(),
         AddressBinding(),
       ],
     ),

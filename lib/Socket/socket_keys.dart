@@ -4,23 +4,21 @@ class SocketKeys {
   //Emiter/
   static String emitConnectUser = "connect_user";
   static String emitSendMessage = "send_message";
-  static String emitGetUsers = "chat_list";
-  static String emitChatHistories = "get_chat";
-  static String emitClearChat = "clear_chat";
-  static String emitReportUser = "report_user";
-  static String emitReadUnread = "read_unread";
-  // Tracking
-  static String emitLiveTracking = "update_location";
+  static String emitGetUsers = "user_constant_list";
+  static String emitChatHistories = "";
+  static String emitClearChat = "";
+  static String emitReportUser = "";
+  static String emitReadUnread = "";
 
   // Listener
   static String listenerConnectUser = "connect_user_listener";
   static String listenerSendMessage = "send_message_emit";
-  static String listenerGetUsers = "chat_list";
-  static String listenerChatHistories = "my_chat";
-  static String listenerClearChat = "clear_chat_listener";
-  static String listenerReportUser = "report_user_listener";
-  static String listenerReadUnread = "read_data_status";
-  static String listenerLiveTracking = "update_location_listener";
+  static String listenerGetUsers = "user_constant_chat_list";
+  static String listenerChatHistories = "";
+  static String listenerClearChat = "";
+  static String listenerReportUser = "";
+  static String listenerReadUnread = "";
+  static String listenerLiveTracking = "";
 }
 
 class MessageType {

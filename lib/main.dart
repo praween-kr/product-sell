@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/utills/colors_file.dart';
 
 import 'routes/app_routes.dart';
 import 'service/local/db_helper.dart';
@@ -39,7 +40,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Poppins', primaryColor: Colors.transparent),
+      theme: ThemeData(
+          fontFamily: 'Poppins',
+          primaryColor: Colors.transparent,
+          progressIndicatorTheme:
+              const ProgressIndicatorThemeData(color: themeColor)),
       title: 'Flutter Demo',
       initialRoute: Routes.splashScreen,
       supportedLocales: const [

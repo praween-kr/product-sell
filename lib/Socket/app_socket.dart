@@ -3,13 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'controller/chat_msg_controller.dart';
-import 'model/chat_user_model.dart';
 import 'model/message_model.dart';
 import 'socket_keys.dart';
 
@@ -44,7 +43,7 @@ class AppSocket {
     _socketIO?.onConnect((data) {
       isConnected = true;
       socketPrint("Socket===> Connected Success... ${socket()?.connected}");
-      SocketEmits.sendMessage(receiverId: "5207", productId: "27", msg: "Hi");
+      SocketEmits.connectUser();
       //
       // SocketEmits.connectUser();
       _initListener();
@@ -98,12 +97,19 @@ class AppSocket {
     _socketIO?.on(SocketKeys.listenerGetUsers, (data) {
       //
       ChatMsgController cmc = Get.find();
+
+      List<ChatProductUser> list = [];
+      List<Map<String, dynamic>> ulist =
+          data['getdata'] as List<Map<String, dynamic>>;
+      for (var element in ulist) {
+        list.add(ChatProductUser.fromJson(element));
+      }
       socketPrint(
-          "Listener:---------> (${SocketKeys.emitGetUsers}), ${jsonEncode({
-            "users": data
+          "Listener:---------> (${list.length}) (${SocketKeys.listenerGetUsers}), ${jsonEncode({
+            "users": data['getdata']
           })}");
-      ChatUsersModel users = ChatUsersModel.fromJson({"users": data});
-      cmc.listenerGetUsers(users.users ?? []);
+      // ChatUsersModel users = ChatUsersModel.fromJson({"users": data});
+      cmc.listenerGetUsers(list);
     });
     // Send new message---------------
     _socketIO?.on(SocketKeys.listenerSendMessage, (data) {
@@ -181,7 +187,7 @@ class SocketEmits {
   // Get Users---------------
   static getUsers() {
     Map<String, dynamic> req = HashMap();
-    req['sender_id'] = UserStoredInfo().userInfo?.id ?? '';
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
     socketPrint("Emit:---------> getUsers-(${SocketKeys.emitGetUsers}), $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitGetUsers, req);
@@ -248,23 +254,6 @@ class SocketEmits {
     socketPrint("Emit:---------> emitReadUnread-(${SocketKeys.emitReadUnread})",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitReadUnread, req);
-  }
-
-  // Traking Emit ---------------
-  static liveTrackingUpdate(
-      {required LatLng latLng,
-      required String jobId,
-      required String workerId}) {
-    socketPrint("---> $workerId");
-    Map<String, dynamic> req = HashMap();
-    req['user_id'] = workerId;
-    req['longitude'] = latLng.longitude;
-    req['latitude'] = latLng.latitude;
-    req['job_id'] = jobId;
-    socketPrint(
-        "Emit:---------> emitLiveTracking-(${SocketKeys.emitLiveTracking})--> $req",
-        blue: true);
-    AppSocket.socket()?.emit(SocketKeys.emitLiveTracking, req);
   }
 }
 

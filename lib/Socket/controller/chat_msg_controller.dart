@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
+import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
@@ -11,8 +12,11 @@ import '../model/chat_user_model.dart';
 import '../model/message_model.dart';
 
 class ChatMsgController extends GetxController {
-  var users = <ChatUser>[].obs;
-  var allUsers = <ChatUser>[].obs;
+  var messageController = 0.obs;
+
+  ///--------------------------
+  var users = <ChatProductUser>[].obs;
+  var allUsers = <ChatProductUser>[].obs;
   var messages = <Message>[].obs;
   var loadingData = false.obs;
   var loadingChatHistories = false.obs;
@@ -33,19 +37,19 @@ class ChatMsgController extends GetxController {
       users.value = allUsers;
     } else {
       log("searchKey.text.trim().toLowerCase(): ${searchKey.text.trim().toLowerCase()}");
-      users.value = allUsers.where((user) {
-        //-------
-        ChatUserInfo receiver = (user.sender ?? []).isEmpty
-            ? (user.userInfo ?? []).first
-            : UserStoredInfo().userInfo?.id.toString() ==
-                    (user.sender ?? []).first.sId
-                ? (user.userInfo ?? []).first
-                : (user.sender ?? []).first;
-        //-------
-        return ("${receiver.firstname} ${receiver.lastname}")
-            .toLowerCase()
-            .contains(searchKey.text.trim().toLowerCase());
-      }).toList();
+      // users.value = allUsers.where((user) {
+      //   //-------
+      //   ChatUserInfo receiver = (user.sender ?? []).isEmpty
+      //       ? (user.userInfo ?? []).first
+      //       : UserStoredInfo().userInfo?.id.toString() ==
+      //               (user.sender ?? []).first.sId
+      //           ? (user.userInfo ?? []).first
+      //           : (user.sender ?? []).first;
+      //   //-------
+      //   return ("${receiver.firstname} ${receiver.lastname}")
+      //       .toLowerCase()
+      //       .contains(searchKey.text.trim().toLowerCase());
+      // }).toList();
     }
     users.refresh();
   }
@@ -58,7 +62,7 @@ class ChatMsgController extends GetxController {
   }
 
   // Listener Get Users ----------
-  listenerGetUsers(List<ChatUser> data) {
+  listenerGetUsers(List<ChatProductUser> data) {
     socketPrint("-----> ===> $data");
     users.value = data;
     allUsers.value = data;
@@ -141,7 +145,7 @@ class ChatMsgController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    SocketEmits.connectUser();
+    // SocketEmits.connectUser();
     // SocketEmits.sendMessage(
     //     receiverId: "64f9c7095c8ed265e5c100b3", msg: "First name...");
     // SocketEmits.getChatHistories(
@@ -162,6 +166,7 @@ class ChatMsgController extends GetxController {
     if (receiverId != null) {
       if (newMessageType.value == MessageType.text) {
         if (newMessageInput.text != '') {
+          socketPrint("Send First Message--> $receiverId");
           SocketEmits.sendMessage(
               receiverId: receiverId,
               msg: newMessageInput.text,

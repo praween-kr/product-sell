@@ -4,6 +4,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
+import 'package:oninto_flutter/Socket/app_socket.dart';
+import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
@@ -89,9 +91,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     //   color: AppColor.appcolor,
                                     // ),
                                     GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(Routes.messageScreen);
-                                      },
+                                      onTap: _sendMessage,
                                       child: Container(
                                           height: 40,
                                           width: 40,
@@ -434,6 +434,21 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                     ),
             )));
+  }
+
+  _sendMessage() {
+    ChatMsgController cmc;
+    if (ChatMsgController().initialized) {
+      cmc = Get.find<ChatMsgController>();
+    } else {
+      cmc = Get.put(ChatMsgController());
+    }
+    socketPrint("Send First Message!");
+    cmc.newMessageInput.text = "Hello";
+    cmc.sendNewMessage(
+        (controller.productDetailsData.value?.details?.vendorId ?? '')
+            .toString());
+    Get.toNamed(Routes.messageScreen);
   }
 
   Future reviewDialog() async {
