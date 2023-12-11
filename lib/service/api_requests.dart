@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/auth/cms_model.dart';
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
@@ -30,7 +31,7 @@ class ApiRequests {
       {required String phoneEmail, required String password}) async {
     AppLoader.show();
     // FirebaseMessaging.instance.getToken().then((value) {
-    //   print("FCM Token: $value");
+    //   debugPrint("FCM Token: $value");
     // });
 
     // final fcmToken = await FirebaseMessaging.instance.getToken();
@@ -73,7 +74,7 @@ class ApiRequests {
       required String confirmPassword}) async {
     AppLoader.show();
     // final fcmToken = await FirebaseMessaging.instance.getToken().then((value) {
-    //   print("FCM Token: $value");
+    //   debugPrint("FCM Token: $value");
     // });
     Map<String, dynamic> reqdata = {
       "firstName": firstName,
@@ -170,7 +171,7 @@ class ApiRequests {
     required LatLng? cordinates,
   }) async {
     AppLoader.show();
-    print("location.text.trim(): $location");
+    debugPrint("location.text.trim(): $location");
     var data = await BaseApiCall().putReq(AppApis.updateProfile, data: {
       "firstName": firstName,
       "lastName": lastName,

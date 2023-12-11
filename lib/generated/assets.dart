@@ -64,11 +64,10 @@ class Assets {
   static const String assetsTouchIcon = 'assets/touch_icon.png';
   static const String assetsTshirt = 'assets/Tshirt.png';
   static const String assetsVideo = 'assets/video.png';
+  static const String lottieLoader = 'assets/lottie/loader.json';
+  static const String lottieNoData = 'assets/lottie/no_data.json';
+  static const String lottieNoImage = 'assets/lottie/no_image.json';
+  static const String lottieNoInternet = 'assets/lottie/no_internet.json';
+  static const String lottieNoMessage = 'assets/lottie/no_message.json';
 
-  // Lottie
-  static const String lottieLoader = "assets/lottie/loader.json";
-  static const String lottieNoImage = "assets/lottie/no_image.json";
-  static const String lottieNoData = "assets/lottie/no_data.json";
-  static const String lottieNoInternet = "assets/lottie/no_internet.json";
-  static const String lottieNoChat = "assets/lottie/no_message.json";
 }

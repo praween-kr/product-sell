@@ -13,10 +13,9 @@ import 'service/local/db_helper.dart';
 import 'service/local/local_store_keys.dart';
 
 void main() async {
-  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   String initialRoute = await findIntialRoute();
-
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: Colors.transparent,
@@ -35,12 +34,13 @@ Future<String> findIntialRoute() async {
 class MyApp extends StatelessWidget {
   final String initialRoute;
 
-  const MyApp(this.initialRoute, {Key? key}) : super(key: key);
+  const MyApp(this.initialRoute, {super.key});
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: false,
           fontFamily: 'Poppins',
           primaryColor: Colors.transparent,
           progressIndicatorTheme:

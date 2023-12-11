@@ -31,7 +31,7 @@ class AuthController extends GetxController {
   var cordinates = Rx<LatLng?>(null);
   TextEditingController password = TextEditingController(text: '');
   TextEditingController confirmPassword = TextEditingController(text: '');
-  var passwordVisibile = true.obs;
+  var passwordVisible = true.obs;
   var confirmPasswordVisible = true.obs;
 
   //
