@@ -18,7 +18,7 @@ import 'package:oninto_flutter/utills/widgets/dialogs.dart';
 import '../../common_widget/app_textfield.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
   final HomeCatProductcontroller controller = Get.find();
 
   @override
