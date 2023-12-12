@@ -5,7 +5,7 @@ class SocketKeys {
   static String emitConnectUser = "connect_user";
   static String emitSendMessage = "send_message";
   static String emitGetUsers = "user_constant_list";
-  static String emitChatHistories = "";
+  static String emitChatHistories = "users_chat_list";
   static String emitClearChat = "";
   static String emitReportUser = "";
   static String emitReadUnread = "";
@@ -14,7 +14,7 @@ class SocketKeys {
   static String listenerConnectUser = "connect_user_listener";
   static String listenerSendMessage = "send_message_emit";
   static String listenerGetUsers = "user_constant_chat_list";
-  static String listenerChatHistories = "";
+  static String listenerChatHistories = "users_chat_list_listener";
   static String listenerClearChat = "";
   static String listenerReportUser = "";
   static String listenerReadUnread = "";

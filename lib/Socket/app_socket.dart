@@ -3,12 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'controller/chat_msg_controller.dart';
+import 'model/chat_product_user_model.dart';
 import 'model/message_model.dart';
 import 'socket_keys.dart';
 
@@ -96,20 +96,14 @@ class AppSocket {
     // Get Users---------------
     _socketIO?.on(SocketKeys.listenerGetUsers, (data) {
       //
-      ChatMsgController cmc = Get.find();
-
-      List<ChatProductUser> list = [];
-      List<Map<String, dynamic>> ulist =
-          data['getdata'] as List<Map<String, dynamic>>;
-      for (var element in ulist) {
-        list.add(ChatProductUser.fromJson(element));
-      }
       socketPrint(
-          "Listener:---------> (${list.length}) (${SocketKeys.listenerGetUsers}), ${jsonEncode({
+          "Listener:---------> (${SocketKeys.listenerGetUsers}), ${jsonEncode({
             "users": data['getdata']
           })}");
-      // ChatUsersModel users = ChatUsersModel.fromJson({"users": data});
-      cmc.listenerGetUsers(list);
+      ChatMsgController cmc = Get.find();
+
+      ChatProductUsersModel usersModel = ChatProductUsersModel.fromJson(data);
+      cmc.listenerGetUsers(usersModel.getdata ?? []);
     });
     // Send new message---------------
     _socketIO?.on(SocketKeys.listenerSendMessage, (data) {
@@ -124,12 +118,12 @@ class AppSocket {
     _socketIO?.on(SocketKeys.listenerChatHistories, (data) {
       //
       ChatMsgController cmc = Get.find();
+      MessagesModel messagesModel = MessagesModel.fromJson(data);
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerChatHistories}), ${jsonEncode({
             "msgs": data
           })}");
-      // MessagesModel messages = MessagesModel.fromJson({"msgs": data});
-      // cmc.listenerChatHistories(messages.mssages ?? []);
+      cmc.listenerChatHistories(messagesModel.messages ?? []);
     });
     // Clear chat---------------
     _socketIO?.on(SocketKeys.listenerClearChat, (data) {
@@ -215,8 +209,8 @@ class SocketEmits {
   // Get Chat Histories---------------
   static getChatHistories(String receiverId) {
     Map<String, dynamic> req = HashMap();
-    req['sender_id'] = UserStoredInfo().userInfo?.id ?? '';
-    req['receiver_id'] = receiverId;
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['receiverId'] = receiverId;
     socketPrint(
         "Emit:---------> getChatHistories-(${SocketKeys.emitChatHistories}), $req",
         blue: true);

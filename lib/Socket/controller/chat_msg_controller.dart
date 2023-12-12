@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
 import 'package:oninto_flutter/utills/app_toast_loader.dart';
 
-import '../model/chat_user_model.dart';
 import '../model/message_model.dart';
 
 class ChatMsgController extends GetxController {
@@ -78,14 +78,8 @@ class ChatMsgController extends GetxController {
     }
     // socketPrint("Listener:---------> (send_message_listener) ===> $data");
     if (data != null) {
-      // messages.add(data);
-      // messages.refresh();
-      if (UserStoredInfo().userInfo?.id.toString() ==
-          data.senderId.toString()) {
-        SocketEmits.getChatHistories((data.receiverId ?? '').toString());
-      } else {
-        SocketEmits.getChatHistories((data.senderId ?? '').toString());
-      }
+      messages.add(data);
+      messages.refresh();
     }
     // socketPrint("listenerNewMessage---> $data");
   }
@@ -94,7 +88,7 @@ class ChatMsgController extends GetxController {
   listenerChatHistories(List<Message> data) {
     messages.value = data;
     loadingChatHistories.value = false;
-    // socketPrint("listenerChatHistories---> $data");
+    socketPrint("listenerChatHistories---> $data");
   }
 
   // Clear chat----------
@@ -134,25 +128,12 @@ class ChatMsgController extends GetxController {
 
   //----------------------------------------------------------------------------
   // Navigation -------------
-  goToChatRoom(ChatUserInfo reciverInfo) {
-    readUnread(reciverInfo.sId ?? '');
+  goToChatRoom(ChatProductUser reciverInfo) {
+    Get.toNamed(Routes.messageScreen, arguments: {'reciver_info': reciverInfo});
+    readUnread((reciverInfo.receiver?.id ?? '').toString());
+    SocketEmits.getChatHistories((reciverInfo.receiver?.id ?? '').toString());
 
-    SocketEmits.getChatHistories(reciverInfo.sId ?? '');
-    // Get.toNamed(Routes.chatScreen, arguments: {'reciver_info': reciverInfo});
     loadingChatHistories.value = true;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    // SocketEmits.connectUser();
-    // SocketEmits.sendMessage(
-    //     receiverId: "64f9c7095c8ed265e5c100b3", msg: "First name...");
-    // SocketEmits.getChatHistories(
-    //     UserStoredInfo().userInfo?.role == UserRole.worker
-    //         ? "64f9c7095c8ed265e5c100b3"
-    //         : "64f9b5575c8ed265e5c10005");
-    getUsers();
   }
 
   /// Load users --------

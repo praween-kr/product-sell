@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utills/colors_file.dart';
 import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utills/image_view.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});
@@ -126,63 +129,78 @@ class NavBarMsgScreen extends StatelessWidget {
   }
 
   Widget products(List<ChatProductUser> productUsers) {
+    socketPrint("Users: ${productUsers.length}");
     return RefreshIndicator(
       onRefresh: () async {
         await _chatMsgController.getUsers();
         await Future.delayed(const Duration(seconds: 1));
       },
       child: ListView.builder(
-          itemCount: productUsers.length + 1,
+          itemCount: productUsers.length,
           shrinkWrap: true,
-          itemBuilder: (context, position) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 35.0, vertical: 15.0),
-                  child: Column(
+          itemBuilder: (context, index) {
+            ChatProductUser data = productUsers[index];
+            String productImg = ImageBaseUrls.product;
+            if ((data.product?.image ?? '') == '') {
+              if ((data.product?.productImages ?? []).isNotEmpty) {
+                productImg +=
+                    (data.product?.productImages ?? []).first.image ?? '';
+              }
+            } else {
+              productImg += data.product?.image ?? '';
+            }
+            socketPrint("Product Image: $productImg");
+
+            return Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 15.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: GestureDetector(
+                  onTap: () {
+                    _chatMsgController.goToChatRoom(data);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed(Routes.messageScreen);
-                        },
+                      Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                Image.asset(
-                                  Assets.assetsGirlJean,
-                                  height: 57.0,
-                                  width: 57.0,
-                                ),
-                                const SizedBox(
-                                  width: 12.0,
-                                ),
-                                Column(
-                                  children: [
-                                    const AppText(
-                                      text: "Men Tshirt",
-                                      textSize: 15.0,
-                                      color: AppColor.blackColor,
-                                      style: AppTextStyle.title,
-                                    ),
-                                    const SizedBox(
-                                      height: 7.0,
-                                    ),
-                                    AppText(
-                                      text: "Send Images",
-                                      textSize: 12.0,
-                                      color:
-                                          AppColor.blackColor.withOpacity(0.3),
-                                      style: AppTextStyle.medium,
-                                    )
-                                  ],
-                                )
-                              ],
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: AppImage.view(productImg,
+                                  height: 57.0, width: 57.0, fit: BoxFit.cover),
                             ),
-                            Row(
+                            const SizedBox(width: 12.0),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppText(
+                                    text: data.product?.name ?? '',
+                                    textSize: 15.0,
+                                    color: AppColor.blackColor,
+                                    style: AppTextStyle.title,
+                                    maxlines: 1,
+                                  ),
+                                  const SizedBox(height: 7.0),
+                                  AppText(
+                                    text: data.lastMessageIds?.message ?? '',
+                                    textSize: 12.0,
+                                    color: AppColor.blackColor.withOpacity(0.3),
+                                    style: AppTextStyle.medium,
+                                    maxlines: 1,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      (data.unreadCount ?? 0) == 0
+                          ? const SizedBox.shrink()
+                          : Row(
                               children: [
                                 Container(
                                   padding: const EdgeInsets.symmetric(
@@ -191,9 +209,9 @@ class NavBarMsgScreen extends StatelessWidget {
                                     color: AppColor.appcolor,
                                     shape: BoxShape.circle,
                                   ),
-                                  child: const Center(
+                                  child: Center(
                                     child: AppText(
-                                      text: "2",
+                                      text: (data.unreadCount ?? 0).toString(),
                                       color: AppColor.white,
                                       textSize: 10.0,
                                       style: AppTextStyle.regular,
@@ -202,18 +220,10 @@ class NavBarMsgScreen extends StatelessWidget {
                                 )
                               ],
                             )
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
-                Divider(
-                  color: AppColor.blackColor.withOpacity(0.1),
-                  height: 1.0,
-                  thickness: 1.0,
-                )
-              ],
+              ),
             );
           }),
     );
