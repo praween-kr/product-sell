@@ -25,9 +25,7 @@ class SellItemController extends GetxController {
   ].obs;
 
   /// datePicker View
-  // TextEditingController startDateController = TextEditingController();
-  // TextEditingController endDateController = TextEditingController();
-  void pickDate(BuildContext context, int value,
+  void pickDate(int value,
       {required Function(DateTime?) onChanged}) async {
     DateTime? pickedDate = await showDatePicker(
         builder: (context, Widget? child) {
@@ -44,23 +42,12 @@ class SellItemController extends GetxController {
             child: child!,
           );
         },
-        context: context,
+        context: Get.context!,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         //DateTime.now() - not to allow to choose before today.
         lastDate: DateTime(2040));
     onChanged(pickedDate);
-    // if (pickedDate != null) {
-    //   // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-    //   // String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-    //   // print(formattedDate);
-    //   // if (value == 0) {
-    //   //   startDateController.text =
-    //   //       formattedDate; //set output date to TextField value
-    //   // } else {
-    //   //   endDateController.text = formattedDate;
-    //   // }
-    // } else {}
   }
 
   /// ----------- FORM AND API ------------------------------ ///
@@ -81,6 +68,7 @@ class SellItemController extends GetxController {
   // physical product
   var shares = TextEditingController(text: '');
   var basePrice = TextEditingController(text: '');
+  var bidTime = TextEditingController(text: '');
   // co-owner
   var selectedCategory = Rx<CategoryModel?>(null);
   var selectedSubCategory = Rx<CategoryModel?>(null);
@@ -89,6 +77,7 @@ class SellItemController extends GetxController {
   var brand = TextEditingController(text: '');
   var condition = 'Excellent'.obs;
   var sellOption = 'Auction'.obs;
+  var bidDate = Rx<DateTime?>(null);
   var startDate = Rx<DateTime?>(null);
   var endDate = Rx<DateTime?>(null);
   var price = TextEditingController(text: '');

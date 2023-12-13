@@ -20,10 +20,46 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+    <array>
+            <dict>
+        		<key>CFBundleTypeRole</key>
+        		<string>Editor</string>
+        		<key>CFBundleURLSchemes</key>
+        		<array>
+        			<string>com.googleusercontent.apps.227272123288-csb4e1kse11vl3mc3f42jif6q182303s</string>
+        		</array>
+        	</dict>
+        	<dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                	<string>fb{your-app-id}</string>
+                	<string>com.googleusercontent.apps.227272123288-csb4e1kse11vl3mc3f42jif6q182303s</string>
+                </array>
+            </dict>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSAllowsArbitraryLoadsInWebContent</key>
+        <true/>
+    </dict>
+    <key>FacebookAppID</key>
+    <string>{your-app-id}</string>
+    <key>FacebookDisplayName</key>
+    <string>{your-app-name}</string>
+    <key>FacebookClientToken</key>
+    <string>CLIENT-TOKEN</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+    </array>
 	<key>NSCameraUsageDescription</key>
     <string>To capture profile photo please grant camera access</string>
     <key>NSMicrophoneUsageDescription</key>
