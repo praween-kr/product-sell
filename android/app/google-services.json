@@ -12,7 +12,20 @@
           "package_name": "com.app.ownitoo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "227272123288-f8r7ofn2s54aplss20foe896gfu6avr1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.ownitoo",
+            "certificate_hash": "ecb057a1d49c851d9b4d97d37c338395364954ea"
+          }
+        },
+        {
+          "client_id": "227272123288-ir0384q98f4c6p5us7qrq1h728g0lhhu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAsS7PMqr_QU4sgTUYKsrb04kC0qDHjuho"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227272123288-ir0384q98f4c6p5us7qrq1h728g0lhhu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "227272123288-csb4e1kse11vl3mc3f42jif6q182303s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.ownitoo"
+              }
+            }
+          ]
         }
       }
     }

@@ -9,8 +9,6 @@ import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/push_notification_services/push_notification_services.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
-
-import 'firebase_options.dart';
 import 'routes/app_routes.dart';
 import 'service/local/db_helper.dart';
 import 'service/local/local_store_keys.dart';

@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '227272123288',
     projectId: 'ownitoo-5ecfe',
     storageBucket: 'ownitoo-5ecfe.appspot.com',
+    androidClientId: '227272123288-f8r7ofn2s54aplss20foe896gfu6avr1.apps.googleusercontent.com',
+    iosClientId: '227272123288-csb4e1kse11vl3mc3f42jif6q182303s.apps.googleusercontent.com',
     iosBundleId: 'com.app.ownitoo',
   );
 }

@@ -10,14 +10,15 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/helper/social_login_helper.dart';
 import 'package:oninto_flutter/utils/regex.dart';
 
 import '../../utils/colors_file.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
   // final controller = Get.put(Homecontroller());
-  AuthController authController = Get.find();
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +228,7 @@ class LoginScreen extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         offset: Offset(0, 2),
-                        color: Color(0xff290000000),
+                        color: Colors.black45,
                         // spreadRadius: 2,
                         blurRadius: 6,
                       ),
@@ -261,35 +262,16 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                      decoration: BoxDecoration(boxShadow: const [
-                        BoxShadow(
-                            color: Color(0xff29000000),
-                            offset: Offset(5, 5),
-                            blurRadius: 5)
-                      ], borderRadius: BorderRadius.circular(15)),
-                      child: Image.asset(Assets.assetsGoogle,
-                          height: 50, width: 50)),
-                  const SizedBox(width: 20),
-                  Container(
-                      decoration: BoxDecoration(boxShadow: const [
-                        BoxShadow(
-                            color: Color(0xff29000000),
-                            offset: Offset(5, 5),
-                            blurRadius: 5)
-                      ], borderRadius: BorderRadius.circular(15)),
-                      child:
-                          Image.asset(Assets.assetsFb, height: 50, width: 50)),
-                  const SizedBox(width: 20),
-                  Container(
-                      decoration: BoxDecoration(boxShadow: const [
-                        BoxShadow(
-                            color: Color(0xff29000000),
-                            offset: Offset(5, 5),
-                            blurRadius: 5)
-                      ], borderRadius: BorderRadius.circular(15)),
-                      child: Image.asset(Assets.assetsApple,
-                          height: 50, width: 50)),
+                  socialLoginButton(image:Assets.assetsGoogle,onTap: ()async{
+                  var result = await  SocialLoginHelper.loginWithGoogle();
+                  print("result $result");
+                  }),
+                  const SizedBox(width: 15,),
+                  socialLoginButton(image:Assets.assetsFb,onTap: (){}),
+                  GetPlatform.isIOS
+                      ? const SizedBox(width: 15,):Container(),
+                  GetPlatform.isIOS
+                      ? socialLoginButton(image:Assets.assetsApple,onTap: (){}):Container(),
                 ],
               ),
               const SizedBox(
@@ -324,4 +306,20 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget socialLoginButton({required String image,required Function onTap}){
+    return GestureDetector(
+      onTap: ()=>onTap(),
+      child: Card(
+        elevation: 3,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)
+        ),
+        child: Image.asset(image,
+            height: 50, width: 50),
+      ),
+    );
+  }
+
 }

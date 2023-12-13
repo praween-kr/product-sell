@@ -62,14 +62,19 @@ class AppPicker {
                   onClick: () async {
                     Get.back();
                     var path = await (picker(AttachmentPicker.VIDEO_GALLERY));
-                    final fileName = await VideoThumbnail.thumbnailFile(
-                        video: path,
-                        thumbnailPath: (await getTemporaryDirectory()).path,
-                        imageFormat: ImageFormat.WEBP,
-                        maxHeight: 64,
-                        quality: 75);
-                    AppPrint.all(fileName.toString());
-                    onChanged(path, AttachmentPicker.VIDEO, fileName);
+                    if(path!=null){
+                      final fileName = await VideoThumbnail.thumbnailFile(
+                          video: path,
+                          thumbnailPath: (await getTemporaryDirectory()).path,
+                          imageFormat: ImageFormat.WEBP,
+                          maxHeight: 64,
+                          quality: 75);
+                      AppPrint.all(fileName.toString());
+                      onChanged(path, AttachmentPicker.VIDEO, fileName);
+                    }
+                    else{
+                      AppPrint.all("no video selected");
+                    }
                   },
                   title: "Video",
                   icon: Icons.camera_alt_rounded),
@@ -236,7 +241,7 @@ class AppPicker {
     if (croppedFile != null) {
       return croppedFile.path;
     } else {
-      print('No image selected.');
+      debugPrint('No image selected.');
     }
     return null;
   }
