@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 import '../../common_widget/color_constant.dart';
 

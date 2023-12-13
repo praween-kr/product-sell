@@ -4,9 +4,9 @@ import 'package:oninto_flutter/common_controller/product/my_product_controller.d
 import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/utills/common_widgets.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
+import 'package:oninto_flutter/utils/common_widgets.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../../common_widget/appbar.dart';
 

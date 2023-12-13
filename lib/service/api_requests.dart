@@ -16,8 +16,8 @@ import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 import 'apis.dart';
 import 'base_api_call.dart';

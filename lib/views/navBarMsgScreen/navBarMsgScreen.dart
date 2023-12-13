@@ -6,8 +6,8 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});

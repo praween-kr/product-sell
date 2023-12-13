@@ -4,7 +4,7 @@ import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatelessWidget {

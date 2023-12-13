@@ -10,7 +10,7 @@ import '../../../common_widget/color_constant.dart';
 import '../../../common_widget/common_button.dart';
 import '../../../generated/assets.dart';
 import '../../../routes/routes.dart';
-import '../../../utills/colors_file.dart';
+import '../../../utils/colors_file.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});

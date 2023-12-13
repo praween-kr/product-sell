@@ -5,7 +5,7 @@ import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 
 import '../../../common_widget/appbar.dart';
-import '../../../utills/colors_file.dart';
+import '../../../utils/colors_file.dart';
 
 class CmsScreen extends StatelessWidget {
   CmsScreen({super.key, required});

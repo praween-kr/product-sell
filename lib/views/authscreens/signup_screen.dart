@@ -11,7 +11,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../common_widget/app_text.dart';
-import '../../utills/colors_file.dart';
+import '../../utils/colors_file.dart';
 import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {

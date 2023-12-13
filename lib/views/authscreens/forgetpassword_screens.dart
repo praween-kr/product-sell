@@ -5,7 +5,7 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
 
 class ForgotScreen extends StatelessWidget {
   const ForgotScreen({super.key});

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/settings/my_favourite_product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 
 class FavouritesController extends GetxController {
   var loadingData = false.obs;

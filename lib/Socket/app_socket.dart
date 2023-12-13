@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'controller/chat_msg_controller.dart';

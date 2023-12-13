@@ -6,15 +6,15 @@ import 'package:oninto_flutter/common_controller/product/my_product_controller.d
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
 import 'package:oninto_flutter/common_widget/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/utills/date_time_formates.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../../common_widget/app_text.dart';
 import '../../../common_widget/appbar.dart';
 import '../../../common_widget/color_constant.dart';
 import '../../../common_widget/common_button.dart';
 import '../../../routes/routes.dart';
-import '../../../utills/colors_file.dart';
+import '../../../utils/colors_file.dart';
 
 class MyPysicalProductDetailScreen extends StatelessWidget {
   MyPysicalProductDetailScreen({super.key});

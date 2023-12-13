@@ -3,7 +3,7 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 
 class CategoriesController extends GetxController {
   var loadingData = false.obs;

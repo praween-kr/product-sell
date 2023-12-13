@@ -6,8 +6,8 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/common_widget/details_images_view.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 class CoOwnerProductDetailsScreen extends StatelessWidget {
   CoOwnerProductDetailsScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
 
 class DetailsImagesView extends StatefulWidget {
   const DetailsImagesView({super.key, required this.images});

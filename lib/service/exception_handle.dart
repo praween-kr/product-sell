@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 class ApiException {
   static onError(DioException error) {

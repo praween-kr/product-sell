@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:oninto_flutter/utills/google/get_current_location.dart';
+import 'package:oninto_flutter/utils/google/get_current_location.dart';
 
 class AppMapView extends StatefulWidget {
   AppMapView({super.key, this.initialLatLong});

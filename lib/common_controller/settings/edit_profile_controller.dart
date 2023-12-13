@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
-import 'package:oninto_flutter/utills/regex.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/regex.dart';
 
 class EditProfileController extends GetxController {
   //

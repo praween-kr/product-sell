@@ -10,10 +10,10 @@ import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/userInfo_globle.dart';
-import 'package:oninto_flutter/utills/common_widgets.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
-import 'package:oninto_flutter/utills/widgets/dialogs.dart';
+import 'package:oninto_flutter/utils/common_widgets.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../common_widget/app_textfield.dart';
 

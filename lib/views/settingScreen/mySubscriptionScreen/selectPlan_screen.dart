@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/subscription_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../common_widget/color_constant.dart';
 import '../../../routes/routes.dart';
-import '../../../utills/common_appbar.dart';
+import '../../../utils/common_appbar.dart';
 
 class SelectPlanScreen extends StatelessWidget {
   SelectPlanScreen({super.key});

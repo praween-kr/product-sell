@@ -25,7 +25,7 @@ void openSettingsForPermission(
                         color: Colors.blue)),
                 const SizedBox(height: 8),
                 Text(
-                  "To $purposeText, allow Jobbie access to your $typeText.\nTap Settings > Permissions, and turn $typeText on.",
+                  "To $purposeText, allow Onito access to your $typeText.\nTap Settings > Permissions, and turn $typeText on.",
                   style: const TextStyle(fontSize: 14),
                   textAlign: TextAlign.center,
                 ),

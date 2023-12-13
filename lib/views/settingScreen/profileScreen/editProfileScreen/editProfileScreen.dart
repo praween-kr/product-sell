@@ -11,7 +11,7 @@ import '../../../../common_widget/app_textfield.dart';
 import '../../../../common_widget/appbar.dart';
 import '../../../../common_widget/color_constant.dart';
 import '../../../../common_widget/common_button.dart';
-import '../../../../utills/colors_file.dart';
+import '../../../../utils/colors_file.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});

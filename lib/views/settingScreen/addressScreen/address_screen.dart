@@ -6,11 +6,11 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/settings/address_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/empty_widget.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
 
 import '../../../common_widget/common_button.dart';
-import '../../../utills/colors_file.dart';
-import '../../../utills/common_appbar.dart';
+import '../../../utils/colors_file.dart';
+import '../../../utils/common_appbar.dart';
 
 class AddressScreen extends StatelessWidget {
   AddressScreen({super.key});
