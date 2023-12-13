@@ -267,11 +267,17 @@ class LoginScreen extends StatelessWidget {
                   print("result $result");
                   }),
                   const SizedBox(width: 15,),
-                  socialLoginButton(image:Assets.assetsFb,onTap: (){}),
+                  socialLoginButton(image:Assets.assetsFb,onTap: ()async{
+                    var fbResult = await  SocialLoginHelper.loginWithFacebook();
+                    print("fbResult $fbResult");
+                  }),
                   GetPlatform.isIOS
                       ? const SizedBox(width: 15,):Container(),
                   GetPlatform.isIOS
-                      ? socialLoginButton(image:Assets.assetsApple,onTap: (){}):Container(),
+                      ? socialLoginButton(image:Assets.assetsApple,onTap: ()async{
+                    var appleResult = await  SocialLoginHelper.loginWithApple();
+                    print("appleResult $appleResult");
+                  }):Container(),
                 ],
               ),
               const SizedBox(
