@@ -2,18 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>227272123288-csb4e1kse11vl3mc3f42jif6q182303s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.227272123288-csb4e1kse11vl3mc3f42jif6q182303s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>227272123288-f8r7ofn2s54aplss20foe896gfu6avr1.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD6ANJCMNzFdZ9t-hB0YB7N16ydsZ7zC9Y</string>
+	<string>AIzaSyBZ8zJS9sP9MXhfr3IT4VYHGqG9RD6xcjQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>174361222654</string>
+	<string>227272123288</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.onintoapp.onintoFlutter</string>
+	<string>com.app.ownitoo</string>
 	<key>PROJECT_ID</key>
-	<string>ownitoo</string>
+	<string>ownitoo-5ecfe</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ownitoo.appspot.com</string>
+	<string>ownitoo-5ecfe.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:174361222654:ios:af7e7a5518f1aac4ee34af</string>
+	<string>1:227272123288:ios:86566ba7a908f7390901ed</string>
 </dict>
 </plist>
