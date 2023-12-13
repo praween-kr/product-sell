@@ -1,6 +1,6 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:oninto_flutter/utills/permission/open_settings.dart';
+import 'package:oninto_flutter/utils/permission/open_settings.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CurrentLocation {

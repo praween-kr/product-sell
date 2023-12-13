@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
 
 class FavouriteButton extends StatefulWidget {
-  FavouriteButton(
+  const FavouriteButton(
       {super.key,
       required this.onClick,
       required this.isFavourite,
       this.size,
       this.activeColor,
-      this.unactiveColor,
+      this.inActiveColor,
       this.activeIcon,
-      this.unactiveIcon});
+      this.inActiveIcon});
   final Function onClick;
   final bool isFavourite;
-  Color? activeColor;
-  Color? unactiveColor;
-  double? size;
-  IconData? activeIcon;
-  IconData? unactiveIcon;
+  final Color? activeColor;
+  final Color? inActiveColor;
+  final double? size;
+  final IconData? activeIcon;
+  final IconData? inActiveIcon;
 
   @override
   State<FavouriteButton> createState() => _FavouriteButtonState();
@@ -47,8 +47,8 @@ class _FavouriteButtonState extends State<FavouriteButton>
         child: widget.isFavourite
             ? Icon(widget.activeIcon ?? Icons.favorite,
                 size: widget.size, color: widget.activeColor ?? themeColor)
-            : Icon(widget.unactiveIcon ?? Icons.favorite_border,
-                size: widget.size, color: widget.unactiveColor ?? themeColor),
+            : Icon(widget.inActiveIcon ?? Icons.favorite_border,
+                size: widget.size, color: widget.inActiveColor ?? themeColor),
       ),
     );
   }

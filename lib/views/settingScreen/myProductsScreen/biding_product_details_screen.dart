@@ -8,14 +8,14 @@ import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/common_widget/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
-import 'package:oninto_flutter/utills/date_time_formates.dart';
-import 'package:oninto_flutter/utills/favourite_button.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
-import 'package:oninto_flutter/utills/widgets/dialogs.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/favourite_button.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../../common_widget/color_constant.dart';
-import '../../../utills/colors_file.dart';
+import '../../../utils/colors_file.dart';
 
 class BidingProductDetailsScreen extends StatelessWidget {
   BidingProductDetailsScreen({super.key}) {

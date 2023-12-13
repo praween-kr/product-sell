@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_controller.dart';
 import '../../../generated/assets.dart';
-import '../../../utills/colors_file.dart';
+import '../../../utils/colors_file.dart';
 
 class SettingPaymentScreen extends StatelessWidget {
    SettingPaymentScreen({super.key});

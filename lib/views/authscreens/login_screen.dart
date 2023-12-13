@@ -8,11 +8,11 @@ import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
-import 'package:oninto_flutter/utills/regex.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/regex.dart';
 
-import '../../utills/colors_file.dart';
+import '../../utils/colors_file.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);

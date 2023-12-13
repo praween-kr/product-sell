@@ -6,9 +6,9 @@ import 'package:oninto_flutter/common_widget/app_text.dart';
 import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/empty_widget.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 class SubCategoriesScreen extends StatelessWidget {
   SubCategoriesScreen({super.key});

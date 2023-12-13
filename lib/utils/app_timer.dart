@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
 
 class AppTimer extends StatelessWidget {
-  AppTimer({super.key, required this.bidNow, required this.endTime});
+  const AppTimer({super.key, required this.bidNow, required this.endTime});
   final Function bidNow;
   final DateTime endTime;
 
-  bool _running = true;
+  static bool _running = true;
   Stream<String> _clock() async* {
     while (_running) {
       await Future<void>.delayed(const Duration(seconds: 1));

@@ -6,7 +6,7 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/views/insight_screen/insight_controller.dart';
 import '../../common_widget/app_text.dart';
 import '../../common_widget/color_constant.dart';
-import '../../utills/colors_file.dart';
+import '../../utils/colors_file.dart';
 
 class InsightsScreen extends StatelessWidget {
    InsightsScreen({super.key});

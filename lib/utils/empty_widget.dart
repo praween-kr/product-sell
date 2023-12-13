@@ -25,7 +25,7 @@ class EmptyWidgets {
             child: Stack(
           alignment: Alignment.center,
           children: [
-            Lottie.asset(Assets.lottieNoChat),
+            Lottie.asset(Assets.lottieNoMessage),
             Positioned(
               top: Get.height * 0.22,
               child: const Text(

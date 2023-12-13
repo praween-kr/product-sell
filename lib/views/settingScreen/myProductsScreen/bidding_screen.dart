@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
 
 import '../../../common_widget/appbar.dart';
 import '../../../common_widget/color_constant.dart';

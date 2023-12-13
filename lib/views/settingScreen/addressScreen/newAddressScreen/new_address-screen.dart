@@ -5,12 +5,12 @@ import 'package:oninto_flutter/common_controller/settings/address_controller.dar
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/utills/google/pick_location_map.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
+import 'package:oninto_flutter/utils/google/pick_location_map.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../../../common_widget/appbar.dart';
-import '../../../../utills/common_appbar.dart';
+import '../../../../utils/common_appbar.dart';
 
 class NewAddressScreen extends StatelessWidget {
   NewAddressScreen({super.key});

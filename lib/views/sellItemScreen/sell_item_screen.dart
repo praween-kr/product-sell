@@ -12,14 +12,14 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/utills/helper/file_picker.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
+import 'package:oninto_flutter/utils/helper/file_picker.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../routes/routes.dart';
-import '../../utills/common_appbar.dart';
+import '../../utils/common_appbar.dart';
 
 class SellItemScreen extends StatelessWidget {
   SellItemScreen({super.key});

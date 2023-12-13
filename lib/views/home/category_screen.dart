@@ -4,9 +4,9 @@ import 'package:oninto_flutter/common_controller/home/categories_controller.dart
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/empty_widget.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../common_widget/app_text.dart';
 import '../../common_widget/appbar.dart';

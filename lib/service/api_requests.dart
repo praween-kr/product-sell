@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/auth/cms_model.dart';
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
@@ -14,9 +15,9 @@ import 'package:oninto_flutter/model/settings/my_favourite_product_model.dart';
 import 'package:oninto_flutter/service/dio/shared/page_response.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 import 'apis.dart';
 import 'base_api_call.dart';
@@ -30,7 +31,7 @@ class ApiRequests {
       {required String phoneEmail, required String password}) async {
     AppLoader.show();
     // FirebaseMessaging.instance.getToken().then((value) {
-    //   print("FCM Token: $value");
+    //   debugPrint("FCM Token: $value");
     // });
 
     // final fcmToken = await FirebaseMessaging.instance.getToken();
@@ -73,7 +74,7 @@ class ApiRequests {
       required String confirmPassword}) async {
     AppLoader.show();
     // final fcmToken = await FirebaseMessaging.instance.getToken().then((value) {
-    //   print("FCM Token: $value");
+    //   debugPrint("FCM Token: $value");
     // });
     Map<String, dynamic> reqdata = {
       "firstName": firstName,
@@ -170,7 +171,7 @@ class ApiRequests {
     required LatLng? cordinates,
   }) async {
     AppLoader.show();
-    print("location.text.trim(): $location");
+    debugPrint("location.text.trim(): $location");
     var data = await BaseApiCall().putReq(AppApis.updateProfile, data: {
       "firstName": firstName,
       "lastName": lastName,

@@ -16,7 +16,7 @@ class OnBoardingScreen extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: PageView.builder(
-          // physics: const NeverScrollableScrollPhysics(),
+           physics: const ClampingScrollPhysics(),
           onPageChanged: controller.onPageChanged,
           itemCount: controller.onBoardingData.length,
           controller: controller.pageController,

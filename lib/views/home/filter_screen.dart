@@ -6,12 +6,12 @@ import 'package:oninto_flutter/common_widget/appbar.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
-import 'package:oninto_flutter/utills/empty_widget.dart';
-import 'package:oninto_flutter/utills/favourite_button.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/favourite_button.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 class FilterScreen extends StatelessWidget {
   FilterScreen({super.key});

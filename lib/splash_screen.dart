@@ -5,10 +5,10 @@ import 'package:oninto_flutter/model/auth/user_info_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 
 import 'common_controller/auth/auth_controller.dart';
-import 'service/local/userInfo_globle.dart';
+import 'service/local/userInfo_global.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

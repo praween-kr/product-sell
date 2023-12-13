@@ -9,11 +9,11 @@ import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../model/onboard_model.dart';
-import '../../utills/helper/camera_helper.dart';
+import '../../utils/helper/camera_helper.dart';
 
 class HomeCatProductcontroller extends GetxController
     implements CameraOnCompleteListener {

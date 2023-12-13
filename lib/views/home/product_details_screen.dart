@@ -12,10 +12,10 @@ import 'package:oninto_flutter/common_widget/common_button.dart';
 import 'package:oninto_flutter/common_widget/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utills/colors_file.dart';
-import 'package:oninto_flutter/utills/common_appbar.dart';
-import 'package:oninto_flutter/utills/date_time_formates.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/colors_file.dart';
+import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../common_widget/color_constant.dart';
 

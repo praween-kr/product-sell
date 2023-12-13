@@ -11,7 +11,7 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../common_widget/app_text.dart';
-import '../../utills/colors_file.dart';
+import '../../utils/colors_file.dart';
 import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -212,7 +212,7 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Obx(
                     () => AppTextField(
-                        isObscure: authController.passwordVisibile.value,
+                        isObscure: authController.passwordVisible.value,
                         controller: authController.password,
                         height: 50,
                         borderRadius: BorderRadius.circular(19),
@@ -223,7 +223,7 @@ class SignUpScreen extends StatelessWidget {
                         contentPadding:
                             const EdgeInsets.only(top: 30, left: 20),
                         suffix: IconButton(
-                          icon: authController.passwordVisibile.value
+                          icon: authController.passwordVisible.value
                               ? Icon(
                                   Icons.visibility_off,
                                   size: 20,
@@ -235,8 +235,8 @@ class SignUpScreen extends StatelessWidget {
                                   color: AppColor.blackColor.withOpacity(0.3),
                                 ),
                           onPressed: () {
-                            authController.passwordVisibile.value =
-                                !authController.passwordVisibile.value;
+                            authController.passwordVisible.value =
+                                !authController.passwordVisible.value;
                           },
                         )),
                   ),

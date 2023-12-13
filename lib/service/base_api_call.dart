@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 import 'apis.dart';
 import 'dio/injector.dart';
@@ -87,7 +87,7 @@ class BaseApiCall {
           return response.data;
         }
       }
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       ApiException.onError(error);
     }
   }
@@ -108,7 +108,7 @@ class BaseApiCall {
         showToast ? AppToast.show(response.data['message']) : null;
       }
       // ignore: deprecated_member_use
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       ApiException.onError(error);
     }
     return null;
@@ -130,7 +130,7 @@ class BaseApiCall {
         showToast ? AppToast.show(response.data['message']) : null;
       }
       // ignore: deprecated_member_use
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       ApiException.onError(error);
     }
     return null;
@@ -185,7 +185,7 @@ class BaseApiCall {
       }
       // Conver
       FormData formData = FormData.fromMap(map);
-      print("Form Post Request Data===> ${formData.fields}");
+      debugPrint("Form Post Request Data===> ${formData.fields}");
       Response response = await _dio.post(AppApis.baseUrl + endPoint,
           data: FormData.fromMap(map),
           options: Injector
@@ -203,7 +203,7 @@ class BaseApiCall {
         AppToast.show(response.data['message']);
       }
       // ignore: deprecated_member_use
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       ApiException.onError(error);
     }
     return null;
@@ -259,7 +259,7 @@ class BaseApiCall {
       }
       // Conver
       FormData formData = FormData.fromMap(map);
-      print("Form Post Request Data===> ${formData.fields}");
+      debugPrint("Form Post Request Data===> ${formData.fields}");
       Response response = await _dio.put(AppApis.baseUrl + endPoint,
           data: FormData.fromMap(map),
           options: Injector
@@ -277,7 +277,7 @@ class BaseApiCall {
         AppToast.show(response.data['message']);
       }
       // ignore: deprecated_member_use
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       ApiException.onError(error);
     }
     return null;
@@ -311,7 +311,7 @@ class BaseApiCall {
           return response.data;
         }
       }
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       ApiException.onError(error);
     }
   }

@@ -4,15 +4,15 @@ import 'package:oninto_flutter/common_controller/home/categories_controller.dart
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/utills/app_print.dart';
-import 'package:oninto_flutter/utills/app_timer.dart';
-import 'package:oninto_flutter/utills/app_toast_loader.dart';
-import 'package:oninto_flutter/utills/empty_widget.dart';
-import 'package:oninto_flutter/utills/favourite_button.dart';
-import 'package:oninto_flutter/utills/image_view.dart';
-import 'package:oninto_flutter/utills/shimmer_widget.dart';
-import 'package:oninto_flutter/utills/widgets/blure_widget.dart';
-import 'package:oninto_flutter/utills/widgets/dialogs.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_timer.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/favourite_button.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/widgets/blure_widget.dart';
+import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../common_widget/app_text.dart';
@@ -21,7 +21,7 @@ import '../../common_widget/color_constant.dart';
 import '../../common_widget/common_button.dart';
 import '../../generated/assets.dart';
 import '../../routes/routes.dart';
-import '../../utills/colors_file.dart';
+import '../../utils/colors_file.dart';
 
 class CategoryWiseProductsScreen extends StatelessWidget {
   CategoryWiseProductsScreen({super.key});

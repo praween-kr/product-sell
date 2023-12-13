@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:oninto_flutter/service/exception_handle.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 
 import '../../main.dart';
 import '../app_keys.dart';
@@ -40,7 +40,7 @@ class Injector {
   static Options? getHeaderToken() {
     String? token = UserStoredInfo().userInfo?.token;
     if (kDebugMode) {
-      print("User Token => $token");
+      debugPrint("User Token => $token");
     }
     debugPrint("User Id => ${UserStoredInfo().userInfo?.token}");
     var headerOptions = Options(
@@ -52,7 +52,7 @@ class Injector {
   static Options? requestHeaderToken(String method) {
     String? token = UserStoredInfo().userInfo?.token;
     if (kDebugMode) {
-      print("User Token => $token");
+      debugPrint("User Token => $token");
     }
     debugPrint("User Id => ${UserStoredInfo().userInfo?.token}");
     var headerOptions =
@@ -75,66 +75,66 @@ class LoggingInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (kDebugMode) {
-      print(
+      debugPrint(
           "--> ${options.method.toUpperCase()} ${"${options.baseUrl}${options.path}"}");
-      print("Headers:");
-      options.headers.forEach((k, v) => print('$k: $v'));
-      print("queryParameters:");
-      options.queryParameters.forEach((k, v) => print('$k: $v'));
+      debugPrint("Headers:");
+      options.headers.forEach((k, v) => debugPrint('$k: $v'));
+      debugPrint("queryParameters:");
+      options.queryParameters.forEach((k, v) => debugPrint('$k: $v'));
       if (options.data != null) {
         try {
-          // print("Body: ${printObject(options.data)}");
+          // debugPrint("Body: ${printObject(options.data)}");
           FormData formData = options.data as FormData;
-          print("Body:");
+          debugPrint("Body:");
           var buffer = [];
           for (MapEntry<String, String> pair in formData.fields) {
             buffer.add('${pair.key}:${pair.value}');
           }
-          print("Body:{${buffer.join(', ')}}");
+          debugPrint("Body:{${buffer.join(', ')}}");
         } catch (e) {
-          print("Body: ${printObject(options.data)}");
+          debugPrint("Body: ${printObject(options.data)}");
         }
       }
-      print(
+      debugPrint(
           "--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}");
     }
     return super.onRequest(options, handler);
   }
 
   @override
-  void onError(DioError dioError, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     if (kDebugMode) {
-      print(
-          "<-- ${dioError.message} ${(dioError.response?.requestOptions != null ? (dioError.response!.requestOptions.baseUrl + dioError.response!.requestOptions.path) : 'URL')}");
-      print(
-          "${dioError.response != null ? dioError.response!.data : 'Unknown Error'}");
-      print("<-- End error");
+      debugPrint(
+          "<-- ${err.message} ${(err.response?.requestOptions != null ? (err.response!.requestOptions.baseUrl + err.response!.requestOptions.path) : 'URL')}");
+      debugPrint(
+          "${err.response != null ? err.response!.data : 'Unknown Error'}");
+      debugPrint("<-- End error");
     }
     // if (dioError.response?.statusCode == 400) {
     //   MyApp.startFirstScreen("Session expire. Please login again.");
     // }
-    if (dioError.response?.statusCode == 401) {
+    if (err.response?.statusCode == 401) {
       MyApp.startFirstScreen("Session expire. Please login again.");
     }
-    ApiException.onError(dioError);
+    ApiException.onError(err);
     //else if (dioError.response?.statusCode == 402) {
     //   MyApp.startFirstScreen("Your account is inactive from admin. Please contact at support@karmakid.com");
     // }
     // else if (dioError.response?.statusCode == 403) {
     //   MyApp.startFirstScreen("Session expire. Please login again.");
     // }
-    return super.onError(dioError, handler);
+    return super.onError(err, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
-      print(
+      debugPrint(
           "<-- ${response.statusCode} ${(response.requestOptions != null ? (response.requestOptions.baseUrl + response.requestOptions.path) : 'URL')}");
-      print("Headers:");
-      response.headers.forEach((k, v) => print('$k: $v'));
-      print("Response: ${response.data}");
-      print("<-- END HTTP");
+      debugPrint("Headers:");
+      response.headers.forEach((k, v) => debugPrint('$k: $v'));
+      debugPrint("Response: ${response.data}");
+      debugPrint("<-- END HTTP");
     }
     return super.onResponse(response, handler);
   }
