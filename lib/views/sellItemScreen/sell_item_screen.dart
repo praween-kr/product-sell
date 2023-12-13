@@ -81,6 +81,7 @@ class SellItemScreen extends StatelessWidget {
               ),
         Expanded(
           child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Column(
@@ -280,7 +281,31 @@ class SellItemScreen extends StatelessWidget {
                                 AppTextField(
                                   controller: controller.basePrice,
                                   height: 46.0,
-                                  title: "Enter Price",
+                                  title: "Select date",
+                                  margin: const EdgeInsets.only(right: 0.0),
+                                  borderRadius: BorderRadius.circular(23),
+                                  containerColor: AppColor.TextColor,
+                                ),
+                                const SizedBox(height: 16.0),
+                                bidDatePicker(
+                                  initialDate:
+                                  controller.bidDate.value,
+                                  date: (DateTime? selected) {
+                                    controller.bidDate.value = selected;
+                                  },
+                                ),
+                                const SizedBox(height: 16.0),
+                                const AppText(
+                                  text: "Bid Time",
+                                  color: AppColor.blackColor,
+                                  textSize: 13.0,
+                                  style: AppTextStyle.medium,
+                                ),
+                                const SizedBox(height: 14.0),
+                                AppTextField(
+                                  controller: controller.basePrice,
+                                  height: 46.0,
+                                  title: "Select time",
                                   margin: const EdgeInsets.only(right: 0.0),
                                   borderRadius: BorderRadius.circular(23),
                                   containerColor: AppColor.TextColor,
@@ -509,7 +534,7 @@ class SellItemScreen extends StatelessWidget {
                                         controller.itemSize.value = newValue!;
                                       },
                                       value: controller.itemSize.value,
-                                      items: controller.sizeItems.value
+                                      items: controller.sizeItems
                                           .map((items) {
                                         return DropdownMenuItem(
                                           value: items,
@@ -608,7 +633,7 @@ class SellItemScreen extends StatelessWidget {
                                         controller.condition.value = newValue!;
                                       },
                                       value: controller.condition.value,
-                                      items: controller.conditionItems.value
+                                      items: controller.conditionItems
                                           .map((items) {
                                         return DropdownMenuItem(
                                           value: items,
@@ -749,7 +774,6 @@ class SellItemScreen extends StatelessWidget {
                                 Obx(() => controller.sellOption.value ==
                                         'Auction'
                                     ? startEndDatesPicker(
-                                        context,
                                         initialDate1:
                                             controller.startDate.value,
                                         initialDate2: controller.endDate.value,
@@ -867,6 +891,8 @@ class SellItemScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 25.0),
+
                 ],
               ),
             ),
@@ -1073,7 +1099,7 @@ class SellItemScreen extends StatelessWidget {
   }
 
   ///Start and End Date View
-  Widget startEndDatesPicker(BuildContext context,
+  Widget startEndDatesPicker(
       {required Function(DateTime?) date1,
       required Function(DateTime?) date2,
       required DateTime? initialDate1,
@@ -1103,7 +1129,7 @@ class SellItemScreen extends StatelessWidget {
           containerColor: AppColor.TextColor,
           suffix: IconButton(
               onPressed: () =>
-                  controller.pickDate(context, 0, onChanged: date1),
+                  controller.pickDate( 0, onChanged: date1),
               icon: Icon(Icons.calendar_month_outlined,
                   size: 16, color: AppColor.blackColor.withOpacity(0.3))),
         ),
@@ -1133,7 +1159,7 @@ class SellItemScreen extends StatelessWidget {
           containerColor: AppColor.TextColor,
           suffix: IconButton(
               onPressed: () =>
-                  controller.pickDate(context, 2, onChanged: date2),
+                  controller.pickDate( 2, onChanged: date2),
               icon: Icon(
                 Icons.calendar_month_outlined,
                 size: 16,
@@ -1141,6 +1167,42 @@ class SellItemScreen extends StatelessWidget {
               )),
         ),
         const SizedBox(height: 14),
+      ],
+    );
+  }
+
+  Widget bidDatePicker(
+      {required Function(DateTime?) date,
+      required DateTime? initialDate}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const AppText(
+            text: "Bid Date",
+            color: AppColor.blackColor,
+            textSize: 13.0,
+            style: AppTextStyle.medium),
+        const SizedBox(height: 14.0),
+        AppTextField(
+          readOnly: true,
+          controller: TextEditingController(
+            text:
+                "${initialDate?.day ?? 'DD'}-${initialDate?.month ?? 'MM'}-${initialDate?.year ?? 'YYYY'}",
+          ),
+          height: 46.0,
+          title: "Bid Date",
+          style: TextStyle(color: initialDate == null ? AppColor.grey : null),
+          hintStyle: const TextStyle(color: AppColor.blackColor, fontSize: 13),
+          //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+          margin: const EdgeInsets.only(right: 0.0),
+          borderRadius: BorderRadius.circular(23),
+          containerColor: AppColor.TextColor,
+          suffix: IconButton(
+              onPressed: () =>
+                  controller.pickDate( 0, onChanged: date),
+              icon: Icon(Icons.calendar_month_outlined,
+                  size: 16, color: AppColor.blackColor.withOpacity(0.3))),
+        ),
       ],
     );
   }
