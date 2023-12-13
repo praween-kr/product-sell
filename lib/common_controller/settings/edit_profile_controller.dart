@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/regex.dart';
 
@@ -17,7 +17,7 @@ class EditProfileController extends GetxController {
   var cordinates = Rx<LatLng?>(null);
 
   initialData() {
-    GlobleController gc = Get.find();
+    GlobalController gc = Get.find();
     firstName.text = gc.userInfo.value?.firstName ?? '';
     lastName.text = gc.userInfo.value?.lastName ?? '';
     email.text = gc.userInfo.value?.email ?? '';

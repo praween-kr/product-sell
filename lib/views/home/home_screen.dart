@@ -9,7 +9,7 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                             child: Obx(
                               () => AppText(
                                 text:
-                                    "  Hello, ${Get.find<GlobleController>().userInfo.value?.firstName ?? ''} ${Get.find<GlobleController>().userInfo.value?.lastName ?? ''}",
+                                    "  Hello, ${Get.find<GlobalController>().userInfo.value?.firstName ?? ''} ${Get.find<GlobalController>().userInfo.value?.lastName ?? ''}",
                                 textSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: Obx(
                                   () => AppText(
-                                    text: Get.find<GlobleController>()
+                                    text: Get.find<GlobalController>()
                                             .userInfo
                                             .value
                                             ?.location ??

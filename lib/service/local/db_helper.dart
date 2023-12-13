@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
 
+import '../../push_notification_services/notification_entity.dart';
+
 class DbHelper {
   static GetStorage box = GetStorage();
   static const JsonDecoder _decoder = JsonDecoder();
@@ -35,6 +37,21 @@ class DbHelper {
     String? data = readData(key);
     return data == null || data == '' ? null : jsonDecode(data);
   }
+
+  NotificationEntity? convertStringToNotificationEntity(String? value) {
+    if (value == null) {
+      return null;
+    }
+    Map<String, dynamic> map = _decoder.convert(value);
+    return NotificationEntity.fromJson(map);
+  }
+
+  String convertNotificationEntityToString(
+      NotificationEntity? notificationEntity) {
+    String value = _encoder.convert(notificationEntity);
+    return value;
+  }
+
 }
 
 /*class KeysDbHelper {

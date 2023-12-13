@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 
 import '../../../common_widget/app_text.dart';
 import '../../../common_widget/appbar.dart';
@@ -14,7 +14,7 @@ import '../../../utils/colors_file.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
-  final GlobleController globleController = Get.find();
+  final GlobalController globleController = Get.find();
 
   @override
   Widget build(BuildContext context) {

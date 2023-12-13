@@ -9,7 +9,7 @@ import 'package:oninto_flutter/common_controller/product/sellItem_controller.dar
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 
 class AuthBinding extends Bindings {
   @override
@@ -28,7 +28,7 @@ class SettingsBinding extends Bindings {
 class GlobleControllerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(GlobleController(), permanent: true);
+    Get.put(GlobalController(), permanent: true);
   }
 }
 

@@ -6,7 +6,7 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
 import 'package:oninto_flutter/service/local/local_store_keys.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/regex.dart';

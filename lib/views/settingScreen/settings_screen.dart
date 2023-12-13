@@ -8,7 +8,7 @@ import 'package:oninto_flutter/common_controller/settings/settings_controller.da
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/common_appbar.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
@@ -17,7 +17,7 @@ class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
   @override
   final SettingsController settingsController = Get.find();
-  final GlobleController globleController = Get.find();
+  final GlobalController globleController = Get.find();
   final CmsController cmsController = Get.find();
   final MyProductController _myProductController = Get.find();
 

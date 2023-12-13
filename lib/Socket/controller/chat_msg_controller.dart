@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
-import 'package:oninto_flutter/service/local/userInfo_globle.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 import '../model/chat_user_model.dart';
