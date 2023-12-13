@@ -160,67 +160,75 @@ class NavBarMsgScreen extends StatelessWidget {
                   onTap: () {
                     _chatMsgController.goToChatRoom(data);
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: AppImage.view(productImg,
-                                  height: 57.0, width: 57.0, fit: BoxFit.cover),
-                            ),
-                            const SizedBox(width: 12.0),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: AppImage.view(productImg,
+                                    height: 57.0,
+                                    width: 57.0,
+                                    fit: BoxFit.cover),
+                              ),
+                              const SizedBox(width: 12.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AppText(
+                                      text:
+                                          "${data.receiver?.firstName ?? ''} ${data.receiver?.lastName ?? ''}",
+                                      textSize: 15.0,
+                                      color: AppColor.blackColor,
+                                      style: AppTextStyle.title,
+                                      maxlines: 1,
+                                    ),
+                                    const SizedBox(height: 7.0),
+                                    AppText(
+                                      text: data.lastMessageIds?.message ?? '',
+                                      textSize: 12.0,
+                                      color:
+                                          AppColor.blackColor.withOpacity(0.3),
+                                      style: AppTextStyle.medium,
+                                      maxlines: 1,
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        (data.unreadCount ?? 0) == 0
+                            ? const SizedBox.shrink()
+                            : Row(
                                 children: [
-                                  AppText(
-                                    text: data.product?.name ?? '',
-                                    textSize: 15.0,
-                                    color: AppColor.blackColor,
-                                    style: AppTextStyle.title,
-                                    maxlines: 1,
-                                  ),
-                                  const SizedBox(height: 7.0),
-                                  AppText(
-                                    text: data.lastMessageIds?.message ?? '',
-                                    textSize: 12.0,
-                                    color: AppColor.blackColor.withOpacity(0.3),
-                                    style: AppTextStyle.medium,
-                                    maxlines: 1,
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    decoration: const BoxDecoration(
+                                      color: AppColor.appcolor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Center(
+                                      child: AppText(
+                                        text:
+                                            (data.unreadCount ?? 0).toString(),
+                                        color: AppColor.white,
+                                        textSize: 10.0,
+                                        style: AppTextStyle.regular,
+                                      ),
+                                    ),
                                   )
                                 ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      (data.unreadCount ?? 0) == 0
-                          ? const SizedBox.shrink()
-                          : Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10.0),
-                                  decoration: const BoxDecoration(
-                                    color: AppColor.appcolor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Center(
-                                    child: AppText(
-                                      text: (data.unreadCount ?? 0).toString(),
-                                      color: AppColor.white,
-                                      textSize: 10.0,
-                                      style: AppTextStyle.regular,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                    ],
+                              )
+                      ],
+                    ),
                   ),
                 ),
               ),

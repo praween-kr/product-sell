@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/db_helper.dart';
@@ -19,6 +20,7 @@ class SettingsController extends GetxController {
   logout() async {
     await ApiRequests.logout();
     DbHelper.deleteData(SharedPrefKeys.userInfo);
+    AppSocket.disconnect();
     NavigateTo.login();
   }
 

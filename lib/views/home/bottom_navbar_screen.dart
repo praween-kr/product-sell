@@ -2,6 +2,7 @@ import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
 import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
@@ -11,8 +12,8 @@ import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
 class BottomScreen extends StatelessWidget {
   BottomScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final controller = Get.put(BottomNavController());
 
   List<TabItem> items = [
@@ -116,6 +117,11 @@ class BottomScreen extends StatelessWidget {
 
       case 2:
         {
+          if (ChatMsgController().initialized) {
+            Get.find<ChatMsgController>().getUsers();
+          } else {
+            Get.put(ChatMsgController()).getUsers();
+          }
           return NavBarMsgScreen();
         }
       case 3:

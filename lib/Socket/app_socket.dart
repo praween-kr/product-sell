@@ -59,6 +59,7 @@ class AppSocket {
 
   static disconnect() {
     if (_socketIO != null) {
+      SocketEmits.disConnectUser();
       _socketIO?.disconnect();
       _socketIO?.close();
       _socketIO?.dispose();
@@ -84,15 +85,16 @@ class AppSocket {
   _initListener() {
     // Connect user---------------
     _socketIO?.on(SocketKeys.listenerConnectUser, (data) {
-      //
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerConnectUser}), ${jsonEncode(data)}");
-
-      // if (!data.toString().contains("longitude")) {
-      //   ChatMsgController cmc = Get.find();
-      //   cmc.listenerUserConnected(data as Map<String, dynamic>);
-      // }
     });
+
+    // Disconnect user---------------
+    _socketIO?.on(SocketKeys.listenerDisconnectUser, (data) {
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerDisconnectUser}), ${jsonEncode(data)}");
+    });
+
     // Get Users---------------
     _socketIO?.on(SocketKeys.listenerGetUsers, (data) {
       //
@@ -100,11 +102,13 @@ class AppSocket {
           "Listener:---------> (${SocketKeys.listenerGetUsers}), ${jsonEncode({
             "users": data['getdata']
           })}");
+
       ChatMsgController cmc = Get.find();
 
       ChatProductUsersModel usersModel = ChatProductUsersModel.fromJson(data);
       cmc.listenerGetUsers(usersModel.getdata ?? []);
     });
+
     // Send new message---------------
     _socketIO?.on(SocketKeys.listenerSendMessage, (data) {
       //
@@ -114,9 +118,19 @@ class AppSocket {
       Message newMsg = Message.fromJson(data);
       cmc.listenerNewMessage(newMsg);
     });
+
+    // Delete message---------------
+    _socketIO?.on(SocketKeys.listenerDeleteMsg, (data) {
+      //
+      ChatMsgController cmc = Get.find();
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerDeleteMsg}), ${jsonEncode(data)}");
+
+      cmc.listenerDeleteMessage();
+    });
+
     // Histories of chat---------------
     _socketIO?.on(SocketKeys.listenerChatHistories, (data) {
-      //
       ChatMsgController cmc = Get.find();
       MessagesModel messagesModel = MessagesModel.fromJson(data);
       socketPrint(
@@ -125,6 +139,7 @@ class AppSocket {
           })}");
       cmc.listenerChatHistories(messagesModel.messages ?? []);
     });
+
     // Clear chat---------------
     _socketIO?.on(SocketKeys.listenerClearChat, (data) {
       //
@@ -136,6 +151,7 @@ class AppSocket {
 
       cmc.listenerClearChat(true);
     });
+
     // Report User---------------
     _socketIO?.on(SocketKeys.listenerReportUser, (data) {
       //
@@ -148,6 +164,7 @@ class AppSocket {
 
       cmc.listenerReportUser(true);
     });
+
     // Read/Unread messages ---------------
     _socketIO?.on(SocketKeys.listenerReadUnread, (data) {
       //
@@ -168,7 +185,7 @@ class AppSocket {
 }
 
 class SocketEmits {
-  // Join to Chat Room---------------
+  // Connect User---------------
   static connectUser() {
     Map<String, dynamic> req = HashMap();
     req['userId'] = UserStoredInfo().userInfo?.id ?? '';
@@ -176,6 +193,16 @@ class SocketEmits {
         "Emit:---------> connectUser-(${SocketKeys.emitConnectUser}), $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitConnectUser, req);
+  }
+
+  // Disconnect User---------------
+  static disConnectUser() {
+    Map<String, dynamic> req = HashMap();
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    socketPrint(
+        "Emit:---------> connectUser-(${SocketKeys.emitDisconnectUser}), $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emitDisconnectUser, req);
   }
 
   // Get Users---------------
@@ -220,12 +247,23 @@ class SocketEmits {
   // Clear Chat ---------------
   static clearChat(String receiverId) {
     Map<String, dynamic> req = HashMap();
-    req['sender_id'] = UserStoredInfo().userInfo?.id ?? '';
-    req['receiver_id'] = receiverId;
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['receiverId'] = receiverId;
     socketPrint(
         "Emit:---------> emitClearChat-(${SocketKeys.emitClearChat}), $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitClearChat, req);
+  }
+
+  // Delete Message Chat ---------------
+  static deleteMessage(String messageId) {
+    Map<String, dynamic> req = HashMap();
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['id'] = messageId;
+    socketPrint(
+        "Emit:---------> emitClearChat-(${SocketKeys.emitDeleteMsg}), $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emitDeleteMsg, req);
   }
 
   // Report User ---------------

@@ -84,9 +84,15 @@ class ChatMsgController extends GetxController {
     // socketPrint("listenerNewMessage---> $data");
   }
 
+  // Listener Delete Message---------
+  listenerDeleteMessage() {
+    socketPrint("listenerDeleteMessage---> In Controller");
+  }
+
   // Listener Chat Histories----------
-  listenerChatHistories(List<Message> data) {
+  listenerChatHistories(List<Message> data) async {
     messages.value = data;
+    await Future.delayed(const Duration(seconds: 5));
     loadingChatHistories.value = false;
     socketPrint("listenerChatHistories---> $data");
   }
@@ -94,6 +100,9 @@ class ChatMsgController extends GetxController {
   // Clear chat----------
   listenerClearChat(bool data) {
     socketPrint("listenerClearChat---> $data");
+    messages.clear();
+    messages.refresh();
+    AppToast.show("Messages are clear successfully");
   }
 
   // Report User----------
@@ -119,8 +128,6 @@ class ChatMsgController extends GetxController {
         }
       }
       newReadedMsg.refresh();
-      // Socket Debug: listenerReadUnread---> 65290ca7cb057231ad36edb9, 652909f1cb057231ad36ed54
-      // logedin-> 65290ca7cb057231ad36edb9
     }
     socketPrint("listenerReadUnread---> $sender, $reciver");
     // messages.refresh();
@@ -128,9 +135,12 @@ class ChatMsgController extends GetxController {
 
   //----------------------------------------------------------------------------
   // Navigation -------------
+  var activeUser = Rx<ChatProductUser?>(null);
   goToChatRoom(ChatProductUser reciverInfo) {
-    Get.toNamed(Routes.messageScreen, arguments: {'reciver_info': reciverInfo});
-    readUnread((reciverInfo.receiver?.id ?? '').toString());
+    activeUser.value = reciverInfo;
+    messages.clear();
+    Get.toNamed(Routes.messageScreen);
+    // readUnread((reciverInfo.receiver?.id ?? '').toString());
     SocketEmits.getChatHistories((reciverInfo.receiver?.id ?? '').toString());
 
     loadingChatHistories.value = true;
@@ -176,6 +186,11 @@ class ChatMsgController extends GetxController {
     }
   }
 
+  // Delete Message Emit
+  deleteMsg(String messageId) {
+    SocketEmits.deleteMessage(messageId);
+  }
+
   clearMsgInput() {
     newMessageInput.clear();
     newMessageType.value = MessageType.text;
@@ -183,8 +198,9 @@ class ChatMsgController extends GetxController {
   }
 
   /// Clear chats -------
-  clearAllChats() {
+  clearAllChats(String receiverId) {
     //---
+    SocketEmits.clearChat(receiverId);
     socketPrint("emited for clear all chats...");
   }
 
@@ -218,6 +234,12 @@ class ChatMsgController extends GetxController {
       newMessageType.value = MessageType.image;
     }
     newMessageAttachment.value = file;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getUsers();
   }
 }
 
