@@ -16,60 +16,114 @@ class MessageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CommonAppbarWidget(
-        heading: 'Men Tshirt',
-        textStyle: const TextStyle(
-            fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
-        action: const Icon(Icons.more_vert, color: AppColor.blackColor),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          Expanded(
-            child: ListView.builder(
-                physics: const ClampingScrollPhysics(),
-                itemCount: _chatMsgController.messages.length,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+        backgroundColor: Colors.white,
+        appBar: CommonAppbarWidget(
+          heading: 'Men Tshirt',
+          textStyle: const TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
+          action: const Icon(Icons.more_vert, color: AppColor.blackColor),
+        ),
+        body: Column(
+          children: [
+            Container(
+              color: Colors.amber,
+              width: 100,
+              child: const Text("Hi,How are yo "),
+            ),
+            Expanded(
+              child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return messageCard();
-                }),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                  color: Color(0xff1c000000),
-                  offset: Offset(0, -10),
-                  blurRadius: 30)
-            ]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: AppTextField(
-                    controller: _chatMsgController.newMessageInput,
-                    title: "Type here ……..",
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Poppins",
+                  return Container(
+                    width: 50,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    color: Colors.amber,
+                    child: const Text("Hi,How are yo "),
+                  );
+                },
+                itemCount: 5,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    color: Color(0xff1c000000),
+                    offset: Offset(0, -10),
+                    blurRadius: 30)
+              ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: AppTextField(
+                      controller: _chatMsgController.newMessageInput,
+                      title: "Type here ……..",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Poppins",
+                      ),
                     ),
                   ),
-                ),
-                Image.asset(Assets.assetsAttachment, height: 20, width: 20),
-                const SizedBox(width: 5),
-                InkWell(
-                    onTap: () {
-                      _chatMsgController.sendNewMessage("5208");
-                    },
-                    child: const Icon(Icons.send, color: AppColor.appcolor))
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+                  Image.asset(Assets.assetsAttachment, height: 20, width: 20),
+                  const SizedBox(width: 5),
+                  InkWell(
+                      onTap: () {
+                        _chatMsgController.sendNewMessage("5208");
+                      },
+                      child: const Icon(Icons.send, color: AppColor.appcolor))
+                ],
+              ),
+            )
+          ],
+        )
+        // Column(
+        //   children: [
+        //     const SizedBox(height: 10),
+        //     Expanded(
+        //       child: ListView.builder(
+        //           physics: const ClampingScrollPhysics(),
+        //           itemCount: _chatMsgController.messages.length,
+        //           padding: const EdgeInsets.symmetric(horizontal: 10),
+        //           itemBuilder: (context, index) {
+        //             return messageCard();
+        //           }),
+        //     ),
+        //     Container(
+        //       padding: const EdgeInsets.only(left: 20, right: 20),
+        //       decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+        //         BoxShadow(
+        //             color: Color(0xff1c000000),
+        //             offset: Offset(0, -10),
+        //             blurRadius: 30)
+        //       ]),
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.start,
+        //         children: [
+        //           Flexible(
+        //             child: AppTextField(
+        //               controller: _chatMsgController.newMessageInput,
+        //               title: "Type here ……..",
+        //               style: const TextStyle(
+        //                 fontSize: 12,
+        //                 fontWeight: FontWeight.w400,
+        //                 fontFamily: "Poppins",
+        //               ),
+        //             ),
+        //           ),
+        //           Image.asset(Assets.assetsAttachment, height: 20, width: 20),
+        //           const SizedBox(width: 5),
+        //           InkWell(
+        //               onTap: () {
+        //                 _chatMsgController.sendNewMessage("5208");
+        //               },
+        //               child: const Icon(Icons.send, color: AppColor.appcolor))
+        //         ],
+        //       ),
+        //     )
+        //   ],
+        // ),
+        );
   }
 
   Widget messageCard() => Container(
@@ -78,11 +132,13 @@ class MessageScreen extends StatelessWidget {
           constraints: BoxConstraints(
             maxWidth: Get.width * 0.5,
           ),
-          child: const AppText(
-            text:
-                "Hi,How are you ?Hi,How are you ?Hi,How are you ?Hi,How are you ?Hi,How are you ?",
-            color: Colors.black,
-            textSize: 14,
+          child: const SizedBox(
+            width: 200,
+            child: AppText(
+                text:
+                    "Hi,How are you ?Hi,How are you ?Hi,How are you ?Hi,How are you ?Hi,How are you ?",
+                color: Colors.black,
+                textSize: 14),
           ),
         ),
       );
