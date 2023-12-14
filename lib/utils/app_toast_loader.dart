@@ -39,41 +39,29 @@ class AppLoader {
           Center(
             child: Material(
               color: Colors.transparent,
-              child: Container(
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.circular(radius),
-                //   boxShadow: [
-                //   BoxShadow(
-                //     blurRadius: 10,
-                //     color: Colors.black.withOpacity(0.3),
-                //     blurStyle: BlurStyle.inner,
-                //     offset: const Offset(0.5, 24),
-                //   )
-                // ]),
-                child: Stack(
-                  children: [
-                    Lottie.asset(Assets.lottieLoader, width: 120),
-                    Lottie.asset(Assets.lottieLoader, width: 120),
-                    Positioned(
-                      bottom: 10,
-                      child: Align(
+              child: Stack(
+                children: [
+                  Lottie.asset(Assets.lottieLoader, width: 120),
+                  Lottie.asset(Assets.lottieLoader, width: 120),
+                  Positioned(
+                    bottom: 10,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: 120,
                         alignment: Alignment.bottomCenter,
-                        child: Container(
-                          width: 120,
-                          alignment: Alignment.bottomCenter,
-                          child: const Text(
-                            "Please wait...",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
+                        child: const Text(
+                          "Please wait...",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

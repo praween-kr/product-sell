@@ -6,7 +6,7 @@ import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
-import '../../common_widget/color_constant.dart';
+import '../../utils/color_constant.dart';
 
 class SellItemController extends GetxController {
   var tabController = 1.obs;
@@ -33,7 +33,7 @@ class SellItemController extends GetxController {
             data: ThemeData.dark().copyWith(
               colorScheme: const ColorScheme.dark(
                 onPrimary: AppColor.white,
-                primary: AppColor.appcolor,
+                primary: AppColor.appColor,
                 surface: AppColor.white,
                 onSurface: AppColor.blackColor,
               ),

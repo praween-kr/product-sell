@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/subscription_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../common_widget/color_constant.dart';
-import '../../../utils/common_appbar.dart';
+import '../../../utils/color_constant.dart';
+import '../../../utils/app_text.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   SubscriptionScreen({super.key});
@@ -23,11 +22,11 @@ class SubscriptionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Choose plan",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -55,7 +54,7 @@ class SubscriptionScreen extends StatelessWidget {
               //       fontSize: 12,fontFamily: "Poppins"),
               // ),
               CommonButton(
-                color: AppColor.TextColor,
+                color: AppColor.textColor,
                 margin: const EdgeInsets.only(right: 30, left: 30, bottom: 30),
                 height: 57,
                 text: "Your Current Plan",
@@ -68,13 +67,13 @@ class SubscriptionScreen extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(Routes.selectPlanScreen);
                 },
-                child: CommonButton(
-                  color: AppColor.appcolor,
-                  margin: const EdgeInsets.only(
+                child: const CommonButton(
+                  color: AppColor.appColor,
+                  margin: EdgeInsets.only(
                       right: 30, left: 30, bottom: 30),
                   height: 57,
                   text: "Change Plan",
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                       color: AppColor.white,
                       fontSize: 12, fontFamily: "Poppins"),
                 ),
@@ -113,12 +112,12 @@ class SubscriptionScreen extends StatelessWidget {
                   AppText(text: "\$",
                     style: AppTextStyle.title,
                     textSize: 15.0,
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                   ),
                   AppText(text: "200",
                     style: AppTextStyle.title,
                     textSize: 49.0,
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                   ),
                 ],
               ),
@@ -138,7 +137,7 @@ class SubscriptionScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.circle, color: AppColor.appcolor,
+                          Icon(Icons.circle, color: AppColor.appColor,
                             size: 8.0,),
                           SizedBox(width: 13.0,),
                           AppText(text: "Lorem ipsum is a dummy text",
@@ -159,8 +158,8 @@ class SubscriptionScreen extends StatelessWidget {
                     count: 3,
                     effect: ExpandingDotsEffect(
                         spacing: 15.0,
-                        activeDotColor: AppColor.appcolor,
-                        dotColor: AppColor.appcolor.withOpacity(0.4),
+                        activeDotColor: AppColor.appColor,
+                        dotColor: AppColor.appColor.withOpacity(0.4),
                         dotWidth: 10),
                     onDotClicked: (index) {},
                   )),

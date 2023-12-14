@@ -3,19 +3,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_controller/favourites_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/common_widget/details_images_view.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
+import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
-import '../../../common_widget/color_constant.dart';
-import '../../../utils/colors_file.dart';
+import '../../../utils/color_constant.dart';
 
 class BidingProductDetailsScreen extends StatelessWidget {
   BidingProductDetailsScreen({super.key}) {
@@ -52,7 +51,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               padding: const EdgeInsets.only(left: 12),
               decoration: BoxDecoration(
-                  color: AppColor.appcolor,
+                  color: AppColor.appColor,
                   borderRadius: BorderRadius.circular(15)),
               child: const Icon(Icons.arrow_back_ios),
             ),
@@ -152,7 +151,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                           height: 40,
                                           width: 40,
                                           decoration: BoxDecoration(
-                                              color: AppColor.appcolor,
+                                              color: AppColor.appColor,
                                               borderRadius:
                                                   BorderRadius.circular(20)),
                                           child: const Icon(
@@ -164,7 +163,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                 ),
                                 const Row(
                                   children: [
-                                    Icon(Icons.star, color: AppColor.appcolor),
+                                    Icon(Icons.star, color: AppColor.appColor),
                                     SizedBox(width: 5),
                                     AppText(
                                       text: "/4.5",
@@ -344,7 +343,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                             '',
                                         textSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: blackColor),
+                                        color: AppColor.blackColor),
                                   ],
                                 ),
                                 const SizedBox(height: 5),
@@ -367,7 +366,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                             '',
                                         textSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: blackColor),
+                                        color: AppColor.blackColor),
                                   ],
                                 ),
                                 const SizedBox(height: 5),
@@ -389,7 +388,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                           '',
                                       textSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                   ],
                                 ),
@@ -412,7 +411,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                             '',
                                         textSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: blackColor),
+                                        color: AppColor.blackColor),
                                   ],
                                 ),
                                 const SizedBox(height: 5),
@@ -431,13 +430,13 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                     text: "Condition",
                                     textSize: 15,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColor.appcolor),
+                                    color: AppColor.appColor),
                                 SizedBox(height: 5),
                                 AppText(
                                   text: "New with tags",
                                   textSize: 13,
                                   fontWeight: FontWeight.w600,
-                                  color: blackColor,
+                                  color: AppColor.blackColor,
                                 ),
                                 SizedBox(
                                   height: 5,
@@ -480,7 +479,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                             text: "XL / 42 / 14",
                                             textSize: 12,
                                             fontWeight: FontWeight.w400,
-                                            color: blackColor,
+                                            color: AppColor.blackColor,
                                             fontFamily: "Poppins",
                                           )
                                         ],
@@ -505,7 +504,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                                     '',
                                                 textSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color: blackColor,
+                                                color: AppColor.blackColor,
                                                 fontFamily: "Poppins"),
                                           )
                                         ],
@@ -531,7 +530,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                             textSize: 12,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: "Poppins",
-                                            color: blackColor,
+                                            color: AppColor.blackColor,
                                           )
                                         ],
                                       ),
@@ -588,21 +587,21 @@ class BidingProductDetailsScreen extends StatelessWidget {
                             },
                             child: Obx(
                               () => controller.sub.value
-                                  ? CommonButton(
+                                  ? const CommonButton(
                                       height: 57,
                                       radius: 20,
-                                      margin: const EdgeInsets.only(
+                                      margin: EdgeInsets.only(
                                           left: 30, right: 30, top: 20),
-                                      color: AppColor.appcolor,
+                                      color: AppColor.appColor,
                                       text: "Edit Bid",
-                                      textStyle: const TextStyle(
+                                      textStyle: TextStyle(
                                           fontSize: 15,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400,
                                           fontFamily: "Poppins"),
                                     )
-                                  : Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                  : const Padding(
+                                      padding: EdgeInsets.symmetric(
                                           horizontal: 35, vertical: 15),
                                       child: Row(
                                         crossAxisAlignment:
@@ -614,24 +613,24 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                             height: 50,
                                             width: 150,
                                             radius: 18,
-                                            color: AppColor.appcolor,
+                                            color: AppColor.appColor,
                                             text: "Bid \$2500",
-                                            textStyle: const TextStyle(
+                                            textStyle: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w400,
                                                 fontFamily: "Poppins"),
                                           ),
-                                          const SizedBox(
+                                          SizedBox(
                                             width: 20,
                                           ),
                                           CommonButton(
                                             height: 50,
                                             width: 150,
-                                            color: AppColor.appcolor,
+                                            color: AppColor.appColor,
                                             radius: 18,
                                             text: "Bid \$3500",
-                                            textStyle: const TextStyle(
+                                            textStyle: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w400,

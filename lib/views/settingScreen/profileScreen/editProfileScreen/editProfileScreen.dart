@@ -6,28 +6,27 @@ import 'package:oninto_flutter/common_controller/settings/edit_profile_controlle
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
-import '../../../../common_widget/app_text.dart';
-import '../../../../common_widget/app_textfield.dart';
-import '../../../../common_widget/appbar.dart';
-import '../../../../common_widget/color_constant.dart';
-import '../../../../common_widget/common_button.dart';
-import '../../../../utils/colors_file.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../../../utils/app_text_field.dart';
+import '../../../../utils/appbar.dart';
+import '../../../../utils/color_constant.dart';
+import '../../../../utils/common_button.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
 
-  EditProfileController editProfileController = Get.find();
+  final EditProfileController editProfileController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Edit Profile",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -63,7 +62,7 @@ class EditProfileScreen extends StatelessWidget {
                     keyBoardType: TextInputAction.next,
                     textInputType: TextInputType.name,
                     borderRadius: BorderRadius.circular(19),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     prefix: const Icon(
                       Icons.person_outline,
                       size: 30.0,
@@ -98,7 +97,7 @@ class EditProfileScreen extends StatelessWidget {
                     contentPadding: const EdgeInsets.only(top: 8.0, left: 13.0),
                     //margin: const EdgeInsets.only(right: 35.0),
                     borderRadius: BorderRadius.circular(19),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     prefix: const Icon(
                       Icons.person_outline,
                       size: 30.0,
@@ -132,7 +131,7 @@ class EditProfileScreen extends StatelessWidget {
                     textInputType: TextInputType.emailAddress,
                     contentPadding: const EdgeInsets.only(top: 8.0, left: 13.0),
                     borderRadius: BorderRadius.circular(19),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     prefix: Image.asset(
                       Assets.assetsEmail,
                       scale: 2.2,
@@ -160,7 +159,7 @@ class EditProfileScreen extends StatelessWidget {
                     height: 50,
                     margin: const EdgeInsets.only(right: 0),
                     borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     title: "Location",
                     hintStyle: const TextStyle(
                         color: AppColor.blackColor,
@@ -173,7 +172,7 @@ class EditProfileScreen extends StatelessWidget {
                     suffix: const Icon(
                       Icons.my_location,
                       size: 18.0,
-                      color: AppColor.appcolor,
+                      color: AppColor.appColor,
                     ),
                   ),
                   const SizedBox(
@@ -190,12 +189,12 @@ class EditProfileScreen extends StatelessWidget {
                     height: 50,
                     margin: const EdgeInsets.only(right: 0),
                     borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     textInputType: TextInputType.phone,
                     prefix: Container(
                       margin: const EdgeInsets.only(right: 15),
                       decoration: const BoxDecoration(
-                          color: AppColor.appcolor,
+                          color: AppColor.appColor,
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
@@ -234,12 +233,12 @@ class EditProfileScreen extends StatelessWidget {
               //Get.toNamed(Routes.editProfileScreen);
               await editProfileController.updateProfile();
             },
-            child: CommonButton(
-              color: AppColor.appcolor,
+            child: const CommonButton(
+              color: AppColor.appColor,
               height: 57,
               text: "Update",
-              margin: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              margin: EdgeInsets.only(left: 25, right: 25, bottom: 30),
+              textStyle: TextStyle(color: Colors.white, fontSize: 16),
             ),
           )
         ],

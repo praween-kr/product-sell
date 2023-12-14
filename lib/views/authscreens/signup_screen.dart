@@ -5,21 +5,16 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
-import '../../common_widget/app_text.dart';
-import '../../utils/colors_file.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
-  SignUpScreen({Key? key}) : super(key: key);
-  // final RxBool tick = true.obs;
-  final RxBool pass = true.obs;
-  int type = 0;
-
+  SignUpScreen({super.key});
   final AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -41,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
                     padding: const EdgeInsets.only(left: 12),
                     decoration: BoxDecoration(
-                        color: AppColor.appcolor,
+                        color: AppColor.appColor,
                         borderRadius: BorderRadius.circular(15)),
                     child: const Icon(Icons.arrow_back_ios),
                   ),
@@ -87,7 +82,7 @@ class SignUpScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 20),
                     title: "Your first name",
                     prefix: const Icon(Icons.person_outline),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     contentPadding: const EdgeInsets.only(top: 30, left: 20),
                   ),
                   const SizedBox(height: 18),
@@ -105,7 +100,7 @@ class SignUpScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 20),
                     title: "Your last name",
                     prefix: const Icon(Icons.person_outline),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     contentPadding: const EdgeInsets.only(top: 30, left: 20),
                   ),
                   const SizedBox(height: 18),
@@ -122,7 +117,7 @@ class SignUpScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(right: 20),
                     title: "example@gmail.com",
                     prefix: const Icon(Icons.person_outline),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     contentPadding: const EdgeInsets.only(top: 30, left: 20),
                   ),
                   const SizedBox(height: 18),
@@ -138,12 +133,12 @@ class SignUpScreen extends StatelessWidget {
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     textInputType: TextInputType.phone,
                     prefix: Container(
                       margin: const EdgeInsets.only(right: 15),
                       decoration: const BoxDecoration(
-                          color: AppColor.appcolor,
+                          color: AppColor.appColor,
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -193,13 +188,13 @@ class SignUpScreen extends StatelessWidget {
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.TextColor,
+                    containerColor: AppColor.textColor,
                     title: "Add",
                     //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                     suffix: const Icon(
                       Icons.my_location,
                       size: 18.0,
-                      color: AppColor.appcolor,
+                      color: AppColor.appColor,
                     ),
                   ),
                   const SizedBox(height: 18),
@@ -219,7 +214,7 @@ class SignUpScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 20),
                         title: "Password",
                         prefix: const Icon(Icons.lock_outline_sharp),
-                        containerColor: AppColor.TextColor,
+                        containerColor: AppColor.textColor,
                         contentPadding:
                             const EdgeInsets.only(top: 30, left: 20),
                         suffix: IconButton(
@@ -256,7 +251,7 @@ class SignUpScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 20),
                         title: "Confirm password",
                         prefix: const Icon(Icons.lock_outline_sharp),
-                        containerColor: AppColor.TextColor,
+                        containerColor: AppColor.textColor,
                         contentPadding:
                             const EdgeInsets.only(top: 30, left: 20),
                         suffix: IconButton(
@@ -303,7 +298,7 @@ class SignUpScreen extends StatelessWidget {
                                 text: "By creating an"
                                     " account you have to agree\n with "
                                     "our ",
-                                style: const TextStyle(color: blackColor),
+                                style: const TextStyle(color: AppColor.blackColor),
                                 children: [
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
@@ -338,14 +333,14 @@ class SignUpScreen extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.height * 0.40,
                         decoration: const BoxDecoration(
-                          color: themeColor,
+                          color: AppColor.themeColor,
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
                           ),
                           boxShadow: [
                             BoxShadow(
                               offset: Offset(0, 2),
-                              color: themeColor,
+                              color: AppColor.themeColor,
                               spreadRadius: 2,
                               blurRadius: 0,
                             ),
@@ -395,9 +390,9 @@ class SignUpScreen extends StatelessWidget {
                               text: "Login",
                               textSize: 12,
                               fontWeight: FontWeight.w600,
-                              underlineColor: themeColor,
+                              underlineColor: AppColor.themeColor,
                               underline: true,
-                              color: themeColor,
+                              color: AppColor.themeColor,
                               fontFamily: "Poppins",
                             ),
                           ),

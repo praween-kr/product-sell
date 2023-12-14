@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/common_widget/app_string.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -54,8 +53,8 @@ class OnBoardingScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        AppText(
-                            text: AppStrings.Onboarding,
+                        const AppText(
+                            text: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry.",
                             textSize: 15,
                             color: Colors.white,
                             fontWeight: FontWeight.w400,

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
-
-import '../../../common_widget/app_text.dart';
-import '../../../common_widget/appbar.dart';
-import '../../../common_widget/color_constant.dart';
-import '../../../common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../../utils/appbar.dart';
+import '../../../utils/color_constant.dart';
+import '../../../utils/common_button.dart';
 import '../../../generated/assets.dart';
 import '../../../routes/routes.dart';
-import '../../../utils/colors_file.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -21,11 +19,11 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Profile",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -60,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 8.0, left: 13.0),
                       //margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(19),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                       prefix: const Icon(
                         Icons.person_outline,
                         size: 30.0,
@@ -89,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 8.0, left: 13.0),
                       //margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(19),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                       prefix: const Icon(
                         Icons.person_outline,
                         size: 30.0,
@@ -116,7 +114,7 @@ class ProfileScreen extends StatelessWidget {
                           const EdgeInsets.only(bottom: 8.0, left: 13.0),
                       //margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(19),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                       prefix: Image.asset(
                         Assets.assetsEmail,
                         scale: 2.2,
@@ -184,12 +182,12 @@ class ProfileScreen extends StatelessWidget {
                       height: 50,
                       readOnly: true,
                       borderRadius: BorderRadius.circular(20),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                       textInputType: TextInputType.phone,
                       prefix: Container(
                         margin: const EdgeInsets.only(right: 15),
                         decoration: const BoxDecoration(
-                            color: AppColor.appcolor,
+                            color: AppColor.appColor,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
                         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -222,12 +220,12 @@ class ProfileScreen extends StatelessWidget {
               Get.find<EditProfileController>().initialData();
               Get.toNamed(Routes.editProfileScreen);
             },
-            child: CommonButton(
-              color: AppColor.appcolor,
+            child: const CommonButton(
+              color: AppColor.appColor,
               height: 57,
               text: "Edit Profile",
-              margin: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              margin: EdgeInsets.only(left: 25, right: 25, bottom: 30),
+              textStyle: TextStyle(color: Colors.white, fontSize: 16),
             ),
           )
         ],

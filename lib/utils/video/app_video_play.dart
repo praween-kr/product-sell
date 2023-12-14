@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class AppVideoPlayer extends StatefulWidget {
-  AppVideoPlayer({
-    Key? key,
+  const AppVideoPlayer({
+    super.key,
     required this.video,
     this.isNetworkType = true,
-  }) : super(key: key);
+  });
 
   final String video;
-  bool isNetworkType;
+  final bool isNetworkType;
 
   @override
   State<StatefulWidget> createState() {

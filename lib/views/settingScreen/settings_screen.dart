@@ -5,11 +5,11 @@ import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 
@@ -94,7 +94,7 @@ class SettingScreen extends GetView<SettingsController> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0, vertical: 5.0),
                                   decoration: BoxDecoration(
-                                      color: AppColor.appcolor,
+                                      color: AppColor.appColor,
                                       borderRadius: BorderRadius.circular(7.0)),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -148,7 +148,7 @@ class SettingScreen extends GetView<SettingsController> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 10.0),
                         decoration: const BoxDecoration(
-                            color: AppColor.appcolor, shape: BoxShape.circle),
+                            color: AppColor.appColor, shape: BoxShape.circle),
                         child: const Center(
                           child: Icon(
                             Icons.notifications,
@@ -172,7 +172,7 @@ class SettingScreen extends GetView<SettingsController> {
                     Obx(() => Transform.scale(
                           scale: 0.8,
                           child: CupertinoSwitch(
-                            activeColor: AppColor.appcolor,
+                            activeColor: AppColor.appColor,
                             thumbColor: AppColor.white,
                             trackColor: Colors.red,
                             value: controller.on.value,
@@ -289,8 +289,8 @@ class SettingScreen extends GetView<SettingsController> {
               commonRow(
                 icon: Icons.logout_sharp,
                 title: "Logout",
-                color: AppColor.prdtextColor,
-                boxColor: AppColor.prdtextColor,
+                color: AppColor.prdTextColor,
+                boxColor: AppColor.prdTextColor,
                 onClick: () => AppDialogs.confirm(
                   context,
                   msg: "Are you sure\nwant to Logout?",
@@ -329,7 +329,7 @@ class SettingScreen extends GetView<SettingsController> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               decoration: BoxDecoration(
-                  color: boxColor ?? AppColor.appcolor, shape: BoxShape.circle),
+                  color: boxColor ?? AppColor.appColor, shape: BoxShape.circle),
               child: Center(
                 child: Icon(
                   icon,

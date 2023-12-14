@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 
 class CommonAppbarWidget extends StatelessWidget
     implements PreferredSizeWidget {
-  String? heading;
-  Widget? headingChild;
+  final String? heading;
+  final  Widget? headingChild;
   final VoidCallback? onBackPress;
-  IconData? iconData;
-  TextStyle? textStyle;
-  Widget? leading;
-  double? preferredheight;
-  Widget? action;
+  final IconData? iconData;
+  final TextStyle? textStyle;
+  final Widget? leading;
+  final double? preferredHeight;
+  final Widget? action;
 
-  CommonAppbarWidget(
+  const CommonAppbarWidget(
       {super.key,
       this.heading,
       this.headingChild,
@@ -22,7 +22,7 @@ class CommonAppbarWidget extends StatelessWidget
       this.leading,
       this.onBackPress,
       this.action,
-      this.preferredheight});
+      this.preferredHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class CommonAppbarWidget extends StatelessWidget
                 margin: const EdgeInsets.all(5),
                 padding: const EdgeInsets.only(left: 12),
                 decoration: BoxDecoration(
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                     borderRadius: BorderRadius.circular(15)),
                 child: const Icon(Icons.arrow_back_ios, color: Colors.white),
               ),

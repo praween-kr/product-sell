@@ -4,17 +4,15 @@ import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
-import 'package:oninto_flutter/common_widget/details_images_view.dart';
+import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
-
-import '../../../common_widget/app_text.dart';
-import '../../../common_widget/appbar.dart';
-import '../../../common_widget/color_constant.dart';
-import '../../../common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../../utils/appbar.dart';
+import '../../../utils/color_constant.dart';
+import '../../../utils/common_button.dart';
 import '../../../routes/routes.dart';
-import '../../../utils/colors_file.dart';
 
 class MyPysicalProductDetailScreen extends StatelessWidget {
   MyPysicalProductDetailScreen({super.key});
@@ -46,7 +44,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
             margin: const EdgeInsets.all(5),
             padding: const EdgeInsets.only(left: 12),
             decoration: BoxDecoration(
-                color: AppColor.appcolor,
+                color: AppColor.appColor,
                 borderRadius: BorderRadius.circular(15)),
             child: const Icon(Icons.arrow_back_ios),
           ),
@@ -54,7 +52,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
         // heading: "Samsung Note 10",
         textStyle: const TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -126,7 +124,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                   text:
                                                       "\$${_myProductController.productDetailsData.value?.details?.price ?? '0.0'}",
                                                   textSize: 23.0,
-                                                  color: AppColor.appcolor,
+                                                  color: AppColor.appColor,
                                                   style: AppTextStyle.title,
                                                 ),
                                                 const SizedBox(height: 5),
@@ -150,15 +148,15 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.favorite,
-                                                  color: AppColor.appcolor,
+                                                  color: AppColor.appColor,
                                                 ),
                                                 const SizedBox(height: 5),
                                                 AppText(
-                                                  text: _myProductController
-                                                          .productDetailsData
-                                                          .value
-                                                          ?.favoriteCount ??
-                                                      '0',
+                                                  text: "${_myProductController
+                                                      .productDetailsData
+                                                      .value
+                                                      ?.favoriteCount ??
+                                                      '0'}",
                                                   textSize: 15.0,
                                                   color: AppColor.blackColor
                                                       .withOpacity(0.3),
@@ -171,7 +169,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                               children: [
                                                 const Icon(
                                                   Icons.visibility,
-                                                  color: AppColor.appcolor,
+                                                  color: AppColor.appColor,
                                                 ),
                                                 const SizedBox(
                                                   height: 5,
@@ -239,7 +237,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   children: [
                                     const AppText(
                                       text: "Condition",
-                                      color: AppColor.appcolor,
+                                      color: AppColor.appColor,
                                       textSize: 15,
                                       style: AppTextStyle.title,
                                     ),
@@ -319,7 +317,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                           text: "Item Description",
                                           textSize: 13,
                                           fontFamily: "Poppins",
-                                          color: blackColor,
+                                          color: AppColor.blackColor,
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -351,7 +349,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   );
                                 },
                                 child: CommonButton(
-                                  color: AppColor.TextColor,
+                                  color: AppColor.textColor,
                                   height: 57,
                                   radius: 23,
                                   text: "Boost your post",
@@ -400,13 +398,13 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                             .toString());
                                   });
                                 },
-                                child: CommonButton(
-                                  color: AppColor.appcolor,
+                                child: const CommonButton(
+                                  color: AppColor.appColor,
                                   height: 57,
                                   text: "Edit",
-                                  margin: const EdgeInsets.symmetric(
+                                  margin: EdgeInsets.symmetric(
                                       horizontal: 35),
-                                  textStyle: const TextStyle(
+                                  textStyle: TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
                               ),

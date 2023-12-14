@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
-import '../../../common_widget/appbar.dart';
+import '../../../utils/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({
@@ -34,7 +33,7 @@ class ProductScreen extends StatelessWidget {
             margin: const EdgeInsets.all(5),
             padding: const EdgeInsets.only(left: 12),
             decoration: BoxDecoration(
-                color: AppColor.appcolor,
+                color: AppColor.appColor,
                 borderRadius: BorderRadius.circular(15)),
             child: const Icon(Icons.arrow_back_ios, color: AppColor.white),
           ),
@@ -42,7 +41,7 @@ class ProductScreen extends StatelessWidget {
         heading: "My Products",
         textStyle: const TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
         action: PopupMenuButton(
@@ -55,10 +54,10 @@ class ProductScreen extends StatelessWidget {
             width: 30,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: AppColor.appcolor),
+              border: Border.all(color: AppColor.appColor),
             ),
             child:
-                const Icon(Icons.filter_alt_rounded, color: AppColor.appcolor),
+                const Icon(Icons.filter_alt_rounded, color: AppColor.appColor),
           ),
           onSelected: (value) {
             value();
@@ -391,9 +390,9 @@ class ProductScreen extends StatelessWidget {
       width: 100,
       margin: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-          color: selected ? AppColor.appcolor : Colors.white,
+          color: selected ? AppColor.appColor : Colors.white,
           border: Border.all(
-            color: selected ? AppColor.appcolor : Colors.grey.shade300,
+            color: selected ? AppColor.appColor : Colors.grey.shade300,
           ),
           borderRadius: BorderRadius.circular(20)),
       child: Center(

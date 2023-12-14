@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+
+import '../color_constant.dart';
 
 enum AttachmentPicker {
   IMG_GALLERY,
@@ -86,7 +87,7 @@ class AppPicker {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                      color: themeColor,
+                      color: AppColor.themeColor,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -127,7 +128,7 @@ class AppPicker {
               ),
               icon == null
                   ? const SizedBox.shrink()
-                  : Icon(icon, color: themeColor),
+                  : Icon(icon, color: AppColor.themeColor),
             ],
           ),
         ),
@@ -229,7 +230,7 @@ class AppPicker {
       uiSettings: [
         AndroidUiSettings(
             toolbarTitle: 'Cropper',
-            toolbarColor: themeColor,
+            toolbarColor: AppColor.themeColor,
             toolbarWidgetColor: Colors.white,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: true),

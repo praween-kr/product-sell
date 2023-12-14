@@ -2,31 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/google/pick_location_map.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
-import '../../../../common_widget/appbar.dart';
-import '../../../../utils/common_appbar.dart';
+import '../../../../utils/appbar.dart';
+import '../../../../utils/app_text.dart';
 
 class NewAddressScreen extends StatelessWidget {
   NewAddressScreen({super.key});
 
-  AddressController addressController = Get.find();
+  final AddressController addressController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Add New Address",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -62,7 +61,7 @@ class NewAddressScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 5.0, left: 1.0),
                       margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(40),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                       prefix: Icon(
                         Icons.location_on,
                         size: 18.0,
@@ -71,7 +70,7 @@ class NewAddressScreen extends StatelessWidget {
                       suffix: const Icon(
                         Icons.search,
                         size: 22.0,
-                        color: themeColor,
+                        color: AppColor.themeColor,
                       ),
                     ),
                     Obx(
@@ -135,7 +134,7 @@ class NewAddressScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 8.0, left: 13.0),
                       margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(40),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -158,7 +157,7 @@ class NewAddressScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 8.0, left: 13.0),
                       margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(40),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                     ),
                     const SizedBox(
                       height: 16.0,
@@ -181,7 +180,7 @@ class NewAddressScreen extends StatelessWidget {
                           const EdgeInsets.only(top: 8.0, left: 13.0),
                       margin: const EdgeInsets.only(right: 35.0),
                       borderRadius: BorderRadius.circular(40),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                     ),
                   ],
                 ),
@@ -192,12 +191,12 @@ class NewAddressScreen extends StatelessWidget {
             onTap: () {
               addressController.saveAddress();
             },
-            child: CommonButton(
-              color: AppColor.appcolor,
-              margin: const EdgeInsets.only(right: 30, left: 30, bottom: 20),
+            child: const CommonButton(
+              color: AppColor.appColor,
+              margin: EdgeInsets.only(right: 30, left: 30, bottom: 20),
               height: 57,
               text: "Save Address",
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              textStyle: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ],

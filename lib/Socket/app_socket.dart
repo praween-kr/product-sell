@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'controller/chat_msg_controller.dart';
 import 'model/chat_product_user_model.dart';
@@ -19,8 +19,8 @@ class AppSocket {
 
   factory AppSocket() => _singleton;
 
-  static IO.Socket? _socketIO;
-  static IO.Socket? socket() {
+  static io.Socket? _socketIO;
+  static io.Socket? socket() {
     if (_socketIO == null) {
       reconnect();
     }
@@ -31,9 +31,9 @@ class AppSocket {
 
   void init() {
     socketPrint("Socket===> *********************");
-    _socketIO = IO.io(
+    _socketIO = io.io(
         SocketKeys.socketUrl,
-        IO.OptionBuilder()
+        io.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect()
             .setExtraHeaders({'forceNew': true})
@@ -68,7 +68,7 @@ class AppSocket {
       });
       _socketIO = null;
     } else {
-      socketPrint("Socket alrady disconnected...");
+      socketPrint("Socket already disconnected...");
     }
   }
 
@@ -293,7 +293,7 @@ class SocketEmits {
 
 socketPrint(dynamic data, {bool blue = false}) {
   if (blue) {
-    print("Socket Debug: $data");
+    debugPrint("Socket Debug: $data");
   } else {
     log("Socket Debug: $data");
     // debugPrint("Socket Debug: $data");

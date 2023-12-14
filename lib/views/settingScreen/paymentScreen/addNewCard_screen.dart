@@ -1,14 +1,11 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
-
-import '../../../common_widget/app_text.dart';
-import '../../../common_widget/app_textfield.dart';
-import '../../../common_widget/appbar.dart';
-import '../../../common_widget/color_constant.dart';
-import '../../../common_widget/common_button.dart';
-import '../../../utils/colors_file.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../../utils/app_text_field.dart';
+import '../../../utils/appbar.dart';
+import '../../../utils/color_constant.dart';
+import '../../../utils/common_button.dart';
 
 class AddNewCardScreen extends StatelessWidget {
   const AddNewCardScreen({super.key});
@@ -18,10 +15,10 @@ class AddNewCardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget
+      appBar: const CommonAppbarWidget
         (heading: "Add New Account",
-        textStyle: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.w500, color: blackColor),
+        textStyle: TextStyle(
+            fontSize: 18, fontWeight: FontWeight.w500, color: AppColor.blackColor),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 20.0),
@@ -44,7 +41,7 @@ class AddNewCardScreen extends StatelessWidget {
               textInputType: TextInputType.name,
               margin: const EdgeInsets.only(right: 0.0),
               borderRadius: BorderRadius.circular(23),
-              containerColor: AppColor.TextColor,
+              containerColor: AppColor.textColor,
             ),
             const SizedBox(
               height: 16.0,
@@ -65,7 +62,7 @@ class AddNewCardScreen extends StatelessWidget {
               textInputType: TextInputType.name,
               margin: const EdgeInsets.only(right: 0.0),
               borderRadius: BorderRadius.circular(23),
-              containerColor: AppColor.TextColor,
+              containerColor: AppColor.textColor,
             ),
             const SizedBox(
               height: 16.0,
@@ -85,7 +82,7 @@ class AddNewCardScreen extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.zero,
                     decoration: const BoxDecoration(
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                         borderRadius: BorderRadius.all(Radius.circular(15))),
                     child:   IntrinsicHeight (
                       child: Row(
@@ -96,7 +93,7 @@ class AddNewCardScreen extends StatelessWidget {
                             textInputType: TextInputType.number,
                             margin: const EdgeInsets.only(right: 0.0),
                             borderRadius: BorderRadius.circular(23),
-                            containerColor: AppColor.TextColor,
+                            containerColor: AppColor.textColor,
                           ),
                           const VerticalDivider(
                             color: Colors.grey,width: 2,
@@ -107,7 +104,7 @@ class AddNewCardScreen extends StatelessWidget {
                             textInputType: TextInputType.number,
                             margin: const EdgeInsets.only(right: 0.0),
                             borderRadius: BorderRadius.circular(23),
-                            containerColor: AppColor.TextColor,
+                            containerColor: AppColor.textColor,
                           ),
                         ],
                       ),
@@ -116,7 +113,7 @@ class AddNewCardScreen extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.zero,
                   decoration: const BoxDecoration(
-                      color: AppColor.TextColor,
+                      color: AppColor.textColor,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child:   IntrinsicHeight (
                     child: Row(
@@ -127,7 +124,7 @@ class AddNewCardScreen extends StatelessWidget {
                           textInputType: TextInputType.number,
                           margin: const EdgeInsets.only(right: 0.0),
                           borderRadius: BorderRadius.circular(23),
-                          containerColor: AppColor.TextColor,
+                          containerColor: AppColor.textColor,
                         ),
                         const VerticalDivider(
                           color: Colors.grey,width: 2,
@@ -138,7 +135,7 @@ class AddNewCardScreen extends StatelessWidget {
                           textInputType: TextInputType.number,
                           margin: const EdgeInsets.only(right: 0.0),
                           borderRadius: BorderRadius.circular(23),
-                          containerColor: AppColor.TextColor,
+                          containerColor: AppColor.textColor,
                         ),
                       ],
                     ),
@@ -148,7 +145,7 @@ class AddNewCardScreen extends StatelessWidget {
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
                   decoration: const BoxDecoration(
-                      color: AppColor.TextColor,
+                      color: AppColor.textColor,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                   child:   IntrinsicHeight (
                     child: Row(
@@ -159,7 +156,7 @@ class AddNewCardScreen extends StatelessWidget {
                           textInputType: TextInputType.number,
                           margin: const EdgeInsets.only(right: 0.0),
                           borderRadius: BorderRadius.circular(23),
-                          containerColor: AppColor.TextColor,
+                          containerColor: AppColor.textColor,
                         ),
                         const VerticalDivider(
                           color: Colors.grey,width: 2,
@@ -170,7 +167,7 @@ class AddNewCardScreen extends StatelessWidget {
                           textInputType: TextInputType.number,
                           margin: const EdgeInsets.only(right: 0.0),
                           borderRadius: BorderRadius.circular(23),
-                          containerColor: AppColor.TextColor,
+                          containerColor: AppColor.textColor,
                         ),
                       ],
                     ),
@@ -196,9 +193,9 @@ class AddNewCardScreen extends StatelessWidget {
                   height: 46,
                   width: 80,
                   decoration: BoxDecoration(
-                      color: AppColor.TextColor,
+                      color: AppColor.textColor,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColor.TextColor, width: 2))),
+                      border: Border.all(color: AppColor.textColor, width: 2))),
             ),
             const SizedBox(
               height: 30.0,
@@ -207,20 +204,20 @@ class AddNewCardScreen extends StatelessWidget {
               onTap: () {
                 Get.back();
               },
-        child: CommonButton(
+        child: const CommonButton(
                 height: 50,
                 radius: 15,
-                margin: const EdgeInsets.only(
+                margin: EdgeInsets.only(
                   left: 20,
                   right: 20,
                 ),
                 text: "Add Account",
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.w400),
-                color: AppColor.appcolor,
+                color: AppColor.appColor,
               ),
             ),
           ],

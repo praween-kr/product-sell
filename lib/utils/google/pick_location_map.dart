@@ -82,7 +82,7 @@ class _AppMapViewState extends State<PickLocationMap> {
 
   getCurrentLoc() async {
     CurrentLocationData currentLoc = await CurrentLocation.pick();
-    print("Location : ${currentLoc.lat} ${currentLoc.lag}");
+    debugPrint("Location : ${currentLoc.lat} ${currentLoc.lag}");
     setState(() {
       latLng = LatLng(currentLoc.lat, currentLoc.lag);
       // cameraPosition = CameraPosition(target: latLng);

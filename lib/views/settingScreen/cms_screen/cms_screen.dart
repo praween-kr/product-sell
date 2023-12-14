@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 
-import '../../../common_widget/appbar.dart';
-import '../../../utils/colors_file.dart';
+import '../../../utils/appbar.dart';
 
 class CmsScreen extends StatelessWidget {
   CmsScreen({super.key, required});
@@ -26,7 +25,7 @@ class CmsScreen extends StatelessWidget {
                     : "Privacy Policy",
         textStyle: const TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),

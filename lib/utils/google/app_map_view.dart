@@ -5,8 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/utils/google/get_current_location.dart';
 
 class AppMapView extends StatefulWidget {
-  AppMapView({super.key, this.initialLatLong});
-  LatLng? initialLatLong;
+  const AppMapView({super.key, this.initialLatLong});
+  final LatLng? initialLatLong;
 
   @override
   State<AppMapView> createState() => _AppMapViewState();
@@ -21,7 +21,7 @@ class _AppMapViewState extends State<AppMapView> {
 
   getCurrentLoc() async {
     CurrentLocationData currentLoc = await CurrentLocation.pick();
-    print("Location : ${currentLoc.lat} ${currentLoc.lag}");
+    debugPrint("Location : ${currentLoc.lat} ${currentLoc.lag}");
     // setState(() {
     //   latLng = LatLng(currentLoc.lat, currentLoc.lag);
     //   cameraPosition = CameraPosition(target: latLng);

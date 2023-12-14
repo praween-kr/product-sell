@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-import '../../common_widget/app_text.dart';
-import '../../common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../utils/color_constant.dart';
 import '../../generated/assets.dart';
 
 class HomeBidScreen extends StatelessWidget {
@@ -68,12 +68,12 @@ class HomeBidScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppColor.appcolor),
+                          border: Border.all(color: AppColor.appColor),
                         ),
                         child: GestureDetector(
                           onTap: () {},
                           child: const Icon(Icons.filter_alt_rounded,
-                              color: AppColor.appcolor),
+                              color: AppColor.appColor),
                         ),
                       ),
                     ),
@@ -81,7 +81,7 @@ class HomeBidScreen extends StatelessWidget {
                       height: 30,
                       width: 30,
                       decoration: BoxDecoration(
-                          color: AppColor.appcolor,
+                          color: AppColor.appColor,
                           borderRadius: BorderRadius.circular(15)),
                       child: const Icon(
                         Icons.notifications,
@@ -107,12 +107,12 @@ class HomeBidScreen extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColor.appcolor),
+                  border: Border.all(color: AppColor.appColor),
                 ),
                 child: GestureDetector(
                   onTap: () {},
                   child: const Icon(Icons.filter_alt_rounded,
-                      color: AppColor.appcolor),
+                      color: AppColor.appColor),
                 ),
               ),
             ],

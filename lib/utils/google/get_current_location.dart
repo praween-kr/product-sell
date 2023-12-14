@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:oninto_flutter/utils/permission/open_settings.dart';
@@ -19,7 +20,7 @@ class CurrentLocation {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      print(
+      debugPrint(
           'Location permissions are permanently denied, we cannot request permissions.');
       var status = await Permission.location.status;
       if (!status.isGranted) {
@@ -32,15 +33,15 @@ class CurrentLocation {
       //     'Location permissions are permanently denied, we cannot request permissions.');
     }
     var loc = await Geolocator.getCurrentPosition();
-    List<Placemark> placemarks =
+    List<Placemark> placeMarks =
         await placemarkFromCoordinates(loc.latitude, loc.longitude);
 
     var cl = CurrentLocationData(
       lat: loc.latitude,
       lag: loc.longitude,
-      pinCode: placemarks.first.postalCode ?? '',
+      pinCode: placeMarks.first.postalCode ?? '',
       location:
-          "${placemarks.first.name} ${placemarks.first.subLocality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.street}, ${placemarks.first.country}",
+          "${placeMarks.first.name} ${placeMarks.first.subLocality}, ${placeMarks.first.subAdministrativeArea}, ${placeMarks.first.street}, ${placeMarks.first.country}",
     );
 
     return cl;

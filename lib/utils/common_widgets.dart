@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/service/apis.dart';
 
+import 'app_text.dart';
 import 'date_time_formates.dart';
 import 'favourite_button.dart';
 import 'image_view.dart';
@@ -112,7 +112,7 @@ class CommonWidgets {
                           likes == null
                               ? const SizedBox.shrink()
                               : const Icon(Icons.favorite,
-                                  color: AppColor.appcolor, size: 12),
+                                  color: AppColor.appColor, size: 12),
                           likes == null
                               ? const SizedBox.shrink()
                               : AppText(
@@ -123,7 +123,7 @@ class CommonWidgets {
                           views == null
                               ? const SizedBox.shrink()
                               : const Icon(Icons.remove_red_eye_outlined,
-                                  color: AppColor.appcolor, size: 12),
+                                  color: AppColor.appColor, size: 12),
                           views == null
                               ? const SizedBox.shrink()
                               : AppText(
@@ -281,7 +281,7 @@ class CommonWidgets {
                           likes == null
                               ? const SizedBox.shrink()
                               : const Icon(Icons.favorite,
-                                  color: AppColor.appcolor, size: 12),
+                                  color: AppColor.appColor, size: 12),
                           likes == null
                               ? const SizedBox.shrink()
                               : AppText(
@@ -292,7 +292,7 @@ class CommonWidgets {
                           views == null
                               ? const SizedBox.shrink()
                               : const Icon(Icons.remove_red_eye_outlined,
-                                  color: AppColor.appcolor, size: 12),
+                                  color: AppColor.appColor, size: 12),
                           views == null
                               ? const SizedBox.shrink()
                               : AppText(

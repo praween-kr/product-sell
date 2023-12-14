@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
+import 'color_constant.dart';
 
 class FavouriteButton extends StatefulWidget {
   const FavouriteButton(
@@ -46,9 +46,9 @@ class _FavouriteButtonState extends State<FavouriteButton>
             CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
         child: widget.isFavourite
             ? Icon(widget.activeIcon ?? Icons.favorite,
-                size: widget.size, color: widget.activeColor ?? themeColor)
+                size: widget.size, color: widget.activeColor ?? AppColor.themeColor)
             : Icon(widget.inActiveIcon ?? Icons.favorite_border,
-                size: widget.size, color: widget.inActiveColor ?? themeColor),
+                size: widget.size, color: widget.inActiveColor ?? AppColor.themeColor),
       ),
     );
   }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_controller.dart';
 import '../../../generated/assets.dart';
-import '../../../utils/colors_file.dart';
 
 class SettingPaymentScreen extends StatelessWidget {
    SettingPaymentScreen({super.key});
@@ -17,11 +16,11 @@ class SettingPaymentScreen extends StatelessWidget {
     var dim = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Payments",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
         fontSize: 20,
-        color: blackColor,
+        color: AppColor.blackColor,
         fontWeight: FontWeight.w500,
         fontFamily: "Poppins"
       ),
@@ -37,7 +36,7 @@ class SettingPaymentScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 20.0),
                   decoration: BoxDecoration(
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                     borderRadius: BorderRadius.circular(6.0)
                   ),
                   child: const Align(
@@ -104,7 +103,7 @@ class SettingPaymentScreen extends StatelessWidget {
               left: dim.width * 0.10,
               right: dim.width * 0.10),
               decoration: const BoxDecoration(
-              color: AppColor.appcolor,
+              color: AppColor.appColor,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30),
                 topLeft: Radius.circular(30),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 
 class AppTimer extends StatelessWidget {
   const AppTimer({super.key, required this.bidNow, required this.endTime});
@@ -43,7 +42,7 @@ class AppTimer extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return timerWidget(
-                timeChild: const CircularProgressIndicator(color: themeColor));
+                timeChild: const CircularProgressIndicator(color: AppColor.themeColor));
           }
           return timerWidget(
               timeChild: Text(
@@ -88,12 +87,12 @@ class AppTimer extends StatelessWidget {
                 const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () => bidNow(),
-                  child: CommonButton(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    color: AppColor.appcolor,
+                  child: const CommonButton(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    color: AppColor.appColor,
                     text: "Bid Now",
                     radius: 15,
-                    textStyle: const TextStyle(
+                    textStyle: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontFamily: "Poppins",
                         fontSize: 15,

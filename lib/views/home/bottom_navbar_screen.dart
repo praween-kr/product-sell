@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
@@ -39,7 +39,7 @@ class BottomScreen extends StatelessWidget {
           bottomNavigationBar: BottomBarInspiredOutside(
             items: items,
             iconSize: 25,
-            backgroundColor: AppColor.appcolor,
+            backgroundColor: AppColor.appColor,
             color: AppColor.white,
             colorSelected: AppColor.white,
             indexSelected: controller.selectedIndex.value,
@@ -47,7 +47,7 @@ class BottomScreen extends StatelessWidget {
             animated: true,
             itemStyle: ItemStyle.circle,
             chipStyle: const ChipStyle(
-              background: AppColor.appcolor,
+              background: AppColor.appColor,
               notchSmoothness: NotchSmoothness.sharpEdge,
             ),
           ),

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
-import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 
-import '../../../common_widget/app_textfield.dart';
+import '../../../utils/app_text_field.dart';
 import '../../../generated/assets.dart';
 
 class GyaradoMsgScreen extends StatelessWidget {
@@ -21,7 +19,7 @@ class GyaradoMsgScreen extends StatelessWidget {
         heading: "Message",
           textStyle: const TextStyle(
               fontSize: 20,
-              color: blackColor,
+              color: AppColor.blackColor,
               fontWeight: FontWeight.w500,
               fontFamily: "Poppins"),
         action: GestureDetector(
@@ -42,7 +40,7 @@ class GyaradoMsgScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0)
             ),
             child: const Center(
-              child: Icon(Icons.bar_chart_rounded,color: AppColor.appcolor,
+              child: Icon(Icons.bar_chart_rounded,color: AppColor.appColor,
               size: 40.0,
               ),
             ),
@@ -103,10 +101,10 @@ body:  Column(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Flexible(
+          const Flexible(
             child: AppTextField(
               title: "Type here ……..",
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 fontFamily: "Poppins",
@@ -123,7 +121,7 @@ body:  Column(
           ),
           const Icon(
             Icons.send,
-            color: AppColor.appcolor,
+            color: AppColor.appColor,
           )
         ],
       ),
@@ -196,7 +194,7 @@ body:  Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.calendar_month_outlined,color: AppColor.appcolor,
+                                  Icon(Icons.calendar_month_outlined,color: AppColor.appColor,
                                   size: 15.0,
                                   ),
                                   SizedBox(width: 11.0,),
@@ -210,7 +208,7 @@ body:  Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.watch_later,color: AppColor.appcolor,
+                                  Icon(Icons.watch_later,color: AppColor.appColor,
                                     size: 15.0,
                                   ),
                                   SizedBox(width: 11.0,),
@@ -252,13 +250,13 @@ body:  Column(
                           onTap: () {
                             Get.back();
                           },
-                          child: CommonButton(
-                            color: AppColor.appcolor,
+                          child: const CommonButton(
+                            color: AppColor.appColor,
                             radius: 17,
-                            margin: const EdgeInsets.only(right: 30,left: 30),
+                            margin: EdgeInsets.only(right: 30,left: 30),
                             //height: 39,
                             text: "Create Poll",
-                            textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+                            textStyle: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         )
                       ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 
-import '../../../common_widget/appbar.dart';
-import '../../../common_widget/color_constant.dart';
+import '../../../utils/appbar.dart';
+import '../../../utils/color_constant.dart';
 
 class BiddingScreen extends StatelessWidget {
   const BiddingScreen({super.key});
@@ -45,7 +45,7 @@ class BiddingScreen extends StatelessWidget {
                           AppText(
                             text: "\$2100",
                             textSize: 15,
-                            color: AppColor.appcolor,
+                            color: AppColor.appColor,
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w500,
                           ),
