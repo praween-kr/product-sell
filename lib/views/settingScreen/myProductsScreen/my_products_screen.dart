@@ -6,14 +6,15 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../../common_widget/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final MyProductController _myProductController = Get.find();
 
   @override
@@ -187,9 +188,7 @@ class ProductScreen extends StatelessWidget {
                       child: _myProductController.loadingdata.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.myBuyProducts.isEmpty
-                              ? const Center(
-                                  child: Text("No data"),
-                                )
+                              ? EmptyWidgets.simple()
                               : GridView.builder(
                                   physics: const ClampingScrollPhysics(
                                       parent: AlwaysScrollableScrollPhysics()),
@@ -237,9 +236,7 @@ class ProductScreen extends StatelessWidget {
                       child: _myProductController.loadingdata.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.mySellProducts.isEmpty
-                              ? const Center(
-                                  child: Text("No data"),
-                                )
+                              ? EmptyWidgets.simple()
                               : GridView.builder(
                                   physics: const ClampingScrollPhysics(
                                       parent: AlwaysScrollableScrollPhysics()),
@@ -289,9 +286,7 @@ class ProductScreen extends StatelessWidget {
                       child: _myProductController.loadingdata.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.myCoWonerProducts.isEmpty
-                              ? const Center(
-                                  child: Text("No data"),
-                                )
+                              ? EmptyWidgets.simple()
                               : GridView.builder(
                                   physics: const ClampingScrollPhysics(
                                       parent: AlwaysScrollableScrollPhysics()),
@@ -340,9 +335,7 @@ class ProductScreen extends StatelessWidget {
                       child: _myProductController.loadingdata.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.myPhysicalProducts.isEmpty
-                              ? const Center(
-                                  child: Text("No data"),
-                                )
+                              ? EmptyWidgets.simple()
                               : GridView.builder(
                                   physics: const ClampingScrollPhysics(
                                       parent: AlwaysScrollableScrollPhysics()),

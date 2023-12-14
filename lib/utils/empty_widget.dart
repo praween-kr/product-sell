@@ -15,7 +15,7 @@ class EmptyWidgets {
           child: Center(
               child: Padding(
             padding: EdgeInsets.only(bottom: Get.height * 0.2),
-            child: Lottie.asset(Assets.lottieNoData),
+            child: const Text("No data"), // Lottie.asset(Assets.lottieNoData),
           )),
         ),
       );

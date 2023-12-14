@@ -20,7 +20,7 @@ import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import '../../common_widget/color_constant.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  ProductDetailsScreen({Key? key}) : super(key: key);
+  ProductDetailsScreen({super.key});
   final HomeCatProductcontroller controller = Get.find();
 
   @override
@@ -447,7 +447,8 @@ class ProductDetailsScreen extends StatelessWidget {
     cmc.newMessageInput.text = "Hello";
     cmc.sendNewMessage(
         (controller.productDetailsData.value?.details?.vendorId ?? '')
-            .toString());
+            .toString(),
+        '1');
     Get.toNamed(Routes.messageScreen);
   }
 

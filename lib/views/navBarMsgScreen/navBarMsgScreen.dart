@@ -8,8 +8,10 @@ import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
+import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
@@ -135,105 +137,115 @@ class NavBarMsgScreen extends StatelessWidget {
         await _chatMsgController.getUsers();
         await Future.delayed(const Duration(seconds: 1));
       },
-      child: ListView.builder(
-          itemCount: productUsers.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            ChatProductUser data = productUsers[index];
-            String productImg = ImageBaseUrls.product;
-            if ((data.product?.image ?? '') == '') {
-              if ((data.product?.productImages ?? []).isNotEmpty) {
-                productImg +=
-                    (data.product?.productImages ?? []).first.image ?? '';
-              }
-            } else {
-              productImg += data.product?.image ?? '';
-            }
-            socketPrint("Product Image: $productImg");
+      child: productUsers.isEmpty
+          ? EmptyWidgets.simple()
+          : ListView.builder(
+              itemCount: productUsers.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                ChatProductUser data = productUsers[index];
+                String productImg = ImageBaseUrls.product;
+                if ((data.product?.image ?? '') == '') {
+                  if ((data.product?.productImages ?? []).isNotEmpty) {
+                    productImg +=
+                        (data.product?.productImages ?? []).first.image ?? '';
+                  }
+                } else {
+                  productImg += data.product?.image ?? '';
+                }
+                socketPrint("Product Image: $productImg");
 
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 15.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: GestureDetector(
-                  onTap: () {
-                    _chatMsgController.goToChatRoom(data);
-                  },
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: AppImage.view(productImg,
-                                    height: 57.0,
-                                    width: 57.0,
-                                    fit: BoxFit.cover),
-                              ),
-                              const SizedBox(width: 12.0),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppText(
-                                      text:
-                                          "${data.receiver?.firstName ?? ''} ${data.receiver?.lastName ?? ''}",
-                                      textSize: 15.0,
-                                      color: AppColor.blackColor,
-                                      style: AppTextStyle.title,
-                                      maxlines: 1,
-                                    ),
-                                    const SizedBox(height: 7.0),
-                                    AppText(
-                                      text: data.lastMessageIds?.message ?? '',
-                                      textSize: 12.0,
-                                      color:
-                                          AppColor.blackColor.withOpacity(0.3),
-                                      style: AppTextStyle.medium,
-                                      maxlines: 1,
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        (data.unreadCount ?? 0) == 0
-                            ? const SizedBox.shrink()
-                            : Row(
+                Receiver? user =
+                    data.receiver?.id == UserStoredInfo().userInfo?.id
+                        ? data.sender
+                        : data.receiver;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 35.0, vertical: 15.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () {
+                        _chatMsgController.activeProduct.value = data.product;
+                        _chatMsgController.activeUser.value = user;
+                        _chatMsgController.goToChatRoom(user);
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Row(
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0, vertical: 10.0),
-                                    decoration: const BoxDecoration(
-                                      color: AppColor.appcolor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Center(
-                                      child: AppText(
-                                        text:
-                                            (data.unreadCount ?? 0).toString(),
-                                        color: AppColor.white,
-                                        textSize: 10.0,
-                                        style: AppTextStyle.regular,
-                                      ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: AppImage.view(productImg,
+                                        height: 57.0,
+                                        width: 57.0,
+                                        fit: BoxFit.cover),
+                                  ),
+                                  const SizedBox(width: 12.0),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AppText(
+                                          text:
+                                              "${user?.firstName ?? ''} ${user?.lastName ?? ''}",
+                                          textSize: 15.0,
+                                          color: AppColor.blackColor,
+                                          style: AppTextStyle.title,
+                                          maxlines: 1,
+                                        ),
+                                        const SizedBox(height: 7.0),
+                                        AppText(
+                                          text: data.lastMessageIds?.message ??
+                                              '',
+                                          textSize: 12.0,
+                                          color: AppColor.blackColor
+                                              .withOpacity(0.3),
+                                          style: AppTextStyle.medium,
+                                          maxlines: 1,
+                                        )
+                                      ],
                                     ),
                                   )
                                 ],
-                              )
-                      ],
+                              ),
+                            ),
+                            (data.unreadCount ?? 0) == 0
+                                ? const SizedBox.shrink()
+                                : Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 10.0),
+                                        decoration: const BoxDecoration(
+                                          color: AppColor.appcolor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Center(
+                                          child: AppText(
+                                            text: (data.unreadCount ?? 0)
+                                                .toString(),
+                                            color: AppColor.white,
+                                            textSize: 10.0,
+                                            style: AppTextStyle.regular,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            );
-          }),
+                );
+              }),
     );
   }
 

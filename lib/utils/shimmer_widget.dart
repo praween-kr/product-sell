@@ -17,6 +17,43 @@ class ShimmerWidgets {
               : null,
           borderRadius: BorderRadius.all(Radius.circular(radius)));
 
+  static Widget chatListView({bool scrollHide = false}) => ListView.separated(
+        shrinkWrap: scrollHide,
+        physics: scrollHide
+            ? const NeverScrollableScrollPhysics()
+            : const ClampingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          child: Row(
+            mainAxisAlignment: index % 2 == 0
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.end,
+            children: [
+              index % 2 != 0
+                  ? const SizedBox.shrink()
+                  : card(h: 50, w: 50, radius: 5),
+              const SizedBox(width: 8),
+              Column(
+                crossAxisAlignment: index % 2 == 0
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
+                children: [
+                  text(w: Get.width * 0.4, h: 20),
+                  text(w: Get.width * 0.2, h: 14),
+                ],
+              ),
+              const SizedBox(width: 8),
+              index % 2 == 0
+                  ? const SizedBox.shrink()
+                  : card(h: 50, w: 50, radius: 5),
+            ],
+          ),
+        ),
+        separatorBuilder: (_, __) => const SizedBox(height: 0),
+        itemCount: 7,
+      );
+
   static Widget listView(
           {bool scrollHide = false,
           bool withoutImage = false,

@@ -21,7 +21,7 @@ class SocketKeys {
   static String listenerSendMessage = "send_message_emit";
   static String listenerGetUsers = "user_constant_chat_list";
   static String listenerChatHistories = "users_chat_list_listener";
-  static String listenerReadUnread = "read_data_status";
+  static String listenerReadUnread = "read_unread_listner";
   static String listenerDeleteMsg = "delete_message_listener";
   static String listenerTyping = "stopTyping";
   //

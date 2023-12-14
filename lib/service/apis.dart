@@ -44,4 +44,7 @@ class AppApis {
   // Add Favourite
   static String addProductAsFavourite = "/addFavouriteProduct";
   static String myFavouriteProducts = "/myFavouriteProduct";
+
+  // chat Attachment upload
+  static String uploadAttachment = "/sendMessageSocket";
 }

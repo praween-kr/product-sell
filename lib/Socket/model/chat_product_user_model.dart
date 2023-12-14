@@ -37,6 +37,7 @@ class ChatProductUser {
   bool? onlineStatus;
   LastMessageIds? lastMessageIds;
   Receiver? receiver;
+  Receiver? sender;
   Product? product;
 
   ChatProductUser(
@@ -49,6 +50,7 @@ class ChatProductUser {
       this.onlineStatus,
       this.lastMessageIds,
       this.receiver,
+      this.sender,
       this.product});
 
   ChatProductUser.fromJson(Map<String, dynamic> json) {
@@ -64,6 +66,7 @@ class ChatProductUser {
         : null;
     receiver =
         json['receiver'] != null ? Receiver.fromJson(json['receiver']) : null;
+    sender = json['sender'] != null ? Receiver.fromJson(json['sender']) : null;
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
   }
@@ -82,6 +85,9 @@ class ChatProductUser {
     }
     if (receiver != null) {
       data['receiver'] = receiver!.toJson();
+    }
+    if (sender != null) {
+      data['sender'] = sender!.toJson();
     }
     if (product != null) {
       data['product'] = product!.toJson();

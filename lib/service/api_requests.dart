@@ -705,6 +705,28 @@ class ApiRequests {
     return false;
   }
 
+  /// ---- Add Physical Product -------
+  static uploadAttachment(
+      {required String attachment,
+      required String type,
+      required String thumbnail}) async {
+    Map<String, dynamic> mapData = {"messageType": type};
+
+    AppLoader.show();
+    var data = await BaseApiCall().postFormReq(
+      AppApis.addPhysicalProduct,
+      data: mapData,
+      attachments: {'message': attachment, "thumbnail": thumbnail},
+    );
+    AppPrint.all("Add Product Resp: $data");
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
   ///----------------------------
 
   static gPlaceSearch(String query,

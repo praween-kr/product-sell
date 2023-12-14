@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
@@ -168,6 +168,10 @@ class AppSocket {
     // Read/Unread messages ---------------
     _socketIO?.on(SocketKeys.listenerReadUnread, (data) {
       //
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerReadUnread}), ${jsonEncode({
+            "msgs": data
+          })}");
       ChatMsgController cmc;
       if (ChatMsgController().initialized) {
         cmc = Get.find<ChatMsgController>();
@@ -175,11 +179,8 @@ class AppSocket {
         cmc = Get.put(ChatMsgController());
       }
 
-      socketPrint(
-          "Listener:---------> (${SocketKeys.listenerReadUnread}), ${jsonEncode({
-            "msgs": data
-          })}");
-      cmc.listenerReadUnread(data['sender_id'], data['receiver_id']);
+      cmc.listenerReadUnread(
+          data['senderId'].toString(), data['receiverId'].toString());
     });
   }
 }
@@ -281,9 +282,10 @@ class SocketEmits {
   // Read/Unread messages ---------------
   static readUnread(String receiverId) {
     Map<String, dynamic> req = HashMap();
-    req['sender_id'] = UserStoredInfo().userInfo?.id ?? '';
-    req['receiver_id'] = receiverId;
-    socketPrint("Emit:---------> emitReadUnread-(${SocketKeys.emitReadUnread})",
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['receiverId'] = receiverId;
+    socketPrint(
+        "Emit:---------> emitReadUnread-(${SocketKeys.emitReadUnread}) - $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitReadUnread, req);
   }
@@ -293,7 +295,9 @@ socketPrint(dynamic data, {bool blue = false}) {
   if (blue) {
     print("Socket Debug: $data");
   } else {
-    // log("Socket Debug: $data");
-    debugPrint("Socket Debug: $data");
+    log("Socket Debug: $data");
+    // debugPrint("Socket Debug: $data");
   }
 }
+
+class SocketChatListener {}

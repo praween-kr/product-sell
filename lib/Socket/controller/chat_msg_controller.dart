@@ -72,14 +72,17 @@ class ChatMsgController extends GetxController {
 
   // Listener Send Message----------
   listenerNewMessage(Message? data) {
-    if (UserStoredInfo().userInfo?.id.toString() ==
-        data?.receiverId.toString()) {
-      readUnread((data?.senderId ?? '').toString());
-    }
-    // socketPrint("Listener:---------> (send_message_listener) ===> $data");
+    socketPrint("Listener:---------> (send_message_listener) ===> $data");
     if (data != null) {
       messages.add(data);
       messages.refresh();
+      socketPrint(
+          "Listener:---------> (send_message_listener) ===> ${data.message}-- ${messages.length}");
+      socketPrint(
+          "Listener:---------> ${data.senderId.toString()} == ${activeUser.value?.id.toString()} -> ${data.senderId.toString() == activeUser.value?.id.toString()}");
+      if (data.senderId.toString() == activeUser.value?.id.toString()) {
+        readUnread(data.senderId.toString());
+      }
     }
     // socketPrint("listenerNewMessage---> $data");
   }
@@ -92,7 +95,7 @@ class ChatMsgController extends GetxController {
   // Listener Chat Histories----------
   listenerChatHistories(List<Message> data) async {
     messages.value = data;
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 1));
     loadingChatHistories.value = false;
     socketPrint("listenerChatHistories---> $data");
   }
@@ -124,10 +127,10 @@ class ChatMsgController extends GetxController {
         if (messages[i].readStatus == 1) {
           break;
         } else {
-          newReadedMsg.add(sender);
+          messages[i].readStatus = 1;
         }
       }
-      newReadedMsg.refresh();
+      messages.refresh();
     }
     socketPrint("listenerReadUnread---> $sender, $reciver");
     // messages.refresh();
@@ -135,13 +138,13 @@ class ChatMsgController extends GetxController {
 
   //----------------------------------------------------------------------------
   // Navigation -------------
-  var activeUser = Rx<ChatProductUser?>(null);
-  goToChatRoom(ChatProductUser reciverInfo) {
-    activeUser.value = reciverInfo;
+  var activeUser = Rx<Receiver?>(null);
+  var activeProduct = Rx<Product?>(null);
+  goToChatRoom(Receiver? reciverInfo) {
     messages.clear();
     Get.toNamed(Routes.messageScreen);
     // readUnread((reciverInfo.receiver?.id ?? '').toString());
-    SocketEmits.getChatHistories((reciverInfo.receiver?.id ?? '').toString());
+    SocketEmits.getChatHistories((reciverInfo?.id ?? '').toString());
 
     loadingChatHistories.value = true;
   }
@@ -153,7 +156,7 @@ class ChatMsgController extends GetxController {
   }
 
   /// Send new message --------
-  sendNewMessage(String? receiverId) async {
+  sendNewMessage(String? receiverId, String productId) async {
     if (receiverId != null) {
       if (newMessageType.value == MessageType.text) {
         if (newMessageInput.text != '') {
@@ -162,7 +165,7 @@ class ChatMsgController extends GetxController {
               receiverId: receiverId,
               msg: newMessageInput.text,
               type: newMessageType.value,
-              productId: '1');
+              productId: productId);
         }
       } else if (newMessageAttachment.value != '') {
         // await ApiRequests.messageAttachmentUpload(

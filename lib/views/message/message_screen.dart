@@ -13,7 +13,10 @@ import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/common_appbar.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/helper/file_picker.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../common_widget/color_constant.dart';
@@ -35,8 +38,7 @@ class MessageScreen extends StatelessWidget {
             title: "Clear",
             onClick: () {
               _chatMsgController.clearAllChats(
-                  (_chatMsgController.activeUser.value?.receiverId ?? '')
-                      .toString());
+                  (_chatMsgController.activeUser.value?.id ?? '').toString());
             }),
         // InkWell(
         //     onTap: () {},
@@ -48,13 +50,9 @@ class MessageScreen extends StatelessWidget {
           Expanded(
             child: Obx(
               () => _chatMsgController.loadingChatHistories.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  ? ShimmerWidgets.chatListView()
                   : _chatMsgController.messages.isEmpty
-                      ? const Center(
-                          child: Text("No chat"),
-                        )
+                      ? EmptyWidgets.simple()
                       : SingleChildScrollView(
                           reverse: true,
                           physics: const ClampingScrollPhysics(),
@@ -66,58 +64,23 @@ class MessageScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               Message message =
                                   _chatMsgController.messages[index];
-                              String today = DateFormat("dd-MMM-yyyy")
-                                  .format(DateTime.now());
-                              String yesterday = DateFormat("dd-MMM-yyyy")
-                                  .format(DateTime.now()
-                                      .subtract(const Duration(days: 1)));
-                              String lastMessageDate = DateFormat("dd-MMM-yyyy")
-                                  .format(
-                                      DateTime.parse(message.createdAt ?? ''));
-                              String? secLastMessageDate = index == 0
-                                  ? null
-                                  : DateFormat("dd-MMM-yyyy").format(
-                                      DateTime.parse(_chatMsgController
-                                              .messages[index - 1].createdAt ??
-                                          ''));
-                              //
-                              String dt = '';
-                              if (index == 0) {
-                                dt = lastMessageDate == yesterday
-                                    ? "Yesterday"
-                                    : lastMessageDate == today
-                                        ? "Today"
-                                        : lastMessageDate;
-                              } else {
-                                if (secLastMessageDate != lastMessageDate) {
-                                  dt = lastMessageDate == yesterday
-                                      ? "Yesterday"
-                                      : lastMessageDate == today
-                                          ? "Today"
-                                          : lastMessageDate;
-                                }
-                              }
-                              return Column(
-                                children: [
-                                  dt == ''
-                                      ? const SizedBox.shrink()
-                                      : dividerByDate(dt),
-                                  messageCard(message,
-                                      _chatMsgController.activeUser.value,
-                                      onLongClick: () {
-                                    AppDialogs.confirm(
-                                      context,
-                                      msg:
-                                          "Are you sure\nwant to delete message?",
-                                      clickOnYes: () {
-                                        _chatMsgController
-                                            .deleteMsg(message.id.toString());
-                                        Get.back();
-                                      },
-                                    );
-                                  }),
-                                ],
-                              );
+
+                              return messageCard(
+                                  index,
+                                  message,
+                                  _chatMsgController.activeUser.value,
+                                  _chatMsgController.activeProduct.value,
+                                  onLongClick: () {
+                                AppDialogs.confirm(
+                                  context,
+                                  msg: "Are you sure\nwant to delete message?",
+                                  clickOnYes: () {
+                                    _chatMsgController
+                                        .deleteMsg(message.id.toString());
+                                    Get.back();
+                                  },
+                                );
+                              });
                             },
                           ),
                         ),
@@ -145,11 +108,27 @@ class MessageScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Image.asset(Assets.assetsAttachment, height: 20, width: 20),
+                InkWell(
+                    onTap: () {
+                      // attachmentDialog(
+                      //   onImagClick: () {
+                      //     Get.back();
+                      //   },
+                      //   onFileClick: () {
+                      //     Get.back();
+                      //     // chatController.cameraHelper.openAttachmentDialog();
+                      //   },
+                      // );
+                    },
+                    child: Image.asset(Assets.assetsAttachment,
+                        height: 20, width: 20)),
                 const SizedBox(width: 5),
                 InkWell(
                     onTap: () {
-                      _chatMsgController.sendNewMessage("5208");
+                      _chatMsgController.sendNewMessage(
+                          _chatMsgController.activeUser.value?.id.toString(),
+                          (_chatMsgController.activeProduct.value?.id)
+                              .toString());
                     },
                     child: const Icon(Icons.send, color: AppColor.appcolor))
               ],
@@ -158,6 +137,22 @@ class MessageScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _addMoreAttachments() {
+    AppPicker().image((path, type, thumb) {
+      String typeKey = "0";
+      if (type == AttachmentPicker.IMG) {
+        typeKey = "0";
+      } else if (type == AttachmentPicker.VIDEO) {
+        typeKey = "2";
+      } else {
+        typeKey = "1";
+      }
+      if (path != null) {
+        //
+      }
+    });
   }
 
   PopupMenuButton<Function> popupWidget(
@@ -210,96 +205,133 @@ class MessageScreen extends StatelessWidget {
     );
   }
 
-  Widget messageCard(Message message, ChatProductUser? reciverInfo,
+  Widget messageCard(
+      int index, Message message, Receiver? reciverInfo, Product? product,
       {Function()? onLongClick, Function()? onClick}) {
     bool me = UserStoredInfo().userInfo?.id == message.senderId;
-
     bool isRead = message.readStatus == 1;
     //
     String productImg = ImageBaseUrls.product;
-    if ((reciverInfo?.product?.image ?? '') == '') {
-      if ((reciverInfo?.product?.productImages ?? []).isNotEmpty) {
-        productImg +=
-            (reciverInfo?.product?.productImages ?? []).first.image ?? '';
+    if ((product?.image ?? '') == '') {
+      if ((product?.productImages ?? []).isNotEmpty) {
+        productImg += (product?.productImages ?? []).first.image ?? '';
       }
     } else {
-      productImg += reciverInfo?.product?.image ?? '';
+      productImg += product?.image ?? '';
     }
 
-    return SizedBox(
-      width: double.infinity,
-      child: Align(
-        alignment: me ? Alignment.centerRight : Alignment.centerLeft,
-        child: GestureDetector(
-          onLongPress: onLongClick,
-          onTap: onClick,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: Get.width * 0.65),
-            child: Column(
-              crossAxisAlignment:
-                  me ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: [
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
+    ///----- Divider -----
+    String today = DateFormat("dd-MMM-yyyy").format(DateTime.now());
+    String yesterday = DateFormat("dd-MMM-yyyy")
+        .format(DateTime.now().subtract(const Duration(days: 1)));
+    String lastMessageDate = DateFormat("dd-MMM-yyyy")
+        .format(DateTime.parse(message.createdAt ?? ''));
+    String? secLastMessageDate = index == 0
+        ? null
+        : DateFormat("dd-MMM-yyyy").format(DateTime.parse(
+            _chatMsgController.messages[index - 1].createdAt ?? ''));
+    //
+    String dt = '';
+    if (index == 0) {
+      dt = lastMessageDate == yesterday
+          ? "Yesterday"
+          : lastMessageDate == today
+              ? "Today"
+              : lastMessageDate;
+    } else {
+      if (secLastMessageDate != lastMessageDate) {
+        dt = lastMessageDate == yesterday
+            ? "Yesterday"
+            : lastMessageDate == today
+                ? "Today"
+                : lastMessageDate;
+      }
+    }
+
+    ///----
+
+    return Column(
+      children: [
+        dt == '' ? const SizedBox.shrink() : dividerByDate(dt),
+        SizedBox(
+          width: double.infinity,
+          child: Align(
+            alignment: me ? Alignment.centerRight : Alignment.centerLeft,
+            child: GestureDetector(
+              onLongPress: onLongClick,
+              onTap: onClick,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: Get.width * 0.65),
+                child: Column(
+                  crossAxisAlignment:
+                      me ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
-                    me
-                        ? const SizedBox.shrink()
-                        : ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            child: Container(
-                              height: 60,
-                              width: 60,
-                              color: Colors.grey.shade300,
-                              child:
-                                  AppImage.view(productImg, fit: BoxFit.cover),
-                            ),
-                          ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 14),
-                      decoration: BoxDecoration(
-                          color: me
-                              ? Colors.grey.shade700
-                              : themeColor.withOpacity(0.0),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(12))),
-                      child: message.messageType.toString() == MessageType.text
-                          ? AppText(
-                              text: message.message ?? '',
-                              lineHeight: 1.5,
-                              letterSpacing: 0.6,
-                              color: me ? Colors.white : Colors.black,
-                              fontFamily: "Oswald",
-                              fontWeight: FontWeight.w500,
-                              textSize: 14)
-                          : _attachmentView(message.message ?? ''),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        me
+                            ? const SizedBox.shrink()
+                            : ClipRRect(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
+                                child: Container(
+                                  height: 60,
+                                  width: 60,
+                                  color: Colors.grey.shade300,
+                                  child: AppImage.view(productImg,
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 14),
+                          decoration: BoxDecoration(
+                              color: me
+                                  ? Colors.grey.shade700
+                                  : themeColor.withOpacity(0.0),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12))),
+                          child:
+                              message.messageType.toString() == MessageType.text
+                                  ? AppText(
+                                      text: message.message ?? '',
+                                      lineHeight: 1.5,
+                                      letterSpacing: 0.6,
+                                      color: me ? Colors.white : Colors.black,
+                                      fontFamily: "Oswald",
+                                      fontWeight: FontWeight.w500,
+                                      textSize: 14)
+                                  : _attachmentView(message.message ?? ''),
+                        ),
+                      ],
                     ),
+                    //
+                    Wrap(
+                      children: [
+                        Text(
+                            DateFormat("hh:mm a").format(
+                                AppDateTime.getDateTime(
+                                    message.createdAt ?? '')!),
+                            style: const TextStyle(fontSize: 10)),
+                        const SizedBox(width: 5),
+                        me
+                            ? Icon(
+                                isRead ? Icons.done_all : Icons.check,
+                                size: 16,
+                                color:
+                                    isRead ? Colors.blue : Colors.grey.shade400,
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
-                //
-                Wrap(
-                  children: [
-                    Text(
-                        DateFormat("hh:mm a").format(
-                            AppDateTime.getDateTime(message.createdAt ?? '')!),
-                        style: const TextStyle(fontSize: 10)),
-                    const SizedBox(width: 5),
-                    me
-                        ? Icon(
-                            isRead ? Icons.done_all : Icons.check,
-                            size: 16,
-                            color: isRead ? Colors.blue : Colors.grey.shade400,
-                          )
-                        : const SizedBox.shrink(),
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -356,6 +388,87 @@ class MessageScreen extends StatelessWidget {
                     child: AppImage.view("${ImageBaseUrls.product}$url",
                         errorShow: true)),
               ));
+  }
+
+  void attachmentDialog(
+      {required Function onImagClick, required Function onFileClick}) {
+    Get.bottomSheet(
+      Wrap(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: Get.width * 0.15, vertical: Get.height * 0.05),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(14))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => onImagClick(),
+                        child: const Column(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: themeColor,
+                              child: Icon(Icons.image, color: Colors.white),
+                            ),
+                            SizedBox(height: 8),
+                            AppText(
+                                text: "Image",
+                                color: Colors.black,
+                                textSize: 12),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => onFileClick(),
+                        child: const Column(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: themeColor,
+                              child: Icon(
+                                Icons.file_present_sharp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            AppText(
+                                text: "File",
+                                color: Colors.black,
+                                textSize: 12),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 14),
+                      decoration: BoxDecoration(
+                          color: themeColor.withOpacity(0.2),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(14))),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 8),
+                      child: const Center(child: Text("Cancel")),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      // backgroundColor: Colors.black.withOpacity(0.3)
+    );
   }
 
   List fileTypes = ['pdf', 'docx', 'doc', 'txt', 'pptx', 'ppt', 'xlsx', 'xls'];
