@@ -3,16 +3,16 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
+
+import '../../utils/app_text.dart';
+import '../../utils/appbar.dart';
+import '../../utils/color_constant.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});
@@ -23,12 +23,12 @@ class NavBarMsgScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
-        leading: const Text(""),
+      appBar: const CommonAppbarWidget(
+        leading: Text(""),
         heading: "Message",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -64,13 +64,13 @@ class NavBarMsgScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:
                                 _chatMsgController.messageController.value == 0
-                                    ? AppColor.appcolor
+                                    ? AppColor.blackColor
                                     : Colors.white,
                             border: Border.all(
                               color:
                                   _chatMsgController.messageController.value ==
                                           0
-                                      ? AppColor.appcolor
+                                      ? AppColor.blackColor
                                       : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
@@ -93,13 +93,13 @@ class NavBarMsgScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:
                                 _chatMsgController.messageController.value == 1
-                                    ? AppColor.appcolor
+                                    ? AppColor.blackColor
                                     : Colors.white,
                             border: Border.all(
                               color:
                                   _chatMsgController.messageController.value ==
                                           1
-                                      ? AppColor.appcolor
+                                      ? AppColor.blackColor
                                       : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
@@ -224,7 +224,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10.0, vertical: 10.0),
                                         decoration: const BoxDecoration(
-                                          color: AppColor.appcolor,
+                                          color: AppColor.blackColor,
                                           shape: BoxShape.circle,
                                         ),
                                         child: Center(
@@ -291,7 +291,7 @@ class NavBarMsgScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10.0, vertical: 10.0),
                             decoration: const BoxDecoration(
-                              color: AppColor.appcolor,
+                              color: AppColor.blackColor,
                               shape: BoxShape.circle,
                             ),
                             child: const Center(

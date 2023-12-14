@@ -5,13 +5,11 @@ import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/model/message_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/helper/file_picker.dart';
@@ -19,7 +17,9 @@ import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
-import '../../common_widget/color_constant.dart';
+import '../../utils/app_text.dart';
+import '../../utils/color_constant.dart';
+
 
 class MessageScreen extends StatelessWidget {
   MessageScreen({super.key});
@@ -130,7 +130,7 @@ class MessageScreen extends StatelessWidget {
                           (_chatMsgController.activeProduct.value?.id)
                               .toString());
                     },
-                    child: const Icon(Icons.send, color: AppColor.appcolor))
+                    child:  const Icon(Icons.send, color: AppColor.blackColor))
               ],
             ),
           )
@@ -188,7 +188,7 @@ class MessageScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
               decoration: BoxDecoration(
-                  color: themeColor.withOpacity(0.2),
+                  color: AppColor.themeColor.withOpacity(0.2),
                   borderRadius: const BorderRadius.all(Radius.circular(20))),
               child: Text(
                 dt,
@@ -288,7 +288,7 @@ class MessageScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: me
                                   ? Colors.grey.shade700
-                                  : themeColor.withOpacity(0.0),
+                                  : AppColor.themeColor.withOpacity(0.0),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(12))),
                           child:
@@ -413,7 +413,7 @@ class MessageScreen extends StatelessWidget {
                         child: const Column(
                           children: [
                             CircleAvatar(
-                              backgroundColor: themeColor,
+                              backgroundColor: AppColor.themeColor,
                               child: Icon(Icons.image, color: Colors.white),
                             ),
                             SizedBox(height: 8),
@@ -429,7 +429,7 @@ class MessageScreen extends StatelessWidget {
                         child: const Column(
                           children: [
                             CircleAvatar(
-                              backgroundColor: themeColor,
+                              backgroundColor: AppColor.themeColor,
                               child: Icon(
                                 Icons.file_present_sharp,
                                 color: Colors.white,
@@ -453,7 +453,7 @@ class MessageScreen extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 14),
                       decoration: BoxDecoration(
-                          color: themeColor.withOpacity(0.2),
+                          color: AppColor.themeColor.withOpacity(0.2),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(14))),
                       padding: const EdgeInsets.symmetric(
