@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 
 class AppDialogs {
   static confirm(BuildContext context,
@@ -123,7 +122,7 @@ class AppDialogs {
                           const AppText(
                             text: "Bid Now",
                             textSize: 15,
-                            color: blackColor,
+                            color: AppColor.blackColor,
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
                           ),
@@ -197,7 +196,7 @@ class AppDialogs {
                                 const AppText(
                                   text: "Bid History",
                                   textSize: 12,
-                                  color: blackColor,
+                                  color: AppColor.blackColor,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
                                 ),
@@ -206,7 +205,7 @@ class AppDialogs {
                                   child: const AppText(
                                     text: "See all",
                                     textSize: 10,
-                                    color: blackColor,
+                                    color: AppColor.blackColor,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: "Poppins",
                                   ),
@@ -239,7 +238,7 @@ class AppDialogs {
                                             text: "J*******th",
                                             textSize: 15,
                                             fontFamily: "Poppins",
-                                            color: blackColor,
+                                            color: AppColor.blackColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                           AppText(

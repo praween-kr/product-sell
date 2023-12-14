@@ -12,7 +12,6 @@ import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -20,7 +19,7 @@ import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import '../../utils/color_constant.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  ProductDetailsScreen({Key? key}) : super(key: key);
+  ProductDetailsScreen({super.key});
   final HomeCatProductcontroller controller = Get.find();
 
   @override
@@ -80,7 +79,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                           '',
                                       textSize: 17,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                     // AppText(
                                     //   text: controller.productDetailsData.value
@@ -113,7 +112,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                       text: "Girl Denim",
                                       textSize: 17,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                     const Icon(Icons.star,
                                         color: AppColor.appColor),
@@ -176,7 +175,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                           '',
                                       textSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                   ],
                                 ),
@@ -201,7 +200,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                           '',
                                       textSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                   ],
                                 ),
@@ -221,7 +220,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                           '',
                                       textSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                   ],
                                 ),
@@ -241,7 +240,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                           '',
                                       textSize: 12,
                                       fontWeight: FontWeight.w400,
-                                      color: blackColor,
+                                      color: AppColor.blackColor,
                                     ),
                                   ],
                                 )
@@ -266,7 +265,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                   text: "New with tags",
                                   textSize: 13,
                                   fontWeight: FontWeight.w400,
-                                  color: blackColor,
+                                  color: AppColor.blackColor,
                                 ),
                                 SizedBox(height: 5),
                                 AppText(
@@ -302,7 +301,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                             text: "XL / 42 / 14",
                                             textSize: 12,
                                             fontWeight: FontWeight.w400,
-                                            color: blackColor,
+                                            color: AppColor.blackColor,
                                             fontFamily: "Poppins",
                                           )
                                         ],
@@ -326,7 +325,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                     '',
                                                 textSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color: blackColor,
+                                                color: AppColor.blackColor,
                                                 fontFamily: "Poppins"),
                                           )
                                         ],
@@ -355,7 +354,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                             textSize: 12,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: "Poppins",
-                                            color: blackColor,
+                                            color: AppColor.blackColor,
                                           )
                                         ],
                                       ),
@@ -498,7 +497,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             textSize: 18,
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: blackColor,
+                            color: AppColor.blackColor,
                           ),
                         ),
                         ListView.builder(
@@ -618,7 +617,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             textSize: 18,
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: blackColor,
+                            color: AppColor.blackColor,
                           ),
                         ),
                         GestureDetector(
@@ -690,13 +689,13 @@ class ProductDetailsScreen extends StatelessWidget {
                             };
                             Get.toNamed(Routes.denimScreen, arguments: data);*/
                           },
-                          child: CommonButton(
+                          child: const CommonButton(
                             height: 50,
                             radius: 15,
-                            margin: const EdgeInsets.only(
+                            margin: EdgeInsets.only(
                                 left: 20, top: 20, right: 20),
                             text: "Upload",
-                            textStyle: const TextStyle(
+                            textStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
                                 fontFamily: "Poppins",
@@ -761,7 +760,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             textSize: 18,
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: blackColor,
+                            color: AppColor.blackColor,
                           ),
                         ),
                         DottedBorder(
@@ -904,7 +903,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             textSize: 18,
                             fontFamily: "Poppins",
                             fontWeight: FontWeight.w400,
-                            color: blackColor,
+                            color: AppColor.blackColor,
                           ),
                         ),
                         RatingBar.builder(
@@ -943,13 +942,13 @@ class ProductDetailsScreen extends StatelessWidget {
 
                             Get.toNamed(Routes.productScreen);
                           },
-                          child: CommonButton(
+                          child: const CommonButton(
                             height: 50,
                             radius: 15,
-                            margin: const EdgeInsets.only(
+                            margin: EdgeInsets.only(
                                 left: 20, top: 20, right: 20),
                             text: "Done",
-                            textStyle: const TextStyle(
+                            textStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
                                 fontFamily: "Poppins",

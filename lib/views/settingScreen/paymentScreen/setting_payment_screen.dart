@@ -6,7 +6,6 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_controller.dart';
 import '../../../generated/assets.dart';
-import '../../../utils/colors_file.dart';
 
 class SettingPaymentScreen extends StatelessWidget {
    SettingPaymentScreen({super.key});
@@ -17,11 +16,11 @@ class SettingPaymentScreen extends StatelessWidget {
     var dim = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Payments",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
         fontSize: 20,
-        color: blackColor,
+        color: AppColor.blackColor,
         fontWeight: FontWeight.w500,
         fontFamily: "Poppins"
       ),

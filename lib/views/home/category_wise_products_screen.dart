@@ -21,7 +21,6 @@ import '../../utils/color_constant.dart';
 import '../../utils/common_button.dart';
 import '../../generated/assets.dart';
 import '../../routes/routes.dart';
-import '../../utils/colors_file.dart';
 
 class CategoryWiseProductsScreen extends StatelessWidget {
   CategoryWiseProductsScreen({super.key});
@@ -111,7 +110,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                               child: AppText(
                                   text: "Near by",
                                   textSize: 17,
-                                  color: blackColor,
+                                  color: AppColor.blackColor,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Poppins"),
                             ),
@@ -403,14 +402,14 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                               );
                                                             });
                                                       },
-                                                      child: CommonButton(
+                                                      child: const CommonButton(
                                                         height: 40,
                                                         radius: 15,
                                                         color:
                                                             AppColor.appColor,
                                                         text: "Bid \$2500",
                                                         textStyle:
-                                                            const TextStyle(
+                                                            TextStyle(
                                                           fontSize: 15,
                                                           fontFamily: "Poppins",
                                                           color: Colors.white,
@@ -687,7 +686,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                         child: AppText(
                             text: "\$${price ?? '0.0'}",
                             textSize: 15,
-                            color: blackColor,
+                            color: AppColor.blackColor,
                             fontWeight: FontWeight.w600),
                       ),
                       FavouriteButton(
@@ -698,7 +697,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                   AppText(
                     text: about,
                     textSize: 10,
-                    color: blackColor,
+                    color: AppColor.blackColor,
                     fontWeight: FontWeight.w400,
                   ),
                   size == null
@@ -709,7 +708,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                       : AppText(
                           text: size,
                           textSize: 10,
-                          color: blackColor,
+                          color: AppColor.blackColor,
                           fontWeight: FontWeight.w600,
                         ),
                 ],

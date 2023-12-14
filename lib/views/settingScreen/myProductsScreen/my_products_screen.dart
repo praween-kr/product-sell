@@ -4,7 +4,6 @@ import 'package:oninto_flutter/common_controller/product/my_product_controller.d
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
@@ -12,8 +11,8 @@ import '../../../utils/appbar.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final MyProductController _myProductController = Get.find();
 
   @override
@@ -41,7 +40,7 @@ class ProductScreen extends StatelessWidget {
         heading: "My Products",
         textStyle: const TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
         action: PopupMenuButton(

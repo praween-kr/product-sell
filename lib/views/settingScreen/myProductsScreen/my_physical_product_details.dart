@@ -13,7 +13,6 @@ import '../../../utils/appbar.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
 import '../../../routes/routes.dart';
-import '../../../utils/colors_file.dart';
 
 class MyPysicalProductDetailScreen extends StatelessWidget {
   MyPysicalProductDetailScreen({super.key});
@@ -53,7 +52,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
         // heading: "Samsung Note 10",
         textStyle: const TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -318,7 +317,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                           text: "Item Description",
                                           textSize: 13,
                                           fontFamily: "Poppins",
-                                          color: blackColor,
+                                          color: AppColor.blackColor,
                                         ),
                                         const SizedBox(
                                           height: 5,

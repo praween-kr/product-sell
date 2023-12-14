@@ -6,7 +6,6 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/views/insight_screen/insight_controller.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import '../../utils/color_constant.dart';
-import '../../utils/colors_file.dart';
 
 class InsightsScreen extends StatelessWidget {
    InsightsScreen({super.key});
@@ -15,11 +14,11 @@ final controller = Get.put(InsightController());
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Insights",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),

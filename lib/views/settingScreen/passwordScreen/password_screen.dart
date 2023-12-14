@@ -5,7 +5,6 @@ import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 
 import '../../../utils/app_text_field.dart';
 
@@ -22,11 +21,11 @@ class PasswordScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Password",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -162,12 +161,12 @@ class PasswordScreen extends StatelessWidget {
               //Get.toNamed(Routes.verificationScreen);
               await settingsController.changePassword();
             },
-            child: CommonButton(
+            child: const CommonButton(
               color: AppColor.appColor,
-              margin: const EdgeInsets.only(right: 30, left: 30, bottom: 35),
+              margin: EdgeInsets.only(right: 30, left: 30, bottom: 35),
               height: 57,
               text: "Update",
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              textStyle: TextStyle(color: Colors.white, fontSize: 16),
             ),
           )
         ],

@@ -5,7 +5,6 @@ import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 
 import '../../utils/color_constant.dart';
@@ -21,12 +20,12 @@ class PaymentScreen extends StatelessWidget {
         appBar: CommonAppbarWidget(
           heading: "Pay Now",
           textStyle: const TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w500, color: blackColor),
+              fontSize: 18, fontWeight: FontWeight.w500, color: AppColor.blackColor),
           leading: GestureDetector(
               onTap: () {
                 Get.back();
               },
-              child: const Icon(Icons.arrow_back, color: blackColor)),
+              child: const Icon(Icons.arrow_back, color: AppColor.blackColor)),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,15 +164,15 @@ class PaymentScreen extends StatelessWidget {
                 };
                 Get.toNamed(Routes.productDetailsScreen, arguments: data);
               },
-              child: CommonButton(
+              child: const CommonButton(
                 height: 50,
                 radius: 15,
-                margin: const EdgeInsets.only(
+                margin: EdgeInsets.only(
                   left: 20,
                   right: 20,
                 ),
                 text: "Pay Now",
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontFamily: "Poppins",

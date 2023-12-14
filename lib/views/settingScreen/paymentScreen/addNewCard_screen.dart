@@ -6,7 +6,6 @@ import '../../../utils/app_text_field.dart';
 import '../../../utils/appbar.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
-import '../../../utils/colors_file.dart';
 
 class AddNewCardScreen extends StatelessWidget {
   const AddNewCardScreen({super.key});
@@ -16,10 +15,10 @@ class AddNewCardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget
+      appBar: const CommonAppbarWidget
         (heading: "Add New Account",
-        textStyle: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.w500, color: blackColor),
+        textStyle: TextStyle(
+            fontSize: 18, fontWeight: FontWeight.w500, color: AppColor.blackColor),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 20.0),
@@ -205,15 +204,15 @@ class AddNewCardScreen extends StatelessWidget {
               onTap: () {
                 Get.back();
               },
-        child: CommonButton(
+        child: const CommonButton(
                 height: 50,
                 radius: 15,
-                margin: const EdgeInsets.only(
+                margin: EdgeInsets.only(
                   left: 20,
                   right: 20,
                 ),
                 text: "Add Account",
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontFamily: "Poppins",

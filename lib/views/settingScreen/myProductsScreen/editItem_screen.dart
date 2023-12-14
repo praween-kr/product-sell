@@ -8,7 +8,6 @@ import '../../../utils/app_text_field.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
 import '../../../routes/routes.dart';
-import '../../../utils/colors_file.dart';
 
 class EditItemScreen extends StatelessWidget {
    EditItemScreen({super.key});
@@ -17,11 +16,11 @@ class EditItemScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Edit Item",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -98,13 +97,13 @@ class EditItemScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {},
-                child: CommonButton(
+                child: const CommonButton(
                   color: AppColor.appColor,
                   radius: 25,
-                  margin: const EdgeInsets.only(right: 0),
+                  margin: EdgeInsets.only(right: 0),
                   height: 57,
                   text: "Add more",
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                       color: Colors.white, fontSize: 16),
                 ),
               ),
@@ -737,11 +736,11 @@ class EditItemScreen extends StatelessWidget {
                 onTap: () {
                   customDialog(context);
                 },
-                child: CommonButton(
+                child: const CommonButton(
                   color: AppColor.appColor,
                   height: 57,
                   text: "Submit",
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                       color: Colors.white, fontSize: 16),
                 ),
               )
@@ -809,14 +808,14 @@ class EditItemScreen extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(Routes.productScreen);
                       },
-                      child: CommonButton(
+                      child: const CommonButton(
                         color: AppColor.appColor,
                         radius: 25,
                         //  margin: const EdgeInsets.only(right: 30),
                         height: 57,
                         text: "Ok",
                         textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 16),
+                        TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     )
                   ]),

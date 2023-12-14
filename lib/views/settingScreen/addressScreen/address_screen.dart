@@ -9,7 +9,6 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 
 import '../../../utils/common_button.dart';
-import '../../../utils/colors_file.dart';
 import '../../../utils/app_text.dart';
 
 class AddressScreen extends StatelessWidget {
@@ -21,11 +20,11 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Addresses",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -74,13 +73,13 @@ class AddressScreen extends StatelessWidget {
                   onTap: () {
                     Get.toNamed(Routes.settingPaymentScreen);
                   },
-                  child: CommonButton(
+                  child: const CommonButton(
                     color: AppColor.appColor,
-                    margin: const EdgeInsets.only(right: 30.0, left: 30.0),
+                    margin: EdgeInsets.only(right: 30.0, left: 30.0),
                     height: 57,
                     text: "Pay Now",
                     textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 15),
+                        TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 )
               ],
@@ -94,13 +93,13 @@ class AddressScreen extends StatelessWidget {
                   onTap: () {
                     Get.toNamed(Routes.newAddressScreen);
                   },
-                  child: CommonButton(
+                  child: const CommonButton(
                     color: AppColor.appColor,
-                    margin: const EdgeInsets.only(right: 30.0, left: 30.0),
+                    margin: EdgeInsets.only(right: 30.0, left: 30.0),
                     height: 57,
                     text: "Add New Address",
                     textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 15),
+                        TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 )
               ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/subscription_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../utils/color_constant.dart';
@@ -18,11 +17,11 @@ class SelectPlanScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Choose plan",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -109,12 +108,12 @@ class SelectPlanScreen extends StatelessWidget {
             onTap: (){
               Get.toNamed(Routes.settingPaymentScreen);
             },
-            child: CommonButton(
+            child: const CommonButton(
               color: AppColor.appColor,
-              margin: const EdgeInsets.only(right: 30,left: 30,bottom: 30),
+              margin: EdgeInsets.only(right: 30,left: 30,bottom: 30),
               height: 57,
               text: "Select Plan",
-              textStyle:  const TextStyle(
+              textStyle:  TextStyle(
                   color: AppColor.white,
                   fontSize: 12,fontFamily: "Poppins"),
             ),

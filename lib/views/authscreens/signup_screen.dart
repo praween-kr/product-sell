@@ -11,7 +11,6 @@ import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import 'package:oninto_flutter/utils/app_text.dart';
-import '../../utils/colors_file.dart';
 import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -299,7 +298,7 @@ class SignUpScreen extends StatelessWidget {
                                 text: "By creating an"
                                     " account you have to agree\n with "
                                     "our ",
-                                style: const TextStyle(color: blackColor),
+                                style: const TextStyle(color: AppColor.blackColor),
                                 children: [
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()

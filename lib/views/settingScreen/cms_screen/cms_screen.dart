@@ -5,7 +5,6 @@ import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 
 import '../../../utils/appbar.dart';
-import '../../../utils/colors_file.dart';
 
 class CmsScreen extends StatelessWidget {
   CmsScreen({super.key, required});
@@ -26,7 +25,7 @@ class CmsScreen extends StatelessWidget {
                     : "Privacy Policy",
         textStyle: const TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),

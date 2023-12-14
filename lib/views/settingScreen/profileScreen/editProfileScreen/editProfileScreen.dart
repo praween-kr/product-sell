@@ -11,7 +11,6 @@ import '../../../../utils/app_text_field.dart';
 import '../../../../utils/appbar.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/common_button.dart';
-import '../../../../utils/colors_file.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
@@ -23,11 +22,11 @@ class EditProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Edit Profile",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -234,12 +233,12 @@ class EditProfileScreen extends StatelessWidget {
               //Get.toNamed(Routes.editProfileScreen);
               await editProfileController.updateProfile();
             },
-            child: CommonButton(
+            child: const CommonButton(
               color: AppColor.appColor,
               height: 57,
               text: "Update",
-              margin: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              margin: EdgeInsets.only(left: 25, right: 25, bottom: 30),
+              textStyle: TextStyle(color: Colors.white, fontSize: 16),
             ),
           )
         ],

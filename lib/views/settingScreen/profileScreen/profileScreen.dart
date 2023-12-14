@@ -9,7 +9,6 @@ import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
 import '../../../generated/assets.dart';
 import '../../../routes/routes.dart';
-import '../../../utils/colors_file.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -20,11 +19,11 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.white,
       resizeToAvoidBottomInset: false,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Profile",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -221,12 +220,12 @@ class ProfileScreen extends StatelessWidget {
               Get.find<EditProfileController>().initialData();
               Get.toNamed(Routes.editProfileScreen);
             },
-            child: CommonButton(
+            child: const CommonButton(
               color: AppColor.appColor,
               height: 57,
               text: "Edit Profile",
-              margin: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
-              textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              margin: EdgeInsets.only(left: 25, right: 25, bottom: 30),
+              textStyle: TextStyle(color: Colors.white, fontSize: 16),
             ),
           )
         ],
