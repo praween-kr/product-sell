@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class AppBlureWidget {
+class AppBlurWidget {
   static Widget child(
           {required Widget child,
-          required Widget blureChild,
+          required Widget blurChild,
           double? height,
           double? width}) =>
       ClipRRect(
@@ -16,7 +16,7 @@ class AppBlureWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              blureChild,
+              blurChild,
               ClipRRect(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),

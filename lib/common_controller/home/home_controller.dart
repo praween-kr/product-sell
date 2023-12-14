@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
-import 'package:oninto_flutter/common_widget/app_string.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
@@ -37,13 +36,11 @@ class HomeCatProductcontroller extends GetxController
   var sub = false.obs;
   var track = false.obs;
   var trackupload = false.obs;
-  RxInt productValue = 0.obs;
-  String value = "";
+
 
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);
-  RxList Categorydata = RxList([]);
   RxInt pagePosition = RxInt(0);
 
   @override
@@ -64,15 +61,15 @@ class HomeCatProductcontroller extends GetxController
       CommonModel(
           image: Assets.assetsHome1,
           title: "Login Your Details",
-          description: AppStrings.Onboarding),
+          description: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
       CommonModel(
           image: Assets.assetsHome2,
           title: "Add Your Product",
-          description: AppStrings.Onboarding),
+          description: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
       CommonModel(
           image: Assets.assetsHome3,
           title: "Sold Your Product",
-          description: AppStrings.Onboarding),
+          description: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
     ]);
 
     //

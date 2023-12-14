@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
@@ -62,13 +62,13 @@ class NavBarMsgScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:
                                 _chatMsgController.messageController.value == 0
-                                    ? AppColor.appcolor
+                                    ? AppColor.appColor
                                     : Colors.white,
                             border: Border.all(
                               color:
                                   _chatMsgController.messageController.value ==
                                           0
-                                      ? AppColor.appcolor
+                                      ? AppColor.appColor
                                       : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
@@ -91,13 +91,13 @@ class NavBarMsgScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:
                                 _chatMsgController.messageController.value == 1
-                                    ? AppColor.appcolor
+                                    ? AppColor.appColor
                                     : Colors.white,
                             border: Border.all(
                               color:
                                   _chatMsgController.messageController.value ==
                                           1
-                                      ? AppColor.appcolor
+                                      ? AppColor.appColor
                                       : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
@@ -212,7 +212,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10.0, vertical: 10.0),
                                     decoration: const BoxDecoration(
-                                      color: AppColor.appcolor,
+                                      color: AppColor.appColor,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
@@ -279,7 +279,7 @@ class NavBarMsgScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10.0, vertical: 10.0),
                             decoration: const BoxDecoration(
-                              color: AppColor.appcolor,
+                              color: AppColor.appColor,
                               shape: BoxShape.circle,
                             ),
                             child: const Center(

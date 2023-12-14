@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 
-import 'colors_file.dart';
+import 'color_constant.dart';
+
 
 class EmptyWidgets {
   static Widget simple({String? text, Color? textColor}) =>
@@ -33,7 +34,7 @@ class EmptyWidgets {
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
-                    color: themeColor),
+                    color: AppColor.themeColor),
               ),
             )
           ],

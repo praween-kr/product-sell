@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
 
 class AppDialogs {
@@ -42,12 +42,12 @@ class AppDialogs {
                         children: [
                           GestureDetector(
                             onTap: () => clickOnYes(),
-                            child: CommonButton(
-                              color: AppColor.appcolor,
+                            child: const CommonButton(
+                              color: AppColor.appColor,
                               radius: 25,
                               height: 40,
                               text: "Yes",
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   color: Colors.white, fontSize: 16),
                             ),
                           ),
@@ -55,12 +55,12 @@ class AppDialogs {
                             onTap: clickOnNo != null
                                 ? () => clickOnNo()
                                 : () => Get.back(),
-                            child: CommonButton(
-                              color: AppColor.appcolor,
+                            child: const CommonButton(
+                              color: AppColor.appColor,
                               radius: 25,
                               height: 40,
                               text: " No ",
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   color: Colors.white, fontSize: 16),
                             ),
                           ),
@@ -77,7 +77,6 @@ class AppDialogs {
 
   static bidHistoryDialog(
       {required Function confirm, required Function seeAll}) {
-    print("clicked---- ");
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -131,32 +130,9 @@ class AppDialogs {
                           const SizedBox(
                             height: 20,
                           ),
-                          // Center(
-                          //   child: IntrinsicWidth(
-                          //     child: AppTextField(
-                          //       textAlign: TextAlign.center,
-                          //       textInputType: TextInputType.number,
-                          //       inputFormatters: <TextInputFormatter>[
-                          //         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                          //       ],
-                          //       maxLines: 3,
-                          //       containerColor: AppColor.textfield,
-                          //       hintStyle: const TextStyle(
-                          //         color: AppColor.blackColor,
-                          //         fontWeight: FontWeight.w400,
-                          //         fontFamily: "Poppins",
-                          //       ),
-                          //       contentPadding: const EdgeInsets.symmetric(
-                          //           vertical: 20,horizontal: 20
-                          //       ),
-                          //       prefix: const Icon(Icons.attach_money,
-                          //         color: AppColor.blackColor,size: 18,),
-                          //     ),
-                          //   ),
-                          // ),
                           Container(
                             decoration: BoxDecoration(
-                              color: AppColor.textfield,
+                              color: AppColor.textField,
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Center(
@@ -269,7 +245,7 @@ class AppDialogs {
                                           AppText(
                                             text: "\$2100",
                                             textSize: 15,
-                                            color: AppColor.appcolor,
+                                            color: AppColor.appColor,
                                             fontFamily: "Poppins",
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -282,13 +258,13 @@ class AppDialogs {
                               }),
                           GestureDetector(
                             onTap: () => confirm(),
-                            child: CommonButton(
+                            child: const CommonButton(
                               margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              color: AppColor.appcolor,
+                                  EdgeInsets.symmetric(horizontal: 20),
+                              color: AppColor.appColor,
                               text: "Confirm",
                               radius: 15,
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
                                   fontSize: 15,

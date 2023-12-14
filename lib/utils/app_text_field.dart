@@ -5,40 +5,40 @@ import 'package:get/get.dart';
 typedef StringToVoidFunc = void Function(String);
 
 class AppTextField extends StatelessWidget {
-  String? name;
-  int? maxLength;
-  String? title;
+  final String? name;
+  final int? maxLength;
+  final String? title;
   final TextStyle? labelStyle;
   final List<TextInputFormatter>? inputFormatters;
   final TextStyle? style;
   final Color? suffixIconColor;
-  TextEditingController? controller;
-  bool? isObscure = false;
-  bool? readOnly;
-  TextInputType? textInputType = TextInputType.emailAddress;
-  double? height;
-  TextStyle? hintStyle;
-  TextInputAction? keyBoardType;
-  double? width;
-  TextAlign? textAlign;
+  final TextEditingController? controller;
+  final bool? isObscure;
+  final bool? readOnly;
+  final TextInputType? textInputType ;
+  final double? height;
+  final TextStyle? hintStyle;
+  final TextInputAction? keyBoardType;
+  final double? width;
+  final TextAlign? textAlign;
   final double? elevation;
   final Widget? suffix;
   final Widget? countryCodePiker;
   final Widget? prefix;
-  StringToVoidFunc? onChanged;
-  EdgeInsetsGeometry? contentPadding;
-  int? maxLines;
-  int? minLines;
-  BorderRadiusGeometry? borderRadius;
-  BoxBorder? border;
+  final StringToVoidFunc? onChanged;
+  final EdgeInsetsGeometry? contentPadding;
+  final int? maxLines;
+  final int? minLines;
+  final BorderRadiusGeometry? borderRadius;
+  final BoxBorder? border;
   final Color? containerColor;
-  EdgeInsetsGeometry? margin;
-  FocusNode? focusNode;
-  Function? onClick;
-  void Function(String)? onFieldSubmitted;
+  final EdgeInsetsGeometry? margin;
+  final FocusNode? focusNode;
+  final Function? onClick;
+  final Function(String)? onFieldSubmitted;
 
-  AppTextField(
-      {Key? key,
+  const AppTextField(
+      {super.key,
       this.title,
       this.style,
       this.suffix,
@@ -69,8 +69,7 @@ class AppTextField extends StatelessWidget {
       this.keyBoardType,
       this.focusNode,
       this.onClick,
-      this.onFieldSubmitted})
-      : super(key: key);
+      this.onFieldSubmitted});
   @override
   Widget build(BuildContext context) {
     return Container(

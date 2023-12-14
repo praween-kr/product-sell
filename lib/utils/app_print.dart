@@ -7,7 +7,7 @@ class AppPrint {
 
   //
   static error(String text) {
-    print('\x1B[31m$text\x1B[0m');
+    debugPrint('\x1B[31m$text\x1B[0m');
   }
 
   static all(String text) {

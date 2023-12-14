@@ -4,11 +4,10 @@ class BouncingButton extends StatefulWidget {
   const BouncingButton({super.key});
 
   @override
-  _BouncingButtonState createState() => _BouncingButtonState();
+  State<BouncingButton> createState() => _BouncingButtonState();
 }
 
-class _BouncingButtonState extends State<BouncingButton>
-    with SingleTickerProviderStateMixin {
+class _BouncingButtonState extends State<BouncingButton> with SingleTickerProviderStateMixin{
   late double _scale;
   late AnimationController _controller;
   @override
@@ -21,8 +20,8 @@ class _BouncingButtonState extends State<BouncingButton>
       lowerBound: 0.0,
       upperBound: 0.1,
     )..addListener(() {
-        setState(() {});
-      });
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -105,3 +104,5 @@ class _BouncingButtonState extends State<BouncingButton>
     _controller.reverse();
   }
 }
+
+

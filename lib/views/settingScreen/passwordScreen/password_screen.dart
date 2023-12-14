@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
 
-import '../../../common_widget/app_textfield.dart';
+import '../../../utils/app_text_field.dart';
 
 class PasswordScreen extends StatelessWidget {
   PasswordScreen({super.key});
@@ -58,7 +58,7 @@ class PasswordScreen extends StatelessWidget {
                             const EdgeInsets.only(top: 8.0, left: 13.0),
                         //margin: const EdgeInsets.only(right: 35.0),
                         borderRadius: BorderRadius.circular(40),
-                        containerColor: AppColor.TextColor,
+                        containerColor: AppColor.textColor,
                         suffix: IconButton(
                           icon: oldPassVisible.value
                               ? Icon(
@@ -96,7 +96,7 @@ class PasswordScreen extends StatelessWidget {
                             const EdgeInsets.only(top: 8.0, left: 13.0),
                         //margin: const EdgeInsets.only(right: 35.0),
                         borderRadius: BorderRadius.circular(40),
-                        containerColor: AppColor.TextColor,
+                        containerColor: AppColor.textColor,
                         suffix: IconButton(
                           icon: newPassVisible.value
                               ? Icon(
@@ -134,7 +134,7 @@ class PasswordScreen extends StatelessWidget {
                             const EdgeInsets.only(top: 8.0, left: 13.0),
                         //margin: const EdgeInsets.only(right: 35.0),
                         borderRadius: BorderRadius.circular(40),
-                        containerColor: AppColor.TextColor,
+                        containerColor: AppColor.textColor,
                         suffix: IconButton(
                           icon: confirmPassVisible.value
                               ? Icon(
@@ -163,7 +163,7 @@ class PasswordScreen extends StatelessWidget {
               await settingsController.changePassword();
             },
             child: CommonButton(
-              color: AppColor.appcolor,
+              color: AppColor.appColor,
               margin: const EdgeInsets.only(right: 30, left: 30, bottom: 35),
               height: 57,
               text: "Update",

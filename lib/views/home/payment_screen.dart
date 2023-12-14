@@ -1,14 +1,14 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 
-import '../../common_widget/color_constant.dart';
+import '../../utils/color_constant.dart';
 
 class PaymentScreen extends StatelessWidget {
   PaymentScreen({super.key});
@@ -178,7 +178,7 @@ class PaymentScreen extends StatelessWidget {
                     fontSize: 15,
                     fontFamily: "Poppins",
                     fontWeight: FontWeight.w400),
-                color: AppColor.appcolor,
+                color: AppColor.appColor,
               ),
             ),
           ],

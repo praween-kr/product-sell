@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/colors_file.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 
-import '../../../common_widget/app_textfield.dart';
+import '../../../utils/app_text_field.dart';
 import '../../../generated/assets.dart';
 
 class GyaradoMsgScreen extends StatelessWidget {
@@ -42,7 +42,7 @@ class GyaradoMsgScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0)
             ),
             child: const Center(
-              child: Icon(Icons.bar_chart_rounded,color: AppColor.appcolor,
+              child: Icon(Icons.bar_chart_rounded,color: AppColor.appColor,
               size: 40.0,
               ),
             ),
@@ -123,7 +123,7 @@ body:  Column(
           ),
           const Icon(
             Icons.send,
-            color: AppColor.appcolor,
+            color: AppColor.appColor,
           )
         ],
       ),
@@ -196,7 +196,7 @@ body:  Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.calendar_month_outlined,color: AppColor.appcolor,
+                                  Icon(Icons.calendar_month_outlined,color: AppColor.appColor,
                                   size: 15.0,
                                   ),
                                   SizedBox(width: 11.0,),
@@ -210,7 +210,7 @@ body:  Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.watch_later,color: AppColor.appcolor,
+                                  Icon(Icons.watch_later,color: AppColor.appColor,
                                     size: 15.0,
                                   ),
                                   SizedBox(width: 11.0,),
@@ -253,7 +253,7 @@ body:  Column(
                             Get.back();
                           },
                           child: CommonButton(
-                            color: AppColor.appcolor,
+                            color: AppColor.appColor,
                             radius: 17,
                             margin: const EdgeInsets.only(right: 30,left: 30),
                             //height: 39,

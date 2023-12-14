@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatelessWidget {
@@ -68,10 +68,10 @@ class VerificationScreen extends StatelessWidget {
                         fontSize: 20, fontWeight: FontWeight.w600),
                     width: 80,
                     decoration: BoxDecoration(
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                         borderRadius: BorderRadius.circular(20),
                         border:
-                            Border.all(color: AppColor.TextColor, width: 2))),
+                            Border.all(color: AppColor.textColor, width: 2))),
               ),
               const SizedBox(height: 25),
               GestureDetector(
@@ -83,7 +83,7 @@ class VerificationScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
                   decoration: const BoxDecoration(
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
                     ),

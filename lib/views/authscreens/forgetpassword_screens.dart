@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 
 class ForgotScreen extends StatelessWidget {
   const ForgotScreen({super.key});
@@ -49,7 +49,7 @@ class ForgotScreen extends StatelessWidget {
                 AppTextField(
                   borderRadius: BorderRadius.circular(20),
                   title: "jennysmith@gmail.com",
-                  containerColor: AppColor.TextColor,
+                  containerColor: AppColor.textColor,
                   prefix: const Icon(Icons.email_outlined),
                 ),
                 const SizedBox(height: 30),
@@ -58,7 +58,7 @@ class ForgotScreen extends StatelessWidget {
                     Get.toNamed(Routes.verificationScreen);
                   },
                   child: CommonButton(
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                     // margin: const EdgeInsets.only(right: 20,left: 20),
                     radius: 20,
                     height: 57,

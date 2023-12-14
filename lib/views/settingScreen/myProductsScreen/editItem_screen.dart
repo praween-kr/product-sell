@@ -1,13 +1,12 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/views/settingScreen/controller/editItem_screen_controller.dart';
-
-import '../../../common_widget/app_text.dart';
-import '../../../common_widget/app_textfield.dart';
-import '../../../common_widget/color_constant.dart';
-import '../../../common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../../utils/app_text_field.dart';
+import '../../../utils/color_constant.dart';
+import '../../../utils/common_button.dart';
 import '../../../routes/routes.dart';
 import '../../../utils/colors_file.dart';
 
@@ -100,7 +99,7 @@ class EditItemScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: CommonButton(
-                  color: AppColor.appcolor,
+                  color: AppColor.appColor,
                   radius: 25,
                   margin: const EdgeInsets.only(right: 0),
                   height: 57,
@@ -127,7 +126,7 @@ class EditItemScreen extends StatelessWidget {
                 //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                 margin: const EdgeInsets.only(right: 0.0),
                 borderRadius: BorderRadius.circular(23),
-                containerColor: AppColor.TextColor,
+                containerColor: AppColor.textColor,
               ),
               const SizedBox(
                 height: 16.0,
@@ -147,11 +146,11 @@ class EditItemScreen extends StatelessWidget {
                 //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                 margin: const EdgeInsets.only(right: 0.0),
                 borderRadius: BorderRadius.circular(23),
-                containerColor: AppColor.TextColor,
+                containerColor: AppColor.textColor,
                 suffix: const Icon(
                   Icons.my_location,
                   size: 18.0,
-                  color: AppColor.appcolor,
+                  color: AppColor.appColor,
                 ),
               ),
               const SizedBox(
@@ -192,7 +191,7 @@ class EditItemScreen extends StatelessWidget {
                           horizontal: 15.0, vertical: 5.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -265,7 +264,7 @@ class EditItemScreen extends StatelessWidget {
                           left: 14.0, right: 16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -339,7 +338,7 @@ class EditItemScreen extends StatelessWidget {
                           left: 14.0, right: 16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -412,7 +411,7 @@ class EditItemScreen extends StatelessWidget {
                           left: 14.0, right: 16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -486,7 +485,7 @@ class EditItemScreen extends StatelessWidget {
                           left: 14.0, right: 16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -560,7 +559,7 @@ class EditItemScreen extends StatelessWidget {
                           left: 14.0, right: 16.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -634,7 +633,7 @@ class EditItemScreen extends StatelessWidget {
                           horizontal: 15.0, vertical: 5.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(23),
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                       ),
                       //elevation: 2,
                     ),
@@ -691,7 +690,7 @@ class EditItemScreen extends StatelessWidget {
                 //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                 margin: const EdgeInsets.only(right: 0.0),
                 borderRadius: BorderRadius.circular(23),
-                containerColor: AppColor.TextColor,
+                containerColor: AppColor.textColor,
               ),
               const SizedBox(
                 height: 16.0,
@@ -711,7 +710,7 @@ class EditItemScreen extends StatelessWidget {
                 //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                 margin: const EdgeInsets.only(right: 0.0),
                 borderRadius: BorderRadius.circular(23),
-                containerColor: AppColor.TextColor,
+                containerColor: AppColor.textColor,
                 maxLines: 5,
               ),
               const SizedBox(
@@ -722,7 +721,7 @@ class EditItemScreen extends StatelessWidget {
                   Get.toNamed(Routes.subscriptionScreen);
                 },
                 child: CommonButton(
-                  color: AppColor.TextColor,
+                  color: AppColor.textColor,
                   height: 57,
                   radius: 23,
                   text: "Boost your post",
@@ -739,7 +738,7 @@ class EditItemScreen extends StatelessWidget {
                   customDialog(context);
                 },
                 child: CommonButton(
-                  color: AppColor.appcolor,
+                  color: AppColor.appColor,
                   height: 57,
                   text: "Submit",
                   textStyle: const TextStyle(
@@ -778,7 +777,7 @@ class EditItemScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 25.0),
                             decoration: const BoxDecoration(
-                                color: AppColor.appcolor,
+                                color: AppColor.appColor,
                                 shape: BoxShape.circle),
                             child: const Center(
                               child: Icon(
@@ -811,7 +810,7 @@ class EditItemScreen extends StatelessWidget {
                         Get.toNamed(Routes.productScreen);
                       },
                       child: CommonButton(
-                        color: AppColor.appcolor,
+                        color: AppColor.appColor,
                         radius: 25,
                         //  margin: const EdgeInsets.only(right: 30),
                         height: 57,

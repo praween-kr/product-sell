@@ -11,14 +11,14 @@ import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
-import 'package:oninto_flutter/utils/widgets/blure_widget.dart';
+import 'package:oninto_flutter/utils/widgets/blur_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-import '../../common_widget/app_text.dart';
-import '../../common_widget/appbar.dart';
-import '../../common_widget/color_constant.dart';
-import '../../common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../utils/appbar.dart';
+import '../../utils/color_constant.dart';
+import '../../utils/common_button.dart';
 import '../../generated/assets.dart';
 import '../../routes/routes.dart';
 import '../../utils/colors_file.dart';
@@ -41,7 +41,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
             margin: const EdgeInsets.all(5),
             padding: const EdgeInsets.only(left: 12),
             decoration: BoxDecoration(
-                color: AppColor.appcolor,
+                color: AppColor.appColor,
                 borderRadius: BorderRadius.circular(15)),
             child: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
@@ -245,7 +245,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                       horizontal: 14,
                                                       vertical: 12),
                                               decoration: BoxDecoration(
-                                                  color: AppColor.appcolor,
+                                                  color: AppColor.appColor,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           15)),
@@ -301,13 +301,13 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                             clipBehavior: Clip.none,
                                             alignment: Alignment.bottomCenter,
                                             children: [
-                                              AppBlureWidget.child(
+                                              AppBlurWidget.child(
                                                 height: Get.height,
                                                 child: AppImage.view(
                                                     "${ImageBaseUrls.product}$img",
                                                     fit: BoxFit.contain,
                                                     width: double.infinity),
-                                                blureChild: AppImage.view(
+                                                blurChild: AppImage.view(
                                                     "${ImageBaseUrls.product}$img",
                                                     fit: BoxFit.cover,
                                                     height: Get.height),
@@ -407,7 +407,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                         height: 40,
                                                         radius: 15,
                                                         color:
-                                                            AppColor.appcolor,
+                                                            AppColor.appColor,
                                                         text: "Bid \$2500",
                                                         textStyle:
                                                             const TextStyle(

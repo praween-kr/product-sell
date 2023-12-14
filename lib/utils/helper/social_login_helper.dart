@@ -62,7 +62,7 @@ class SocialLoginHelper {
     /*  {
   "email" = "dsmr.apps@gmail.com",
   "id" = 3003332493073668,
-  "name" = "Darwin Morocho",
+  "name" = "Darwin",
   "picture" = {
   "data" = {
   "height" = 50,

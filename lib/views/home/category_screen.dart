@@ -8,8 +8,8 @@ import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
-import '../../common_widget/app_text.dart';
-import '../../common_widget/appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../utils/appbar.dart';
 
 class CategoryScreen extends StatelessWidget {
   CategoryScreen({super.key});

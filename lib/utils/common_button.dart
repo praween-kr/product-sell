@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 class CommonButton extends StatelessWidget {
-  String? text;
-  double? height;
-  double? width;
-  double? imgHeight;
-  double? radius;
-  double? imgWidth;
-  TextStyle? textStyle;
-  String? image;
-  FontWeight? fontWeight;
-  double? fontSize;
-  Color? color;
-  Color? borderColor;
-  double? borderWidth;
-  EdgeInsetsGeometry? margin;
-  EdgeInsetsGeometry? imagePadding;
-  IconData? iconData;
+  final String? text;
+  final double? height;
+  final double? width;
+  final double? imgHeight;
+  final double? radius;
+  final double? imgWidth;
+  final TextStyle? textStyle;
+  final String? image;
+  final FontWeight? fontWeight;
+  final double? fontSize;
+  final Color? color;
+  final Color? borderColor;
+  final double? borderWidth;
+  final EdgeInsetsGeometry? margin;
+  final  EdgeInsetsGeometry? imagePadding;
+  final IconData? iconData;
 
-  CommonButton(
+  const CommonButton(
       {super.key,
       this.text,
       this.height,
@@ -44,7 +44,7 @@ class CommonButton extends StatelessWidget {
       height: height?? 50,
       width: width,
       decoration: BoxDecoration(
-          boxShadow: [
+          boxShadow: const [
             //BoxShadow(color: const Color(0xffFDA2C5), blurRadius: 15)
           ],
           color: color ?? Colors.red,

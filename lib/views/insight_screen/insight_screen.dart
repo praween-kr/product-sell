@@ -1,11 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/views/insight_screen/insight_controller.dart';
-import '../../common_widget/app_text.dart';
-import '../../common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import '../../utils/color_constant.dart';
 import '../../utils/colors_file.dart';
 
 class InsightsScreen extends StatelessWidget {
@@ -57,7 +57,7 @@ final controller = Get.put(InsightController());
                         padding: const EdgeInsets.only(left: 10.0,right: 5.0),
                          decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(19),
-                           color: AppColor.appcolor,
+                           color: AppColor.appColor,
                          ),
                          //elevation: 2,
                        ),
@@ -232,7 +232,7 @@ final controller = Get.put(InsightController());
                                   children: [
                                     Icon(
                                       Icons.favorite,
-                                      color: AppColor.appcolor,
+                                      color: AppColor.appColor,
                                       size: 12,
                                     ),
                                     AppText(
@@ -243,7 +243,7 @@ final controller = Get.put(InsightController());
                                     ),
                                     Icon(
                                       Icons.remove_red_eye_outlined,
-                                      color: AppColor.appcolor,
+                                      color: AppColor.appColor,
                                       size: 12,
                                     ),
                                     AppText(

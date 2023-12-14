@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 class NotificationScreen extends StatelessWidget {

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 
-import '../../../common_widget/appbar.dart';
+import '../../../utils/appbar.dart';
 import '../../../utils/colors_file.dart';
 
 class CmsScreen extends StatelessWidget {

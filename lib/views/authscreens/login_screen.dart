@@ -4,16 +4,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
-import 'package:oninto_flutter/utils/common_appbar.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/helper/social_login_helper.dart';
 import 'package:oninto_flutter/utils/regex.dart';
 
-import '../../utils/colors_file.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -77,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                       ? Container(
                           margin: const EdgeInsets.only(right: 15),
                           decoration: const BoxDecoration(
-                              color: AppColor.appcolor,
+                              color: AppColor.appColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: Row(
@@ -112,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                 ),
-                containerColor: AppColor.TextColor,
+                containerColor: AppColor.textColor,
                 contentPadding: const EdgeInsets.only(
                   top: 30,
                   left: 20,
@@ -159,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                             color: AppColor.blackColor.withOpacity(0.4),
                           ),
                   ),
-                  containerColor: AppColor.TextColor,
+                  containerColor: AppColor.textColor,
                 ),
               ),
               const SizedBox(height: 10),
@@ -179,7 +178,7 @@ class LoginScreen extends StatelessWidget {
                                 authController.rememberMe.value =
                                     !authController.rememberMe.value;
                               },
-                              activeColor: themeColor,
+                              activeColor: AppColor.themeColor,
                               trackColor: Colors.grey.shade400,
                               thumbColor: Colors.grey.shade100,
                             )),
@@ -221,7 +220,7 @@ class LoginScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
                   padding: const EdgeInsets.only(top: 15, bottom: 15),
                   decoration: const BoxDecoration(
-                    color: AppColor.appcolor,
+                    color: AppColor.appColor,
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
                     ),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/common_widget/app_text.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
@@ -15,7 +15,7 @@ import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
-import '../../common_widget/app_textfield.dart';
+import '../../utils/app_text_field.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -99,10 +99,10 @@ class HomeScreen extends StatelessWidget {
                             width: 30,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: AppColor.appcolor),
+                              border: Border.all(color: AppColor.appColor),
                             ),
                             child: const Icon(Icons.filter_alt_rounded,
-                                color: AppColor.appcolor),
+                                color: AppColor.appColor),
                           ),
                           onSelected: (value) => value(),
                           itemBuilder: (context) => [
@@ -155,7 +155,7 @@ class HomeScreen extends StatelessWidget {
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
-                                color: AppColor.appcolor,
+                                color: AppColor.appColor,
                                 borderRadius: BorderRadius.circular(15)),
                             child: Stack(
                               alignment: Alignment.center,
@@ -225,7 +225,7 @@ class HomeScreen extends StatelessWidget {
                                           fontWeight: FontWeight.w400),
                                       prefix: const Icon(Icons.search,
                                           color: Colors.black),
-                                      containerColor: AppColor.TextColor,
+                                      containerColor: AppColor.textColor,
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               vertical: 4),
@@ -491,7 +491,7 @@ class HomeScreen extends StatelessWidget {
                 }
                 Get.toNamed(Routes.sellItemScreen);
               },
-              backgroundColor: AppColor.appcolor,
+              backgroundColor: AppColor.appColor,
               child: const Icon(
                 Icons.add,
                 color: Colors.white,
@@ -595,7 +595,7 @@ class HomeScreen extends StatelessWidget {
                           },
                           child: CommonButton(
                             margin: const EdgeInsets.symmetric(horizontal: 20),
-                            color: AppColor.appcolor,
+                            color: AppColor.appColor,
                             text: "Bid Now",
                             radius: 15,
                             textStyle: const TextStyle(

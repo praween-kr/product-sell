@@ -6,20 +6,19 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
-import 'package:oninto_flutter/common_widget/app_textfield.dart';
-import 'package:oninto_flutter/common_widget/appbar.dart';
-import 'package:oninto_flutter/common_widget/color_constant.dart';
-import 'package:oninto_flutter/common_widget/common_button.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
-import 'package:oninto_flutter/utils/colors_file.dart';
 import 'package:oninto_flutter/utils/helper/file_picker.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../routes/routes.dart';
-import '../../utils/common_appbar.dart';
+import '../../utils/app_text.dart';
 
 class SellItemScreen extends StatelessWidget {
   SellItemScreen({super.key});
@@ -37,11 +36,11 @@ class SellItemScreen extends StatelessWidget {
     }
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Sell an Item",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 20,
-            color: blackColor,
+            color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
@@ -180,13 +179,13 @@ class SellItemScreen extends StatelessWidget {
                       onTap: () {
                         _addMoreAttachments();
                       },
-                      child: CommonButton(
-                          color: AppColor.appcolor,
+                      child: const CommonButton(
+                          color: AppColor.appColor,
                           radius: 25,
-                          margin: const EdgeInsets.only(right: 0),
+                          margin: EdgeInsets.only(right: 0),
                           height: 57,
                           text: "Add more",
-                          textStyle: const TextStyle(
+                          textStyle: TextStyle(
                               color: Colors.white, fontSize: 16)),
                     ),
                   ),
@@ -210,7 +209,7 @@ class SellItemScreen extends StatelessWidget {
                         title: "Add",
                         margin: const EdgeInsets.only(right: 0.0),
                         borderRadius: BorderRadius.circular(23),
-                        containerColor: AppColor.TextColor),
+                        containerColor: AppColor.textColor),
                   ),
                   const SizedBox(height: 16.0),
 
@@ -241,9 +240,9 @@ class SellItemScreen extends StatelessWidget {
                       title: "Add",
                       margin: const EdgeInsets.only(right: 0.0),
                       borderRadius: BorderRadius.circular(23),
-                      containerColor: AppColor.TextColor,
+                      containerColor: AppColor.textColor,
                       suffix: const Icon(Icons.my_location,
-                          size: 18.0, color: AppColor.appcolor),
+                          size: 18.0, color: AppColor.appColor),
                     ),
                   ),
                   const SizedBox(height: 16.0),
@@ -268,7 +267,7 @@ class SellItemScreen extends StatelessWidget {
                                   title: "50",
                                   margin: const EdgeInsets.only(right: 0.0),
                                   borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.TextColor,
+                                  containerColor: AppColor.textColor,
                                 ),
                                 const SizedBox(height: 16.0),
                                 const AppText(
@@ -284,7 +283,7 @@ class SellItemScreen extends StatelessWidget {
                                   title: "Select date",
                                   margin: const EdgeInsets.only(right: 0.0),
                                   borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.TextColor,
+                                  containerColor: AppColor.textColor,
                                 ),
                                 const SizedBox(height: 16.0),
                                 bidDatePicker(
@@ -308,7 +307,7 @@ class SellItemScreen extends StatelessWidget {
                                   title: "Select time",
                                   margin: const EdgeInsets.only(right: 0.0),
                                   borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.TextColor,
+                                  containerColor: AppColor.textColor,
                                 ),
                                 const SizedBox(height: 16.0),
                               ],
@@ -370,7 +369,7 @@ class SellItemScreen extends StatelessWidget {
                                           horizontal: 15.0, vertical: 5.0),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(23),
-                                        color: AppColor.TextColor,
+                                        color: AppColor.textColor,
                                       ),
                                       //elevation: 2,
                                     ),
@@ -456,7 +455,7 @@ class SellItemScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(23),
-                                          color: AppColor.TextColor,
+                                          color: AppColor.textColor,
                                         ),
                                         //elevation: 2,
                                       ),
@@ -509,7 +508,7 @@ class SellItemScreen extends StatelessWidget {
                                   controller: controller.itemColor,
                                   height: 50,
                                   borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.TextColor,
+                                  containerColor: AppColor.textColor,
                                   title: "Enter Color",
                                   style: const TextStyle(
                                       color: AppColor.blackColor,
@@ -554,7 +553,7 @@ class SellItemScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(23),
-                                          color: AppColor.TextColor,
+                                          color: AppColor.textColor,
                                         ),
                                         //elevation: 2,
                                       ),
@@ -607,7 +606,7 @@ class SellItemScreen extends StatelessWidget {
                                   controller: controller.brand,
                                   height: 50,
                                   borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.TextColor,
+                                  containerColor: AppColor.textColor,
                                   title: "Enter Brand",
                                   style: const TextStyle(
                                       color: AppColor.blackColor,
@@ -653,7 +652,7 @@ class SellItemScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(23),
-                                          color: AppColor.TextColor,
+                                          color: AppColor.textColor,
                                         ),
                                         //elevation: 2,
                                       ),
@@ -729,7 +728,7 @@ class SellItemScreen extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(23),
-                                          color: AppColor.TextColor,
+                                          color: AppColor.textColor,
                                         ),
                                         //elevation: 2,
                                       ),
@@ -801,7 +800,7 @@ class SellItemScreen extends StatelessWidget {
                                   //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                                   margin: const EdgeInsets.only(right: 0.0),
                                   borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.TextColor,
+                                  containerColor: AppColor.textColor,
                                 ),
                                 const SizedBox(height: 16.0),
                               ],
@@ -824,7 +823,7 @@ class SellItemScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Container(
                       decoration: const BoxDecoration(
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                         borderRadius: BorderRadius.all(Radius.circular(23)),
                       ),
                       child: TextFormField(
@@ -856,7 +855,7 @@ class SellItemScreen extends StatelessWidget {
                         Get.toNamed(Routes.subscriptionScreen);
                       },
                       child: CommonButton(
-                        color: AppColor.TextColor,
+                        color: AppColor.textColor,
                         height: 57,
                         radius: 23,
                         text: "Boost your post",
@@ -883,7 +882,7 @@ class SellItemScreen extends StatelessWidget {
                         // });
                       },
                       child: CommonButton(
-                        color: AppColor.appcolor,
+                        color: AppColor.appColor,
                         height: 57,
                         text: Get.arguments == 'edit' ? "Edit" : "Submit",
                         textStyle:
@@ -1051,7 +1050,7 @@ class SellItemScreen extends StatelessWidget {
               height: h,
               decoration: BoxDecoration(
                 color:
-                    (type == '1' ? themeColor : Colors.grey).withOpacity(0.2),
+                    (type == '1' ? AppColor.themeColor : Colors.grey).withOpacity(0.2),
                 borderRadius: BorderRadius.circular(17.0),
               ),
               child: url == '' || type == '1'
@@ -1126,7 +1125,7 @@ class SellItemScreen extends StatelessWidget {
           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
           margin: const EdgeInsets.only(right: 0.0),
           borderRadius: BorderRadius.circular(23),
-          containerColor: AppColor.TextColor,
+          containerColor: AppColor.textColor,
           suffix: IconButton(
               onPressed: () =>
                   controller.pickDate( 0, onChanged: date1),
@@ -1156,7 +1155,7 @@ class SellItemScreen extends StatelessWidget {
           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
           margin: const EdgeInsets.only(right: 0.0),
           borderRadius: BorderRadius.circular(23),
-          containerColor: AppColor.TextColor,
+          containerColor: AppColor.textColor,
           suffix: IconButton(
               onPressed: () =>
                   controller.pickDate( 2, onChanged: date2),
@@ -1196,7 +1195,7 @@ class SellItemScreen extends StatelessWidget {
           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
           margin: const EdgeInsets.only(right: 0.0),
           borderRadius: BorderRadius.circular(23),
-          containerColor: AppColor.TextColor,
+          containerColor: AppColor.textColor,
           suffix: IconButton(
               onPressed: () =>
                   controller.pickDate( 0, onChanged: date),
@@ -1218,9 +1217,9 @@ class SellItemScreen extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-            color: selected ? AppColor.appcolor : Colors.white,
+            color: selected ? AppColor.appColor : Colors.white,
             border: Border.all(
-              color: selected ? AppColor.appcolor : Colors.grey.shade300,
+              color: selected ? AppColor.appColor : Colors.grey.shade300,
             ),
             borderRadius: BorderRadius.circular(20)),
         child: Center(
@@ -1330,7 +1329,7 @@ class SellItemScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 25.0),
                             decoration: const BoxDecoration(
-                                color: AppColor.appcolor,
+                                color: AppColor.appColor,
                                 shape: BoxShape.circle),
                             child: const Center(
                               child: Icon(
@@ -1365,7 +1364,7 @@ class SellItemScreen extends StatelessWidget {
                         //Get.toNamed(Routes.productScreen);
                       },
                       child: CommonButton(
-                        color: AppColor.appcolor,
+                        color: AppColor.appColor,
                         radius: 25,
                         //  margin: const EdgeInsets.only(right: 30),
                         height: 57,
