@@ -8,7 +8,7 @@ import 'package:oninto_flutter/service/local/local_store_keys.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 
 import '../common_controller/auth/auth_controller.dart';
-import '../service/local/userInfo_global.dart';
+import '../service/local/user_info_global.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -21,7 +21,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.menu.value) {
         AppDialogs.bidHistoryDialog(
-          confirm: () => Get.toNamed(Routes.bidingProductDetatils),
+          confirm: () => Get.toNamed(Routes.bidingProductDetails),
           seeAll: () => Get.toNamed(Routes.biddingScreen),
         );
       } else {
@@ -29,7 +29,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
       }
     });
   }
-  final HomeCatProductcontroller controller = Get.find();
+  final HomeCatProductController controller = Get.find();
   final FavouritesController _favouritesController = Get.find();
 
   @override
@@ -581,7 +581,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
                             onTap: () {
                               AppDialogs.bidHistoryDialog(
                                 confirm: () =>
-                                    Get.toNamed(Routes.bidingProductDetatils),
+                                    Get.toNamed(Routes.bidingProductDetails),
                                 seeAll: () => Get.toNamed(Routes.biddingScreen),
                               );
                             },

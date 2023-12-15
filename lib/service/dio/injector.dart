@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:oninto_flutter/service/exception_handle.dart';
-import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 
 import '../../main.dart';
 import '../app_keys.dart';

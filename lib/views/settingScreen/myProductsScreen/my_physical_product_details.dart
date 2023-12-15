@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
-import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
+import 'package:oninto_flutter/common_controller/product/sell_item_controller.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';

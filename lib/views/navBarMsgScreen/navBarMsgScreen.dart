@@ -6,7 +6,7 @@ import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 
@@ -16,7 +16,6 @@ import '../../utils/color_constant.dart';
 
 class NavBarMsgScreen extends StatelessWidget {
   NavBarMsgScreen({super.key});
-  // final HomeCatProductcontroller controller = Get.find();
   final ChatMsgController _chatMsgController = Get.find();
 
   @override

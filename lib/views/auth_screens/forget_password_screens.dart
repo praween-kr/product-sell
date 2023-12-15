@@ -17,7 +17,7 @@ class ForgotScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonAppbarWidget(),
+          const CommonAppbarWidget(),
           const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -57,14 +57,14 @@ class ForgotScreen extends StatelessWidget {
                   onTap: () {
                     Get.toNamed(Routes.verificationScreen);
                   },
-                  child: CommonButton(
+                  child: const CommonButton(
                     color: AppColor.appColor,
                     // margin: const EdgeInsets.only(right: 20,left: 20),
                     radius: 20,
                     height: 57,
                     text: "Send",
                     textStyle:
-                        const TextStyle(color: Colors.white, fontSize: 16),
+                        TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 )
               ],

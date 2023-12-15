@@ -1,32 +1,29 @@
 import 'package:get/get.dart';
-import 'package:oninto_flutter/routes/get_bindings.dart';
-import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/views/authscreens/forgetpassword_screens.dart';
-import 'package:oninto_flutter/views/authscreens/onboarding_screens.dart';
-import 'package:oninto_flutter/views/authscreens/signup_screen.dart';
-import 'package:oninto_flutter/views/authscreens/verification_screen.dart';
-import 'package:oninto_flutter/views/home/favourite_screen.dart';
-import 'package:oninto_flutter/views/home/filter_screen.dart';
-import 'package:oninto_flutter/views/home/payment_screen.dart';
-import 'package:oninto_flutter/views/home/product_details_screen.dart';
-import 'package:oninto_flutter/views/home/sub_categories_screen.dart';
-import 'package:oninto_flutter/views/insight_screen/insight_screen.dart';
-import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
-import 'package:oninto_flutter/views/sellItemScreen/sell_item_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
-import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/myProductsScreen/editItem_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_physical_product_details.dart';
-import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/passwordScreen/password_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/paymentScreen/addNewCard_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_screen.dart';
-import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
-
+import '../views/auth_screens/forget_password_screens.dart';
+import '../views/auth_screens/onboarding_screens.dart';
+import '../views/auth_screens/signup_screen.dart';
+import '../views/auth_screens/verification_screen.dart';
+import '../views/home/favourite_screen.dart';
+import '../views/home/filter_screen.dart';
+import '../views/home/payment_screen.dart';
+import '../views/home/product_details_screen.dart';
+import '../views/home/sub_categories_screen.dart';
+import '../views/insight_screen/insight_screen.dart';
+import '../views/navBarMsgScreen/navBarMsgScreen.dart';
+import '../views/sellItemScreen/sell_item_screen.dart';
+import '../views/settingScreen/addressScreen/address_screen.dart';
+import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
+import '../views/settingScreen/cms_screen/cms_screen.dart';
+import '../views/settingScreen/myProductsScreen/editItem_screen.dart';
+import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
+import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
+import '../views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
+import '../views/settingScreen/passwordScreen/password_screen.dart';
+import '../views/settingScreen/paymentScreen/addNewCard_screen.dart';
+import '../views/settingScreen/paymentScreen/setting_payment_screen.dart';
+import '../views/settingScreen/settings_screen.dart';
 import '../views/splash_screen.dart';
-import '../views/authscreens/login_screen.dart';
+import '../views/auth_screens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
 import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
@@ -41,14 +38,15 @@ import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
 import '../views/settingScreen/profileScreen/profileScreen.dart';
+import 'get_bindings.dart';
+import 'routes.dart';
 
 class AppRoutes {
   static List<GetPage<dynamic>> routes = [
     GetPage(
         name: Routes.splashScreen,
         page: () => const SplashScreen(),
-        binding: GlobleControllerBinding()),
-
+        binding: GlobalControllerBinding()),
     /// Auth ----------
     GetPage(
         name: Routes.loginScreen,
@@ -58,7 +56,6 @@ class AppRoutes {
         name: Routes.signupScreen,
         page: () => SignUpScreen(),
         bindings: [AuthBinding(), CmsBinding()]),
-
     GetPage(
       name: Routes.passwordScreen,
       page: () => PasswordScreen(),
@@ -71,13 +68,11 @@ class AppRoutes {
       name: Routes.verificationScreen,
       page: () => VerificationScreen(),
     ),
-
     /// Home ----------
     GetPage(
       name: Routes.homeScreen,
       page: () => HomeScreen(),
     ),
-
     GetPage(
       name: Routes.bottomScreen,
       page: () => BottomScreen(),
@@ -155,7 +150,7 @@ class AppRoutes {
       page: () => CmsScreen(),
     ),
     GetPage(
-        name: Routes.homebidScreen,
+        name: Routes.homeBidScreen,
         page: () => HomeBidScreen(),
         binding: HomeBinding()),
     GetPage(
@@ -173,7 +168,7 @@ class AppRoutes {
       binding: ChatMsgBinding(),
     ),
     GetPage(
-      name: Routes.bidingProductDetatils,
+      name: Routes.bidingProductDetails,
       page: () => BidingProductDetailsScreen(),
     ),
     GetPage(

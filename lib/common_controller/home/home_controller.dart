@@ -14,7 +14,7 @@ import 'package:swipable_stack/swipable_stack.dart';
 import '../../model/onboard_model.dart';
 import '../../utils/helper/camera_helper.dart';
 
-class HomeCatProductcontroller extends GetxController
+class HomeCatProductController extends GetxController
     implements CameraOnCompleteListener {
   // RxBool homePass = true.obs;
   // RxBool Switch = false.obs;
@@ -138,7 +138,6 @@ class HomeCatProductcontroller extends GetxController
 
   @override
   void onClose() {
-    // TODO: implement onClose
     pageController.dispose();
     super.onClose();
   }

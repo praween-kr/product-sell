@@ -20,7 +20,7 @@ import '../../utils/color_constant.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key});
-  final HomeCatProductcontroller controller = Get.find();
+  final HomeCatProductController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

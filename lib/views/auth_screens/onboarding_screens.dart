@@ -7,7 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({super.key});
-  final HomeCatProductcontroller controller = Get.find();
+  final HomeCatProductController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

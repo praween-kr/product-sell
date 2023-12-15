@@ -13,7 +13,7 @@ import '../../utils/appbar.dart';
 
 class CategoryScreen extends StatelessWidget {
   CategoryScreen({super.key});
-  final HomeCatProductcontroller controller = Get.find();
+  final HomeCatProductController controller = Get.find();
   final CategoriesController _categoriesController = Get.find();
 
   @override
