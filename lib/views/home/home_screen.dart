@@ -9,7 +9,7 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -19,7 +19,7 @@ import '../../utils/app_text_field.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-  final HomeCatProductcontroller controller = Get.find();
+  final HomeCatProductController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -589,7 +589,7 @@ class HomeScreen extends StatelessWidget {
                             Get.back();
                             AppDialogs.bidHistoryDialog(
                               confirm: () =>
-                                  Get.toNamed(Routes.bidingProductDetatils),
+                                  Get.toNamed(Routes.bidingProductDetails),
                               seeAll: () => Get.toNamed(Routes.biddingScreen),
                             );
                           },

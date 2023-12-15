@@ -14,7 +14,7 @@ class SubCategoriesScreen extends StatelessWidget {
   SubCategoriesScreen({super.key});
   // final controller = Get.put(MenListController());
   // final bottomcontroller = Get.put(BottomNavController());
-  final HomeCatProductcontroller controller = Get.find();
+  final HomeCatProductController controller = Get.find();
   final CategoriesController _categoriesController = Get.find();
 
   @override

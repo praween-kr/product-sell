@@ -17,7 +17,7 @@ class FilterScreen extends StatelessWidget {
   FilterScreen({super.key});
 
   final MyProductController _myProductController = Get.find();
-  final HomeCatProductcontroller _homecontroller = Get.find();
+  final HomeCatProductController _homecontroller = Get.find();
 
   @override
   Widget build(BuildContext context) {

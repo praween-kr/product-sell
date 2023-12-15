@@ -5,11 +5,11 @@ import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_controller/favourites_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
-import 'package:oninto_flutter/common_controller/product/sellItem_controller.dart';
+import 'package:oninto_flutter/common_controller/product/sell_item_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
-import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 
 class AuthBinding extends Bindings {
   @override
@@ -25,7 +25,7 @@ class SettingsBinding extends Bindings {
   }
 }
 
-class GlobleControllerBinding extends Bindings {
+class GlobalControllerBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(GlobalController(), permanent: true);
@@ -70,7 +70,7 @@ class SellItemBinding extends Bindings {
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => HomeCatProductcontroller());
+    Get.lazyPut(() => HomeCatProductController());
   }
 }
 

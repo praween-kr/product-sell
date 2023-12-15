@@ -10,15 +10,15 @@ class Routes {
   static const String verificationScreen = "/VerificationScreen";
   static const String subCategories = "/SubCategories";
   static const String filterScreen = "/FilterScreen";
-  static const String productDetailsScreen = "/product_details_screen";
+  static const String productDetailsScreen = "/ProductDetailsScreen";
   static const String paymentScreen = "/PaymentScreen";
   static const String productScreen = "/ProductScreen";
   static const String signupScreen = "/SignupScreen";
   static const String categoryScreen = "/CategoryScreen";
-  static const String homebidScreen = "/HomeBidScreen";
+  static const String homeBidScreen = "/HomeBidScreen";
   static const String notificationScreen = "/NotificationScreen";
   static const String favouriteScreen = "/FavouriteScreen";
-  static const String bidingProductDetatils = "/BedingProductDetails";
+  static const String bidingProductDetails = "/BidingProductDetails";
   static const String biddingScreen = "/BiddingScreen";
   static const String messageScreen = "/MessageScreen";
   static const String passwordScreen = "/PasswordScreen";
@@ -38,7 +38,7 @@ class Routes {
   static const String insightScreen = "/InsightScreen";
   static const String settingPaymentScreen = "/SettingPaymentScreen";
   static const String myPhysicalProductDetailScreen =
-      "/MyPysicalProductDetailScreen";
+      "/MyPhysicalProductDetailScreen";
   static const String editItemScreen = "/EditItemScreen";
   static const String addNewCardScreen = "/AddNewCardScreen";
   static const String selectPlanScreen = "/SelectPlanScreen";

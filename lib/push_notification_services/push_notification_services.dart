@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import '../routes/routes.dart';
 import '../service/local/db_helper.dart';
-import '../service/local/userInfo_global.dart';
+import '../service/local/user_info_global.dart';
 import 'notification_entity.dart';
 
 

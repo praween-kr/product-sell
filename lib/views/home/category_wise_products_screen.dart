@@ -171,15 +171,15 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                   onClick: () {
                                                     Map<String, dynamic> data =
                                                         {"from": 0};
-                                                    if (HomeCatProductcontroller()
+                                                    if (HomeCatProductController()
                                                         .initialized) {
                                                       Get.find<
-                                                              HomeCatProductcontroller>()
+                                                              HomeCatProductController>()
                                                           .getProductDetails(
                                                               (product.id ?? '')
                                                                   .toString());
                                                     } else {
-                                                      Get.put(HomeCatProductcontroller())
+                                                      Get.put(HomeCatProductController())
                                                           .getProductDetails(
                                                               (product.id ?? '')
                                                                   .toString());
@@ -356,7 +356,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                             .value = false;
                                                         //  controller.touchTap.value = true;
                                                         Get.toNamed(Routes
-                                                            .bidingProductDetatils);
+                                                            .bidingProductDetails);
                                                       },
                                                       child: AppText(
                                                         text:
@@ -608,10 +608,10 @@ class CategoryWiseProductsScreen extends StatelessWidget {
 
   _bidNow(String productId) {
     Map<String, dynamic> data = {"from": 0};
-    if (HomeCatProductcontroller().initialized) {
-      Get.find<HomeCatProductcontroller>().getProductDetails(productId);
+    if (HomeCatProductController().initialized) {
+      Get.find<HomeCatProductController>().getProductDetails(productId);
     } else {
-      Get.put(HomeCatProductcontroller()).getProductDetails(productId);
+      Get.put(HomeCatProductController()).getProductDetails(productId);
     }
     Get.toNamed(Routes.productDetailsScreen, arguments: data);
   }
