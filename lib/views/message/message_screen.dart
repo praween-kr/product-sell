@@ -10,7 +10,7 @@ import 'package:oninto_flutter/Socket/model/message_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/service/apis.dart';
-import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
