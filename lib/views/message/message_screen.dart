@@ -1,25 +1,28 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/model/message_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
-import 'package:oninto_flutter/utils/app_text_field.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/helper/file_picker.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/video/app_video_play.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../utils/app_text.dart';
 import '../../utils/color_constant.dart';
-
 
 class MessageScreen extends StatelessWidget {
   MessageScreen({super.key});
@@ -31,7 +34,16 @@ class MessageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
-        heading: 'Men Tshirt',
+        // heading: 'Men Tshirt',
+        headingChild: Obx(
+          () => Text(
+            _chatMsgController.activeProduct.value?.name ?? '',
+            style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                overflow: TextOverflow.ellipsis),
+          ),
+        ),
         textStyle: const TextStyle(
             fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
         action: popupWidget(
@@ -66,25 +78,29 @@ class MessageScreen extends StatelessWidget {
                                   _chatMsgController.messages[index];
 
                               return messageCard(
-                                  index,
-                                  message,
-                                  _chatMsgController.activeUser.value,
-                                  _chatMsgController.activeProduct.value,
-                                  onLongClick: () {
-                                AppDialogs.confirm(
-                                  context,
-                                  msg: "Are you sure\nwant to delete message?",
-                                  clickOnYes: () {
-                                    _chatMsgController
-                                        .deleteMsg(message.id.toString());
-                                    Get.back();
-                                  },
-                                );
-                              });
+                                index,
+                                message,
+                                _chatMsgController.activeUser.value,
+                                _chatMsgController.activeProduct.value,
+                                onLongClick: () => _deleteMsg(context,
+                                    msgId: message.id.toString()),
+                              );
                             },
                           ),
                         ),
             ),
+          ),
+          Obx(
+            () => localAttachmentView(
+                type: _chatMsgController.newMessageType.value,
+                attachment: _chatMsgController.newMessageAttachment.value,
+                thubnail:
+                    _chatMsgController.newMessageType.value == MessageType.video
+                        ? _chatMsgController.newMessageAttachmentThumbnail.value
+                        : null,
+                onClose: () {
+                  _chatMsgController.clearMsgInput();
+                }),
           ),
           Container(
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -109,17 +125,7 @@ class MessageScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                    onTap: () {
-                      // attachmentDialog(
-                      //   onImagClick: () {
-                      //     Get.back();
-                      //   },
-                      //   onFileClick: () {
-                      //     Get.back();
-                      //     // chatController.cameraHelper.openAttachmentDialog();
-                      //   },
-                      // );
-                    },
+                    onTap: () => _addAttachments(),
                     child: Image.asset(Assets.assetsAttachment,
                         height: 20, width: 20)),
                 const SizedBox(width: 5),
@@ -130,7 +136,7 @@ class MessageScreen extends StatelessWidget {
                           (_chatMsgController.activeProduct.value?.id)
                               .toString());
                     },
-                    child:  const Icon(Icons.send, color: AppColor.blackColor))
+                    child: const Icon(Icons.send, color: AppColor.blackColor))
               ],
             ),
           )
@@ -139,20 +145,31 @@ class MessageScreen extends StatelessWidget {
     );
   }
 
-  _addMoreAttachments() {
+  _deleteMsg(BuildContext context, {required String msgId}) {
+    AppDialogs.confirm(
+      context,
+      msg: "Are you sure\nwant to delete message?",
+      clickOnYes: () {
+        _chatMsgController.deleteMsg(msgId);
+        Get.back();
+      },
+    );
+  }
+
+  _addAttachments() {
     AppPicker().image((path, type, thumb) {
-      String typeKey = "0";
-      if (type == AttachmentPicker.IMG) {
-        typeKey = "0";
-      } else if (type == AttachmentPicker.VIDEO) {
-        typeKey = "2";
-      } else {
-        typeKey = "1";
-      }
+      socketPrint("Attachment path: $path");
       if (path != null) {
-        //
+        if (type == AttachmentPicker.IMG) {
+          _chatMsgController.newMessageType.value = MessageType.image;
+          _chatMsgController.newMessageAttachment.value = path;
+        } else if (type == AttachmentPicker.VIDEO) {
+          _chatMsgController.newMessageType.value = MessageType.video;
+          _chatMsgController.newMessageAttachment.value = path;
+          _chatMsgController.newMessageAttachmentThumbnail.value = thumb ?? '';
+        }
       }
-    });
+    }, hideFile: true);
   }
 
   PopupMenuButton<Function> popupWidget(
@@ -249,7 +266,7 @@ class MessageScreen extends StatelessWidget {
     }
 
     ///----
-
+    socketPrint("message.thumbnail ?? '': ${message.thumbnail ?? ''}");
     return Column(
       children: [
         dt == '' ? const SizedBox.shrink() : dividerByDate(dt),
@@ -301,7 +318,15 @@ class MessageScreen extends StatelessWidget {
                                       fontFamily: "Oswald",
                                       fontWeight: FontWeight.w500,
                                       textSize: 14)
-                                  : _attachmentView(message.message ?? ''),
+                                  : _attachmentView(
+                                      message.messageType.toString() ==
+                                              MessageType.video
+                                          ? message.thumbnail ?? ''
+                                          : message.message ?? '',
+                                      video: message.messageType.toString() ==
+                                              MessageType.video
+                                          ? message.message
+                                          : null),
                         ),
                       ],
                     ),
@@ -335,7 +360,7 @@ class MessageScreen extends StatelessWidget {
     );
   }
 
-  Widget _attachmentView(String url) {
+  Widget _attachmentView(String url, {String? video}) {
     String ext = url.split('.').last;
     print("Msg Attachment: $url");
     return ConstrainedBox(
@@ -378,98 +403,85 @@ class MessageScreen extends StatelessWidget {
               )
             : GestureDetector(
                 onTap: () {
-                  // AppImage.viewFull("${AppApis.imageBaseUrl}$url");
+                  if (video == null) {
+                    AppImage.viewFull("${ImageBaseUrls.messageAttachment}$url");
+                  } else {
+                    Get.to(() => AppVideoPlayer(
+                        video: "${ImageBaseUrls.messageAttachment}$video"));
+                  }
                 },
-                child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                        bottomLeft: Radius.circular(20)),
-                    child: AppImage.view("${ImageBaseUrls.product}$url",
-                        errorShow: true)),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        child: AppImage.view(
+                            "${ImageBaseUrls.messageAttachment}$url",
+                            width: video != null ? double.infinity : null,
+                            errorShow: true,
+                            fit: video != null ? BoxFit.cover : null)),
+                    video != null
+                        ? const CircleAvatar(
+                            backgroundColor: Colors.black54,
+                            child: Icon(Icons.play_arrow, color: Colors.white))
+                        : const SizedBox.shrink(),
+                  ],
+                ),
               ));
   }
 
-  void attachmentDialog(
-      {required Function onImagClick, required Function onFileClick}) {
-    Get.bottomSheet(
-      Wrap(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: Get.width * 0.15, vertical: Get.height * 0.05),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(14))),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-              child: Column(
+  Widget localAttachmentView(
+          {required String attachment,
+          String? thubnail,
+          required String type,
+          required Function onClose}) =>
+      type == MessageType.text
+          ? const SizedBox.shrink()
+          : ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: Get.height * 0.4),
+              child: Stack(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: () => onImagClick(),
-                        child: const Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: AppColor.themeColor,
-                              child: Icon(Icons.image, color: Colors.white),
-                            ),
-                            SizedBox(height: 8),
-                            AppText(
-                                text: "Image",
-                                color: Colors.black,
-                                textSize: 12),
-                          ],
-                        ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 22, right: 22, top: 16),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20)),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: Colors.grey.shade200),
+                        child: type == MessageType.image
+                            ? Image.file(
+                                File(attachment),
+                                fit: BoxFit.fill,
+                              )
+                            : thubnail == null
+                                ? const Center(child: Text("..."))
+                                : Image.file(
+                                    File(thubnail),
+                                    fit: BoxFit.fill,
+                                  ),
                       ),
-                      GestureDetector(
-                        onTap: () => onFileClick(),
-                        child: const Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: AppColor.themeColor,
-                              child: Icon(
-                                Icons.file_present_sharp,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            AppText(
-                                text: "File",
-                                color: Colors.black,
-                                textSize: 12),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 14),
-                      decoration: BoxDecoration(
-                          color: AppColor.themeColor.withOpacity(0.2),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(14))),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
-                      child: const Center(child: Text("Cancel")),
                     ),
-                  )
+                  ),
+                  //
+                  Positioned(
+                      right: 5,
+                      top: 0,
+                      child: GestureDetector(
+                        onTap: () => onClose(),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey.shade300,
+                          child: const Icon(Icons.close),
+                        ),
+                      ))
                 ],
               ),
-            ),
-          ),
-        ],
-      ),
-      // backgroundColor: Colors.black.withOpacity(0.3)
-    );
-  }
+            );
 
   List fileTypes = ['pdf', 'docx', 'doc', 'txt', 'pptx', 'ppt', 'xlsx', 'xls'];
 

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'color_constant.dart';
+
 class AppImage {
   static Widget view(String url,
       {BoxFit? fit,
@@ -48,14 +50,25 @@ class AppImage {
   static void viewFull(String url) {
     Get.to(
       () => Scaffold(
-        appBar: AppBar(
-          // backgroundColor: Colors.transparent,
-          title: const Text("Image View"),
-          centerTitle: true,
-          // elevation: 0,
-        ),
-        body: Center(
-          child: view(url, errorShow: true),
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            SafeArea(
+              child: Center(
+                child: view(url, errorShow: true),
+              ),
+            ),
+            Positioned(
+                top: 90,
+                left: 20,
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child:
+                          Icon(Icons.arrow_back, color: AppColor.themeColor)),
+                ))
+          ],
         ),
       ),
     );

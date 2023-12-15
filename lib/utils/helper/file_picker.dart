@@ -23,7 +23,8 @@ enum AttachmentPicker {
 }
 
 class AppPicker {
-  image(Function(String?, AttachmentPicker?, String?) onChanged) {
+  image(Function(String?, AttachmentPicker?, String?) onChanged,
+      {bool hideFile = false, bool hideVideo = false}) {
     Get.bottomSheet(Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ClipRRect(
@@ -51,34 +52,39 @@ class AppPicker {
                   },
                   title: "Camera",
                   icon: Icons.camera_alt_rounded),
-              listTile(
-                  onClick: () async {
-                    Get.back();
-                    onChanged(await (picker(AttachmentPicker.FILE)),
-                        AttachmentPicker.FILE, null);
-                  },
-                  title: "File",
-                  icon: Icons.camera_alt_rounded),
-              listTile(
-                  onClick: () async {
-                    Get.back();
-                    var path = await (picker(AttachmentPicker.VIDEO_GALLERY));
-                    if(path!=null){
-                      final fileName = await VideoThumbnail.thumbnailFile(
-                          video: path,
-                          thumbnailPath: (await getTemporaryDirectory()).path,
-                          imageFormat: ImageFormat.WEBP,
-                          maxHeight: 64,
-                          quality: 75);
-                      AppPrint.all(fileName.toString());
-                      onChanged(path, AttachmentPicker.VIDEO, fileName);
-                    }
-                    else{
-                      AppPrint.all("no video selected");
-                    }
-                  },
-                  title: "Video",
-                  icon: Icons.camera_alt_rounded),
+              hideFile
+                  ? const SizedBox.shrink()
+                  : listTile(
+                      onClick: () async {
+                        Get.back();
+                        onChanged(await (picker(AttachmentPicker.FILE)),
+                            AttachmentPicker.FILE, null);
+                      },
+                      title: "File",
+                      icon: Icons.camera_alt_rounded),
+              hideVideo
+                  ? const SizedBox.shrink()
+                  : listTile(
+                      onClick: () async {
+                        Get.back();
+                        var path =
+                            await (picker(AttachmentPicker.VIDEO_GALLERY));
+                        if (path != null) {
+                          final fileName = await VideoThumbnail.thumbnailFile(
+                              video: path,
+                              thumbnailPath:
+                                  (await getTemporaryDirectory()).path,
+                              imageFormat: ImageFormat.WEBP,
+                              maxHeight: 64,
+                              quality: 75);
+                          AppPrint.all(fileName.toString());
+                          onChanged(path, AttachmentPicker.VIDEO, fileName);
+                        } else {
+                          AppPrint.all("no video selected");
+                        }
+                      },
+                      title: "Video",
+                      icon: Icons.camera_alt_rounded),
               //
               const SizedBox(height: 14),
               GestureDetector(

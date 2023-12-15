@@ -37,6 +37,7 @@ class Message {
   int? receiverId;
   int? chatConstantId;
   String? message;
+  String? thumbnail;
   int? readStatus;
   int? messageType;
   int? deletedId;
@@ -50,6 +51,7 @@ class Message {
       this.receiverId,
       this.chatConstantId,
       this.message,
+      this.thumbnail,
       this.readStatus,
       this.messageType,
       this.deletedId,
@@ -63,6 +65,7 @@ class Message {
     receiverId = json['receiverId'];
     chatConstantId = json['chatConstantId'];
     message = json['message'];
+    thumbnail = json['thumbnail'];
     readStatus = json['readStatus'];
     messageType = json['messageType'];
     deletedId = json['deletedId'];
@@ -78,6 +81,7 @@ class Message {
     data['receiverId'] = receiverId;
     data['chatConstantId'] = chatConstantId;
     data['message'] = message;
+    data['thumbnail'] = thumbnail;
     data['readStatus'] = readStatus;
     data['messageType'] = messageType;
     data['deletedId'] = deletedId;

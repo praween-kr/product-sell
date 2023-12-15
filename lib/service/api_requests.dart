@@ -18,6 +18,7 @@ import 'package:oninto_flutter/service/local/local_store_keys.dart';
 import 'package:oninto_flutter/service/local/userInfo_global.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/date_time_formates.dart';
 
 import 'apis.dart';
 import 'base_api_call.dart';
@@ -360,6 +361,7 @@ class ApiRequests {
     required String selloption,
     DateTime? startDate,
     DateTime? endDate,
+    TimeOfDay? startBidingTime,
     required String price,
     required String description,
   }) async {
@@ -382,6 +384,7 @@ class ApiRequests {
       "endDate": endDate == null
           ? ''
           : "${endDate.year}-${endDate.month}-${endDate.day}",
+      "bidStartDate": AppDateTime.time24hr(timeOfDay: startBidingTime),
       "boostCode": "",
     };
     AppPrint.all(
@@ -709,21 +712,24 @@ class ApiRequests {
   static uploadAttachment(
       {required String attachment,
       required String type,
-      required String thumbnail}) async {
+      required String thumbnail,
+      required Function(bool) loading,
+      required Function(String, String, String) respdata}) async {
     Map<String, dynamic> mapData = {"messageType": type};
 
-    AppLoader.show();
-    var data = await BaseApiCall().postFormReq(
-      AppApis.addPhysicalProduct,
-      data: mapData,
-      attachments: {'message': attachment, "thumbnail": thumbnail},
-    );
+    loading(true);
+    var data = await BaseApiCall().postFormReq(AppApis.uploadAttachment,
+        data: mapData,
+        attachments: {'message': attachment, "thumbnail": thumbnail},
+        showToast: false);
     AppPrint.all("Add Product Resp: $data");
     if (data != null) {
-      AppLoader.hide();
+      respdata(data['body']['messageType'].toString(),
+          data['body']['message'] ?? '', data['body']['thumbnail'] ?? '');
+      loading(false);
       return true;
     }
-    AppLoader.hide();
+    loading(false);
     return false;
   }
 
