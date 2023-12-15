@@ -25,7 +25,7 @@ import 'package:oninto_flutter/views/settingScreen/paymentScreen/addNewCard_scre
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/setting_payment_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
-import '../splash_screen.dart';
+import '../views/splash_screen.dart';
 import '../views/authscreens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
 import '../views/bid_screen/notification_Screen.dart';
