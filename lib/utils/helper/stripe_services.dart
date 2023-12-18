@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -23,6 +25,8 @@ class StripePaymentService {
   static String stripeTestKey =
       "pk_test_51Iy9mmSHUZtgmXhRe50T8kUlQ12fvx2vPJwAH7evpvq4DiDiqE9DgHr17cGNXcVSGmIp8IRP6xYghuJhtGl64gOP006VrHNug2";
   static String stripeLiveKey = "";
+
+  static String stripeSecretKey="sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
 
   Future<void> init() async {
     Stripe.publishableKey = stripeTestKey;
@@ -61,20 +65,13 @@ class StripePaymentService {
             paymentIntentClientSecret: paymentIntent!['client_secret'],
             //Gotten from payment intent
             style: ThemeMode.dark,
-            merchantDisplayName: 'Ikay',
+            merchantDisplayName: 'Ownitoo',
             // Extra params
             primaryButtonLabel: 'Pay now',
-            applePay: const PaymentSheetApplePay(
-              merchantCountryCode: 'DE',
-            ),
-            googlePay: const PaymentSheetGooglePay(
-              merchantCountryCode: 'DE',
-              testEnv: true,
-            ),
             appearance: const PaymentSheetAppearance(
               colors: PaymentSheetAppearanceColors(
-                background: Colors.lightBlue,
-                primary: Colors.blue,
+                background: Color(0xFFFB941C),
+                primary: Color(0xFFFB941C),
                 componentBorder: Colors.red,
               ),
               shapes: PaymentSheetShape(
@@ -85,9 +82,9 @@ class StripePaymentService {
                 shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
                 colors: PaymentSheetPrimaryButtonTheme(
                   light: PaymentSheetPrimaryButtonThemeColors(
-                    background: Color.fromARGB(255, 231, 235, 30),
-                    text: Color.fromARGB(255, 235, 92, 30),
-                    border: Color.fromARGB(255, 235, 92, 30),
+                    background: Colors.white,
+                    text: Color(0xFFFB941C),
+                    border: Colors.white,
                   ),
                 ),
               ),
@@ -132,12 +129,13 @@ class StripePaymentService {
         "https://api.stripe.com/v1/payment_intents",
         options: Options(
           headers: {
-           // 'Authorization': 'Bearer ${'STRIPE_SECRET'}',
+            'Authorization': 'Bearer $stripeSecretKey',
             'Content-Type': 'application/x-www-form-urlencoded'
           },
         ),
         data: body,
       );
+      log("response ${response.toString()}");
       return response.data;
     } catch (err) {
       throw Exception(err.toString());

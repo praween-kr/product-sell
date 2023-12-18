@@ -11,6 +11,7 @@ import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
+import 'package:oninto_flutter/utils/helper/stripe_services.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
@@ -184,7 +185,6 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
               /// Body ///
               Expanded(
                 child: RefreshIndicator(
