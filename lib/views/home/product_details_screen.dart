@@ -4,16 +4,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
-import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
+import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
-import 'package:oninto_flutter/utils/common_button.dart';
-import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../utils/color_constant.dart';
@@ -442,13 +442,18 @@ class ProductDetailsScreen extends StatelessWidget {
     } else {
       cmc = Get.put(ChatMsgController());
     }
-    socketPrint("Send First Message!");
-    cmc.newMessageInput.text = "Hello";
-    cmc.sendNewMessage(
-        (controller.productDetailsData.value?.details?.vendorId ?? '')
-            .toString(),
-        '1');
-    Get.toNamed(Routes.messageScreen);
+
+    cmc.goToChatRoom(
+        Receiver(id: controller.productDetailsData.value?.details?.vendorId));
+    // socketPrint(
+    //     "Send First Message: ${(controller.productDetailsData.value?.details?.vendorId ?? '').toString()}!");
+    // cmc.newMessageInput.text = "Hello";
+
+    // cmc.sendNewMessage(
+    //     (controller.productDetailsData.value?.details?.vendorId ?? '')
+    //         .toString(),
+    //     '1');
+    // Get.toNamed(Routes.messageScreen);
   }
 
   Future reviewDialog() async {
@@ -693,8 +698,8 @@ class ProductDetailsScreen extends StatelessWidget {
                           child: const CommonButton(
                             height: 50,
                             radius: 15,
-                            margin: EdgeInsets.only(
-                                left: 20, top: 20, right: 20),
+                            margin:
+                                EdgeInsets.only(left: 20, top: 20, right: 20),
                             text: "Upload",
                             textStyle: TextStyle(
                                 color: Colors.white,
@@ -946,8 +951,8 @@ class ProductDetailsScreen extends StatelessWidget {
                           child: const CommonButton(
                             height: 50,
                             radius: 15,
-                            margin: EdgeInsets.only(
-                                left: 20, top: 20, right: 20),
+                            margin:
+                                EdgeInsets.only(left: 20, top: 20, right: 20),
                             text: "Done",
                             textStyle: TextStyle(
                                 color: Colors.white,

@@ -3,6 +3,7 @@ class ImageBaseUrls {
   //
   static String category = "$base/uploads/category/";
   static String product = "$base/uploads/product/";
+  static String messageAttachment = "$base/images/users/";
 }
 
 class AppApis {

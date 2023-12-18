@@ -221,14 +221,16 @@ class SocketEmits {
       {required String receiverId,
       String? type,
       required String msg,
+      String? thumbnail,
       required String productId}) {
     socketPrint("dkfldsjf");
     Map<String, dynamic> req = HashMap();
     req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
     req['receiverId'] = receiverId;
-    req['message_type'] = type ?? MessageType.text;
+    req['messageType'] = type ?? MessageType.text;
     req['productId'] = productId;
     req['message'] = msg;
+    req['thumbnail'] = thumbnail ?? '';
     socketPrint(
         "Emit:---------> sendMessage-(${SocketKeys.emitSendMessage}), $req",
         blue: true);

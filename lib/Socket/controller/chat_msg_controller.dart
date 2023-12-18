@@ -6,6 +6,7 @@ import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
@@ -22,7 +23,9 @@ class ChatMsgController extends GetxController {
   var loadingChatHistories = false.obs;
   //
   var newMessageInput = TextEditingController(text: '');
+  var newMessageInputThumb = TextEditingController(text: '');
   var newMessageAttachment = ''.obs;
+  var newMessageAttachmentThumbnail = ''.obs;
   var newMessageType = MessageType.text.obs;
   var attachmentUploading = false.obs;
 
@@ -83,6 +86,7 @@ class ChatMsgController extends GetxController {
       if (data.senderId.toString() == activeUser.value?.id.toString()) {
         readUnread(data.senderId.toString());
       }
+      clearMsgInput();
     }
     // socketPrint("listenerNewMessage---> $data");
   }
@@ -159,30 +163,26 @@ class ChatMsgController extends GetxController {
   sendNewMessage(String? receiverId, String productId) async {
     if (receiverId != null) {
       if (newMessageType.value == MessageType.text) {
-        if (newMessageInput.text != '') {
+        if (newMessageInput.text.trim() != '') {
           socketPrint("Send First Message--> $receiverId");
           SocketEmits.sendMessage(
               receiverId: receiverId,
-              msg: newMessageInput.text,
+              msg: newMessageInput.text.trim(),
               type: newMessageType.value,
               productId: productId);
         }
       } else if (newMessageAttachment.value != '') {
-        // await ApiRequests.messageAttachmentUpload(
-        //   attachment: newMessageAttachment.value,
-        //   loading: (loading) {
-        //     attachmentUploading.value = loading;
-        //   },
-        //   successFile: (attachmentFile) {
-        //     if ((attachmentFile ?? '') != '') {
-        //       SocketEmits.sendMessage(
-        //         receiverId: receiverId,
-        //         msg: attachmentFile!,
-        //         type: newMessageType.value,
-        //       );
-        //     }
-        //   },
-        // );
+        socketPrint("thum: ${newMessageInputThumb.text}");
+        await _uploadAttachment(() {
+          if (newMessageAttachment.value != '') {
+            SocketEmits.sendMessage(
+                receiverId: receiverId,
+                msg: newMessageInput.text.trim(),
+                type: newMessageType.value,
+                productId: productId,
+                thumbnail: newMessageInputThumb.text);
+          }
+        });
       }
       // readUnread(receiverId);
       clearMsgInput();
@@ -198,6 +198,8 @@ class ChatMsgController extends GetxController {
     newMessageInput.clear();
     newMessageType.value = MessageType.text;
     newMessageAttachment.value = '';
+    newMessageAttachmentThumbnail.value = '';
+    newMessageInputThumb.clear();
   }
 
   /// Clear chats -------
@@ -228,15 +230,21 @@ class ChatMsgController extends GetxController {
     socketPrint("emited for read all messages...");
   }
 
-  @override
-  void onSuccessFile(String file, String fileType) {
-    log("fileTypefileType: $fileType");
-    if (fileType == 'document') {
-      newMessageType.value = MessageType.file;
-    } else {
-      newMessageType.value = MessageType.image;
-    }
-    newMessageAttachment.value = file;
+  /// API
+  _uploadAttachment(Function success) async {
+    await ApiRequests.uploadAttachment(
+        attachment: newMessageAttachment.value,
+        type: newMessageType.value,
+        thumbnail: newMessageAttachmentThumbnail.value,
+        respdata: (type, url, thubUrl) {
+          newMessageInput.text = url;
+          newMessageInputThumb.text = thubUrl;
+          socketPrint("type: $type, url: $url, thubUrl: $thubUrl");
+          success();
+        },
+        loading: (loading) {
+          attachmentUploading.value = loading;
+        });
   }
 
   @override

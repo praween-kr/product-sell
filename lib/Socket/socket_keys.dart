@@ -1,5 +1,6 @@
 class SocketKeys {
   static String socketUrl = 'http://202.164.42.227:9898/';
+  // static String socketUrl = 'http://192.168.1.210:9898/';
 
   //Emiter/
   static String emitConnectUser = "connect_user";
@@ -33,5 +34,5 @@ class SocketKeys {
 class MessageType {
   static String text = '0';
   static String image = '2';
-  static String file = '3';
+  static String video = '3';
 }

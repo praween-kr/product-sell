@@ -178,12 +178,31 @@ class NavBarMsgScreen extends StatelessWidget {
                             Expanded(
                               child: Row(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: AppImage.view(productImg,
-                                        height: 57.0,
-                                        width: 57.0,
-                                        fit: BoxFit.cover),
+                                  Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 2.5, right: 2.5),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: AppImage.view(productImg,
+                                              height: 57.0,
+                                              width: 57.0,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      (data.onlineStatus ?? false)
+                                          ? const Positioned(
+                                              bottom: 0,
+                                              right: 0,
+                                              child: CircleAvatar(
+                                                  radius: 5,
+                                                  backgroundColor:
+                                                      AppColor.themeColor),
+                                            )
+                                          : const SizedBox.shrink(),
+                                    ],
                                   ),
                                   const SizedBox(width: 12.0),
                                   Expanded(

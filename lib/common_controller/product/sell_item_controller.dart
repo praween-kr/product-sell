@@ -25,8 +25,7 @@ class SellItemController extends GetxController {
   ].obs;
 
   /// datePicker View
-  void pickDate(int value,
-      {required Function(DateTime?) onChanged}) async {
+  void pickDate(int value, {required Function(DateTime?) onChanged}) async {
     DateTime? pickedDate = await showDatePicker(
         builder: (context, Widget? child) {
           return Theme(
@@ -81,6 +80,7 @@ class SellItemController extends GetxController {
   var startDate = Rx<DateTime?>(null);
   var endDate = Rx<DateTime?>(null);
   var price = TextEditingController(text: '');
+  var startBidingTime = Rx<TimeOfDay?>(null);
 
   var selloptionsList = ["Auction", 'Fix Price'];
 
@@ -280,7 +280,8 @@ class SellItemController extends GetxController {
         condition: condition.value.trim(),
         selloption: sellOption.value.trim(),
         price: price.text.trim(),
-        description: description.text.trim());
+        description: description.text.trim(),
+        startBidingTime: startBidingTime.value);
   }
 
   _addCoOwnerProduct() async {
