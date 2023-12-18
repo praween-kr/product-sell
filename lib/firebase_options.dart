@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,22 +43,43 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBOoIEEfESrOY97qOwAw4Hc4TIPcPfyBqc',
+    appId: '1:450722208376:web:d202501f9a621b35bb6b8d',
+    messagingSenderId: '450722208376',
+    projectId: 'ownitoo-3d6b0',
+    authDomain: 'ownitoo-3d6b0.firebaseapp.com',
+    storageBucket: 'ownitoo-3d6b0.appspot.com',
+    measurementId: 'G-GK22KEZ6KQ',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAsS7PMqr_QU4sgTUYKsrb04kC0qDHjuho',
-    appId: '1:227272123288:android:d7d5597cd64a9f330901ed',
-    messagingSenderId: '227272123288',
-    projectId: 'ownitoo-5ecfe',
-    storageBucket: 'ownitoo-5ecfe.appspot.com',
+    apiKey: 'AIzaSyC2qlyIRtrnmtuvVVwgTlFIP8XnJZQvHzk',
+    appId: '1:450722208376:android:d3c42cd7623cf8c4bb6b8d',
+    messagingSenderId: '450722208376',
+    projectId: 'ownitoo-3d6b0',
+    storageBucket: 'ownitoo-3d6b0.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBZ8zJS9sP9MXhfr3IT4VYHGqG9RD6xcjQ',
-    appId: '1:227272123288:ios:86566ba7a908f7390901ed',
-    messagingSenderId: '227272123288',
-    projectId: 'ownitoo-5ecfe',
-    storageBucket: 'ownitoo-5ecfe.appspot.com',
-    androidClientId: '227272123288-f8r7ofn2s54aplss20foe896gfu6avr1.apps.googleusercontent.com',
-    iosClientId: '227272123288-csb4e1kse11vl3mc3f42jif6q182303s.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCsza1a-T0vZjt0heNAUuQPrPZ548cw0JE',
+    appId: '1:450722208376:ios:cb813fac67213644bb6b8d',
+    messagingSenderId: '450722208376',
+    projectId: 'ownitoo-3d6b0',
+    storageBucket: 'ownitoo-3d6b0.appspot.com',
+    androidClientId: '450722208376-s91fp69pdcbcrcnkgk7eorlv8hi2ueda.apps.googleusercontent.com',
+    iosClientId: '450722208376-7ju010ac1h7s4n76co8bv8s8mh1aoni1.apps.googleusercontent.com',
     iosBundleId: 'com.app.ownitoo',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCsza1a-T0vZjt0heNAUuQPrPZ548cw0JE',
+    appId: '1:450722208376:ios:bdf6e8b08488de75bb6b8d',
+    messagingSenderId: '450722208376',
+    projectId: 'ownitoo-3d6b0',
+    storageBucket: 'ownitoo-3d6b0.appspot.com',
+    androidClientId: '450722208376-s91fp69pdcbcrcnkgk7eorlv8hi2ueda.apps.googleusercontent.com',
+    iosClientId: '450722208376-78fqrrhj3acpfslij9shgua19dd8bgiv.apps.googleusercontent.com',
+    iosBundleId: 'com.app.onito.RunnerTests',
   );
 }

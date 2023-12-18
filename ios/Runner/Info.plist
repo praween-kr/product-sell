@@ -27,14 +27,14 @@
         		<string>Editor</string>
         		<key>CFBundleURLSchemes</key>
         		<array>
-        			<string>com.googleusercontent.apps.227272123288-csb4e1kse11vl3mc3f42jif6q182303s</string>
+        			<string>com.googleusercontent.apps.450722208376-7ju010ac1h7s4n76co8bv8s8mh1aoni1</string>
         		</array>
         	</dict>
         	<dict>
                 <key>CFBundleURLSchemes</key>
                 <array>
                 	<string>fb{your-app-id}</string>
-                	<string>com.googleusercontent.apps.227272123288-csb4e1kse11vl3mc3f42jif6q182303s</string>
+                	<string>com.googleusercontent.apps.450722208376-7ju010ac1h7s4n76co8bv8s8mh1aoni1</string>
                 </array>
             </dict>
     </array>
