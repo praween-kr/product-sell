@@ -29,6 +29,16 @@ class SocketKeys {
   static String listenerReportUser = "";
   static String listenerBlockUser = "block_user_listener";
   static String listenerClearChat = "clear_chat_listener";
+
+  /// Biding Socket Keys Emit
+  static String emitAddBid = "add_bid";
+  static String emitLastBid = "last_bid";
+  static String emitBidOver = "over_bid";
+
+  /// Biding Socket Keys Listener
+  static String listenerAddBid = "add_bid";
+  static String listenerLastBid = "last_bid";
+  static String listenerBidOver = "over_bid";
 }
 
 class MessageType {

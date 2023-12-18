@@ -7,14 +7,18 @@ import 'package:intl/intl.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
+import 'package:oninto_flutter/common_controller/product/biding_.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
+import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../utils/color_constant.dart';
 
@@ -43,396 +47,482 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
           ),
         ),
-        body: Obx(() => RefreshIndicator(
-              onRefresh: () async {
-                await controller.getProductDetails(
-                    (controller.productDetailsData.value?.details?.id ?? '')
-                        .toString());
-              },
-              child: controller.loadingData.value
-                  ? ShimmerWidgets.product()
-                  : SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DetailsImagesView(
-                              images: (controller.productDetailsData.value
-                                          ?.details?.productImages ??
-                                      [])
-                                  .map((e) => e.image ?? '')
-                                  .toList()),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20, left: 20, right: 20),
+        body: Obx(() => Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        child: AppText(
+                            text: "Bid Ending Soon:",
+                            textSize: 13,
+                            fontFamily: "Poppins"),
+                      ),
+                      AppTimer(
+                        textType: true,
+                        bidNow: () {},
+                        endTime: DateTime.parse("2023-12-20 18:37:00"),
+                        textStyle:
+                            const TextStyle(fontSize: 14, color: Colors.red),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      controller.getBidHistories(
+                          productId: (controller
+                                      .productDetailsData.value?.details?.id ??
+                                  '')
+                              .toString());
+                      await controller.getProductDetails(
+                          (controller.productDetailsData.value?.details?.id ??
+                                  '')
+                              .toString());
+                    },
+                    child: controller.loadingData.value
+                        ? ShimmerWidgets.product()
+                        : SingleChildScrollView(
+                            physics: const ClampingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    AppText(
-                                      text: controller.productDetailsData.value
-                                              ?.details?.name ??
-                                          '',
-                                      textSize: 17,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                    // AppText(
-                                    //   text: controller.productDetailsData.value
-                                    //           ?.details?.name ??
-                                    //       '',
-                                    //   textSize: 17,
-                                    //   fontWeight: FontWeight.w400,
-                                    //   color: AppColor.appcolor,
-                                    // ),
-                                    GestureDetector(
-                                      onTap: _sendMessage,
-                                      child: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              color: AppColor.appColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: const Icon(
-                                            Icons.message,
-                                            color: Colors.white,
-                                          )),
-                                    )
-                                  ],
+                                DetailsImagesView(
+                                    images: (controller.productDetailsData.value
+                                                ?.details?.productImages ??
+                                            [])
+                                        .map((e) => e.image ?? '')
+                                        .toList()),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20, left: 20, right: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppText(
+                                            text: controller.productDetailsData
+                                                    .value?.details?.name ??
+                                                '',
+                                            textSize: 17,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                          // AppText(
+                                          //   text: controller.productDetailsData.value
+                                          //           ?.details?.name ??
+                                          //       '',
+                                          //   textSize: 17,
+                                          //   fontWeight: FontWeight.w400,
+                                          //   color: AppColor.appcolor,
+                                          // ),
+                                          GestureDetector(
+                                            onTap: _sendMessage,
+                                            child: Container(
+                                                height: 40,
+                                                width: 40,
+                                                decoration: BoxDecoration(
+                                                    color: AppColor.appColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: const Icon(
+                                                  Icons.message,
+                                                  color: Colors.white,
+                                                )),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          const AppText(
+                                            text: "Girl Denim",
+                                            textSize: 17,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                          const Icon(Icons.star,
+                                              color: AppColor.appColor),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Get.arguments?["from"] == 1
+                                                  ? Container()
+                                                  : reviewDialog();
+                                            },
+                                            child: const AppText(
+                                              text: "/4.5",
+                                              textSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color: Color(0x4d000000),
+                                              fontFamily: "Poppins",
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      AppText(
+                                        text:
+                                            "\$${controller.productDetailsData.value?.details?.price ?? '0.0'}",
+                                        textSize: 22,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColor.appColor,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      const AppText(
+                                        text: "Inclusive of all taxes",
+                                        textSize: 12,
+                                        color: Color(0x32000000),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Obx(
+                                        () => controller.track.value ||
+                                                controller.trackupload.value
+                                            ? const AppText(
+                                                text:
+                                                    "Tracking ID : XX123XX343XX",
+                                                textSize: 15,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              )
+                                            : Container(),
+                                      ),
+                                      const SizedBox(height: 30),
+                                      Row(
+                                        children: [
+                                          const AppText(
+                                            text: "Category : ",
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff9F9F9F),
+                                            fontFamily: "Poppins",
+                                          ),
+                                          AppText(
+                                            text: controller
+                                                    .productDetailsData
+                                                    .value
+                                                    ?.details
+                                                    ?.category
+                                                    ?.name ??
+                                                '',
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          const AppText(
+                                            text: "Sub Category : ",
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff9F9F9F),
+                                            fontFamily: "Poppins",
+                                          ),
+                                          AppText(
+                                            text: controller
+                                                    .productDetailsData
+                                                    .value
+                                                    ?.details
+                                                    ?.category
+                                                    ?.subCategory
+                                                    ?.name ??
+                                                '',
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          const AppText(
+                                            text: "Color :  ",
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff9F9F9F),
+                                            fontFamily: "Poppins",
+                                          ),
+                                          AppText(
+                                            text: controller.productDetailsData
+                                                    .value?.details?.color ??
+                                                '',
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: [
+                                          const AppText(
+                                            text: "Brand : ",
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xff9F9F9F),
+                                            fontFamily: "Poppins",
+                                          ),
+                                          AppText(
+                                            text: controller.productDetailsData
+                                                    .value?.details?.brand ??
+                                                '',
+                                            textSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    const AppText(
-                                      text: "Girl Denim",
-                                      textSize: 17,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                    const Icon(Icons.star,
-                                        color: AppColor.appColor),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.arguments?["from"] == 1
-                                            ? Container()
-                                            : reviewDialog();
-                                      },
-                                      child: const AppText(
-                                        text: "/4.5",
+                                const Divider(color: Color(0x66000000)),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20, left: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppText(
+                                        text: "Condition",
+                                        textSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColor.appColor,
+                                      ),
+                                      SizedBox(height: 5),
+                                      AppText(
+                                        text: "New with tags",
+                                        textSize: 13,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColor.blackColor,
+                                      ),
+                                      SizedBox(height: 5),
+                                      AppText(
+                                        text:
+                                            "A brand-new, unused item with tags attached\nor in the original packing.",
                                         textSize: 12,
                                         fontWeight: FontWeight.w400,
+                                        lineHeight: 1.3,
                                         color: Color(0x4d000000),
                                         fontFamily: "Poppins",
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                AppText(
-                                  text:
-                                      "\$${controller.productDetailsData.value?.details?.price ?? '0.0'}",
-                                  textSize: 22,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.appColor,
-                                ),
-                                const SizedBox(height: 5),
-                                const AppText(
-                                  text: "Inclusive of all taxes",
-                                  textSize: 12,
-                                  color: Color(0x32000000),
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                const SizedBox(height: 10),
-                                Obx(
-                                  () => controller.track.value ||
-                                          controller.trackupload.value
-                                      ? const AppText(
-                                          text: "Tracking ID : XX123XX343XX",
-                                          textSize: 15,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        )
-                                      : Container(),
-                                ),
-                                const SizedBox(height: 30),
-                                Row(
-                                  children: [
-                                    const AppText(
-                                      text: "Category : ",
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff9F9F9F),
-                                      fontFamily: "Poppins",
-                                    ),
-                                    AppText(
-                                      text: controller.productDetailsData.value
-                                              ?.details?.category?.name ??
-                                          '',
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    const AppText(
-                                      text: "Sub Category : ",
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff9F9F9F),
-                                      fontFamily: "Poppins",
-                                    ),
-                                    AppText(
-                                      text: controller
-                                              .productDetailsData
-                                              .value
-                                              ?.details
-                                              ?.category
-                                              ?.subCategory
-                                              ?.name ??
-                                          '',
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    const AppText(
-                                      text: "Color :  ",
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff9F9F9F),
-                                      fontFamily: "Poppins",
-                                    ),
-                                    AppText(
-                                      text: controller.productDetailsData.value
-                                              ?.details?.color ??
-                                          '',
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    const AppText(
-                                      text: "Brand : ",
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xff9F9F9F),
-                                      fontFamily: "Poppins",
-                                    ),
-                                    AppText(
-                                      text: controller.productDetailsData.value
-                                              ?.details?.brand ??
-                                          '',
-                                      textSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.blackColor,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Divider(color: Color(0x66000000)),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20, left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppText(
-                                  text: "Condition",
-                                  textSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.appColor,
-                                ),
-                                SizedBox(height: 5),
-                                AppText(
-                                  text: "New with tags",
-                                  textSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.blackColor,
-                                ),
-                                SizedBox(height: 5),
-                                AppText(
-                                  text:
-                                      "A brand-new, unused item with tags attached\nor in the original packing.",
-                                  textSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  lineHeight: 1.3,
-                                  color: Color(0x4d000000),
-                                  fontFamily: "Poppins",
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Divider(color: Color(0x66000000)),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: Column(
-                                    children: [
-                                      const Row(
-                                        children: [
-                                          AppText(
-                                            text: "Size :",
-                                            textSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0x4d000000),
-                                          ),
-                                          AppText(
-                                            text: "XL / 42 / 14",
-                                            textSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColor.blackColor,
-                                            fontFamily: "Poppins",
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const AppText(
-                                              text: "Location  :",
-                                              textSize: 12,
-                                              color: Color(0x4d000000),
-                                              fontWeight: FontWeight.w400),
-                                          Expanded(
-                                            child: AppText(
-                                                text: controller
-                                                        .productDetailsData
-                                                        .value
-                                                        ?.details
-                                                        ?.location ??
-                                                    '',
-                                                textSize: 12,
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColor.blackColor,
-                                                fontFamily: "Poppins"),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const AppText(
-                                            text: "Posted Date :",
-                                            textSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0x4d000000),
-                                          ),
-                                          AppText(
-                                            text: AppDateTime.getDateTime(
-                                                controller
-                                                        .productDetailsData
-                                                        .value
-                                                        ?.details
-                                                        ?.createdAt ??
-                                                    '',
-                                                format:
-                                                    DateFormat("dd MMM yyyy")),
-                                            textSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: "Poppins",
-                                            color: AppColor.blackColor,
-                                          )
-                                        ],
                                       ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                Image.asset(Assets.assetsSale),
-                                const SizedBox(height: 5),
+                                const Divider(color: Color(0x66000000)),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Column(
+                                          children: [
+                                            const Row(
+                                              children: [
+                                                AppText(
+                                                  text: "Size :",
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0x4d000000),
+                                                ),
+                                                AppText(
+                                                  text: "XL / 42 / 14",
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColor.blackColor,
+                                                  fontFamily: "Poppins",
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const AppText(
+                                                    text: "Location  :",
+                                                    textSize: 12,
+                                                    color: Color(0x4d000000),
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                Expanded(
+                                                  child: AppText(
+                                                      text: controller
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.location ??
+                                                          '',
+                                                      textSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          AppColor.blackColor,
+                                                      fontFamily: "Poppins"),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const AppText(
+                                                  text: "Posted Date :",
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0x4d000000),
+                                                ),
+                                                AppText(
+                                                  text: AppDateTime.getDateTime(
+                                                      controller
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.createdAt ??
+                                                          '',
+                                                      format: DateFormat(
+                                                          "dd MMM yyyy")),
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: "Poppins",
+                                                  color: AppColor.blackColor,
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Image.asset(Assets.assetsSale),
+                                      const SizedBox(height: 5),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 20, left: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const AppText(
+                                          text: "Item Description",
+                                          textSize: 13,
+                                          fontFamily: "Poppins"),
+                                      const SizedBox(height: 5),
+                                      AppText(
+                                          text: controller
+                                                  .productDetailsData
+                                                  .value
+                                                  ?.details
+                                                  ?.description ??
+                                              '',
+                                          textSize: 13,
+                                          fontFamily: "Poppins",
+                                          color: const Color(0x4d000000)),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (controller.productType.value ==
+                                        ProductType.BID) {
+                                      _onBid(controller
+                                          .productDetailsData.value?.details);
+                                    }
+                                    // Map<String, dynamic> data = {
+                                    //   "data": "from",
+                                    // };
+                                    // controller.trackupload.value
+                                    //     ? uploadDialog()
+                                    //     : controller.upload.value
+                                    //         ? givereviewDialog()
+                                    //         : Get.arguments?["from"] == 1 &&
+                                    //                 !controller.upload.value
+                                    //             ? trackingDialog()
+                                    //             : Get.arguments?["from"] == 1
+                                    //                 ? givereviewDialog()
+                                    //                 : Get.toNamed(
+                                    //                     Routes.addressScreen,
+                                    //                   );
+                                  },
+                                  child: Obx(() => CommonButton(
+                                        height: 50,
+                                        radius: 15,
+                                        margin: const EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        text: controller.productType.value ==
+                                                ProductType.BID
+                                            ? "Bid \$2500"
+                                            : "Buy Now",
+                                        // controller.upload.value
+                                        //     ? "Give Reviews"
+                                        //     : controller.track.value
+                                        //         ? "Edit Tracking"
+                                        //         : controller.trackupload.value
+                                        //             ? "Upload"
+                                        //             : Get.arguments?["from"] == 1
+                                        //                 ? "Add Tracking ID"
+                                        //                 : "Buy Now",
+                                        textStyle: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: "Poppins",
+                                            fontWeight: FontWeight.w400),
+                                        color: AppColor.appColor,
+                                      )),
+                                ),
+                                const SizedBox(height: 10),
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, left: 20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const AppText(
-                                    text: "Item Description",
-                                    textSize: 13,
-                                    fontFamily: "Poppins"),
-                                const SizedBox(height: 5),
-                                AppText(
-                                    text: controller.productDetailsData.value
-                                            ?.details?.description ??
-                                        '',
-                                    textSize: 13,
-                                    fontFamily: "Poppins",
-                                    color: const Color(0x4d000000)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 30),
-                          GestureDetector(
-                            onTap: () {
-                              // Map<String, dynamic> data = {
-                              //   "data": "from",
-                              // };
-                              controller.trackupload.value
-                                  ? uploadDialog()
-                                  : controller.upload.value
-                                      ? givereviewDialog()
-                                      : Get.arguments?["from"] == 1 &&
-                                              !controller.upload.value
-                                          ? trackingDialog()
-                                          : Get.arguments?["from"] == 1
-                                              ? givereviewDialog()
-                                              : Get.toNamed(
-                                                  Routes.addressScreen,
-                                                );
-                            },
-                            child: Obx(() => CommonButton(
-                                  height: 50,
-                                  radius: 15,
-                                  margin: const EdgeInsets.only(
-                                      left: 20, right: 20),
-                                  text: controller.upload.value
-                                      ? "Give Reviews"
-                                      : controller.track.value
-                                          ? "Edit Tracking"
-                                          : controller.trackupload.value
-                                              ? "Upload"
-                                              : Get.arguments?["from"] == 1
-                                                  ? "Add Tracking ID"
-                                                  : "Buy Now",
-                                  textStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontFamily: "Poppins",
-                                      fontWeight: FontWeight.w400),
-                                  color: AppColor.appColor,
-                                )),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
+                  ),
+                ),
+              ],
             )));
+  }
+
+  _onBid(ProductDetails? product) async {
+    await controller.getBidHistories(productId: (product?.id ?? '').toString());
+    timerDialog(
+        endTime: DateTime.parse("2023-12-20 18:37:00"),
+        bidNow: () {
+          Get.back();
+          AppDialogs.bidHistoryDialog(
+            controller: controller.bidAmountInput,
+            bidingData: controller.bidingData.value,
+            isAddingBid: controller.addBbidingLoading.value,
+            confirm: () {
+              controller.addBid(
+                  lastBidPrice: double.parse(
+                      controller.bidingData.value?.save?.bidPrice ?? "0.0"),
+                  productId: (product?.id ?? '').toString(),
+                  bidPrice: double.parse(controller.bidAmountInput.text == ""
+                      ? "0.0"
+                      : controller.bidAmountInput.text));
+            },
+            seeAll: () {
+              Get.toNamed(Routes.biddingHistoryScreen);
+            },
+          );
+        });
   }
 
   _sendMessage() {

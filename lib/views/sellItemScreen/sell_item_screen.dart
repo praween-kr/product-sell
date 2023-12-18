@@ -272,11 +272,10 @@ class SellItemScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 16.0),
                                 const AppText(
-                                  text: "Base Price",
-                                  color: AppColor.blackColor,
-                                  textSize: 13.0,
-                                  style: AppTextStyle.medium,
-                                ),
+                                    text: "Base Price",
+                                    color: AppColor.blackColor,
+                                    textSize: 13.0,
+                                    style: AppTextStyle.medium),
                                 const SizedBox(height: 14.0),
                                 AppTextField(
                                   controller: controller.basePrice,
@@ -287,13 +286,13 @@ class SellItemScreen extends StatelessWidget {
                                   containerColor: AppColor.textColor,
                                 ),
                                 const SizedBox(height: 16.0),
-                                bidDatePicker(
-                                  initialDate: controller.bidDate.value,
-                                  date: (DateTime? selected) {
-                                    controller.bidDate.value = selected;
-                                  },
-                                ),
-                                const SizedBox(height: 16.0),
+                                // bidDatePicker(
+                                //   initialDate: controller.bidDate.value,
+                                //   date: (DateTime? selected) {
+                                //     controller.bidDate.value = selected;
+                                //   },
+                                // ),
+                                // const SizedBox(height: 16.0),
                               ],
                             ),
                     ),
@@ -771,57 +770,70 @@ class SellItemScreen extends StatelessWidget {
                                 /// Start and End Date Time---
                                 Obx(() => controller.sellOption.value ==
                                         'Auction'
-                                    ? startEndDatesPicker(
-                                        initialDate1:
-                                            controller.startDate.value,
-                                        initialDate2: controller.endDate.value,
-                                        date1: (DateTime? selected) {
-                                          controller.startDate.value = selected;
-                                        },
-                                        date2: (DateTime? selected) {
-                                          controller.endDate.value = selected;
-                                        },
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          startEndDatesPicker(
+                                            initialDate1:
+                                                controller.startDate.value,
+                                            initialDate2:
+                                                controller.endDate.value,
+                                            date1: (DateTime? selected) {
+                                              controller.startDate.value =
+                                                  selected;
+                                            },
+                                            date2: (DateTime? selected) {
+                                              controller.endDate.value =
+                                                  selected;
+                                            },
+                                          ), // const SizedBox(height: 14.0),
+                                          const AppText(
+                                            text: "Bid Time",
+                                            color: AppColor.blackColor,
+                                            textSize: 13.0,
+                                            style: AppTextStyle.medium,
+                                          ),
+                                          const SizedBox(height: 14.0),
+                                          AppTextField(
+                                            readOnly: true,
+                                            controller: TextEditingController(
+                                              text: AppDateTime.time12hr(
+                                                  timeOfDay: controller
+                                                      .startBidingTime.value),
+                                            ),
+                                            height: 46.0,
+                                            title: "Start Date",
+                                            style: const TextStyle(
+                                                color: AppColor.grey),
+                                            hintStyle: const TextStyle(
+                                                color: AppColor.grey,
+                                                fontSize: 14),
+                                            //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+                                            margin: const EdgeInsets.only(
+                                                right: 0.0),
+                                            borderRadius:
+                                                BorderRadius.circular(23),
+                                            containerColor: AppColor.textColor,
+                                            suffix: IconButton(
+                                              onPressed: () async {
+                                                controller
+                                                        .startBidingTime.value =
+                                                    await showTimePicker(
+                                                  context: context,
+                                                  initialTime: const TimeOfDay(
+                                                      hour: 7, minute: 15),
+                                                );
+                                              },
+                                              icon: Icon(Icons.timer_sharp,
+                                                  size: 18,
+                                                  color: AppColor.blackColor
+                                                      .withOpacity(0.3)),
+                                            ),
+                                          ),
+                                        ],
                                       )
                                     : Container()),
-                                // const SizedBox(height: 14.0),
-                                const AppText(
-                                  text: "Bid Time",
-                                  color: AppColor.blackColor,
-                                  textSize: 13.0,
-                                  style: AppTextStyle.medium,
-                                ),
-                                const SizedBox(height: 14.0),
-                                AppTextField(
-                                  readOnly: true,
-                                  controller: TextEditingController(
-                                    text: AppDateTime.time12hr(
-                                        timeOfDay:
-                                            controller.startBidingTime.value),
-                                  ),
-                                  height: 46.0,
-                                  title: "Start Date",
-                                  style: const TextStyle(color: AppColor.grey),
-                                  hintStyle: const TextStyle(
-                                      color: AppColor.grey, fontSize: 14),
-                                  //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-                                  margin: const EdgeInsets.only(right: 0.0),
-                                  borderRadius: BorderRadius.circular(23),
-                                  containerColor: AppColor.textColor,
-                                  suffix: IconButton(
-                                    onPressed: () async {
-                                      controller.startBidingTime.value =
-                                          await showTimePicker(
-                                        context: context,
-                                        initialTime: const TimeOfDay(
-                                            hour: 7, minute: 15),
-                                      );
-                                    },
-                                    icon: Icon(Icons.timer_sharp,
-                                        size: 18,
-                                        color: AppColor.blackColor
-                                            .withOpacity(0.3)),
-                                  ),
-                                ),
                                 const SizedBox(height: 14.0),
 
                                 /// Price---
@@ -1215,39 +1227,39 @@ class SellItemScreen extends StatelessWidget {
     );
   }
 
-  Widget bidDatePicker(
-      {required Function(DateTime?) date, required DateTime? initialDate}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const AppText(
-            text: "Bid Date",
-            color: AppColor.blackColor,
-            textSize: 13.0,
-            style: AppTextStyle.medium),
-        const SizedBox(height: 14.0),
-        AppTextField(
-          readOnly: true,
-          controller: TextEditingController(
-            text:
-                "${initialDate?.day ?? 'DD'}-${initialDate?.month ?? 'MM'}-${initialDate?.year ?? 'YYYY'}",
-          ),
-          height: 46.0,
-          title: "Bid Date",
-          style: TextStyle(color: initialDate == null ? AppColor.grey : null),
-          hintStyle: const TextStyle(color: AppColor.blackColor, fontSize: 13),
-          //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
-          margin: const EdgeInsets.only(right: 0.0),
-          borderRadius: BorderRadius.circular(23),
-          containerColor: AppColor.textColor,
-          suffix: IconButton(
-              onPressed: () => controller.pickDate(0, onChanged: date),
-              icon: Icon(Icons.calendar_month_outlined,
-                  size: 16, color: AppColor.blackColor.withOpacity(0.3))),
-        ),
-      ],
-    );
-  }
+  // Widget bidDatePicker(
+  //     {required Function(DateTime?) date, required DateTime? initialDate}) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       const AppText(
+  //           text: "Bid Date",
+  //           color: AppColor.blackColor,
+  //           textSize: 13.0,
+  //           style: AppTextStyle.medium),
+  //       const SizedBox(height: 14.0),
+  //       AppTextField(
+  //         readOnly: true,
+  //         controller: TextEditingController(
+  //           text:
+  //               "${initialDate?.day ?? 'DD'}-${initialDate?.month ?? 'MM'}-${initialDate?.year ?? 'YYYY'}",
+  //         ),
+  //         height: 46.0,
+  //         title: "Bid Date",
+  //         style: TextStyle(color: initialDate == null ? AppColor.grey : null),
+  //         hintStyle: const TextStyle(color: AppColor.blackColor, fontSize: 13),
+  //         //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
+  //         margin: const EdgeInsets.only(right: 0.0),
+  //         borderRadius: BorderRadius.circular(23),
+  //         containerColor: AppColor.textColor,
+  //         suffix: IconButton(
+  //             onPressed: () => controller.pickDate(0, onChanged: date),
+  //             icon: Icon(Icons.calendar_month_outlined,
+  //                 size: 16, color: AppColor.blackColor.withOpacity(0.3))),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget tabButton(
       {required String title,

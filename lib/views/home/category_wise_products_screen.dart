@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
@@ -15,12 +17,11 @@ import 'package:oninto_flutter/utils/widgets/blur_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-import 'package:oninto_flutter/utils/app_text.dart';
+import '../../generated/assets.dart';
+import '../../routes/routes.dart';
 import '../../utils/appbar.dart';
 import '../../utils/color_constant.dart';
 import '../../utils/common_button.dart';
-import '../../generated/assets.dart';
-import '../../routes/routes.dart';
 
 class CategoryWiseProductsScreen extends StatelessWidget {
   CategoryWiseProductsScreen({super.key});
@@ -388,6 +389,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                               Get.back();
                                                               AppDialogs
                                                                   .bidHistoryDialog(
+                                                                bidingData:
+                                                                    AddBidsHistory(),
                                                                 confirm: () {
                                                                   Get.back();
                                                                   _bidNow((product
@@ -397,7 +400,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                                 },
                                                                 seeAll: () {
                                                                   Get.toNamed(Routes
-                                                                      .biddingScreen);
+                                                                      .biddingHistoryScreen);
                                                                 },
                                                               );
                                                             });
@@ -408,8 +411,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                         color:
                                                             AppColor.appColor,
                                                         text: "Bid \$2500",
-                                                        textStyle:
-                                                            TextStyle(
+                                                        textStyle: TextStyle(
                                                           fontSize: 15,
                                                           fontFamily: "Poppins",
                                                           color: Colors.white,
@@ -432,7 +434,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                     GestureDetector(
                                                       onTap: () {
                                                         Get.toNamed(Routes
-                                                            .biddingScreen);
+                                                            .biddingHistoryScreen);
                                                       },
                                                       child: RichText(
                                                           text: const TextSpan(

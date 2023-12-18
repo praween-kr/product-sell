@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/utils/app_text.dart';
-import 'package:oninto_flutter/utils/color_constant.dart';
-import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -581,24 +582,24 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontFamily: "Poppins",
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         GestureDetector(
                           onTap: () {
                             Get.back();
                             AppDialogs.bidHistoryDialog(
+                              bidingData: AddBidsHistory(),
                               confirm: () =>
                                   Get.toNamed(Routes.bidingProductDetails),
-                              seeAll: () => Get.toNamed(Routes.biddingScreen),
+                              seeAll: () =>
+                                  Get.toNamed(Routes.biddingHistoryScreen),
                             );
                           },
-                          child: CommonButton(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                          child: const CommonButton(
+                            margin: EdgeInsets.symmetric(horizontal: 20),
                             color: AppColor.appColor,
                             text: "Bid Now",
                             radius: 15,
-                            textStyle: const TextStyle(
+                            textStyle: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "Poppins",
                                 fontSize: 15,

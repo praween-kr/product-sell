@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CommonButton extends StatelessWidget {
   final String? text;
+  final Widget? child;
   final double? height;
   final double? width;
   final double? imgHeight;
@@ -15,11 +16,12 @@ class CommonButton extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
   final EdgeInsetsGeometry? margin;
-  final  EdgeInsetsGeometry? imagePadding;
+  final EdgeInsetsGeometry? imagePadding;
   final IconData? iconData;
 
   const CommonButton(
       {super.key,
+      this.child,
       this.text,
       this.height,
       this.width,
@@ -41,7 +43,7 @@ class CommonButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       margin: margin,
-      height: height?? 50,
+      height: height ?? 50,
       width: width,
       decoration: BoxDecoration(
           boxShadow: const [
@@ -68,10 +70,11 @@ class CommonButton extends StatelessWidget {
                       image ?? ""),
                 )
               : Container(),
-          Text(
-            text ?? "",
-            style: textStyle,
-          ),
+          child ??
+              Text(
+                text ?? "",
+                style: textStyle,
+              ),
           image != null
               ? SizedBox(
                   height: imgHeight,

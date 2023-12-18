@@ -384,7 +384,7 @@ class ApiRequests {
       "endDate": endDate == null
           ? ''
           : "${endDate.year}-${endDate.month}-${endDate.day}",
-      "bidStartDate": AppDateTime.time24hr(timeOfDay: startBidingTime),
+      "bidTime": AppDateTime.time24hr(timeOfDay: startBidingTime),
       "boostCode": "",
     };
     AppPrint.all(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
@@ -46,8 +47,8 @@ class AppDialogs {
                               radius: 25,
                               height: 40,
                               text: "Yes",
-                              textStyle: TextStyle(
-                                  color: Colors.white, fontSize: 16),
+                              textStyle:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                           GestureDetector(
@@ -59,8 +60,8 @@ class AppDialogs {
                               radius: 25,
                               height: 40,
                               text: " No ",
-                              textStyle: TextStyle(
-                                  color: Colors.white, fontSize: 16),
+                              textStyle:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                         ],
@@ -75,7 +76,11 @@ class AppDialogs {
       );
 
   static bidHistoryDialog(
-      {required Function confirm, required Function seeAll}) {
+      {required Function confirm,
+      required Function seeAll,
+      required AddBidsHistory? bidingData,
+      TextEditingController? controller,
+      bool? isAddingBid}) {
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -137,6 +142,7 @@ class AppDialogs {
                             child: Center(
                               child: IntrinsicWidth(
                                 child: TextField(
+                                  controller: controller,
                                   cursorColor: AppColor.blackColor,
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(
@@ -177,16 +183,15 @@ class AppDialogs {
                           const SizedBox(
                             height: 14,
                           ),
-                          const AppText(
-                            text: "Minimum \$2000",
+                          AppText(
+                            text:
+                                "Minimum \$${double.parse((bidingData?.save?.bidPrice ?? 0.0).toString()) + 10}",
                             textSize: 10,
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
                             fontFamily: "Poppins",
                           ),
-                          const SizedBox(
-                            height: 50,
-                          ),
+                          const SizedBox(height: 50),
                           Padding(
                             padding: const EdgeInsets.only(left: 20, right: 20),
                             child: Row(
@@ -213,36 +218,39 @@ class AppDialogs {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
+                          const SizedBox(height: 15),
                           ListView.builder(
-                              itemCount: 5,
+                              itemCount: (bidingData?.history ?? []).length,
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return const Column(
+                                BidsHistory data =
+                                    (bidingData?.history ?? [])[index];
+                                return Column(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                      ),
+                                      padding: const EdgeInsets.only(
+                                          left: 20, right: 20),
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          AppText(
-                                            text: "J*******th",
-                                            textSize: 15,
-                                            fontFamily: "Poppins",
-                                            color: AppColor.blackColor,
-                                            fontWeight: FontWeight.w500,
+                                          Expanded(
+                                            child: AppText(
+                                              text:
+                                                  "${data.user?.firstName ?? ''} ${data.user?.lastName ?? ''}",
+                                              textSize: 15,
+                                              fontFamily: "Poppins",
+                                              color: AppColor.blackColor,
+                                              fontWeight: FontWeight.w500,
+                                              maxlines: 1,
+                                            ),
                                           ),
+                                          const SizedBox(width: 8),
                                           AppText(
-                                            text: "\$2100",
+                                            text: "\$${data.bidPrice ?? 0.0}",
                                             textSize: 15,
                                             color: AppColor.appColor,
                                             fontFamily: "Poppins",
@@ -251,23 +259,27 @@ class AppDialogs {
                                         ],
                                       ),
                                     ),
-                                    Divider()
+                                    const Divider()
                                   ],
                                 );
                               }),
                           GestureDetector(
-                            onTap: () => confirm(),
-                            child: const CommonButton(
+                            onTap:
+                                (isAddingBid ?? false) ? null : () => confirm(),
+                            child: CommonButton(
                               margin:
-                                  EdgeInsets.symmetric(horizontal: 20),
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               color: AppColor.appColor,
                               text: "Confirm",
                               radius: 15,
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
                                   fontSize: 15,
                                   color: Colors.white),
+                              child: (isAddingBid ?? false)
+                                  ? const CircularProgressIndicator()
+                                  : null,
                             ),
                           ),
                         ],

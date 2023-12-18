@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
-import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 class AppTimer extends StatelessWidget {
-  const AppTimer({super.key, required this.bidNow, required this.endTime});
+  const AppTimer(
+      {super.key,
+      required this.bidNow,
+      required this.endTime,
+      this.textType = false,
+      this.textStyle});
   final Function bidNow;
   final DateTime endTime;
+  final bool textType;
+  final TextStyle? textStyle;
 
   static bool _running = true;
   Stream<String> _clock() async* {
+    print("dsfsdf");
     while (_running) {
       await Future<void>.delayed(const Duration(seconds: 1));
 
@@ -41,14 +50,27 @@ class AppTimer extends StatelessWidget {
         stream: _clock(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return timerWidget(
-                timeChild: const CircularProgressIndicator(color: AppColor.themeColor));
+            return textType
+                ? ShimmerWidgets.text(
+                    w: 60, h: 12, color: AppColor.themeColor.withOpacity(0.5))
+                : timerWidget(
+                    timeChild: ShimmerWidgets.text(
+                        w: 80,
+                        h: 16,
+                        color: AppColor.themeColor.withOpacity(0.5)));
           }
-          return timerWidget(
-              timeChild: Text(
-            snapshot.data!,
-            style: const TextStyle(fontSize: 20, color: Colors.red),
-          ));
+          return textType
+              ? Text(
+                  snapshot.data ?? '00:00:00',
+                  style: textStyle ??
+                      const TextStyle(fontSize: 20, color: Colors.red),
+                )
+              : timerWidget(
+                  timeChild: Text(
+                  snapshot.data ?? '00:00:00',
+                  style: textStyle ??
+                      const TextStyle(fontSize: 20, color: Colors.red),
+                ));
         });
   }
 

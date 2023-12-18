@@ -281,7 +281,9 @@ class SellItemController extends GetxController {
         selloption: sellOption.value.trim(),
         price: price.text.trim(),
         description: description.text.trim(),
-        startBidingTime: startBidingTime.value);
+        startBidingTime: startBidingTime.value,
+        startDate: startDate.value,
+        endDate: endDate.value);
   }
 
   _addCoOwnerProduct() async {

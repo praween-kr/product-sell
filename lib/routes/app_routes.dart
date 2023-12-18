@@ -1,43 +1,44 @@
 import 'package:get/get.dart';
+
 import '../views/auth_screens/forget_password_screens.dart';
+import '../views/auth_screens/login_screen.dart';
 import '../views/auth_screens/onboarding_screens.dart';
 import '../views/auth_screens/signup_screen.dart';
 import '../views/auth_screens/verification_screen.dart';
-import '../views/home/favourite_screen.dart';
-import '../views/home/filter_screen.dart';
-import '../views/home/payment_screen.dart';
-import '../views/home/product_details_screen.dart';
-import '../views/home/sub_categories_screen.dart';
-import '../views/insight_screen/insight_screen.dart';
-import '../views/navBarMsgScreen/navBarMsgScreen.dart';
-import '../views/sellItemScreen/sell_item_screen.dart';
-import '../views/settingScreen/addressScreen/address_screen.dart';
-import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
-import '../views/settingScreen/cms_screen/cms_screen.dart';
-import '../views/settingScreen/myProductsScreen/editItem_screen.dart';
-import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
-import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
-import '../views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
-import '../views/settingScreen/passwordScreen/password_screen.dart';
-import '../views/settingScreen/paymentScreen/addNewCard_screen.dart';
-import '../views/settingScreen/paymentScreen/setting_payment_screen.dart';
-import '../views/settingScreen/settings_screen.dart';
-import '../views/splash_screen.dart';
-import '../views/auth_screens/login_screen.dart';
 import '../views/bid_screen/home_bid_screen.dart';
 import '../views/bid_screen/notification_Screen.dart';
 import '../views/home/bottom_navbar_screen.dart';
 import '../views/home/category_screen.dart';
 import '../views/home/category_wise_products_screen.dart';
+import '../views/home/favourite_screen.dart';
+import '../views/home/filter_screen.dart';
 import '../views/home/home_screen.dart';
+import '../views/home/payment_screen.dart';
+import '../views/home/product_details_screen.dart';
+import '../views/home/sub_categories_screen.dart';
+import '../views/insight_screen/insight_screen.dart';
 import '../views/message/message_screen.dart';
 import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
-import '../views/settingScreen/myProductsScreen/bidding_screen.dart';
+import '../views/navBarMsgScreen/navBarMsgScreen.dart';
+import '../views/sellItemScreen/sell_item_screen.dart';
+import '../views/settingScreen/addressScreen/address_screen.dart';
+import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
+import '../views/settingScreen/cms_screen/cms_screen.dart';
+import '../views/settingScreen/myProductsScreen/bidding_history_screen.dart';
 import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.dart';
+import '../views/settingScreen/myProductsScreen/editItem_screen.dart';
+import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
+import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
+import '../views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
+import '../views/settingScreen/passwordScreen/password_screen.dart';
+import '../views/settingScreen/paymentScreen/addNewCard_screen.dart';
+import '../views/settingScreen/paymentScreen/setting_payment_screen.dart';
 import '../views/settingScreen/profileScreen/editProfileScreen/editProfileScreen.dart';
 import '../views/settingScreen/profileScreen/profileScreen.dart';
+import '../views/settingScreen/settings_screen.dart';
+import '../views/splash_screen.dart';
 import 'get_bindings.dart';
 import 'routes.dart';
 
@@ -47,6 +48,7 @@ class AppRoutes {
         name: Routes.splashScreen,
         page: () => const SplashScreen(),
         binding: GlobalControllerBinding()),
+
     /// Auth ----------
     GetPage(
         name: Routes.loginScreen,
@@ -68,6 +70,7 @@ class AppRoutes {
       name: Routes.verificationScreen,
       page: () => VerificationScreen(),
     ),
+
     /// Home ----------
     GetPage(
       name: Routes.homeScreen,
@@ -177,8 +180,8 @@ class AppRoutes {
       binding: CategoriesBinding(),
     ),
     GetPage(
-      name: Routes.biddingScreen,
-      page: () => const BiddingScreen(),
+      name: Routes.biddingHistoryScreen,
+      page: () => BiddingHistoryScreen(),
     ),
     GetPage(
         name: Routes.coOwnerProductDetailsScreen,

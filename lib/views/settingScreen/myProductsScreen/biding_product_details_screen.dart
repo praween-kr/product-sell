@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/common_controller/favourites_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
-import 'package:oninto_flutter/utils/common_button.dart';
-import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
@@ -21,8 +22,9 @@ class BidingProductDetailsScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.menu.value) {
         AppDialogs.bidHistoryDialog(
+          bidingData: AddBidsHistory(),
           confirm: () => Get.toNamed(Routes.bidingProductDetails),
-          seeAll: () => Get.toNamed(Routes.biddingScreen),
+          seeAll: () => Get.toNamed(Routes.biddingHistoryScreen),
         );
       } else {
         return;
@@ -221,7 +223,8 @@ class BidingProductDetailsScreen extends StatelessWidget {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.toNamed(Routes.biddingScreen);
+                                            Get.toNamed(
+                                                Routes.biddingHistoryScreen);
                                           },
                                           child: RichText(
                                               text: const TextSpan(
@@ -580,9 +583,11 @@ class BidingProductDetailsScreen extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               AppDialogs.bidHistoryDialog(
+                                bidingData: AddBidsHistory(),
                                 confirm: () =>
                                     Get.toNamed(Routes.bidingProductDetails),
-                                seeAll: () => Get.toNamed(Routes.biddingScreen),
+                                seeAll: () =>
+                                    Get.toNamed(Routes.biddingHistoryScreen),
                               );
                             },
                             child: Obx(

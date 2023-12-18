@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/Socket/app_socket.dart';
+import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
@@ -9,6 +11,7 @@ import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../model/onboard_model.dart';
@@ -37,7 +40,6 @@ class HomeCatProductController extends GetxController
   var track = false.obs;
   var trackupload = false.obs;
 
-
   var controller = SwipableStackController();
 
   RxList<CommonModel> onBoardingData = RxList([]);
@@ -61,15 +63,18 @@ class HomeCatProductController extends GetxController
       CommonModel(
           image: Assets.assetsHome1,
           title: "Login Your Details",
-          description: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
+          description:
+              "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
       CommonModel(
           image: Assets.assetsHome2,
           title: "Add Your Product",
-          description: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
+          description:
+              "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
       CommonModel(
           image: Assets.assetsHome3,
           title: "Sold Your Product",
-          description: "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
+          description:
+              "Lorem Ipsum is simply dummy text of \nthe printing and typesetting industry.\nLorem Ipsum is simply dummy text of \nthe printing and typesetting industry."),
     ]);
 
     //
@@ -162,19 +167,10 @@ class HomeCatProductController extends GetxController
   }
 
   var products = <ProductModel>[].obs;
-  var productDetailsData = Rx<ProductDetailsData?>(null);
   //
   searchProducts() async {
     searchAndFilterApplied.value = true;
     await _getSearchProducts();
-  }
-
-  getProductDetails(String productId) async {
-    await ApiRequests.productDetails(productId, data: (data) {
-      productDetailsData.value = data;
-    }, loading: (loading) {
-      loadingData.value = loading;
-    });
   }
 
   // 1-> endingSoon, 2-> highestPrice, 3-> lowestPrice, 4-> mostBid, 5-> leastBid, 6-> recentBid
@@ -228,4 +224,76 @@ class HomeCatProductController extends GetxController
       },
     );
   }
+
+  ///----------------------- Product Details ----------------------
+  var productType = Rx<ProductType?>(null);
+  var productDetailsData = Rx<ProductDetailsData?>(null);
+  getProductDetails(String productId) async {
+    await ApiRequests.productDetails(productId, data: (data) {
+      productDetailsData.value = data;
+      productType.value = data?.details?.sellOption == "Auction"
+          ? ProductType.BID
+          : ProductType.FIX_PRICE;
+    }, loading: (loading) {
+      loadingData.value = loading;
+    });
+  }
+
+  // Socket
+  var bidingDataLoading = false.obs;
+  var addBbidingLoading = false.obs;
+  var bidAmountInput = TextEditingController(text: '');
+
+  var bidingData = Rx<AddBidsHistory?>(null);
+  addBid(
+      {required String productId,
+      required double bidPrice,
+      required double lastBidPrice}) {
+    if (bidPrice <= 0.0) {
+      AppToast.show("Please add bid amount");
+      return;
+    } else if (bidPrice <= lastBidPrice) {
+      AppToast.show("Please add more then last price");
+      return;
+    }
+    socketPrint("$productId != " " && $bidPrice");
+    if (productId != "" && bidPrice > 0.0) {
+      addBbidingLoading.value = true;
+      SocketEmits.addBid(productId: productId, bidPrice: bidPrice);
+      //
+      Get.back();
+      bidAmountInput.clear();
+    }
+  }
+
+  addBidListener(AddBidsHistory? data) {
+    bidingData.value = data;
+    addBbidingLoading.value = false;
+  }
+  //
+
+  getBidHistories({required String productId}) {
+    bidingDataLoading.value = true;
+    SocketEmits.getLastBidAndHistory(productId: productId);
+  }
+
+  getBidHistoriesListener(AddBidsHistory? data) {
+    bidingData.value = data;
+    bidingDataLoading.value = false;
+  }
+  //
+
+  bidOver({required String productId, required double bidPrice}) {
+    SocketEmits.bidOver(productId: productId);
+  }
+
+  bidOverListener(bool data) {
+    socketPrint("Biding over...");
+  }
+
+  ///--------- Biding ---------
 }
+
+enum ProductType { BID, FIX_PRICE, SHERE }
+
+enum ProductStatus { BIDED_ON }

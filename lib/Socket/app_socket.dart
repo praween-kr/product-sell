@@ -4,11 +4,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'controller/chat_msg_controller.dart';
+import 'model/add_bids_histories.dart';
 import 'model/chat_product_user_model.dart';
 import 'model/message_model.dart';
 import 'socket_keys.dart';
@@ -183,6 +185,54 @@ class AppSocket {
       cmc.listenerReadUnread(
           data['senderId'].toString(), data['receiverId'].toString());
     });
+
+    ///----- Biding Listener ------
+    _socketIO?.on(SocketKeys.listenerAddBid, (data) {
+      //
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerAddBid}), ${jsonEncode({
+            "bid": data
+          })}");
+
+      HomeCatProductController controller;
+      if (HomeCatProductController().initialized) {
+        controller = Get.find<HomeCatProductController>();
+      } else {
+        controller = Get.put(HomeCatProductController());
+      }
+      AddBidsHistory? model = AddBidsHistory.fromJson(data);
+      controller.addBidListener(model);
+    });
+    _socketIO?.on(SocketKeys.listenerLastBid, (data) {
+      //
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerLastBid}), ${jsonEncode({
+            "bid": data
+          })}");
+      HomeCatProductController controller;
+      if (HomeCatProductController().initialized) {
+        controller = Get.find<HomeCatProductController>();
+      } else {
+        controller = Get.put(HomeCatProductController());
+      }
+      AddBidsHistory? model = AddBidsHistory.fromJson(data);
+      controller.getBidHistoriesListener(model);
+    });
+    _socketIO?.on(SocketKeys.listenerBidOver, (data) {
+      //
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerBidOver}), ${jsonEncode({
+            "bid": data
+          })}");
+      HomeCatProductController controller;
+      if (HomeCatProductController().initialized) {
+        controller = Get.find<HomeCatProductController>();
+      } else {
+        controller = Get.put(HomeCatProductController());
+      }
+
+      controller.bidOverListener(false);
+    });
   }
 }
 
@@ -291,6 +341,38 @@ class SocketEmits {
         "Emit:---------> emitReadUnread-(${SocketKeys.emitReadUnread}) - $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitReadUnread, req);
+  }
+
+  ///----- Biding Emit ------
+  static addBid({required String productId, required double bidPrice}) {
+    Map<String, dynamic> req = HashMap();
+    req['userId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['productId'] = productId;
+    req['bidPrice'] = bidPrice;
+    socketPrint(
+        "Emit:---------> emitReadUnread-(${SocketKeys.emitAddBid}) - $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emitAddBid, req);
+  }
+
+  static getLastBidAndHistory({required String productId}) {
+    Map<String, dynamic> req = HashMap();
+    req['userId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['productId'] = productId;
+    socketPrint(
+        "Emit:---------> emitReadUnread-(${SocketKeys.emitLastBid}) - $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emitLastBid, req);
+  }
+
+  static bidOver({required String productId}) {
+    Map<String, dynamic> req = HashMap();
+    req['userId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['productId'] = productId;
+    socketPrint(
+        "Emit:---------> emitReadUnread-(${SocketKeys.emitBidOver}) - $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emitBidOver, req);
   }
 }
 
