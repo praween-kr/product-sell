@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "227272123288",
-    "project_id": "ownitoo-5ecfe",
-    "storage_bucket": "ownitoo-5ecfe.appspot.com"
+    "project_number": "450722208376",
+    "project_id": "ownitoo-3d6b0",
+    "storage_bucket": "ownitoo-3d6b0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:227272123288:android:d7d5597cd64a9f330901ed",
+        "mobilesdk_app_id": "1:450722208376:android:d3c42cd7623cf8c4bb6b8d",
         "android_client_info": {
-          "package_name": "com.app.ownitoo"
+          "package_name": "com.app.onito"
         }
       },
       "oauth_client": [
         {
-          "client_id": "227272123288-f8r7ofn2s54aplss20foe896gfu6avr1.apps.googleusercontent.com",
+          "client_id": "450722208376-s91fp69pdcbcrcnkgk7eorlv8hi2ueda.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.ownitoo",
+            "package_name": "com.app.onito",
             "certificate_hash": "ecb057a1d49c851d9b4d97d37c338395364954ea"
           }
         },
         {
-          "client_id": "227272123288-ir0384q98f4c6p5us7qrq1h728g0lhhu.apps.googleusercontent.com",
+          "client_id": "450722208376-np8dc0ujd4pc2vlvs1qkt804pn9m4k8h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAsS7PMqr_QU4sgTUYKsrb04kC0qDHjuho"
+          "current_key": "AIzaSyC2qlyIRtrnmtuvVVwgTlFIP8XnJZQvHzk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "227272123288-ir0384q98f4c6p5us7qrq1h728g0lhhu.apps.googleusercontent.com",
+              "client_id": "450722208376-np8dc0ujd4pc2vlvs1qkt804pn9m4k8h.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "227272123288-csb4e1kse11vl3mc3f42jif6q182303s.apps.googleusercontent.com",
+              "client_id": "450722208376-78fqrrhj3acpfslij9shgua19dd8bgiv.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.app.ownitoo"
+                "bundle_id": "com.app.onito.RunnerTests"
               }
             }
           ]

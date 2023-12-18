@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,12 +17,9 @@
     </queries>
 
     <application
-        android:label="Onito"
+        android:label="Ownitoo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-
-
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -35,6 +36,9 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <meta-data
+                android:name="com.google.android.gms.wallet.api.enabled"
+                android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -52,7 +56,7 @@
             android:value="2" />
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDGxkyWAlm8QrBJDT22ph0Y0CtxOFDHUL0"/>
+            android:value="AIzaSyDGxkyWAlm8QrBJDT22ph0Y0CtxOFDHUL0"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -60,7 +64,5 @@
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
-
-
     </application>
 </manifest>
