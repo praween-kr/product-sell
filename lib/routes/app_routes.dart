@@ -146,7 +146,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.notificationScreen,
-      page: () => const NotificationScreen(),
+      page: () => NotificationScreen(),
     ),
     GetPage(
       name: Routes.cmsScreen,

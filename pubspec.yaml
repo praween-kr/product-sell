@@ -50,7 +50,6 @@ dependencies:
   adaptive_action_sheet: ^2.0.2
   swipable_stack: ^2.0.0
   flutter_launcher_icons: ^0.13.1
-  swipe_to: ^1.0.5
   dropdown_search: ^5.0.6
   dio: ^5.4.0
   get_storage: ^2.1.1
@@ -80,6 +79,7 @@ dependencies:
   socket_io_client: ^2.0.3+1
   flutter_local_notifications: ^16.2.0
   flutter_stripe: ^9.6.0
+  flutter_slidable: ^3.0.1
 
 
 dev_dependencies:

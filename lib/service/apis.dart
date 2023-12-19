@@ -48,4 +48,9 @@ class AppApis {
 
   // chat Attachment upload
   static String uploadAttachment = "/sendMessageSocket";
+
+  // notifications
+  static String notificationListing = "/notificationListing";
+  static String deleteNotification = "/deleteNotification";
+  static String notificationManage = "/notificationManage";
 }
