@@ -1,3 +1,4 @@
+//-----
 class AddBidsHistory {
   Save? save;
   int? count;
@@ -296,7 +297,7 @@ class Product {
   int? isBid;
   String? bidPrice;
   Null bidStartDate;
-  Null bidTime;
+  String? bidTime;
   String? boostCode;
   String? startDate;
   String? endDate;

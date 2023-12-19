@@ -10,33 +10,71 @@ class AppTimer extends StatelessWidget {
       required this.bidNow,
       required this.endTime,
       this.textType = false,
-      this.textStyle});
+      this.textSize,
+      this.onChanged});
   final Function bidNow;
   final DateTime endTime;
   final bool textType;
-  final TextStyle? textStyle;
-
+  final double? textSize;
   static bool _running = true;
-  Stream<String> _clock() async* {
-    print("dsfsdf");
-    while (_running) {
-      await Future<void>.delayed(const Duration(seconds: 1));
+  final Function(TimerType)? onChanged;
 
-      DateTime targetDT = endTime;
-      DateTime today = DateTime.now();
-      Duration liveTime = targetDT.difference(today);
-      String value = "00:00:00";
-      if (liveTime.inSeconds <= 0) {
-        value = "00:00:00";
-        _running = false;
+  //
+  Stream<TimerType> _clock() async* {
+    try {
+      DateTime td = DateTime.parse(DateTime.now().toString().split(" ").first);
+      DateTime ed = DateTime.parse(endTime.toString().split(" ").first);
+      int defInDays = ed.difference(td).inDays;
+      print("Timer Start to --> ${DateTime.now()} || $endTime --> $defInDays");
+      if (defInDays == 0) {
+        while (_running) {
+          await Future<void>.delayed(const Duration(seconds: 1));
+          DateTime targetDT = endTime;
+          DateTime today = DateTime.now();
+          // print(
+          //     "Timer Start to --> $today || $targetDT --> ${targetDT.difference(today).inMinutes}");
+          Duration liveTime = targetDT.difference(today);
+          TimerType data = TimerType(
+              value: "00:00:00",
+              color: Colors.red,
+              status: TimerTypeStatus.UPCOMING);
+
+          if (liveTime.inSeconds > 0) {
+            data = TimerType(
+                value: reminderTime(liveTime),
+                color: Colors.red,
+                status: TimerTypeStatus.GOINGON);
+          } else {
+            print(
+                "Timer Start to --> --  ${DateTime.now()} || $endTime --> $defInDays");
+            data = TimerType(
+                value: "00:00:00",
+                color: Colors.red,
+                status: TimerTypeStatus.END);
+            _running = false;
+          }
+          if (onChanged != null) {
+            onChanged!(data);
+          }
+          yield data;
+        }
+      } else if (defInDays > 0) {
+        TimerType data = TimerType(
+            value: "$defInDays ${defInDays == 1 ? 'day' : 'days'}",
+            color: Colors.green,
+            status: TimerTypeStatus.UPCOMING);
+        yield data;
       } else {
-        value = _reminderTime(liveTime);
+        TimerType data = TimerType(
+            value: "end", color: Colors.red, status: TimerTypeStatus.END);
+        yield data;
       }
-      yield value;
+    } catch (e) {
+      print("Timer Start to --> djfksdfsfslfskldfjdsjfdsjf");
     }
   }
 
-  String _reminderTime(Duration duration) {
+  String reminderTime(Duration duration) {
     String negativeSign = duration.isNegative ? '-' : '';
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60).abs());
@@ -59,17 +97,21 @@ class AppTimer extends StatelessWidget {
                         h: 16,
                         color: AppColor.themeColor.withOpacity(0.5)));
           }
+          print(
+              "Timer Start to --> djfksdfsfslfskldfjdsjfdsjf ${snapshot.data?.value ?? '00:klfkj:00'}");
           return textType
               ? Text(
-                  snapshot.data ?? '00:00:00',
-                  style: textStyle ??
-                      const TextStyle(fontSize: 20, color: Colors.red),
+                  snapshot.data?.value ?? '00:00:00',
+                  style: TextStyle(
+                      fontSize: textSize ?? 20,
+                      color: snapshot.data?.color ?? Colors.red),
                 )
               : timerWidget(
                   timeChild: Text(
-                  snapshot.data ?? '00:00:00',
-                  style: textStyle ??
-                      const TextStyle(fontSize: 20, color: Colors.red),
+                  snapshot.data?.value ?? '00:00:00',
+                  style: TextStyle(
+                      fontSize: textSize ?? 20,
+                      color: snapshot.data?.color ?? Colors.red),
                 ));
         });
   }
@@ -127,3 +169,12 @@ class AppTimer extends StatelessWidget {
     );
   }
 }
+
+class TimerType {
+  final String value;
+  final Color color;
+  final TimerTypeStatus status;
+  TimerType({required this.value, required this.color, required this.status});
+}
+
+enum TimerTypeStatus { END, GOINGON, UPCOMING }

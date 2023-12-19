@@ -10,7 +10,9 @@ import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
+import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
@@ -234,6 +236,8 @@ class HomeCatProductController extends GetxController
       productType.value = data?.details?.sellOption == "Auction"
           ? ProductType.BID
           : ProductType.FIX_PRICE;
+      bidingEndAfter.value = DateTime.parse(
+          "${productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${productDetailsData.value?.details?.bidTime ?? "00:00:00"}");
     }, loading: (loading) {
       loadingData.value = loading;
     });
@@ -245,6 +249,34 @@ class HomeCatProductController extends GetxController
   var bidAmountInput = TextEditingController(text: '');
 
   var bidingData = Rx<AddBidsHistory?>(null);
+
+  //-------------------------
+  var bidingEndAfter = Rx<DateTime>(DateTime.now());
+  var bidingTimerStatus = Rx<TimerTypeStatus?>(null);
+  int? myBidProduct() {
+    if (productDetailsData.value?.details?.sellOption == "Fix Price") {
+      return 0;
+    }
+    if (bidingData.value?.save?.bidOver == 0 &&
+        bidingData.value?.save?.userId == UserStoredInfo().userInfo?.id) {
+      return 1;
+    }
+    return null;
+  }
+
+  int? bidingActionActive() {
+    if (productType.value == ProductType.BID) {
+      if (bidingTimerStatus.value == TimerTypeStatus.UPCOMING) {
+        return 0;
+      }
+      if (bidingTimerStatus.value == TimerTypeStatus.GOINGON) {
+        return 1;
+      }
+    }
+    return null;
+  }
+  //-----------------
+
   addBid(
       {required String productId,
       required double bidPrice,
@@ -268,6 +300,9 @@ class HomeCatProductController extends GetxController
 
   addBidListener(AddBidsHistory? data) {
     bidingData.value = data;
+    if (data?.save?.createdAt != null) {
+      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!);
+    }
     addBbidingLoading.value = false;
   }
   //
@@ -279,6 +314,9 @@ class HomeCatProductController extends GetxController
 
   getBidHistoriesListener(AddBidsHistory? data) {
     bidingData.value = data;
+    if (data?.save?.createdAt != null) {
+      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!);
+    }
     bidingDataLoading.value = false;
   }
   //

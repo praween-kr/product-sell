@@ -47,6 +47,7 @@ class ProductDetails {
   String? boostCode;
   String? startDate;
   String? endDate;
+  String? bidTime;
   int? share;
   String? description;
   String? otherDescription;
@@ -97,6 +98,7 @@ class ProductDetails {
       this.boostCode,
       this.startDate,
       this.endDate,
+      this.bidTime,
       this.share,
       this.description,
       this.otherDescription,
@@ -147,6 +149,7 @@ class ProductDetails {
     boostCode = json['boostCode'];
     startDate = json['startDate'];
     endDate = json['endDate'];
+    bidTime = json['bidTime'];
     share = json['share'];
     description = json['description'];
     otherDescription = json['otherDescription'];
@@ -211,6 +214,7 @@ class ProductDetails {
     data['boostCode'] = boostCode;
     data['startDate'] = startDate;
     data['endDate'] = endDate;
+    data['bidTime'] = bidTime;
     data['share'] = share;
     data['description'] = description;
     data['otherDescription'] = otherDescription;
