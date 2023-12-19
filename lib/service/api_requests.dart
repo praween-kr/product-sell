@@ -20,6 +20,7 @@ import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 
+import '../views/bid_screen/notification_model.dart';
 import 'apis.dart';
 import 'base_api_call.dart';
 import 'dio/shared/data_response.dart';
@@ -754,15 +755,15 @@ class ApiRequests {
   }
 
   static getNotificationListing(
-      {required Function(List<MyFavProduct>) data,
+      {required Function(List<NotificationModel>) data,
       required Function(bool) loading}) async {
     loading(true);
     var respdata = await BaseApiCall()
         .getReq(AppApis.notificationListing, showToast: false);
     if (respdata != null) {
-      PageResponse<MyFavProduct> pageResponse =
-          PageResponse<MyFavProduct>.fromJson(respdata,
-              (json) => MyFavProduct.fromJson(json as Map<String, dynamic>));
+      PageResponse<NotificationModel> pageResponse =
+          PageResponse<NotificationModel>.fromJson(respdata,
+              (json) => NotificationModel.fromJson(json as Map<String, dynamic>));
 
       data(pageResponse.body ?? []);
       loading(false);

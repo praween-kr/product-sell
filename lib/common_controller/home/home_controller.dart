@@ -16,6 +16,7 @@ import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../model/onboard_model.dart';
 import '../../utils/helper/camera_helper.dart';
+import '../../views/bid_screen/notification_model.dart';
 
 class HomeCatProductController extends GetxController
     implements CameraOnCompleteListener {
@@ -157,6 +158,34 @@ class HomeCatProductController extends GetxController
   var searchAndFilterApplied = false.obs;
   //
   var searchInput = TextEditingController(text: '');
+
+
+  var notificationList = <NotificationModel>[].obs;
+
+  var loadingNotification = false.obs;
+
+  RxInt isSelectedNotification = (-1).obs;
+  getNotificationListing() async {
+    await ApiRequests.getNotificationListing(data: (data) {
+      notificationList.value = data;
+    }, loading: (loading) {
+      loadingNotification.value = loading;
+    });
+  }
+
+  deleteNotification({required String notificationId}) async {
+      bool success = await ApiRequests.deleteNotification(
+        notificationId: notificationId
+      );
+      if (success) {
+        notificationList.removeAt(isSelectedNotification.value);
+        notificationList.refresh();
+        isSelectedNotification.value = -1;
+        AppPrint.error("Notification Delete successfully!");
+      } else {
+        AppPrint.error("Failed to delete");
+      }
+  }
 
   getHomeData() async {
     await ApiRequests.getHomeData(data: (data) {

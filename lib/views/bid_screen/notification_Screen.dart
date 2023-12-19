@@ -1,72 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
-import 'package:swipe_to/swipe_to.dart';
+import '../../common_controller/home/home_controller.dart';
+import '../../utils/shimmer_widget.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key});
+   NotificationScreen({super.key}){
+     controller.loadingNotification.value = false;
+     controller.getNotificationListing();
+   }
+
+  final HomeCatProductController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CommonAppbarWidget(
+      appBar: const CommonAppbarWidget(
         heading: "Notifications",
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
             fontSize: 18,
             fontFamily: "Poppins",
             color: Colors.black,
             fontWeight: FontWeight.w500),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        child: Column(
-          children: [
-            Expanded(
-              child: SwipeTo(
-                child: ListView.builder(
-                    itemCount: 8,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Row(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.getNotificationListing();
+        },
+        child: Obx(
+              () => controller.loadingNotification.value
+              ? ShimmerWidgets.listView()
+              : ListView.separated(
+              itemCount: controller.notificationList.length,
+              shrinkWrap: true,
+                physics: const ClampingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+              padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+              itemBuilder: (context, index) {
+                var data = controller.notificationList[index];
+                return Slidable(
+                  endActionPane:  ActionPane(
+                    dragDismissible: false,
+                    motion: const ScrollMotion(),
+                    children:  [
+                      SlidableAction(
+                        onPressed: (context){
+                          controller.isSelectedNotification.value = index;
+                          controller.deleteNotification(notificationId: "${data.id}");
+                        },
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: 'Delete',
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        Assets.assetsBack,
+                        height: 50,
+                        width: 50,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                       Expanded(
+                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(
-                              Assets.assetsBack,
-                              height: 50,
-                              width: 50,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppText(
-                                    text:
-                                        "Men's Tshirt Bidding Time extend for 15 Minutes",
-                                    textSize: 11),
-                                SizedBox(height: 10),
-                                AppText(
-                                    text: "Feb 23, 2023 | 12:00 PM",
-                                    textSize: 10),
-                              ],
-                            ),
+                            AppText(
+                                text:data.message??"",
+                                textSize: 11),
+                            const SizedBox(height: 10),
+                            AppText(
+                                text: "Feb 23, 2023 | 12:00 PM",
+                                textSize: 10),
                           ],
-                        ),
-                      );
-                    }),
-                // onLeftSwipe: () {
-                //   const Icon(
-                //     Icons.delete,
-                //     color: Colors.red,
-                //   );
-                // },
-              ),
-            ),
-          ],
+                                         ),
+                       ),
+                    ],
+                  ),
+                );
+              }, separatorBuilder: (BuildContext context, int index) { return const SizedBox(height: 15,); },),
         ),
       ),
     );

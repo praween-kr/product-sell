@@ -9,8 +9,8 @@ import '../../generated/assets.dart';
 
 class HomeBidScreen extends StatelessWidget {
   HomeBidScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final HomeCatProductController controller = Get.find();
 
   @override
