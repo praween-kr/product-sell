@@ -752,4 +752,37 @@ class ApiRequests {
 
     loading(false);
   }
+
+  static getNotificationListing(
+      {required Function(List<MyFavProduct>) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.notificationListing, showToast: false);
+    if (respdata != null) {
+      PageResponse<MyFavProduct> pageResponse =
+          PageResponse<MyFavProduct>.fromJson(respdata,
+              (json) => MyFavProduct.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  static Future<bool> deleteNotification(
+      {required String notificationId}) async {
+    AppLoader.show();
+    var data = await BaseApiCall().deleteReq(AppApis.deleteNotification, data: {
+      "id": notificationId,
+    });
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
 }
