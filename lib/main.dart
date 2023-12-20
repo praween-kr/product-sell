@@ -21,7 +21,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await GetStorage.init();
-  String initialRoute = await findInitialRoute();
   await FirebaseMessaging.instance.requestPermission();
   await NotificationService().init();
   StripePaymentService().init();
@@ -31,18 +30,15 @@ void main() async {
   ));
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
-      .then((value) => runApp(MyApp(initialRoute)));
+      .then((value) => runApp(const MyApp()));
 }
 
-Future<String> findInitialRoute() async {
-  String initialRoute = Routes.splashScreen;
-  return initialRoute;
-}
+
 
 class MyApp extends StatelessWidget {
-  final String initialRoute;
 
-  const MyApp(this.initialRoute, {super.key});
+
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
