@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,6 +19,7 @@ import 'service/local/local_store_keys.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -42,26 +45,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          useMaterial3: false,
-          fontFamily: 'Poppins',
-          primaryColor: Colors.transparent,
-          progressIndicatorTheme:
-              const ProgressIndicatorThemeData(color: AppColor.themeColor)),
-      title: 'Flutter Demo',
-      initialRoute: Routes.splashScreen,
-      supportedLocales: const [
-        Locale("en"),
-      ],
-      localizationsDelegates: const [
-        CountryLocalizations.delegate,
-      ],
-      getPages: AppRoutes.routes,
+    return GestureDetector(
+      onTap: ()=>hideKeyboard(context),
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            useMaterial3: false,
+            fontFamily: 'Poppins',
+            primaryColor: Colors.transparent,
+            progressIndicatorTheme:
+                const ProgressIndicatorThemeData(color: AppColor.themeColor)),
+        title: 'Flutter Demo',
+        initialRoute: Routes.splashScreen,
+        supportedLocales: const [
+          Locale("en"),
+        ],
+        localizationsDelegates: const [
+          CountryLocalizations.delegate,
+        ],
+        getPages: AppRoutes.routes,
+        navigatorObservers: [ClearFocusOnPush()],
 
-      // home: const SwapperWidget(),
+        // home: const SwapperWidget(),
+      ),
     );
+  }
+
+  void hideKeyboard(context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 
   static startFirstScreen(String? message) {
@@ -71,5 +85,25 @@ class MyApp extends StatelessWidget {
     // SocketHelper().disconnectUser();
     Get.deleteAll(force: true);
     // AppLoader.hide();
+  }
+}
+
+
+
+class ClearFocusOnPush extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPush(route, previousRoute);
+    final focus = FocusManager.instance.primaryFocus;
+    focus?.unfocus();
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
