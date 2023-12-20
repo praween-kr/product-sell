@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 
 Future timerDialog(
-    {required Function bidNow, required DateTime endTime}) async {
+    {required Function bidNow, required DateTime? endTime}) async {
   print("clicked---- ");
   return showDialog(
     barrierDismissible: true,

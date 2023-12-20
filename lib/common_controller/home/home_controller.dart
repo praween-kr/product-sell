@@ -161,7 +161,6 @@ class HomeCatProductController extends GetxController
   //
   var searchInput = TextEditingController(text: '');
 
-
   var notificationList = <NotificationModel>[].obs;
 
   var loadingNotification = false.obs;
@@ -176,17 +175,16 @@ class HomeCatProductController extends GetxController
   }
 
   deleteNotification({required String notificationId}) async {
-      bool success = await ApiRequests.deleteNotification(
-        notificationId: notificationId
-      );
-      if (success) {
-        notificationList.removeAt(isSelectedNotification.value);
-        notificationList.refresh();
-        isSelectedNotification.value = -1;
-        AppPrint.error("Notification Delete successfully!");
-      } else {
-        AppPrint.error("Failed to delete");
-      }
+    bool success =
+        await ApiRequests.deleteNotification(notificationId: notificationId);
+    if (success) {
+      notificationList.removeAt(isSelectedNotification.value);
+      notificationList.refresh();
+      isSelectedNotification.value = -1;
+      AppPrint.error("Notification Delete successfully!");
+    } else {
+      AppPrint.error("Failed to delete");
+    }
   }
 
   getHomeData() async {
@@ -260,6 +258,8 @@ class HomeCatProductController extends GetxController
   var productType = Rx<ProductType?>(null);
   var productDetailsData = Rx<ProductDetailsData?>(null);
   getProductDetails(String productId) async {
+    getBidHistories(productId: productId);
+    productDetailsData.value = null;
     await ApiRequests.productDetails(productId, data: (data) {
       productDetailsData.value = data;
       productType.value = data?.details?.sellOption == "Auction"
@@ -273,6 +273,10 @@ class HomeCatProductController extends GetxController
   }
 
   // Socket
+  //// ---- Biding Duration Increment If Any One Bid On ----
+  var incrementTimeAfterNewBid = 5.obs; // in minutes
+  var bidAlradyEnd = false.obs;
+  //
   var bidingDataLoading = false.obs;
   var addBbidingLoading = false.obs;
   var bidAmountInput = TextEditingController(text: '');
@@ -280,13 +284,13 @@ class HomeCatProductController extends GetxController
   var bidingData = Rx<AddBidsHistory?>(null);
 
   //-------------------------
-  var bidingEndAfter = Rx<DateTime>(DateTime.now());
+  var bidingEndAfter = Rx<DateTime?>(null);
   var bidingTimerStatus = Rx<TimerTypeStatus?>(null);
   int? myBidProduct() {
     if (productDetailsData.value?.details?.sellOption == "Fix Price") {
       return 0;
     }
-    if (bidingData.value?.save?.bidOver == 0 &&
+    if (bidingData.value?.save?.bidOver == 1 &&
         bidingData.value?.save?.userId == UserStoredInfo().userInfo?.id) {
       return 1;
     }
@@ -330,12 +334,14 @@ class HomeCatProductController extends GetxController
   addBidListener(AddBidsHistory? data) {
     bidingData.value = data;
     if (data?.save?.createdAt != null) {
-      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!);
+      // Refresh Timer when other user bid on
+      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!)
+          .add(Duration(minutes: incrementTimeAfterNewBid.value));
     }
     addBbidingLoading.value = false;
   }
-  //
 
+  //
   getBidHistories({required String productId}) {
     bidingDataLoading.value = true;
     SocketEmits.getLastBidAndHistory(productId: productId);
@@ -343,8 +349,18 @@ class HomeCatProductController extends GetxController
 
   getBidHistoriesListener(AddBidsHistory? data) {
     bidingData.value = data;
+
     if (data?.save?.createdAt != null) {
-      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!);
+      DateTime lastBidTime = DateTime.parse(data!.save!.createdAt!);
+      DateTime today = DateTime.now();
+
+      Duration temp = lastBidTime.difference(today);
+      print(temp.inSeconds);
+      if (temp.inSeconds <= 0) {
+        bidAlradyEnd.value = true;
+      } else {
+        bidingEndAfter.value = lastBidTime;
+      }
     }
     bidingDataLoading.value = false;
   }

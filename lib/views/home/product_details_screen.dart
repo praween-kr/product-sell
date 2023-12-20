@@ -70,16 +70,18 @@ class ProductDetailsScreen extends StatelessWidget {
                         textSize: 13,
                         fontFamily: "Poppins"),
                   ),
-                  AppTimer(
-                    textType: true,
-                    bidNow: () {},
-                    endTime:
-                        controller.bidingEndAfter.value, //"2023-12-20 18:37:00"
-                    textSize: 14,
-                    onChanged: (TimerType data) {
-                      controller.bidingTimerStatus.value = data.status;
-                      // print("Timer Start to --> - ${data.value}");
-                    },
+                  Obx(
+                    () => AppTimer(
+                      textType: true,
+                      bidNow: () {},
+                      endTime: controller
+                          .bidingEndAfter.value, //"2023-12-20 18:37:00"
+                      textSize: 14,
+                      onChanged: (TimerType data) {
+                        controller.bidingTimerStatus.value = data.status;
+                        // print("Timer Start to --> - ${data.value}");
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -442,7 +444,7 @@ class ProductDetailsScreen extends StatelessWidget {
                             const SizedBox(height: 30),
                             GestureDetector(
                               onTap: () {
-                                if (controller.bidingActionActive() == null) {
+                                if (controller.bidingActionActive() == 0) {
                                   AppToast.show("Biding will be start soon");
                                 } else if (controller.bidingActionActive() ==
                                     1) {
@@ -456,6 +458,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                   // Fixed Price - Buy
                                 } else if (controller.myBidProduct() == 1) {
                                   // Biding Product - my last bid on product - Buy
+                                  Get.toNamed(Routes.paymentScreen);
                                 }
 
                                 // Map<String, dynamic> data = {
@@ -479,12 +482,14 @@ class ProductDetailsScreen extends StatelessWidget {
                                     radius: 15,
                                     margin: const EdgeInsets.only(
                                         left: 20, right: 20),
-                                    text:
-                                        controller.bidingActionActive() != null
-                                            ? "Bid \$2500"
-                                            : controller.myBidProduct() != null
-                                                ? "Buy Now"
-                                                : "Buy Now",
+                                    text: controller.bidingActionActive() !=
+                                            null
+                                        ? "Bid \$2500"
+                                        : controller.myBidProduct() != null
+                                            ? "Buy Now"
+                                            : controller.myBidProduct() != 1
+                                                ? "Biding End" // If biding is end and not win on biding
+                                                : "Buy Now*",
                                     // controller.upload.value
                                     //     ? "Give Reviews"
                                     //     : controller.track.value
@@ -499,7 +504,9 @@ class ProductDetailsScreen extends StatelessWidget {
                                         fontSize: 15,
                                         fontFamily: "Poppins",
                                         fontWeight: FontWeight.w400),
-                                    color: AppColor.appColor,
+                                    color: controller.myBidProduct() != 1
+                                        ? Colors.grey.shade500
+                                        : AppColor.appColor,
                                   )),
                             ),
                             const SizedBox(height: 10),

@@ -11,42 +11,45 @@ class AppTimer extends StatelessWidget {
       required this.endTime,
       this.textType = false,
       this.textSize,
-      this.onChanged});
+      this.onChanged,
+      this.bidIsRuning = false});
   final Function bidNow;
-  final DateTime endTime;
+  final DateTime? endTime;
   final bool textType;
   final double? textSize;
   static bool _running = true;
   final Function(TimerType)? onChanged;
+  final bool bidIsRuning;
 
   //
   Stream<TimerType> _clock() async* {
+    _running = true;
     try {
+      print("End time----->>>>>> $endTime");
       DateTime td = DateTime.parse(DateTime.now().toString().split(" ").first);
       DateTime ed = DateTime.parse(endTime.toString().split(" ").first);
       int defInDays = ed.difference(td).inDays;
-      print("Timer Start to --> ${DateTime.now()} || $endTime --> $defInDays");
       if (defInDays == 0) {
-        while (_running) {
+        while (_running && endTime != null) {
           await Future<void>.delayed(const Duration(seconds: 1));
-          DateTime targetDT = endTime;
+
+          DateTime targetDT = endTime!;
           DateTime today = DateTime.now();
-          // print(
-          //     "Timer Start to --> $today || $targetDT --> ${targetDT.difference(today).inMinutes}");
+
           Duration liveTime = targetDT.difference(today);
           TimerType data = TimerType(
               value: "00:00:00",
               color: Colors.red,
               status: TimerTypeStatus.UPCOMING);
-
-          if (liveTime.inSeconds > 0) {
+          int x = liveTime.inSeconds;
+          if (x > 0) {
             data = TimerType(
                 value: reminderTime(liveTime),
                 color: Colors.red,
                 status: TimerTypeStatus.GOINGON);
           } else {
-            print(
-                "Timer Start to --> --  ${DateTime.now()} || $endTime --> $defInDays");
+            // print(
+            //     "Timer Start to --> --  ${DateTime.now()} || $endTime --> $defInDays");
             data = TimerType(
                 value: "00:00:00",
                 color: Colors.red,
@@ -70,7 +73,7 @@ class AppTimer extends StatelessWidget {
         yield data;
       }
     } catch (e) {
-      print("Timer Start to --> djfksdfsfslfskldfjdsjfdsjf");
+      // print("Timer Start to --> (Error)-> djfksdfsfslfskldfjdsjfdsjf");
     }
   }
 
@@ -87,7 +90,8 @@ class AppTimer extends StatelessWidget {
     return StreamBuilder(
         stream: _clock(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              endTime == null) {
             return textType
                 ? ShimmerWidgets.text(
                     w: 60, h: 12, color: AppColor.themeColor.withOpacity(0.5))
@@ -97,8 +101,8 @@ class AppTimer extends StatelessWidget {
                         h: 16,
                         color: AppColor.themeColor.withOpacity(0.5)));
           }
-          print(
-              "Timer Start to --> djfksdfsfslfskldfjdsjfdsjf ${snapshot.data?.value ?? '00:klfkj:00'}");
+          // print(
+          //     "Timer Start to --> djfksdfsfslfskldfjdsjfdsjf ${snapshot.data?.value ?? '00:klfkj:00'}");
           return textType
               ? Text(
                   snapshot.data?.value ?? '00:00:00',
