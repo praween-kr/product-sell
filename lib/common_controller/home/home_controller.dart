@@ -266,7 +266,8 @@ class HomeCatProductController extends GetxController
           ? ProductType.BID
           : ProductType.FIX_PRICE;
       bidingEndAfter.value = DateTime.parse(
-          "${productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${productDetailsData.value?.details?.bidTime ?? "00:00:00"}");
+              "${productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${productDetailsData.value?.details?.bidTime ?? "00:00:00"}")
+          .add(Duration(minutes: incrementTimeAfterNewBid.value));
     }, loading: (loading) {
       loadingData.value = loading;
     });
@@ -288,21 +289,25 @@ class HomeCatProductController extends GetxController
   var bidingTimerStatus = Rx<TimerTypeStatus?>(null);
   int? myBidProduct() {
     if (productDetailsData.value?.details?.sellOption == "Fix Price") {
-      return 0;
+      return 0; // Buy
     }
     if (bidingData.value?.save?.bidOver == 1 &&
         bidingData.value?.save?.userId == UserStoredInfo().userInfo?.id) {
-      return 1;
+      return 1; // After Bid Buy
     }
+
     return null;
   }
 
   int? bidingActionActive() {
     if (productType.value == ProductType.BID) {
+      AppPrint.all(
+          "Bid-> controller: bidingTimerStatus-> ${bidingTimerStatus.value}");
       if (bidingTimerStatus.value == TimerTypeStatus.UPCOMING) {
         return 0;
       }
-      if (bidingTimerStatus.value == TimerTypeStatus.GOINGON) {
+      if (bidingTimerStatus.value == TimerTypeStatus.GOINGON ||
+          bidingTimerStatus.value == TimerTypeStatus.GOINGON_NO_BID_YET) {
         return 1;
       }
     }
@@ -336,6 +341,7 @@ class HomeCatProductController extends GetxController
     if (data?.save?.createdAt != null) {
       // Refresh Timer when other user bid on
       bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!)
+          .toLocal()
           .add(Duration(minutes: incrementTimeAfterNewBid.value));
     }
     addBbidingLoading.value = false;
@@ -351,7 +357,7 @@ class HomeCatProductController extends GetxController
     bidingData.value = data;
 
     if (data?.save?.createdAt != null) {
-      DateTime lastBidTime = DateTime.parse(data!.save!.createdAt!);
+      DateTime lastBidTime = DateTime.parse(data!.save!.createdAt!).toLocal();
       DateTime today = DateTime.now();
 
       Duration temp = lastBidTime.difference(today);
@@ -359,14 +365,15 @@ class HomeCatProductController extends GetxController
       if (temp.inSeconds <= 0) {
         bidAlradyEnd.value = true;
       } else {
-        bidingEndAfter.value = lastBidTime;
+        bidingEndAfter.value =
+            lastBidTime.add(Duration(minutes: incrementTimeAfterNewBid.value));
       }
     }
     bidingDataLoading.value = false;
   }
   //
 
-  bidOver({required String productId, required double bidPrice}) {
+  bidOver({required String productId}) {
     SocketEmits.bidOver(productId: productId);
   }
 

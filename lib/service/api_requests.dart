@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/auth/cms_model.dart';
@@ -32,16 +33,14 @@ class ApiRequests {
   static Future<bool> signin(
       {required String phoneEmail, required String password}) async {
     AppLoader.show();
-    // FirebaseMessaging.instance.getToken().then((value) {
-    //   debugPrint("FCM Token: $value");
-    // });
 
-    // final fcmToken = await FirebaseMessaging.instance.getToken();
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    AppPrint.all("FCM Token: $fcmToken");
     var bodyData = {
       "phoneEmail": phoneEmail,
       "password": password,
       "deviceType": Platform.isIOS ? 1 : 1,
-      "deviceToken": "device_toaken" //token ?? ''
+      "deviceToken": fcmToken ?? ''
     };
     AppPrint.info("Login Req: $bodyData");
     var data = await BaseApiCall().postReq(AppApis.signin, data: bodyData);
@@ -75,9 +74,7 @@ class ApiRequests {
       required String password,
       required String confirmPassword}) async {
     AppLoader.show();
-    // final fcmToken = await FirebaseMessaging.instance.getToken().then((value) {
-    //   debugPrint("FCM Token: $value");
-    // });
+    final fcmToken = await FirebaseMessaging.instance.getToken();
     Map<String, dynamic> reqdata = {
       "firstName": firstName,
       "lastName": lastName,
@@ -85,7 +82,7 @@ class ApiRequests {
       "countryCode": countryCode,
       "phone": phone,
       "deviceType": Platform.isIOS ? 1 : 1,
-      "deviceToken": "device_token", //token ?? '',
+      "deviceToken": fcmToken ?? '',
       "location": location,
       "latitude": cordinates?.latitude ?? 0.0,
       "longitude": cordinates?.longitude ?? 0.0,
@@ -762,8 +759,10 @@ class ApiRequests {
         .getReq(AppApis.notificationListing, showToast: false);
     if (respdata != null) {
       PageResponse<NotificationModel> pageResponse =
-          PageResponse<NotificationModel>.fromJson(respdata,
-              (json) => NotificationModel.fromJson(json as Map<String, dynamic>));
+          PageResponse<NotificationModel>.fromJson(
+              respdata,
+              (json) =>
+                  NotificationModel.fromJson(json as Map<String, dynamic>));
 
       data(pageResponse.body ?? []);
       loading(false);

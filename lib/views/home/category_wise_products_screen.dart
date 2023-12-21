@@ -731,6 +731,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           return Material(
             type: MaterialType.transparency,
             child: AppTimer(
+              productId: '',
               bidNow: bidNow,
               endTime: endTime,
             ),
