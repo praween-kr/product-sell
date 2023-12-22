@@ -14,6 +14,7 @@ import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../model/onboard_model.dart';
@@ -255,7 +256,7 @@ class HomeCatProductController extends GetxController
   }
 
   ///----------------------- Product Details ----------------------
-  var productType = Rx<ProductType?>(null);
+  var productType = Rx<String?>(null);
   var productDetailsData = Rx<ProductDetailsData?>(null);
   getProductDetails(String productId) async {
     getBidHistories(productId: productId);
@@ -263,8 +264,8 @@ class HomeCatProductController extends GetxController
     await ApiRequests.productDetails(productId, data: (data) {
       productDetailsData.value = data;
       productType.value = data?.details?.sellOption == "Auction"
-          ? ProductType.BID
-          : ProductType.FIX_PRICE;
+          ? ProductType.biding
+          : ProductType.fixedPrice;
       bidingEndAfter.value = DateTime.parse(
               "${productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${productDetailsData.value?.details?.bidTime ?? "00:00:00"}")
           .add(Duration(minutes: incrementTimeAfterNewBid.value));
@@ -295,12 +296,11 @@ class HomeCatProductController extends GetxController
         bidingData.value?.save?.userId == UserStoredInfo().userInfo?.id) {
       return 1; // After Bid Buy
     }
-
     return null;
   }
 
   int? bidingActionActive() {
-    if (productType.value == ProductType.BID) {
+    if (productType.value == ProductType.biding) {
       AppPrint.all(
           "Bid-> controller: bidingTimerStatus-> ${bidingTimerStatus.value}");
       if (bidingTimerStatus.value == TimerTypeStatus.UPCOMING) {
@@ -384,6 +384,6 @@ class HomeCatProductController extends GetxController
   ///--------- Biding ---------
 }
 
-enum ProductType { BID, FIX_PRICE, SHERE }
+// enum ProductType { BID, FIX_PRICE, SHERE }
 
 enum ProductStatus { BIDED_ON }

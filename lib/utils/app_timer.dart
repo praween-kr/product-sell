@@ -56,7 +56,7 @@ class AppTimer extends StatelessWidget {
               color: Colors.red,
               status: TimerTypeStatus.UPCOMING);
 
-          /// -- End Bid on 12:00 AM --
+          /// -- End Bid on 12:00 AM (Cross next day) --
           if (firstBid != null) {
             //-> True (Biding is started and False (No anyone bid on yet))
             // if (DateTime.parse(firstBid.toString().split(" ").first)
@@ -93,6 +93,7 @@ class AppTimer extends StatelessWidget {
                     color: Colors.red,
                     status: TimerTypeStatus.GOINGON);
               } else {
+                // Timer over
                 _bidOver();
                 data = TimerType(
                     value: "00:00:00",
@@ -112,7 +113,7 @@ class AppTimer extends StatelessWidget {
                 data = TimerType(
                     value: reminderTime(liveTime),
                     color: Colors.blue,
-                    status: TimerTypeStatus.GOINGON);
+                    status: TimerTypeStatus.UPCOMING);
               } else {
                 data = TimerType(
                     value: "00:00:00",
@@ -137,7 +138,7 @@ class AppTimer extends StatelessWidget {
       } else if (defInDays > 0) {
         TimerType data = TimerType(
             value: "$defInDays ${defInDays == 1 ? 'day' : 'days'}",
-            color: Colors.green,
+            color: Colors.blue,
             status: TimerTypeStatus.UPCOMING);
         yield data;
       } else {

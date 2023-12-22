@@ -1,3 +1,4 @@
+import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 
 import 'product_image_model.dart';
@@ -48,53 +49,58 @@ class ProductModel {
   List<ProductImages>? productImages;
   CategoryModel? category;
   int? isFavourite;
+  BidsHistory? lastBidInfo;
+  int? productBidCount;
 
-  ProductModel(
-      {this.id,
-      this.isApproved,
-      this.status,
-      this.isVeg,
-      this.type,
-      this.taxCategoryId,
-      this.vendorId,
-      this.categoryId,
-      this.subCategoryId,
-      this.quantity,
-      this.name,
-      this.location,
-      this.latitude,
-      this.longitude,
-      this.color,
-      this.brand,
-      this.productCondition,
-      this.sellOption,
-      this.price,
-      this.boostCode,
-      this.startDate,
-      this.endDate,
-      this.share,
-      this.description,
-      this.otherDescription,
-      this.image,
-      this.barcode,
-      this.barcodeImage,
-      this.sku,
-      this.skuImage,
-      this.brandName,
-      this.mrp,
-      this.minimumSellingPrice,
-      this.percentageDiscount,
-      this.length,
-      this.width,
-      this.height,
-      this.dimensionsUnit,
-      this.weight,
-      this.weightUnit,
-      this.createdAt,
-      this.updatedAt,
-      this.productImages,
-      this.category,
-      this.isFavourite});
+  ProductModel({
+    this.id,
+    this.isApproved,
+    this.status,
+    this.isVeg,
+    this.type,
+    this.taxCategoryId,
+    this.vendorId,
+    this.categoryId,
+    this.subCategoryId,
+    this.quantity,
+    this.name,
+    this.location,
+    this.latitude,
+    this.longitude,
+    this.color,
+    this.brand,
+    this.productCondition,
+    this.sellOption,
+    this.price,
+    this.boostCode,
+    this.startDate,
+    this.endDate,
+    this.share,
+    this.description,
+    this.otherDescription,
+    this.image,
+    this.barcode,
+    this.barcodeImage,
+    this.sku,
+    this.skuImage,
+    this.brandName,
+    this.mrp,
+    this.minimumSellingPrice,
+    this.percentageDiscount,
+    this.length,
+    this.width,
+    this.height,
+    this.dimensionsUnit,
+    this.weight,
+    this.weightUnit,
+    this.createdAt,
+    this.updatedAt,
+    this.productImages,
+    this.category,
+    this.isFavourite,
+    this.lastBidInfo,
+    this.productBidCount,
+  });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -149,6 +155,10 @@ class ProductModel {
         ? CategoryModel.fromJson(json['category'])
         : null;
     isFavourite = json['isFavourite'];
+    lastBidInfo = json['productBidData'] != null
+        ? BidsHistory.fromJson(json['productBidData'])
+        : null;
+    productBidCount = json['productBidCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -202,6 +212,10 @@ class ProductModel {
       data['category'] = category!.toJson();
     }
     data['isFavourite'] = isFavourite;
+    if (lastBidInfo != null) {
+      data['productBidData'] = lastBidInfo!.toJson();
+    }
+    data['productBidCount'] = productBidCount;
     return data;
   }
 }

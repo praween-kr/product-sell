@@ -40,7 +40,8 @@ class BiddingHistoryScreen extends StatelessWidget {
                 : Column(
                     children: [
                       const SizedBox(height: 15),
-                      ListView.builder(
+                      ListView.separated(
+                          separatorBuilder: (_, __) => const Divider(),
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount:
                               (_controller.bidingData.value?.history ?? [])
@@ -50,36 +51,35 @@ class BiddingHistoryScreen extends StatelessWidget {
                             BidsHistory data =
                                 (_controller.bidingData.value?.history ??
                                     [])[index];
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 20),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      AppText(
+                            return Container(
+                              color: data.bidOver == 1
+                                  ? Colors.green.withOpacity(0.2)
+                                  : null,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: AppText(
                                         text:
                                             "${data.user?.firstName ?? ''} ${data.user?.lastName ?? ''}",
                                         textSize: 15,
                                         fontFamily: "Poppins",
                                         fontWeight: FontWeight.w500,
                                       ),
-                                      AppText(
-                                        text: "\$${data.bidPrice ?? 0.0}",
-                                        textSize: 15,
-                                        color: AppColor.appColor,
-                                        fontFamily: "Poppins",
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    AppText(
+                                      text: "\$${data.bidPrice ?? 0.0}",
+                                      textSize: 15,
+                                      color: AppColor.appColor,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
                                 ),
-                                const Divider()
-                              ],
+                              ),
                             );
                           })
                     ],

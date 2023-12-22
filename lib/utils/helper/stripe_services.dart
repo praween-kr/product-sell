@@ -26,7 +26,8 @@ class StripePaymentService {
       "pk_test_51Iy9mmSHUZtgmXhRe50T8kUlQ12fvx2vPJwAH7evpvq4DiDiqE9DgHr17cGNXcVSGmIp8IRP6xYghuJhtGl64gOP006VrHNug2";
   static String stripeLiveKey = "";
 
-  static String stripeSecretKey="sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
+  static String stripeSecretKey =
+      "sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
 
   Future<void> init() async {
     Stripe.publishableKey = stripeTestKey;
@@ -182,6 +183,7 @@ class StripePaymentService {
       AppLoader.hide();
       errorSnackBar(e.error.message);
     }
+    return null;
   }
 
   static errorSnackBar(String? message) {
