@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 
 import '../app_toast_loader.dart';
 
@@ -48,7 +49,7 @@ class StripePaymentService {
       String? phone}) async {
     try {
       paymentIntent =
-          await createPaymentIntent(amount ?? "", currency ?? 'INR');
+          await createPaymentIntent(amount ?? "0.0", currency ?? 'INR');
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
@@ -65,26 +66,26 @@ class StripePaymentService {
                     state: state)),
             paymentIntentClientSecret: paymentIntent!['client_secret'],
             //Gotten from payment intent
-            style: ThemeMode.dark,
+            style: ThemeMode.light,
             merchantDisplayName: 'Ownitoo',
             // Extra params
-            primaryButtonLabel: 'Pay now',
+            // primaryButtonLabel: 'Pay now',
             appearance: const PaymentSheetAppearance(
               colors: PaymentSheetAppearanceColors(
-                background: Color(0xFFFB941C),
-                primary: Color(0xFFFB941C),
-                componentBorder: Colors.red,
+                background: Colors.white,
+                primary: AppColor.appColor,
+                componentBorder: AppColor.appColor,
               ),
               shapes: PaymentSheetShape(
-                borderWidth: 4,
-                shadow: PaymentSheetShadowParams(color: Colors.red),
+                borderWidth: 1,
+                shadow: PaymentSheetShadowParams(color: AppColor.appColor),
               ),
               primaryButton: PaymentSheetPrimaryButtonAppearance(
                 shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
                 colors: PaymentSheetPrimaryButtonTheme(
                   light: PaymentSheetPrimaryButtonThemeColors(
                     background: Colors.white,
-                    text: Color(0xFFFB941C),
+                    text: AppColor.appColor,
                     border: Colors.white,
                   ),
                 ),
@@ -116,7 +117,7 @@ class StripePaymentService {
     }
   }
 
-//create Payment
+  //create Payment
   static createPaymentIntent(String amount, String currency) async {
     try {
       //Request body

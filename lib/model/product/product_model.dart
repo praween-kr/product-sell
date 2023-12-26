@@ -155,9 +155,11 @@ class ProductModel {
         ? CategoryModel.fromJson(json['category'])
         : null;
     isFavourite = json['isFavourite'];
-    lastBidInfo = json['productBidData'] != null
-        ? BidsHistory.fromJson(json['productBidData'])
-        : null;
+    if (json['productBidData'] != null) {
+      lastBidInfo = (json['productBidData'] as List).first != null
+          ? BidsHistory.fromJson((json['productBidData'] as List).first)
+          : null;
+    }
     productBidCount = json['productBidCount'];
   }
 
@@ -212,9 +214,9 @@ class ProductModel {
       data['category'] = category!.toJson();
     }
     data['isFavourite'] = isFavourite;
-    if (lastBidInfo != null) {
-      data['productBidData'] = lastBidInfo!.toJson();
-    }
+    // if (lastBidInfo != null) {
+    //   data['productBidData'] = lastBidInfo!.toJson();
+    // }
     data['productBidCount'] = productBidCount;
     return data;
   }

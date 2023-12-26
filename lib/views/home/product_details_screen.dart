@@ -12,6 +12,7 @@ import 'package:oninto_flutter/common_controller/product/biding_.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
@@ -21,6 +22,7 @@ import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/helper/stripe_services.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
@@ -361,7 +363,22 @@ class ProductDetailsScreen extends StatelessWidget {
                                       // Fixed Price - Buy
                                     } else if (controller.myBidProduct() == 1) {
                                       // Biding Product - my last bid on product - Buy
-                                      Get.toNamed(Routes.paymentScreen);
+
+                                      // Get.toNamed(Routes.paymentScreen);
+                                      StripePaymentService.stripeMakePayment(
+                                        amount: "10",
+                                        // currency: "USD",
+                                        //
+                                        name:
+                                            "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
+                                        email: UserStoredInfo().userInfo?.email,
+                                        phone: UserStoredInfo()
+                                                    .userInfo
+                                                    ?.phone ==
+                                                null
+                                            ? null
+                                            : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
+                                      );
                                     }
 
                                     // Map<String, dynamic> data = {
