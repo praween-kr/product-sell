@@ -18,8 +18,10 @@ class StripePaymentService {
 
   StripePaymentService._internal();
 
-  static Map<String, dynamic>? paymentIntent;
 
+  static CardDetails cardDetails = CardDetails();
+
+  static Map<String, dynamic>? paymentIntent;
   static final _dio = Dio();
 
   static String stripeTestKey =
@@ -35,22 +37,22 @@ class StripePaymentService {
 
   static Future<void> stripeMakePayment(
       {String? amount,
-      String? currency,
-      String? name,
-      String? email,
-      String? city,
-      String? country,
-      String? line1,
-      String? line2,
-      String? postalCode,
-      String? state,
-      String? phone}) async {
+        String? currency,
+        String? name,
+        String? email,
+        String? city,
+        String? country,
+        String? line1,
+        String? line2,
+        String? postalCode,
+        String? state,
+        String? phone}) async {
     try {
       paymentIntent =
-          await createPaymentIntent(amount ?? "", currency ?? 'INR');
+      await createPaymentIntent(amount ?? "", currency ?? 'INR');
       await Stripe.instance
           .initPaymentSheet(
-              paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentSheetParameters: SetupPaymentSheetParameters(
             billingDetails: BillingDetails(
                 name: name,
                 email: email,
@@ -65,13 +67,13 @@ class StripePaymentService {
             paymentIntentClientSecret: paymentIntent!['client_secret'],
             //Gotten from payment intent
             style: ThemeMode.dark,
-            merchantDisplayName: 'Ownitoo',
+            merchantDisplayName: 'Ikay',
             // Extra params
             primaryButtonLabel: 'Pay now',
             appearance: const PaymentSheetAppearance(
               colors: PaymentSheetAppearanceColors(
-                background: Color(0xFFFB941C),
-                primary: Color(0xFFFB941C),
+                background: Colors.lightBlue,
+                primary: Colors.blue,
                 componentBorder: Colors.red,
               ),
               shapes: PaymentSheetShape(
@@ -82,9 +84,9 @@ class StripePaymentService {
                 shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
                 colors: PaymentSheetPrimaryButtonTheme(
                   light: PaymentSheetPrimaryButtonThemeColors(
-                    background: Colors.white,
-                    text: Color(0xFFFB941C),
-                    border: Colors.white,
+                    background: Color.fromARGB(255, 231, 235, 30),
+                    text: Color.fromARGB(255, 235, 92, 30),
+                    border: Color.fromARGB(255, 235, 92, 30),
                   ),
                 ),
               ),
@@ -98,7 +100,6 @@ class StripePaymentService {
       errorSnackBar(e.toString());
     }
   }
-
   static displayPaymentSheet() async {
     try {
       // 3. display the payment sheet.

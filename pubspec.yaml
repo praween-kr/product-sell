@@ -38,15 +38,15 @@ dependencies:
   get: ^4.6.6
   country_code_picker: ^3.0.0
   smooth_page_indicator: ^1.1.0
-  pinput: ^3.0.1
+  pinput: any
   dotted_border: ^2.1.0
   flutter_rating_bar: ^4.0.1
   awesome_bottom_bar: ^1.2.4
   dropdown_button2: ^2.3.9
   intl:
-  image_picker: ^1.0.5
-  image_cropper: ^5.0.1
-  file_picker: ^6.1.1
+  image_picker: any
+  image_cropper: any
+  file_picker: any
   adaptive_action_sheet: ^2.0.2
   swipable_stack: ^2.0.0
   flutter_launcher_icons: ^0.13.1
@@ -55,24 +55,24 @@ dependencies:
   get_storage: ^2.1.1
   lottie: ^2.7.0
   fluttertoast: ^8.2.4
-  firebase_messaging: ^14.7.9
+  firebase_messaging: any
   google_places_autocomplete_text_field: ^0.1.2
   flutter_html: ^3.0.0-beta.2
   http: ^1.1.2
   google_maps_flutter: ^2.5.0
-  permission_handler: ^11.1.0
+  permission_handler: any
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   shimmer: ^3.0.0
   cached_network_image: ^3.3.0
-  video_thumbnail: ^0.5.3
+  video_thumbnail: any
   path_provider: ^2.1.1
   chewie: ^1.7.4
   video_player: ^2.8.1
   timeago: ^3.6.0
   rename: ^3.0.1
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.15.3
+  firebase_core: any
+  firebase_auth: any
   google_sign_in: ^6.2.1
   flutter_facebook_auth: ^6.0.3
   sign_in_with_apple: ^5.0.0
