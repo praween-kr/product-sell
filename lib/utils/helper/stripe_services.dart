@@ -46,7 +46,8 @@ class StripePaymentService {
       String? line2,
       String? postalCode,
       String? state,
-      String? phone}) async {
+      String? phone,
+      required Function success}) async {
     try {
       paymentIntent =
           await createPaymentIntent(amount ?? "0.0", currency ?? 'INR');
@@ -95,19 +96,23 @@ class StripePaymentService {
           .then((value) {});
 
       //STEP 3: Display Payment sheet
-      displayPaymentSheet();
+      displayPaymentSheet(success);
     } catch (e) {
       errorSnackBar(e.toString());
     }
   }
 
-  static displayPaymentSheet() async {
+  /// 00008101-0006791A2651001E
+  /// iPhone 13,2 / 19H12
+
+  static displayPaymentSheet(Function success) async {
     try {
       // 3. display the payment sheet.
       await Stripe.instance.presentPaymentSheet(
           options: const PaymentSheetPresentOptions(timeout: 1200000));
 
       errorSnackBar('Payment successfully completed');
+      success();
     } on Exception catch (e) {
       if (e is StripeException) {
         errorSnackBar('Error from Stripe: ${e.error.localizedMessage}');

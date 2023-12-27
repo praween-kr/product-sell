@@ -382,6 +382,10 @@ class HomeCatProductController extends GetxController
   }
 
   ///--------- Biding ---------
+  ///--------- Buy Product ----
+  buyProduct(String transactionId) async {
+    return await ApiRequests.buyAndAddShippingAddress(transactionId);
+  }
 }
 
 // enum ProductType { BID, FIX_PRICE, SHERE }

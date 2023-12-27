@@ -155,7 +155,8 @@ class ProductModel {
         ? CategoryModel.fromJson(json['category'])
         : null;
     isFavourite = json['isFavourite'];
-    if (json['productBidData'] != null) {
+    if (json['productBidData'] != null &&
+        (json['productBidData'] as List).isNotEmpty) {
       lastBidInfo = (json['productBidData'] as List).first != null
           ? BidsHistory.fromJson((json['productBidData'] as List).first)
           : null;

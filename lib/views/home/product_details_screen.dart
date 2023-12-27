@@ -363,6 +363,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                       // Fixed Price - Buy
                                     } else if (controller.myBidProduct() == 1) {
                                       // Biding Product - my last bid on product - Buy
+                                      // API Request: product_id,
 
                                       // Get.toNamed(Routes.paymentScreen);
                                       StripePaymentService.stripeMakePayment(
@@ -378,6 +379,9 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 null
                                             ? null
                                             : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
+                                        success: () {
+                                          // Success
+                                        },
                                       );
                                     }
 

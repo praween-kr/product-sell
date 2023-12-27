@@ -731,6 +731,20 @@ class ApiRequests {
     return false;
   }
 
+  ///------------
+
+  static buyAndAddShippingAddress(String transactionId) async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
+        data: {"transaction_id": transactionId}, showToast: true);
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
   ///----------------------------
 
   static gPlaceSearch(String query,
