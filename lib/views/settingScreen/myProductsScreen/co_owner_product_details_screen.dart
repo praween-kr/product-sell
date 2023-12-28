@@ -20,7 +20,7 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
       appBar: CommonAppbarWidget(
         // heading: "Gyarados Ex",
         headingChild: Obx(
-          () => _myProductController.loadingdata.value
+          () => _myProductController.loadingData.value
               ? ShimmerWidgets.text(w: Get.width * 0.4)
               : Text(
                   _myProductController
@@ -39,7 +39,7 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
             fontFamily: "Poppins"),
       ),
       body: Obx(
-        () => _myProductController.loadingdata.value
+        () => _myProductController.loadingData.value
             ? ShimmerWidgets.product()
             : SingleChildScrollView(
                 child: Column(

@@ -24,7 +24,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
       backgroundColor: AppColor.white,
       appBar: CommonAppbarWidget(
         headingChild: Obx(
-          () => _myProductController.loadingdata.value
+          () => _myProductController.loadingData.value
               ? ShimmerWidgets.text(w: Get.width * 0.4)
               : Text(
                   _myProductController
@@ -63,7 +63,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                           '')
                       .toString());
             },
-            child: _myProductController.loadingdata.value
+            child: _myProductController.loadingData.value
                 ? ShimmerWidgets.product()
                 : SingleChildScrollView(
                     child: Padding(

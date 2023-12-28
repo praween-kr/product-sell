@@ -39,7 +39,7 @@ class FilterScreen extends StatelessWidget {
                 },
                 child: (Get.arguments != null && Get.arguments['from'] == 'home'
                         ? _homecontroller.filtering.value
-                        : _myProductController.loadingdata.value)
+                        : _myProductController.loadingData.value)
                     ? ShimmerWidgets.productListView()
                     : (Get.arguments != null && Get.arguments['from'] == 'home'
                             ? _homecontroller.products.isEmpty

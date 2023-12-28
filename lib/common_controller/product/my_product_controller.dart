@@ -4,13 +4,13 @@ import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 
 class MyProductController extends GetxController {
-  var loadingdata = false.obs;
+  var loadingData = false.obs;
   var tabController = 0.obs;
   // My Products List
   var myProducts = <ProductModel>[].obs;
   var myBuyProducts = <ProductModel>[].obs;
   var mySellProducts = <ProductModel>[].obs;
-  var myCoWonerProducts = <ProductModel>[].obs;
+  var myCoOwnerProducts = <ProductModel>[].obs;
   var myPhysicalProducts = <ProductModel>[].obs;
   //Product Details
   var productDetailsData = Rx<ProductDetailsData?>(null);
@@ -37,7 +37,7 @@ class MyProductController extends GetxController {
       pending: pending,
       sold: sold,
       loading: (loading) async {
-        loadingdata.value = loading;
+        loadingData.value = loading;
       },
       data: (data) {
         if (filter) {
@@ -48,7 +48,7 @@ class MyProductController extends GetxController {
           } else if (type == 4) {
             mySellProducts.value = data;
           } else if (type == 2) {
-            myCoWonerProducts.value = data;
+            myCoOwnerProducts.value = data;
           } else if (type == 1) {
             myPhysicalProducts.value = data;
           }
@@ -61,7 +61,7 @@ class MyProductController extends GetxController {
     await ApiRequests.productDetails(productId, data: (data) {
       productDetailsData.value = data;
     }, loading: (loading) {
-      loadingdata.value = loading;
+      loadingData.value = loading;
     });
   }
 }

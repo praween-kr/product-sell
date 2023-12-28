@@ -184,7 +184,7 @@ class ProductScreen extends StatelessWidget {
                       onRefresh: () async {
                         await _myProductController.getMyProducts();
                       },
-                      child: _myProductController.loadingdata.value
+                      child: _myProductController.loadingData.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.myBuyProducts.isEmpty
                               ? EmptyWidgets.simple()
@@ -232,7 +232,7 @@ class ProductScreen extends StatelessWidget {
                       onRefresh: () async {
                         await _myProductController.getMyProducts();
                       },
-                      child: _myProductController.loadingdata.value
+                      child: _myProductController.loadingData.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.mySellProducts.isEmpty
                               ? EmptyWidgets.simple()
@@ -282,9 +282,9 @@ class ProductScreen extends StatelessWidget {
                       onRefresh: () async {
                         await _myProductController.getMyProducts();
                       },
-                      child: _myProductController.loadingdata.value
+                      child: _myProductController.loadingData.value
                           ? ShimmerWidgets.productGridView()
-                          : _myProductController.myCoWonerProducts.isEmpty
+                          : _myProductController.myCoOwnerProducts.isEmpty
                               ? EmptyWidgets.simple()
                               : GridView.builder(
                                   physics: const ClampingScrollPhysics(
@@ -298,11 +298,11 @@ class ProductScreen extends StatelessWidget {
                                           mainAxisSpacing: 30,
                                           crossAxisSpacing: 30),
                                   itemCount: _myProductController
-                                      .myCoWonerProducts.length,
+                                      .myCoOwnerProducts.length,
                                   itemBuilder: (context, index) {
                                     //  var data = controller.Categorydata[index];
                                     var product = _myProductController
-                                        .myCoWonerProducts[index];
+                                        .myCoOwnerProducts[index];
                                     return CommonWidgets.productGridCard(
                                       productImage:
                                           (product.productImages ?? [])
@@ -331,7 +331,7 @@ class ProductScreen extends StatelessWidget {
                       onRefresh: () async {
                         await _myProductController.getMyProducts();
                       },
-                      child: _myProductController.loadingdata.value
+                      child: _myProductController.loadingData.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.myPhysicalProducts.isEmpty
                               ? EmptyWidgets.simple()
