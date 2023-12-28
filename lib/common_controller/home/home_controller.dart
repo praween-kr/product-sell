@@ -14,6 +14,7 @@ import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../model/onboard_model.dart';
@@ -161,7 +162,6 @@ class HomeCatProductController extends GetxController
   //
   var searchInput = TextEditingController(text: '');
 
-
   var notificationList = <NotificationModel>[].obs;
 
   var loadingNotification = false.obs;
@@ -176,17 +176,16 @@ class HomeCatProductController extends GetxController
   }
 
   deleteNotification({required String notificationId}) async {
-      bool success = await ApiRequests.deleteNotification(
-        notificationId: notificationId
-      );
-      if (success) {
-        notificationList.removeAt(isSelectedNotification.value);
-        notificationList.refresh();
-        isSelectedNotification.value = -1;
-        AppPrint.error("Notification Delete successfully!");
-      } else {
-        AppPrint.error("Failed to delete");
-      }
+    bool success =
+        await ApiRequests.deleteNotification(notificationId: notificationId);
+    if (success) {
+      notificationList.removeAt(isSelectedNotification.value);
+      notificationList.refresh();
+      isSelectedNotification.value = -1;
+      AppPrint.error("Notification Delete successfully!");
+    } else {
+      AppPrint.error("Failed to delete");
+    }
   }
 
   getHomeData() async {
@@ -257,22 +256,29 @@ class HomeCatProductController extends GetxController
   }
 
   ///----------------------- Product Details ----------------------
-  var productType = Rx<ProductType?>(null);
+  var productType = Rx<String?>(null);
   var productDetailsData = Rx<ProductDetailsData?>(null);
   getProductDetails(String productId) async {
+    getBidHistories(productId: productId);
+    productDetailsData.value = null;
     await ApiRequests.productDetails(productId, data: (data) {
       productDetailsData.value = data;
       productType.value = data?.details?.sellOption == "Auction"
-          ? ProductType.BID
-          : ProductType.FIX_PRICE;
+          ? ProductType.biding
+          : ProductType.fixedPrice;
       bidingEndAfter.value = DateTime.parse(
-          "${productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${productDetailsData.value?.details?.bidTime ?? "00:00:00"}");
+              "${productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${productDetailsData.value?.details?.bidTime ?? "00:00:00"}")
+          .add(Duration(minutes: incrementTimeAfterNewBid.value));
     }, loading: (loading) {
       loadingData.value = loading;
     });
   }
 
   // Socket
+  //// ---- Biding Duration Increment If Any One Bid On ----
+  var incrementTimeAfterNewBid = 5.obs; // in minutes
+  var bidAlradyEnd = false.obs;
+  //
   var bidingDataLoading = false.obs;
   var addBbidingLoading = false.obs;
   var bidAmountInput = TextEditingController(text: '');
@@ -280,25 +286,28 @@ class HomeCatProductController extends GetxController
   var bidingData = Rx<AddBidsHistory?>(null);
 
   //-------------------------
-  var bidingEndAfter = Rx<DateTime>(DateTime.now());
+  var bidingEndAfter = Rx<DateTime?>(null);
   var bidingTimerStatus = Rx<TimerTypeStatus?>(null);
   int? myBidProduct() {
     if (productDetailsData.value?.details?.sellOption == "Fix Price") {
-      return 0;
+      return 0; // Buy
     }
-    if (bidingData.value?.save?.bidOver == 0 &&
+    if (bidingData.value?.save?.bidOver == 1 &&
         bidingData.value?.save?.userId == UserStoredInfo().userInfo?.id) {
-      return 1;
+      return 1; // After Bid Buy
     }
     return null;
   }
 
   int? bidingActionActive() {
-    if (productType.value == ProductType.BID) {
+    if (productType.value == ProductType.biding) {
+      AppPrint.all(
+          "Bid-> controller: bidingTimerStatus-> ${bidingTimerStatus.value}");
       if (bidingTimerStatus.value == TimerTypeStatus.UPCOMING) {
         return 0;
       }
-      if (bidingTimerStatus.value == TimerTypeStatus.GOINGON) {
+      if (bidingTimerStatus.value == TimerTypeStatus.GOINGON ||
+          bidingTimerStatus.value == TimerTypeStatus.GOINGON_NO_BID_YET) {
         return 1;
       }
     }
@@ -330,12 +339,15 @@ class HomeCatProductController extends GetxController
   addBidListener(AddBidsHistory? data) {
     bidingData.value = data;
     if (data?.save?.createdAt != null) {
-      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!);
+      // Refresh Timer when other user bid on
+      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!)
+          .toLocal()
+          .add(Duration(minutes: incrementTimeAfterNewBid.value));
     }
     addBbidingLoading.value = false;
   }
-  //
 
+  //
   getBidHistories({required String productId}) {
     bidingDataLoading.value = true;
     SocketEmits.getLastBidAndHistory(productId: productId);
@@ -343,14 +355,25 @@ class HomeCatProductController extends GetxController
 
   getBidHistoriesListener(AddBidsHistory? data) {
     bidingData.value = data;
+
     if (data?.save?.createdAt != null) {
-      bidingEndAfter.value = DateTime.parse(data!.save!.createdAt!);
+      DateTime lastBidTime = DateTime.parse(data!.save!.createdAt!).toLocal();
+      DateTime today = DateTime.now();
+
+      Duration temp = lastBidTime.difference(today);
+      print(temp.inSeconds);
+      if (temp.inSeconds <= 0) {
+        bidAlradyEnd.value = true;
+      } else {
+        bidingEndAfter.value =
+            lastBidTime.add(Duration(minutes: incrementTimeAfterNewBid.value));
+      }
     }
     bidingDataLoading.value = false;
   }
   //
 
-  bidOver({required String productId, required double bidPrice}) {
+  bidOver({required String productId}) {
     SocketEmits.bidOver(productId: productId);
   }
 
@@ -359,8 +382,12 @@ class HomeCatProductController extends GetxController
   }
 
   ///--------- Biding ---------
+  ///--------- Buy Product ----
+  buyProduct(String transactionId) async {
+    return await ApiRequests.buyAndAddShippingAddress(transactionId);
+  }
 }
 
-enum ProductType { BID, FIX_PRICE, SHERE }
+// enum ProductType { BID, FIX_PRICE, SHERE }
 
 enum ProductStatus { BIDED_ON }

@@ -5,6 +5,7 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 
 import '../../utils/color_constant.dart';
 
@@ -75,14 +76,14 @@ class SellItemController extends GetxController {
   var itemColor = TextEditingController(text: '');
   var brand = TextEditingController(text: '');
   var condition = 'Excellent'.obs;
-  var sellOption = 'Auction'.obs;
+  var sellOption = ProductType.biding.obs;
   var bidDate = Rx<DateTime?>(null);
   var startDate = Rx<DateTime?>(null);
   var endDate = Rx<DateTime?>(null);
   var price = TextEditingController(text: '');
   var startBidingTime = Rx<TimeOfDay?>(null);
 
-  var selloptionsList = ["Auction", 'Fix Price'];
+  var selloptionsList = [ProductType.biding, ProductType.fixedPrice];
 
   var oldImagesIdList = <String>[].obs;
 
@@ -136,7 +137,7 @@ class SellItemController extends GetxController {
     itemColor.clear();
     brand.clear();
     condition.value = 'Excellent';
-    sellOption.value = 'Auction';
+    sellOption.value = ProductType.biding;
     selectedCategory.value = null;
     selectedSubCategory.value = null;
     price.clear();
@@ -175,7 +176,7 @@ class SellItemController extends GetxController {
     itemColor.text = product?.color ?? '';
     brand.text = product?.brand ?? '';
     condition.value = 'Excellent';
-    sellOption.value = product?.sellOption ?? 'Auction';
+    sellOption.value = product?.sellOption ?? ProductType.biding;
     price.text = product?.price ?? '';
   }
 
@@ -339,7 +340,6 @@ class SellItemController extends GetxController {
         price: price.text.trim(),
         description: description.text.trim());
   }
-
   //
 }
 

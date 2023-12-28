@@ -28,21 +28,24 @@ class AppImage {
           ),
         ),
         fit: fit,
-        errorWidget: (context, url, error) => Center(
-          child: Container(
-            height: height,
-            width: width,
-            color: Colors.grey.shade200,
-            child: isProfile
-                ? Image.asset(Assets.assetsKids, fit: BoxFit.cover)
-                : errorShow
-                    ? const Center(
-                        child: Text(
-                            'No Image'), //Lottie.asset(AssetsLottie.noimage)
-                      )
-                    : const SizedBox.shrink(),
-          ),
-        ),
+        errorWidget: (context, url, error) {
+          print("Image View Error: $error");
+          return Center(
+            child: Container(
+              height: height,
+              width: width,
+              color: Colors.grey.shade200,
+              child: isProfile
+                  ? Image.asset(Assets.assetsKids, fit: BoxFit.cover)
+                  : errorShow
+                      ? const Center(
+                          child: Text(
+                              'No Image'), //Lottie.asset(AssetsLottie.noimage)
+                        )
+                      : const SizedBox.shrink(),
+            ),
+          );
+        },
       ),
     );
   }

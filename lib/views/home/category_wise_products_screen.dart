@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
@@ -405,13 +406,15 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                               );
                                                             });
                                                       },
-                                                      child: const CommonButton(
+                                                      child: CommonButton(
                                                         height: 40,
                                                         radius: 15,
                                                         color:
                                                             AppColor.appColor,
-                                                        text: "Bid \$2500",
-                                                        textStyle: TextStyle(
+                                                        text:
+                                                            "Bid \$${product.lastBidInfo == null ? product.price ?? '0.0' : product.lastBidInfo?.bidPrice ?? '0.0'}",
+                                                        textStyle:
+                                                            const TextStyle(
                                                           fontSize: 15,
                                                           fontFamily: "Poppins",
                                                           color: Colors.white,
@@ -420,16 +423,16 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                     ),
-                                                    const SizedBox(height: 10),
-                                                    AppText(
-                                                      text:
-                                                          "min \$${product.minimumSellingPrice ?? '0.0'}",
-                                                      textSize: 10,
-                                                      color: Colors.white,
-                                                      fontFamily: "Poppins",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    ),
+                                                    // const SizedBox(height: 10),
+                                                    // AppText(
+                                                    //   text:
+                                                    //       "min \$${product.minimumSellingPrice ?? '0.0'}",
+                                                    //   textSize: 10,
+                                                    //   color: Colors.white,
+                                                    //   fontFamily: "Poppins",
+                                                    //   fontWeight:
+                                                    //       FontWeight.w400,
+                                                    // ),
                                                     const SizedBox(height: 10),
                                                     GestureDetector(
                                                       onTap: () {
@@ -437,9 +440,14 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                             .biddingHistoryScreen);
                                                       },
                                                       child: RichText(
-                                                          text: const TextSpan(
-                                                              text: "20 Bid",
-                                                              style: TextStyle(
+                                                          text: TextSpan(
+                                                              text: (product.productBidCount ??
+                                                                          0) <
+                                                                      2
+                                                                  ? "${product.productBidCount ?? 0} Bid "
+                                                                  : "${product.productBidCount ?? 0} Bids ",
+                                                              style:
+                                                                  const TextStyle(
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 10,
@@ -451,21 +459,37 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                               ),
                                                               children: [
                                                             TextSpan(
-                                                              text:
-                                                                  "Show bid history",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 10,
-                                                                  fontFamily:
-                                                                      "Poppins",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .underline),
-                                                            )
+                                                                text:
+                                                                    "Show bid history",
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        10,
+                                                                    fontFamily:
+                                                                        "Poppins",
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .underline),
+                                                                recognizer:
+                                                                    TapGestureRecognizer()
+                                                                      ..onTap =
+                                                                          () {
+                                                                        if (HomeCatProductController()
+                                                                            .initialized) {
+                                                                          Get.find<HomeCatProductController>()
+                                                                              .getBidHistories(productId: (product.id ?? '').toString());
+                                                                        } else {
+                                                                          Get.put(HomeCatProductController())
+                                                                              .getBidHistories(productId: (product.id ?? '').toString());
+                                                                        }
+
+                                                                        Get.toNamed(
+                                                                            Routes.biddingHistoryScreen);
+                                                                      })
                                                           ])),
                                                     )
                                                   ],
@@ -731,6 +755,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           return Material(
             type: MaterialType.transparency,
             child: AppTimer(
+              productId: '',
               bidNow: bidNow,
               endTime: endTime,
             ),

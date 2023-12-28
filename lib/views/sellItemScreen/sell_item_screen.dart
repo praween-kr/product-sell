@@ -10,6 +10,7 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
@@ -769,7 +770,7 @@ class SellItemScreen extends StatelessWidget {
 
                                 /// Start and End Date Time---
                                 Obx(() => controller.sellOption.value ==
-                                        'Auction'
+                                        ProductType.biding
                                     ? Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -840,7 +841,7 @@ class SellItemScreen extends StatelessWidget {
                                 Obx(
                                   () => AppText(
                                       text: controller.sellOption.value ==
-                                              'Auction'
+                                              ProductType.biding
                                           ? "Base Price"
                                           : "Price",
                                       color: AppColor.blackColor,

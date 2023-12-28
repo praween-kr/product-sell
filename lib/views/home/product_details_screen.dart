@@ -1,4 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -11,13 +12,17 @@ import 'package:oninto_flutter/common_controller/product/biding_.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
+import 'package:oninto_flutter/utils/empty_widget.dart';
+import 'package:oninto_flutter/utils/helper/stripe_services.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
@@ -59,31 +64,54 @@ class ProductDetailsScreen extends StatelessWidget {
       body: Obx(
         () => Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: AppText(
-                        text: "Bid Ending Soon:",
-                        textSize: 13,
-                        fontFamily: "Poppins"),
+            // controller.productDetailsData.value?.details?.a
+            controller.bidingData.value?.save?.bidOver == 1 ||
+                    controller.productDetailsData.value == null
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: AppText(
+                              text: controller.bidingTimerStatus.value ==
+                                      TimerTypeStatus.GOINGON_NO_BID_YET
+                                  ? "Biding started"
+                                  : "Bid ${controller.bidingTimerStatus.value == TimerTypeStatus.UPCOMING ? 'Start' : 'Ending'} Soon:",
+                              textSize: 13,
+                              fontFamily: "Poppins"),
+                        ),
+                        Obx(
+                          () => AppTimer(
+                            productId: (controller.productDetailsData.value
+                                        ?.details?.id ??
+                                    '')
+                                .toString(),
+                            textType: true,
+                            bidNow: () {},
+                            endTime: controller
+                                .bidingEndAfter.value, //"2023-12-20 18:37:00"
+                            textSize: 14,
+                            firstBid: (controller.bidingData.value?.history ??
+                                        [])
+                                    .isEmpty
+                                ? null
+                                : DateTime.parse(
+                                        (controller.bidingData.value?.history ??
+                                                [])
+                                            .first
+                                            .createdAt!)
+                                    .toLocal(),
+                            onChanged: (TimerType data) {
+                              controller.bidingTimerStatus.value = data.status;
+                              // print("Timer Start to --> - ${data.value}");
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  AppTimer(
-                    textType: true,
-                    bidNow: () {},
-                    endTime:
-                        controller.bidingEndAfter.value, //"2023-12-20 18:37:00"
-                    textSize: 14,
-                    onChanged: (TimerType data) {
-                      controller.bidingTimerStatus.value = data.status;
-                      // print("Timer Start to --> - ${data.value}");
-                    },
-                  ),
-                ],
-              ),
-            ),
             const SizedBox(height: 10),
             Expanded(
               child: RefreshIndicator(
@@ -99,413 +127,321 @@ class ProductDetailsScreen extends StatelessWidget {
                 },
                 child: controller.loadingData.value
                     ? ShimmerWidgets.product()
-                    : SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            DetailsImagesView(
-                                images: (controller.productDetailsData.value
-                                            ?.details?.productImages ??
-                                        [])
-                                    .map((e) => e.image ?? '')
-                                    .toList()),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 20, left: 20, right: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                    : controller.productDetailsData.value == null
+                        ? EmptyWidgets.simple()
+                        : SingleChildScrollView(
+                            physics: const ClampingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DetailsImagesView(
+                                    images: (controller.productDetailsData.value
+                                                ?.details?.productImages ??
+                                            [])
+                                        .map((e) => e.image ?? '')
+                                        .toList()),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20, left: 20, right: 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      AppText(
-                                        text: controller.productDetailsData
-                                                .value?.details?.name ??
-                                            '',
-                                        textSize: 17,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                      // AppText(
-                                      //   text: controller.productDetailsData.value
-                                      //           ?.details?.name ??
-                                      //       '',
-                                      //   textSize: 17,
-                                      //   fontWeight: FontWeight.w400,
-                                      //   color: AppColor.appcolor,
-                                      // ),
-                                      GestureDetector(
-                                        onTap: _sendMessage,
-                                        child: Container(
-                                            height: 40,
-                                            width: 40,
-                                            decoration: BoxDecoration(
-                                                color: AppColor.appColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: const Icon(
-                                              Icons.message,
-                                              color: Colors.white,
-                                            )),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      const AppText(
-                                        text: "Girl Denim",
-                                        textSize: 17,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                      const Icon(Icons.star,
-                                          color: AppColor.appColor),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Get.arguments?["from"] == 1
-                                              ? Container()
-                                              : reviewDialog();
-                                        },
-                                        child: const AppText(
-                                          text: "/4.5",
-                                          textSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0x4d000000),
-                                          fontFamily: "Poppins",
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  AppText(
-                                    text:
-                                        "\$${controller.productDetailsData.value?.details?.price ?? '0.0'}",
-                                    textSize: 22,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColor.appColor,
-                                  ),
-                                  const SizedBox(height: 5),
-                                  const AppText(
-                                    text: "Inclusive of all taxes",
-                                    textSize: 12,
-                                    color: Color(0x32000000),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Obx(
-                                    () => controller.track.value ||
-                                            controller.trackupload.value
-                                        ? const AppText(
-                                            text: "Tracking ID : XX123XX343XX",
-                                            textSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppText(
+                                            text: controller.productDetailsData
+                                                    .value?.details?.name ??
+                                                '',
+                                            textSize: 17,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.blackColor,
+                                          ),
+                                          // AppText(
+                                          //   text: controller.productDetailsData.value
+                                          //           ?.details?.name ??
+                                          //       '',
+                                          //   textSize: 17,
+                                          //   fontWeight: FontWeight.w400,
+                                          //   color: AppColor.appcolor,
+                                          // ),
+                                          GestureDetector(
+                                            onTap: _sendMessage,
+                                            child: Container(
+                                                height: 40,
+                                                width: 40,
+                                                decoration: BoxDecoration(
+                                                    color: AppColor.appColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: const Icon(
+                                                  Icons.message,
+                                                  color: Colors.white,
+                                                )),
                                           )
-                                        : Container(),
-                                  ),
-                                  const SizedBox(height: 30),
-                                  Row(
-                                    children: [
-                                      const AppText(
-                                        text: "Category : ",
-                                        textSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff9F9F9F),
-                                        fontFamily: "Poppins",
+                                        ],
                                       ),
+                                      const SizedBox(height: 5),
+                                      controller.productType.value ==
+                                              ProductType.fixedPrice
+                                          ? _fixedInfo()
+                                          : _bidInfo()
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                const Divider(color: Color(0x66000000)),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20, left: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
                                       AppText(
-                                        text: controller
-                                                .productDetailsData
-                                                .value
-                                                ?.details
-                                                ?.category
-                                                ?.name ??
-                                            '',
-                                        textSize: 12,
+                                        text: "Condition",
+                                        textSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColor.appColor,
+                                      ),
+                                      SizedBox(height: 5),
+                                      AppText(
+                                        text: "New with tags",
+                                        textSize: 13,
                                         fontWeight: FontWeight.w400,
                                         color: AppColor.blackColor,
                                       ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      const AppText(
-                                        text: "Sub Category : ",
+                                      SizedBox(height: 5),
+                                      AppText(
+                                        text:
+                                            "A brand-new, unused item with tags attached\nor in the original packing.",
                                         textSize: 12,
                                         fontWeight: FontWeight.w400,
-                                        color: Color(0xff9F9F9F),
+                                        lineHeight: 1.3,
+                                        color: Color(0x4d000000),
                                         fontFamily: "Poppins",
                                       ),
-                                      AppText(
-                                        text: controller
-                                                .productDetailsData
-                                                .value
-                                                ?.details
-                                                ?.category
-                                                ?.subCategory
-                                                ?.name ??
-                                            '',
-                                        textSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
                                     ],
                                   ),
-                                  const SizedBox(height: 5),
-                                  Row(
+                                ),
+                                const Divider(color: Color(0x66000000)),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: Column(
                                     children: [
-                                      const AppText(
-                                        text: "Color :  ",
-                                        textSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff9F9F9F),
-                                        fontFamily: "Poppins",
-                                      ),
-                                      AppText(
-                                        text: controller.productDetailsData
-                                                .value?.details?.color ??
-                                            '',
-                                        textSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      const AppText(
-                                        text: "Brand : ",
-                                        textSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xff9F9F9F),
-                                        fontFamily: "Poppins",
-                                      ),
-                                      AppText(
-                                        text: controller.productDetailsData
-                                                .value?.details?.brand ??
-                                            '',
-                                        textSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.blackColor,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            const Divider(color: Color(0x66000000)),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20, left: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppText(
-                                    text: "Condition",
-                                    textSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColor.appColor,
-                                  ),
-                                  SizedBox(height: 5),
-                                  AppText(
-                                    text: "New with tags",
-                                    textSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColor.blackColor,
-                                  ),
-                                  SizedBox(height: 5),
-                                  AppText(
-                                    text:
-                                        "A brand-new, unused item with tags attached\nor in the original packing.",
-                                    textSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    lineHeight: 1.3,
-                                    color: Color(0x4d000000),
-                                    fontFamily: "Poppins",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Divider(color: Color(0x66000000)),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: Column(
-                                      children: [
-                                        const Row(
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20),
+                                        child: Column(
                                           children: [
-                                            AppText(
-                                              text: "Size :",
-                                              textSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0x4d000000),
-                                            ),
-                                            AppText(
-                                              text: "XL / 42 / 14",
-                                              textSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.blackColor,
-                                              fontFamily: "Poppins",
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const AppText(
-                                                text: "Location  :",
-                                                textSize: 12,
-                                                color: Color(0x4d000000),
-                                                fontWeight: FontWeight.w400),
-                                            Expanded(
-                                              child: AppText(
-                                                  text: controller
-                                                          .productDetailsData
-                                                          .value
-                                                          ?.details
-                                                          ?.location ??
-                                                      '',
+                                            const Row(
+                                              children: [
+                                                AppText(
+                                                  text: "Size :",
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0x4d000000),
+                                                ),
+                                                AppText(
+                                                  text: "XL / 42 / 14",
                                                   textSize: 12,
                                                   fontWeight: FontWeight.w400,
                                                   color: AppColor.blackColor,
-                                                  fontFamily: "Poppins"),
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          children: [
-                                            const AppText(
-                                              text: "Posted Date :",
-                                              textSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0x4d000000),
+                                                  fontFamily: "Poppins",
+                                                )
+                                              ],
                                             ),
-                                            AppText(
-                                              text: AppDateTime.getDateTime(
-                                                  controller
-                                                          .productDetailsData
-                                                          .value
-                                                          ?.details
-                                                          ?.createdAt ??
-                                                      '',
-                                                  format: DateFormat(
-                                                      "dd MMM yyyy")),
-                                              textSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: "Poppins",
-                                              color: AppColor.blackColor,
-                                            )
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const AppText(
+                                                    text: "Location  :",
+                                                    textSize: 12,
+                                                    color: Color(0x4d000000),
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                Expanded(
+                                                  child: AppText(
+                                                      text: controller
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.location ??
+                                                          '',
+                                                      textSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color:
+                                                          AppColor.blackColor,
+                                                      fontFamily: "Poppins"),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const AppText(
+                                                  text: "Posted Date :",
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0x4d000000),
+                                                ),
+                                                AppText(
+                                                  text: AppDateTime.getDateTime(
+                                                      controller
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.createdAt ??
+                                                          '',
+                                                      format: DateFormat(
+                                                          "dd MMM yyyy")),
+                                                  textSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: "Poppins",
+                                                  color: AppColor.blackColor,
+                                                )
+                                              ],
+                                            ),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Image.asset(Assets.assetsSale),
+                                      const SizedBox(height: 5),
+                                    ],
                                   ),
-                                  const SizedBox(height: 8),
-                                  Image.asset(Assets.assetsSale),
-                                  const SizedBox(height: 5),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20, left: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const AppText(
-                                      text: "Item Description",
-                                      textSize: 13,
-                                      fontFamily: "Poppins"),
-                                  const SizedBox(height: 5),
-                                  AppText(
-                                      text: controller.productDetailsData.value
-                                              ?.details?.description ??
-                                          '',
-                                      textSize: 13,
-                                      fontFamily: "Poppins",
-                                      color: const Color(0x4d000000)),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 30),
-                            GestureDetector(
-                              onTap: () {
-                                if (controller.bidingActionActive() == null) {
-                                  AppToast.show("Biding will be start soon");
-                                } else if (controller.bidingActionActive() ==
-                                    1) {
-                                  // Can bid on continue
-                                  if (controller.productType.value ==
-                                      ProductType.BID) {
-                                    _onBid(controller
-                                        .productDetailsData.value?.details);
-                                  }
-                                } else if (controller.myBidProduct() == 0) {
-                                  // Fixed Price - Buy
-                                } else if (controller.myBidProduct() == 1) {
-                                  // Biding Product - my last bid on product - Buy
-                                }
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 20, left: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const AppText(
+                                          text: "Item Description",
+                                          textSize: 13,
+                                          fontFamily: "Poppins"),
+                                      const SizedBox(height: 5),
+                                      AppText(
+                                          text: controller
+                                                  .productDetailsData
+                                                  .value
+                                                  ?.details
+                                                  ?.description ??
+                                              '',
+                                          textSize: 13,
+                                          fontFamily: "Poppins",
+                                          color: const Color(0x4d000000)),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (controller.bidingActionActive() == 0) {
+                                      AppToast.show(
+                                          "Biding will be start soon");
+                                    } else if (controller
+                                            .bidingActionActive() ==
+                                        1) {
+                                      // Can bid on continue
+                                      if (controller.productType.value ==
+                                          ProductType.biding) {
+                                        _onBid(controller
+                                            .productDetailsData.value?.details);
+                                      }
+                                    } else if (controller.myBidProduct() == 0) {
+                                      // Fixed Price - Buy
+                                    } else if (controller.myBidProduct() == 1) {
+                                      // Biding Product - my last bid on product - Buy
+                                      // API Request: product_id,
 
-                                // Map<String, dynamic> data = {
-                                //   "data": "from",
-                                // };
-                                // controller.trackupload.value
-                                //     ? uploadDialog()
-                                //     : controller.upload.value
-                                //         ? givereviewDialog()
-                                //         : Get.arguments?["from"] == 1 &&
-                                //                 !controller.upload.value
-                                //             ? trackingDialog()
-                                //             : Get.arguments?["from"] == 1
-                                //                 ? givereviewDialog()
-                                //                 : Get.toNamed(
-                                //                     Routes.addressScreen,
-                                //                   );
-                              },
-                              child: Obx(() => CommonButton(
-                                    height: 50,
-                                    radius: 15,
-                                    margin: const EdgeInsets.only(
-                                        left: 20, right: 20),
-                                    text:
-                                        controller.bidingActionActive() != null
-                                            ? "Bid \$2500"
+                                      // Get.toNamed(Routes.paymentScreen);
+                                      StripePaymentService.stripeMakePayment(
+                                        amount: "10",
+                                        // currency: "USD",
+                                        //
+                                        name:
+                                            "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
+                                        email: UserStoredInfo().userInfo?.email,
+                                        phone: UserStoredInfo()
+                                                    .userInfo
+                                                    ?.phone ==
+                                                null
+                                            ? null
+                                            : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
+                                        success: () {
+                                          // Success
+                                        },
+                                      );
+                                    }
+
+                                    // Map<String, dynamic> data = {
+                                    //   "data": "from",
+                                    // };
+                                    // controller.trackupload.value
+                                    //     ? uploadDialog()
+                                    //     : controller.upload.value
+                                    //         ? givereviewDialog()
+                                    //         : Get.arguments?["from"] == 1 &&
+                                    //                 !controller.upload.value
+                                    //             ? trackingDialog()
+                                    //             : Get.arguments?["from"] == 1
+                                    //                 ? givereviewDialog()
+                                    //                 : Get.toNamed(
+                                    //                     Routes.addressScreen,
+                                    //                   );
+                                  },
+                                  child: Obx(() => CommonButton(
+                                        height: 50,
+                                        radius: 15,
+                                        margin: const EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        text: controller.bidingActionActive() !=
+                                                null
+                                            ? "Bid \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}"
                                             : controller.myBidProduct() != null
                                                 ? "Buy Now"
-                                                : "Buy Now",
-                                    // controller.upload.value
-                                    //     ? "Give Reviews"
-                                    //     : controller.track.value
-                                    //         ? "Edit Tracking"
-                                    //         : controller.trackupload.value
-                                    //             ? "Upload"
-                                    //             : Get.arguments?["from"] == 1
-                                    //                 ? "Add Tracking ID"
-                                    //                 : "Buy Now",
-                                    textStyle: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontFamily: "Poppins",
-                                        fontWeight: FontWeight.w400),
-                                    color: AppColor.appColor,
-                                  )),
+                                                : controller.myBidProduct() != 1
+                                                    ? "Biding End" // If biding is end and not win on biding
+                                                    : "Buy Now*",
+                                        // controller.upload.value
+                                        //     ? "Give Reviews"
+                                        //     : controller.track.value
+                                        //         ? "Edit Tracking"
+                                        //         : controller.trackupload.value
+                                        //             ? "Upload"
+                                        //             : Get.arguments?["from"] == 1
+                                        //                 ? "Add Tracking ID"
+                                        //                 : "Buy Now",
+                                        textStyle: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontFamily: "Poppins",
+                                            fontWeight: FontWeight.w400),
+                                        color: controller.myBidProduct() !=
+                                                    null ||
+                                                controller
+                                                        .bidingActionActive() ==
+                                                    1
+                                            ? AppColor.appColor
+                                            : AppColor
+                                                .grey, // 2023-12-21 15:20:00.000}
+                                      )),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
                             ),
-                            const SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
+                          ),
               ),
             ),
           ],
@@ -514,11 +450,271 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  Column _fixedInfo() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            const AppText(
+              text: "Girl Denim",
+              textSize: 17,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
+            ),
+            const Icon(Icons.star, color: AppColor.appColor),
+            GestureDetector(
+              onTap: () {
+                Get.arguments?["from"] == 1 ? Container() : reviewDialog();
+              },
+              child: const AppText(
+                text: "/4.5",
+                textSize: 12,
+                fontWeight: FontWeight.w400,
+                color: Color(0x4d000000),
+                fontFamily: "Poppins",
+              ),
+            )
+          ],
+        ),
+        const SizedBox(height: 5),
+        AppText(
+          text:
+              "\$${controller.productDetailsData.value?.details?.price ?? '0.0'}",
+          textSize: 22,
+          fontWeight: FontWeight.w400,
+          color: AppColor.appColor,
+        ),
+        const SizedBox(height: 5),
+        const AppText(
+          text: "Inclusive of all taxes",
+          textSize: 12,
+          color: Color(0x32000000),
+          fontWeight: FontWeight.w500,
+        ),
+        const SizedBox(height: 10),
+        Obx(
+          () => controller.track.value || controller.trackupload.value
+              ? const AppText(
+                  text: "Tracking ID : XX123XX343XX",
+                  textSize: 15,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                )
+              : Container(),
+        ),
+        const SizedBox(height: 30),
+        Row(
+          children: [
+            const AppText(
+              text: "Category : ",
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color(0xff9F9F9F),
+              fontFamily: "Poppins",
+            ),
+            AppText(
+              text: controller
+                      .productDetailsData.value?.details?.category?.name ??
+                  '',
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            const AppText(
+              text: "Sub Category : ",
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color(0xff9F9F9F),
+              fontFamily: "Poppins",
+            ),
+            AppText(
+              text: controller.productDetailsData.value?.details?.category
+                      ?.subCategory?.name ??
+                  '',
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            const AppText(
+              text: "Color :  ",
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color(0xff9F9F9F),
+              fontFamily: "Poppins",
+            ),
+            AppText(
+              text: controller.productDetailsData.value?.details?.color ?? '',
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            const AppText(
+              text: "Brand : ",
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Color(0xff9F9F9F),
+              fontFamily: "Poppins",
+            ),
+            AppText(
+              text: controller.productDetailsData.value?.details?.brand ?? '',
+              textSize: 12,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _bidInfo() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.star, color: AppColor.appColor),
+            GestureDetector(
+              onTap: () {
+                Get.arguments?["from"] == 1 ? Container() : reviewDialog();
+              },
+              child: const AppText(
+                text: "/4.5",
+                textSize: 12,
+                fontWeight: FontWeight.w400,
+                color: Color(0x4d000000),
+                fontFamily: "Poppins",
+              ),
+            )
+          ],
+        ),
+        const SizedBox(height: 14),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const AppText(text: "Current Bid: ", color: AppColor.grey),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                AppText(
+                  text:
+                      "\$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}",
+                  textSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+                const SizedBox(height: 8),
+                AppText(
+                  text:
+                      "Min \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}",
+                  textSize: 14,
+                  color: AppColor.grey,
+                ),
+                const SizedBox(height: 8),
+                RichText(
+                  text: TextSpan(
+                    text: '${controller.bidingData.value?.count ?? 0} Bid ',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: AppColor.blackColor.withOpacity(0.8),
+                        fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Show bid history',
+                          style: const TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 12),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Get.toNamed(Routes.biddingHistoryScreen);
+                            }),
+                    ],
+                  ),
+                )
+              ],
+            ))
+          ],
+        ),
+        const SizedBox(height: 14),
+        controller.bidingData.value?.save?.bidOver == 1
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(text: "Ends: ", color: AppColor.grey),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: "",
+                          style: const TextStyle(color: AppColor.blackColor),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text:
+                                    "${controller.bidingData.value?.save?.createdAt == null ? '' : AppDateTime.getDateTime(controller.bidingData.value?.save?.createdAt, format: DateFormat("EEE, dd/MM/yy, hh:mm a"))}",
+                                style: const TextStyle(color: AppColor.grey),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.toNamed(Routes.biddingHistoryScreen);
+                                  }),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      RichText(
+                        text: TextSpan(
+                          text: "Extended Biding Interval ",
+                          style: const TextStyle(color: AppColor.blackColor),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "30 Minutes",
+                                style: const TextStyle(color: AppColor.grey),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.toNamed(Routes.biddingHistoryScreen);
+                                  }),
+                          ],
+                        ),
+                      )
+                    ],
+                  ))
+                ],
+              )
+            : const SizedBox.shrink(),
+      ],
+    );
+  }
+
   _onBid(ProductDetails? product) async {
     await controller.getBidHistories(productId: (product?.id ?? '').toString());
     timerDialog(
+        productId: (product?.id ?? '').toString(),
         endTime: controller
             .bidingEndAfter.value, // DateTime.parse("2023-12-20 18:37:00"),
+        firstBid: (controller.bidingData.value?.history ?? []).isEmpty
+            ? null
+            : DateTime.parse((controller.bidingData.value?.history ?? [])
+                    .first
+                    .createdAt!)
+                .toLocal(),
         bidNow: () {
           Get.back();
           AppDialogs.bidHistoryDialog(

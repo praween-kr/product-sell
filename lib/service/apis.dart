@@ -53,4 +53,7 @@ class AppApis {
   static String notificationListing = "/notificationListing";
   static String deleteNotification = "/deleteNotification";
   static String notificationManage = "/notificationManage";
+
+  // Buy Product
+  static String shippingAddressAddProductBuy = "shippingAddressAdd";
 }

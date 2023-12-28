@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 
 import '../app_toast_loader.dart';
 
@@ -18,17 +19,16 @@ class StripePaymentService {
 
   StripePaymentService._internal();
 
-
-  static CardDetails cardDetails = CardDetails();
-
   static Map<String, dynamic>? paymentIntent;
+
   static final _dio = Dio();
 
   static String stripeTestKey =
       "pk_test_51Iy9mmSHUZtgmXhRe50T8kUlQ12fvx2vPJwAH7evpvq4DiDiqE9DgHr17cGNXcVSGmIp8IRP6xYghuJhtGl64gOP006VrHNug2";
   static String stripeLiveKey = "";
 
-  static String stripeSecretKey="sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
+  static String stripeSecretKey =
+      "sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
 
   Future<void> init() async {
     Stripe.publishableKey = stripeTestKey;
@@ -37,22 +37,23 @@ class StripePaymentService {
 
   static Future<void> stripeMakePayment(
       {String? amount,
-        String? currency,
-        String? name,
-        String? email,
-        String? city,
-        String? country,
-        String? line1,
-        String? line2,
-        String? postalCode,
-        String? state,
-        String? phone}) async {
+      String? currency,
+      String? name,
+      String? email,
+      String? city,
+      String? country,
+      String? line1,
+      String? line2,
+      String? postalCode,
+      String? state,
+      String? phone,
+      required Function success}) async {
     try {
       paymentIntent =
-      await createPaymentIntent(amount ?? "", currency ?? 'INR');
+          await createPaymentIntent(amount ?? "0.0", currency ?? 'INR');
       await Stripe.instance
           .initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
+              paymentSheetParameters: SetupPaymentSheetParameters(
             billingDetails: BillingDetails(
                 name: name,
                 email: email,
@@ -66,27 +67,27 @@ class StripePaymentService {
                     state: state)),
             paymentIntentClientSecret: paymentIntent!['client_secret'],
             //Gotten from payment intent
-            style: ThemeMode.dark,
-            merchantDisplayName: 'Ikay',
+            style: ThemeMode.light,
+            merchantDisplayName: 'Ownitoo',
             // Extra params
-            primaryButtonLabel: 'Pay now',
+            // primaryButtonLabel: 'Pay now',
             appearance: const PaymentSheetAppearance(
               colors: PaymentSheetAppearanceColors(
-                background: Colors.lightBlue,
-                primary: Colors.blue,
-                componentBorder: Colors.red,
+                background: Colors.white,
+                primary: AppColor.appColor,
+                componentBorder: AppColor.appColor,
               ),
               shapes: PaymentSheetShape(
-                borderWidth: 4,
-                shadow: PaymentSheetShadowParams(color: Colors.red),
+                borderWidth: 1,
+                shadow: PaymentSheetShadowParams(color: AppColor.appColor),
               ),
               primaryButton: PaymentSheetPrimaryButtonAppearance(
                 shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
                 colors: PaymentSheetPrimaryButtonTheme(
                   light: PaymentSheetPrimaryButtonThemeColors(
-                    background: Color.fromARGB(255, 231, 235, 30),
-                    text: Color.fromARGB(255, 235, 92, 30),
-                    border: Color.fromARGB(255, 235, 92, 30),
+                    background: Colors.white,
+                    text: AppColor.appColor,
+                    border: Colors.white,
                   ),
                 ),
               ),
@@ -95,18 +96,23 @@ class StripePaymentService {
           .then((value) {});
 
       //STEP 3: Display Payment sheet
-      displayPaymentSheet();
+      displayPaymentSheet(success);
     } catch (e) {
       errorSnackBar(e.toString());
     }
   }
-  static displayPaymentSheet() async {
+
+  /// 00008101-0006791A2651001E
+  /// iPhone 13,2 / 19H12
+
+  static displayPaymentSheet(Function success) async {
     try {
       // 3. display the payment sheet.
       await Stripe.instance.presentPaymentSheet(
           options: const PaymentSheetPresentOptions(timeout: 1200000));
 
       errorSnackBar('Payment successfully completed');
+      success();
     } on Exception catch (e) {
       if (e is StripeException) {
         errorSnackBar('Error from Stripe: ${e.error.localizedMessage}');
@@ -116,7 +122,7 @@ class StripePaymentService {
     }
   }
 
-//create Payment
+  //create Payment
   static createPaymentIntent(String amount, String currency) async {
     try {
       //Request body
@@ -183,6 +189,7 @@ class StripePaymentService {
       AppLoader.hide();
       errorSnackBar(e.error.message);
     }
+    return null;
   }
 
   static errorSnackBar(String? message) {
