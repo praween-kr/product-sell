@@ -55,5 +55,6 @@ class AppApis {
   static String notificationManage = "/notificationManage";
 
   // Buy Product
-  static String shippingAddressAddProductBuy = "shippingAddressAdd";
+  static String shippingAddressAddProductBuy = "stripeLinkGenerate";
+  static String stripeWebhookConfirmPayment = "stripeWebhook";
 }

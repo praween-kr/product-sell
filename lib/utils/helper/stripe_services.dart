@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 
 import '../app_toast_loader.dart';
@@ -108,9 +109,9 @@ class StripePaymentService {
   static displayPaymentSheet(Function success) async {
     try {
       // 3. display the payment sheet.
-      await Stripe.instance.presentPaymentSheet(
+      var data = await Stripe.instance.presentPaymentSheet(
           options: const PaymentSheetPresentOptions(timeout: 1200000));
-
+      AppPrint.all("Payment Successfully Completed: $data");
       errorSnackBar('Payment successfully completed');
       success();
     } on Exception catch (e) {

@@ -161,10 +161,10 @@ class ChatMsgController extends GetxController {
 
   /// Send new message --------
   sendNewMessage(String? receiverId, String productId) async {
+    socketPrint("Send First Message--> $receiverId");
     if (receiverId != null) {
       if (newMessageType.value == MessageType.text) {
         if (newMessageInput.text.trim() != '') {
-          socketPrint("Send First Message--> $receiverId");
           SocketEmits.sendMessage(
               receiverId: receiverId,
               msg: newMessageInput.text.trim(),

@@ -123,9 +123,9 @@ class ApiRequests {
       //
       if (dataResponse.body != null) {
         AppPrint.all("Verify Resp: ${dataResponse.body!.toJson()}");
-        UserStoredInfo().storeUserInfo(dataResponse.body);
-        DbHelper.saveMap(
-            key: SharedPrefKeys.userInfo, data: dataResponse.body!.toJson());
+        // UserStoredInfo().storeUserInfo(dataResponse.body);
+        // DbHelper.saveMap(
+        //     key: SharedPrefKeys.userInfo, data: dataResponse.body!.toJson());
       }
       AppLoader.hide();
       return true;
@@ -732,10 +732,37 @@ class ApiRequests {
   }
 
   ///------------
-
-  static buyAndAddShippingAddress(String transactionId) async {
+  // transaction_id,paymentJSON,productId,amount,shpingAddressId,chargedAmount
+  static buyAndAddShippingAddress(
+      {required String transactionId,
+      required Map<String, dynamic> paymentData,
+      required String productId,
+      required double amount,
+      required String shpingAddressId,
+      required double chargeAccount}) async {
     AppLoader.show();
     var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
+        data: {
+          "transaction_id": transactionId,
+          "paymentJSON": jsonEncode(paymentData),
+          "productId": productId,
+          "amount": amount,
+          "shpingAddressId": shpingAddressId,
+          "chargedAmount": chargeAccount
+        },
+        showToast: true);
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  // stripeWebhookConfirmPayment
+  static stripeWebhookConfirmPayment(String transactionId) async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.stripeWebhookConfirmPayment,
         data: {"transaction_id": transactionId}, showToast: true);
     if (data != null) {
       AppLoader.hide();

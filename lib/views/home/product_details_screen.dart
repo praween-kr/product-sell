@@ -65,7 +65,8 @@ class ProductDetailsScreen extends StatelessWidget {
         () => Column(
           children: [
             // controller.productDetailsData.value?.details?.a
-            controller.bidingData.value?.save?.bidOver == 1 ||
+            controller.productType.value == ProductType.fixedPrice ||
+                    controller.bidingData.value?.save?.bidOver == 1 ||
                     controller.productDetailsData.value == null
                 ? const SizedBox.shrink()
                 : Padding(
@@ -105,7 +106,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     .toLocal(),
                             onChanged: (TimerType data) {
                               controller.bidingTimerStatus.value = data.status;
-                              // print("Timer Start to --> - ${data.value}");
+                              print("Timer Start to --> - ${data.value}");
                             },
                           ),
                         ),
@@ -363,26 +364,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                       // Fixed Price - Buy
                                     } else if (controller.myBidProduct() == 1) {
                                       // Biding Product - my last bid on product - Buy
-                                      // API Request: product_id,
-
-                                      // Get.toNamed(Routes.paymentScreen);
-                                      StripePaymentService.stripeMakePayment(
-                                        amount: "10",
-                                        // currency: "USD",
-                                        //
-                                        name:
-                                            "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
-                                        email: UserStoredInfo().userInfo?.email,
-                                        phone: UserStoredInfo()
-                                                    .userInfo
-                                                    ?.phone ==
-                                                null
-                                            ? null
-                                            : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
-                                        success: () {
-                                          // Success
-                                        },
-                                      );
+                                      _buyBidProduct();
                                     }
 
                                     // Map<String, dynamic> data = {
@@ -450,8 +432,30 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  _buyBidProduct() async {
+    // API Request: product_id,
+
+    // Get.toNamed(Routes.paymentScreen);
+    StripePaymentService.stripeMakePayment(
+      amount: "10",
+      // currency: "USD",
+      //
+      name:
+          "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
+      email: UserStoredInfo().userInfo?.email,
+      phone: UserStoredInfo().userInfo?.phone == null
+          ? null
+          : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
+      success: () {
+        // Success
+        // controller.buyProduct(transactionId)
+      },
+    );
+  }
+
   Column _fixedInfo() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -502,7 +506,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 )
               : Container(),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 14),
         Row(
           children: [
             const AppText(
@@ -744,7 +748,9 @@ class ProductDetailsScreen extends StatelessWidget {
     } else {
       cmc = Get.put(ChatMsgController());
     }
-
+    cmc.activeUser.value = Receiver(
+        id: controller.productDetailsData.value?.details?.vendorId,
+        firstName: "Vendor");
     cmc.goToChatRoom(
         Receiver(id: controller.productDetailsData.value?.details?.vendorId));
     // socketPrint(

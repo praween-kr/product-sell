@@ -276,7 +276,7 @@ class HomeCatProductController extends GetxController
 
   // Socket
   //// ---- Biding Duration Increment If Any One Bid On ----
-  var incrementTimeAfterNewBid = 5.obs; // in minutes
+  var incrementTimeAfterNewBid = 50.obs; // in minutes
   var bidAlradyEnd = false.obs;
   //
   var bidingDataLoading = false.obs;
@@ -383,8 +383,24 @@ class HomeCatProductController extends GetxController
 
   ///--------- Biding ---------
   ///--------- Buy Product ----
-  buyProduct(String transactionId) async {
-    return await ApiRequests.buyAndAddShippingAddress(transactionId);
+  buyProduct(
+      {required String transactionId,
+      required Map<String, dynamic> paymentData,
+      required String productId,
+      required double amount,
+      required String shpingAddressId,
+      required double chargeAccount}) async {
+    return await ApiRequests.buyAndAddShippingAddress(
+        transactionId: transactionId,
+        paymentData: paymentData,
+        productId: productId,
+        amount: amount,
+        shpingAddressId: shpingAddressId,
+        chargeAccount: chargeAccount);
+  }
+
+  stripeWebhookConfirmPayment(String transactionId) async {
+    return await ApiRequests.stripeWebhookConfirmPayment(transactionId);
   }
 }
 
