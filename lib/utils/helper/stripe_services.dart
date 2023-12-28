@@ -119,8 +119,7 @@ class StripePaymentService {
       String? line2,
       String? postalCode,
       String? state,
-      String? phone,
-      required Function success}) async {
+      String? phone}) async {
     var prAge = expiryDate.split("/");
     var month = prAge[0].trim();
     var year = prAge[1].trim();
