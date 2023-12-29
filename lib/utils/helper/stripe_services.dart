@@ -104,22 +104,22 @@ class StripePaymentService {
     }
   }
 
-  static Future<void> stripePayment(
-      {required String cardNumber,
-      required String cvc,
-      required String expiryDate,
-      String? amount,
-      String? currency,
-      List<String>? items,
-      String? name,
-      String? email,
-      String? city,
-      String? country,
-      String? line1,
-      String? line2,
-      String? postalCode,
-      String? state,
-      String? phone}) async {
+  static Future<void> makePayment({
+    required String cardNumber,
+    required String cvc,
+    required String expiryDate,
+    String? amount,
+    String? currency,
+    String? name,
+    String? email,
+    String? city,
+    String? country,
+    String? line1,
+    String? line2,
+    String? postalCode,
+    String? state,
+    String? phone,
+  }) async {
     var prAge = expiryDate.split("/");
     var month = prAge[0].trim();
     var year = prAge[1].trim();
@@ -130,114 +130,55 @@ class StripePaymentService {
       cvc: cvc,
     ));
 
-    try {
-      // 1. Gather customer billing information (ex. email)
-      var billingDetails = BillingDetails(
-          name: name,
-          email: email,
-          phone: phone,
-          address: Address(
-              city: city,
-              country: country,
-              line1: line1,
-              line2: line2,
-              postalCode: postalCode,
-              state: state));
+    // 1. fetch Intent Client Secret from backend
+    final clientSecret = await fetchPaymentIntentClientSecret(
+        amount: amount ?? "0", currency: currency ?? "INR");
 
-      // 2. Create payment method
-      final paymentMethod = await Stripe.instance.createPaymentMethod(
-          params: PaymentMethodParams.card(
+    // 2. Gather customer billing information (ex. email)
+    var billingDetails = BillingDetails(
+        name: name,
+        email: email,
+        phone: phone,
+        address: Address(
+            city: city,
+            country: country,
+            line1: line1,
+            line2: line2,
+            postalCode: postalCode,
+            state: state));
+
+    // 3. Confirm payment with card details
+    final paymentIntent = await Stripe.instance.confirmPayment(
+      paymentIntentClientSecret: clientSecret['client_secret'],
+      data: PaymentMethodParams.card(
         paymentMethodData: PaymentMethodData(
           billingDetails: billingDetails,
         ),
-      ));
-
-      // 3. call API to create PaymentIntent
-      final paymentIntentResult = await callNoWebhookPayEndpointMethodId(
-          useStripeSdk: true,
-          paymentMethodId: paymentMethod.id,
-          currency: currency ?? "INR", // mocked data
-          items: items);
-
-      if (paymentIntentResult['error'] != null) {
-        // Error during creating or confirming Intent
-        errorSnackBar('Error: ${paymentIntentResult['error']}');
-        return;
-      }
-
-      if (paymentIntentResult['clientSecret'] != null &&
-          paymentIntentResult['requiresAction'] == null) {
-        // Payment success
-
-        errorSnackBar('Success!: The payment was confirmed successfully!');
-        return;
-      }
-
-      if (paymentIntentResult['clientSecret'] != null &&
-          paymentIntentResult['requiresAction'] == true) {
-        // 4. if payment requires action calling handleNextAction
-        final paymentIntent = await Stripe.instance
-            .handleNextAction(paymentIntentResult['clientSecret']);
-
-        if (paymentIntent.status == PaymentIntentsStatus.RequiresConfirmation) {
-          // 5. Call API to confirm intent
-          await confirmIntent(paymentIntent.id);
-        } else {
-          // Payment success
-          errorSnackBar('Error: ${paymentIntentResult['error']}');
-        }
-      }
-    } catch (e) {
-      errorSnackBar(e.toString());
-    }
-  }
-
-  static Future<void> confirmIntent(String paymentIntentId) async {
-    final result = await callNoWebhookPayEndpointIntentId(
-        paymentIntentId: paymentIntentId);
-    if (result['error'] != null) {
-      errorSnackBar('Error: ${result['error']}');
-    } else {
-      errorSnackBar('Success!: The payment was confirmed successfully!');
-    }
-  }
-
-  static Future<Map<String, dynamic>> callNoWebhookPayEndpointIntentId({
-    required String paymentIntentId,
-  }) async {
-    Map<String, dynamic> data = {'paymentIntentId': paymentIntentId};
-    final response = await _dio.post(
-      "https://api.stripe.com/v1/charge-card-off-session",
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-        },
       ),
-      data: data,
+      options: const PaymentMethodOptions(
+          setupFutureUsage: PaymentIntentsFutureUsage.OffSession),
     );
-    return response.data;
+    log("paymentIntent $paymentIntent");
+
+    errorSnackBar('Success!: The payment was confirmed successfully!');
   }
 
-  static Future<Map<String, dynamic>> callNoWebhookPayEndpointMethodId({
-    required bool useStripeSdk,
-    required String paymentMethodId,
-    required String currency,
-    List<String>? items,
-  }) async {
-    Map<String, dynamic> data = {
-      'useStripeSdk': useStripeSdk,
-      'paymentMethodId': paymentMethodId,
+  static Future<Map<String, dynamic>> fetchPaymentIntentClientSecret(
+      {required String amount, required String currency}) async {
+    Map<String, dynamic> body = {
+      'amount': calculateAmount(amount),
       'currency': currency,
-      'items': items
+      'payment_method_types[]': "card",
     };
     final response = await _dio.post(
-      "https://api.stripe.com/v1/pay-without-webhooks",
+      "https://api.stripe.com/v1/payment_intents",
       options: Options(
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $stripeSecretKey',
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
       ),
-      data: data,
+      data: body,
     );
     return response.data;
   }
