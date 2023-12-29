@@ -62,7 +62,7 @@ class StripePaymentService {
               postalCode: postalCode,
               state: state));
       paymentIntent =
-          await createPaymentIntent(amount ?? "0.0", currency ?? 'INR');
+          await createPaymentIntent(amount:amount ?? "0.0", currency:currency ?? 'INR',isCard: false);
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
@@ -131,8 +131,7 @@ class StripePaymentService {
     ));
 
     // 1. fetch Intent Client Secret from backend
-    final clientSecret = await fetchPaymentIntentClientSecret(
-        amount: amount ?? "0", currency: currency ?? "INR");
+    final clientSecret =await createPaymentIntent(amount:amount ?? "0.0", currency:currency ?? 'INR',isCard: true);
 
     // 2. Gather customer billing information (ex. email)
     var billingDetails = BillingDetails(
@@ -163,25 +162,6 @@ class StripePaymentService {
     errorSnackBar('Success!: The payment was confirmed successfully!');
   }
 
-  static Future<Map<String, dynamic>> fetchPaymentIntentClientSecret(
-      {required String amount, required String currency}) async {
-    Map<String, dynamic> body = {
-      'amount': calculateAmount(amount),
-      'currency': currency,
-      'payment_method_types[]': "card",
-    };
-    final response = await _dio.post(
-      "https://api.stripe.com/v1/payment_intents",
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $stripeSecretKey',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-      ),
-      data: body,
-    );
-    return response.data;
-  }
 
   /// 00008101-0006791A2651001E
   /// iPhone 13,2 / 19H12
@@ -204,13 +184,16 @@ class StripePaymentService {
   }
 
   //create Payment
-  static createPaymentIntent(String amount, String currency) async {
+  static Future<Map<String, dynamic>> createPaymentIntent({required String amount, required String currency,bool? isCard = false}) async {
     try {
       //Request body
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': currency,
       };
+      if(isCard == true){
+        body['payment_method_types[]'] = "card";
+      }
 
       //Make post request to Stripe
       var response = await _dio.post(
