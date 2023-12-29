@@ -50,22 +50,24 @@ class StripePaymentService {
       String? phone,
       required Function success}) async {
     try {
+      // 1. Gather customer billing information (ex. email)
+      var billingDetails = BillingDetails(
+          name: name,
+          email: email,
+          phone: phone,
+          address: Address(
+              city: city,
+              country: country,
+              line1: line1,
+              line2: line2,
+              postalCode: postalCode,
+              state: state));
       paymentIntent =
-          await createPaymentIntent(amount ?? "0.0", currency ?? 'INR');
+          await createPaymentIntent(amount:amount ?? "0.0", currency:currency ?? 'INR',isCard: false);
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
-            billingDetails: BillingDetails(
-                name: name,
-                email: email,
-                phone: phone,
-                address: Address(
-                    city: city,
-                    country: country,
-                    line1: line1,
-                    line2: line2,
-                    postalCode: postalCode,
-                    state: state)),
+            billingDetails: billingDetails,
             paymentIntentClientSecret: paymentIntent!['client_secret'],
             //Gotten from payment intent
             style: ThemeMode.light,
@@ -103,6 +105,65 @@ class StripePaymentService {
     }
   }
 
+  static Future<void> makePayment({
+    required String cardNumber,
+    required String cvc,
+    required String expiryDate,
+    String? amount,
+    String? currency,
+    String? name,
+    String? email,
+    String? city,
+    String? country,
+    String? line1,
+    String? line2,
+    String? postalCode,
+    String? state,
+    String? phone,
+  }) async {
+    var prAge = expiryDate.split("/");
+    var month = prAge[0].trim();
+    var year = prAge[1].trim();
+    await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
+      number: cardNumber,
+      expirationYear: int.parse(year),
+      expirationMonth: int.parse(month),
+      cvc: cvc,
+    ));
+
+    // 1. fetch Intent Client Secret from backend
+    final clientSecret =await createPaymentIntent(amount:amount ?? "0.0", currency:currency ?? 'INR',isCard: true);
+
+    // 2. Gather customer billing information (ex. email)
+    var billingDetails = BillingDetails(
+        name: name,
+        email: email,
+        phone: phone,
+        address: Address(
+            city: city,
+            country: country,
+            line1: line1,
+            line2: line2,
+            postalCode: postalCode,
+            state: state));
+
+    // 3. Confirm payment with card details
+    final paymentIntent = await Stripe.instance.confirmPayment(
+      paymentIntentClientSecret: clientSecret['client_secret'],
+      data: PaymentMethodParams.card(
+        paymentMethodData: PaymentMethodData(
+          billingDetails: billingDetails,
+        ),
+      ),
+      options: const PaymentMethodOptions(
+          setupFutureUsage: PaymentIntentsFutureUsage.OffSession),
+    );
+    log("paymentIntent $paymentIntent");
+
+    errorSnackBar('Success!: The payment was confirmed successfully!');
+  }
+
+
   /// 00008101-0006791A2651001E
   /// iPhone 13,2 / 19H12
 
@@ -124,13 +185,16 @@ class StripePaymentService {
   }
 
   //create Payment
-  static createPaymentIntent(String amount, String currency) async {
+  static Future<Map<String, dynamic>> createPaymentIntent({required String amount, required String currency,bool? isCard = false}) async {
     try {
       //Request body
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': currency,
       };
+      if(isCard == true){
+        body['payment_method_types[]'] = "card";
+      }
 
       //Make post request to Stripe
       var response = await _dio.post(
