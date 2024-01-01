@@ -9,6 +9,8 @@ import 'package:oninto_flutter/utils/app_toast_loader.dart';
 class AddressController extends GetxController {
   var loadingData = false.obs;
   var addresses = <AddressModel>[].obs;
+  // Selected Address
+  var selectedAddress = Rx<AddressModel?>(null);
 
   getAddresses() async {
     await ApiRequests.getAddresses(data: (data) {

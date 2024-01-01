@@ -48,7 +48,7 @@ class StripePaymentService {
       String? postalCode,
       String? state,
       String? phone,
-      required Function success}) async {
+      required Function(Map<String, dynamic>?) success}) async {
     try {
       // 1. Gather customer billing information (ex. email)
       var billingDetails = BillingDetails(
@@ -62,8 +62,8 @@ class StripePaymentService {
               line2: line2,
               postalCode: postalCode,
               state: state));
-      paymentIntent =
-          await createPaymentIntent(amount:amount ?? "0.0", currency:currency ?? 'INR',isCard: false);
+      paymentIntent = await createPaymentIntent(
+          amount: amount ?? "0.0", currency: currency ?? 'INR', isCard: false);
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
@@ -99,7 +99,9 @@ class StripePaymentService {
           .then((value) {});
 
       //STEP 3: Display Payment sheet
-      displayPaymentSheet(success);
+      displayPaymentSheet(() {
+        success(paymentIntent);
+      });
     } catch (e) {
       errorSnackBar(e.toString());
     }
@@ -132,7 +134,8 @@ class StripePaymentService {
     ));
 
     // 1. fetch Intent Client Secret from backend
-    final clientSecret =await createPaymentIntent(amount:amount ?? "0.0", currency:currency ?? 'INR',isCard: true);
+    final clientSecret = await createPaymentIntent(
+        amount: amount ?? "0.0", currency: currency ?? 'INR', isCard: true);
 
     // 2. Gather customer billing information (ex. email)
     var billingDetails = BillingDetails(
@@ -163,7 +166,6 @@ class StripePaymentService {
     errorSnackBar('Success!: The payment was confirmed successfully!');
   }
 
-
   /// 00008101-0006791A2651001E
   /// iPhone 13,2 / 19H12
 
@@ -185,14 +187,17 @@ class StripePaymentService {
   }
 
   //create Payment
-  static Future<Map<String, dynamic>> createPaymentIntent({required String amount, required String currency,bool? isCard = false}) async {
+  static Future<Map<String, dynamic>> createPaymentIntent(
+      {required String amount,
+      required String currency,
+      bool? isCard = false}) async {
     try {
       //Request body
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': currency,
       };
-      if(isCard == true){
+      if (isCard == true) {
         body['payment_method_types[]'] = "card";
       }
 

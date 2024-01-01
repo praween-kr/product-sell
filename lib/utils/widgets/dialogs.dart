@@ -10,7 +10,8 @@ class AppDialogs {
   static confirm(BuildContext context,
           {required String msg,
           required Function clickOnYes,
-          Function? clickOnNo}) =>
+          Function? clickOnNo,
+          Widget? child}) =>
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -69,6 +70,27 @@ class AppDialogs {
                     )
                   ]),
                 ),
+              ),
+            ),
+          );
+        },
+      );
+
+  static simple({Widget? body}) => showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Align(
+              child: Container(
+                width: 250,
+                decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(25)),
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 20),
+                    child: body),
               ),
             ),
           );

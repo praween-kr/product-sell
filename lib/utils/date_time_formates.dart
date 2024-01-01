@@ -49,6 +49,10 @@ class AppDateTime {
     return DateFormat("HH:mm").format(dt);
   }
 
+  static String defaultDateTime(DateTime dateTime) {
+    return DateFormat("yyyy-MM-dd").format(dateTime);
+  }
+
   // print(timeago.format(fifteenAgo, locale: 'en_short')); // 15m
   // print(timeago.format(fifteenAgo, locale: 'es')); // hace 15 minutos
 }

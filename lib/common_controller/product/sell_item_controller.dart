@@ -338,7 +338,10 @@ class SellItemController extends GetxController {
         condition: condition.value.trim(),
         selloption: sellOption.value.trim(),
         price: price.text.trim(),
-        description: description.text.trim());
+        description: description.text.trim(),
+        startBidingTime: startBidingTime.value,
+        startDate: startDate.value,
+        endDate: endDate.value);
   }
   //
 }

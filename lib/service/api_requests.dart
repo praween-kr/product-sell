@@ -378,15 +378,18 @@ class ApiRequests {
       "description": description,
       "startDate": startDate == null
           ? ''
-          : "${startDate.year}-${startDate.month}-${startDate.day}",
+          : AppDateTime.defaultDateTime(
+              startDate), //"${startDate.year}-${startDate.month}-${startDate.day}",
       "endDate": endDate == null
           ? ''
-          : "${endDate.year}-${endDate.month}-${endDate.day}",
+          : AppDateTime.defaultDateTime(
+              endDate), //"${endDate.year}-${endDate.month}-${endDate.day}",
       "bidTime": AppDateTime.time24hr(timeOfDay: startBidingTime),
       "boostCode": "",
     };
     AppPrint.all(
         "Add Product Req: data--> $mapData images---> $images videos---> $videos");
+
     AppLoader.show();
     var data = await BaseApiCall().postFormReq(
       AppApis.addPhysicalProduct,
@@ -419,6 +422,7 @@ class ApiRequests {
     String? selloption,
     DateTime? startDate,
     DateTime? endDate,
+    TimeOfDay? startBidingTime,
     String? price,
     String? description,
   }) async {
@@ -465,6 +469,10 @@ class ApiRequests {
     if (endDate != null) {
       mapData.addAll(
           {"endDate": "${endDate.year}-${endDate.month}-${endDate.day}"});
+    }
+    if (startBidingTime != null) {
+      mapData.addAll(
+          {"bidTime": AppDateTime.time24hr(timeOfDay: startBidingTime)});
     }
     if (oldImagesId != null) {
       String ids = "";
@@ -741,16 +749,17 @@ class ApiRequests {
       required String shpingAddressId,
       required double chargeAccount}) async {
     AppLoader.show();
+    Map<String, dynamic>? requestData = {
+      "transaction_id": transactionId,
+      "paymentJSON": jsonEncode(paymentData),
+      "productId": productId,
+      "amount": amount,
+      "shpingAddressId": shpingAddressId,
+      "chargedAmount": chargeAccount
+    };
+    AppPrint.all("requestData: $requestData");
     var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
-        data: {
-          "transaction_id": transactionId,
-          "paymentJSON": jsonEncode(paymentData),
-          "productId": productId,
-          "amount": amount,
-          "shpingAddressId": shpingAddressId,
-          "chargedAmount": chargeAccount
-        },
-        showToast: true);
+        data: requestData, showToast: true);
     if (data != null) {
       AppLoader.hide();
       return true;

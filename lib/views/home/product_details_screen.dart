@@ -9,10 +9,12 @@ import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/biding_.dart';
+import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
@@ -25,24 +27,24 @@ import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/helper/stripe_services.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
+import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
 
 import '../../utils/color_constant.dart';
 
+/// Fixed price product
+/// Biding product
+///  - start date and end date
+///  - first bid and last bid
+///  - bid over ->
+///  - bid over but no bid -> d
+///  - last bid user- win -> d
+///  - bided user- fail -> d
 class ProductDetailsScreen extends StatelessWidget {
   ProductDetailsScreen({super.key});
   final HomeCatProductController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    // DateTime targetDT = DateTime.parse("2023-12-20 18:37:00"
-    //     //"${controller.productDetailsData.value?.details?.startDate ?? "0000-00-00"} ${controller.productDetailsData.value?.details?.bidTime ?? "00:00:00"}",
-    //     );
-    // DateTime today = DateTime.now();
-    // Duration s = targetDT.difference(today);
-    // DateTime dt = DateTime.parse(today.toString().split(" ").first);
-    // Duration liveTime = targetDT.difference(dt);
-    // print("Timer Start to --> $dt *${liveTime.inDays}");
-    // print("product data: ${controller.productDetailsData.value}");
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
@@ -347,7 +349,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 30),
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     if (controller.bidingActionActive() == 0) {
                                       AppToast.show(
                                           "Biding will be start soon");
@@ -362,9 +364,40 @@ class ProductDetailsScreen extends StatelessWidget {
                                       }
                                     } else if (controller.myBidProduct() == 0) {
                                       // Fixed Price - Buy
+                                      double totalPrice = double.parse(
+                                          (controller.productDetailsData.value
+                                                      ?.details?.price ??
+                                                  0.0)
+                                              .toString());
+                                      String productId = (controller
+                                                  .productDetailsData
+                                                  .value
+                                                  ?.details
+                                                  ?.id ??
+                                              '')
+                                          .toString();
+                                      await _buyFixedPriceProduct(
+                                        productId: productId,
+                                        amount: totalPrice,
+                                      );
                                     } else if (controller.myBidProduct() == 1) {
                                       // Biding Product - my last bid on product - Buy
-                                      _buyBidProduct();
+                                      double totalPrice = double.parse(
+                                          (controller.productDetailsData.value
+                                                      ?.details?.price ??
+                                                  0.0)
+                                              .toString());
+                                      String productId = (controller
+                                                  .productDetailsData
+                                                  .value
+                                                  ?.details
+                                                  ?.id ??
+                                              '')
+                                          .toString();
+
+                                      await _buyBidProduct(
+                                          productId: productId,
+                                          amount: totalPrice);
                                     }
 
                                     // Map<String, dynamic> data = {
@@ -432,28 +465,104 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  _buyBidProduct() async {
-    // API Request: product_id,
+  _buyFixedPriceProduct(
+      {required String productId, required double amount}) async {
+    // await _stripePay(
+    //   () {
+    //     // Success
+    //   },
+    //   productId: productId,
+    //   amount: amount,
+    // );
+    AppDialogs.simple(
+        body: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          Assets.successIcon,
+          height: 50,
+          width: 50,
+        ),
+        const SizedBox(height: 14),
+        const AppText(
+          text: "Payment successfully done",
+          color: Colors.green,
+          textSize: 18,
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 14),
+        GestureDetector(
+          onTap: () => Get.back(),
+          child: const CommonButton(
+            color: AppColor.appColor,
+            radius: 25,
+            height: 40,
+            text: " Ok ",
+            textStyle: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+      ],
+    ));
+  }
 
-    // Get.toNamed(Routes.paymentScreen);
-    StripePaymentService.stripeMakePayment(
-      amount: "10",
-      // currency: "USD",
-      //
-      name:
-          "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
-      email: UserStoredInfo().userInfo?.email,
-      phone: UserStoredInfo().userInfo?.phone == null
-          ? null
-          : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
-      success: () {
+  _buyBidProduct({required String productId, required double amount}) async {
+    // API Request: product_id,
+    await _stripePay(
+      () {
         // Success
-        // controller.buyProduct(transactionId)
       },
+      productId: productId,
+      amount: amount,
     );
   }
 
-  Column _fixedInfo() {
+  /// Pick shiping address and stripe payment
+  _stripePay(Function() success,
+      {required String productId, required double amount}) {
+    //
+    if (AddressController().initialized) {
+      Get.find<AddressController>().getAddresses();
+    } else {
+      Get.put(AddressController()).getAddresses();
+    }
+    //
+    Get.to(
+      () => AddressScreen(
+        paynow: (String addressId) async {
+          await StripePaymentService.stripeMakePayment(
+            amount: amount.toString(),
+            // currency: "USD",
+            name:
+                "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
+            email: UserStoredInfo().userInfo?.email,
+            phone: UserStoredInfo().userInfo?.phone == null
+                ? null
+                : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
+            success: (paymentIntent) async {
+              // Success
+              AppPrint.all("Payment Info: $paymentIntent");
+              if (paymentIntent != null) {
+                var resp = await controller.buyProduct(
+                    transactionId: paymentIntent['id'],
+                    paymentData: paymentIntent,
+                    productId: productId,
+                    amount: (paymentIntent['amount'] ?? 0.0) / 100,
+                    shpingAddressId: addressId,
+                    chargeAccount: 5.0);
+                if (resp) {
+                  success();
+                }
+              }
+            },
+          );
+        },
+      ),
+      arguments: {'type': 'select_address'},
+    );
+    //---------
+  }
+
+  Widget _fixedInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
