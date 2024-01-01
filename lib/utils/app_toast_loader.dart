@@ -6,14 +6,17 @@ import 'package:oninto_flutter/generated/assets.dart';
 
 class AppToast {
   static show(String msg, {Color? bgColor}) {
-    Fluttertoast.showToast(
-      msg: msg,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-      backgroundColor: Colors.black.withOpacity(0.8),
-      textColor: Colors.white,
-      fontSize: 14.0,
-    );
+    if(msg != "null"){
+      Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.black.withOpacity(0.8),
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
+    }
+
   }
 }
 
