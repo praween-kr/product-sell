@@ -6,6 +6,8 @@ import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
 
+import '../../generated/assets.dart';
+
 class AppDialogs {
   static confirm(BuildContext context,
           {required String msg,
@@ -76,8 +78,9 @@ class AppDialogs {
         },
       );
 
-  static simple({Widget? body}) => showDialog(
+  static simple({Widget? body, bool barrierDismissible = true}) => showDialog(
         context: Get.context!,
+        barrierDismissible: barrierDismissible,
         builder: (BuildContext context) {
           return Material(
             type: MaterialType.transparency,
@@ -96,6 +99,39 @@ class AppDialogs {
           );
         },
       );
+  static paymentSuccess(Function ok) {
+    simple(
+        barrierDismissible: false,
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              Assets.successIcon,
+              height: 50,
+              width: 50,
+            ),
+            const SizedBox(height: 14),
+            const AppText(
+              text: "Payment successfully done",
+              color: Colors.green,
+              textSize: 18,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 22),
+            GestureDetector(
+              onTap: () => ok(),
+              child: CommonButton(
+                margin: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
+                color: AppColor.appColor,
+                radius: 25,
+                height: 40,
+                text: " Ok ",
+                textStyle: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+          ],
+        ));
+  }
 
   static bidHistoryDialog(
       {required Function confirm,

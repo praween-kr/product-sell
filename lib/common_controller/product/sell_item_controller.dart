@@ -13,8 +13,7 @@ class SellItemController extends GetxController {
   var tabController = 1.obs;
 
   // List of items in our dropdown menu
-  RxList<String> sizeItems =
-      ['Small', 'Medium', 'Large', 'Extra Large', 'Extra Extra Large'].obs;
+  RxList<String> sizeItems = ['Select Size'].obs;
   RxString dropDownValue5 = 'Tommy'.obs;
   // List of items in our dropdown menu
 
@@ -72,7 +71,7 @@ class SellItemController extends GetxController {
   // co-owner
   var selectedCategory = Rx<CategoryModel?>(null);
   var selectedSubCategory = Rx<CategoryModel?>(null);
-  var itemSize = 'Medium'.obs;
+  var itemSize = 'Select Size'.obs;
   var itemColor = TextEditingController(text: '');
   var brand = TextEditingController(text: '');
   var condition = 'Excellent'.obs;
@@ -82,6 +81,8 @@ class SellItemController extends GetxController {
   var endDate = Rx<DateTime?>(null);
   var price = TextEditingController(text: '');
   var startBidingTime = Rx<TimeOfDay?>(null);
+
+  var productSizeList = <String>[].obs;
 
   var selloptionsList = [ProductType.biding, ProductType.fixedPrice];
 
@@ -133,7 +134,7 @@ class SellItemController extends GetxController {
     //Co-owner
     selectedCategory.value = null;
     selectedSubCategory.value = null;
-    itemSize.value = 'Medium';
+    itemSize.value = 'Select Size';
     itemColor.clear();
     brand.clear();
     condition.value = 'Excellent';
@@ -172,7 +173,7 @@ class SellItemController extends GetxController {
       }
     }
     // selectedSubCategory.value = product?.category?.subCategory;
-    itemSize.value = 'Medium';
+    itemSize.value = 'Select Size';
     itemColor.text = product?.color ?? '';
     brand.text = product?.brand ?? '';
     condition.value = 'Excellent';
@@ -226,8 +227,8 @@ class SellItemController extends GetxController {
       AppToast.show("Please enter color");
       return false;
     }
-    if (tabController.value == 1 && itemSize.value.trim() == '') {
-      AppToast.show("Please enter size");
+    if (tabController.value == 1 && itemSize.value.trim() == 'Select Size') {
+      AppToast.show("Please select size");
       return false;
     }
     if (tabController.value == 1 && brand.text.trim() == '') {

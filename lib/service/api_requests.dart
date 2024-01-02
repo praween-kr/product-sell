@@ -757,9 +757,71 @@ class ApiRequests {
       "shpingAddressId": shpingAddressId,
       "chargedAmount": chargeAccount
     };
-    AppPrint.all("requestData: $requestData");
+    // Map<String, dynamic>? requestData = {
+    //   "transaction_id": "pi_3OU4fqBABpxXnhXr1kWWm8iL",
+    //   "paymentJSON": jsonEncode({
+    //     "id": "pi_3OU4fqBABpxXnhXr1kWWm8iL",
+    //     "object": "payment_intent",
+    //     "amount": 10000,
+    //     "amount_capturable": 0,
+    //     "amount_details": {"tip": {}},
+    //     "amount_received": 0,
+    //     "application": null,
+    //     "application_fee_amount": null,
+    //     "automatic_payment_methods": {
+    //       "allow_redirects": "always",
+    //       "enabled": true
+    //     },
+    //     "canceled_at": null,
+    //     "cancellation_reason": null,
+    //     "capture_method": "automatic",
+    //     "client_secret":
+    //         "pi_3OU4fqBABpxXnhXr1kWWm8iL_secret_U5sgoTtXbKWfoYpWGMmbuGXsA",
+    //     "confirmation_method": "automatic",
+    //     "created": 1704189254,
+    //     "currency": "inr",
+    //     "customer": null,
+    //     "description": null,
+    //     "invoice": null,
+    //     "last_payment_error": null,
+    //     "latest_charge": null,
+    //     "livemode": false,
+    //     "metadata": {},
+    //     "next_action": null,
+    //     "on_behalf_of": null,
+    //     "payment_method": null,
+    //     "payment_method_configuration_details": null,
+    //     "payment_method_options": {
+    //       "card": {
+    //         "installments": null,
+    //         "mandate_options": null,
+    //         "network": null,
+    //         "request_three_d_secure": "automatic"
+    //       }
+    //     },
+    //     "payment_method_types": ["card"],
+    //     "processing": null,
+    //     "receipt_email": null,
+    //     "review": null,
+    //     "setup_future_usage": null,
+    //     "shipping": null,
+    //     "source": null,
+    //     "statement_descriptor": null,
+    //     "statement_descriptor_suffix": null,
+    //     "status": "requires_payment_method",
+    //     "transfer_data": null,
+    //     "transfer_group": null
+    //   }),
+    //   "productId": 52,
+    //   "amount": 100.0,
+    //   "shpingAddressId": 9,
+    //   "chargedAmount": 5.0
+    // };
+    AppPrint.all("requestData: buyAndAddShippingAddress-Req> $requestData");
     var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
         data: requestData, showToast: true);
+
+    AppPrint.all("requestData: buyAndAddShippingAddress -Resp> $requestData");
     if (data != null) {
       AppLoader.hide();
       return true;

@@ -409,6 +409,14 @@ class SellItemScreen extends StatelessWidget {
                                         if (newValue?.id != null) {
                                           controller.selectedSubCategory.value =
                                               newValue;
+                                          controller.sizeItems.value = [
+                                            'Select Size'
+                                          ];
+                                          if (newValue?.sizeList != null) {
+                                            controller.sizeItems.addAll(
+                                                newValue?.sizeList ?? []);
+                                          }
+                                          controller.sizeItems.refresh();
                                         }
                                       },
                                       value:
@@ -444,6 +452,7 @@ class SellItemScreen extends StatelessWidget {
                                               BorderRadius.circular(23),
                                           color: AppColor.textColor,
                                         ),
+
                                         //elevation: 2,
                                       ),
                                       iconStyleData: const IconStyleData(

@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
 import 'package:oninto_flutter/common_controller/cms_controller.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
-import 'package:oninto_flutter/utils/app_text.dart';
 import '../settingScreen/cms_screen/cms_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -298,7 +298,8 @@ class SignUpScreen extends StatelessWidget {
                                 text: "By creating an"
                                     " account you have to agree\n with "
                                     "our ",
-                                style: const TextStyle(color: AppColor.blackColor),
+                                style:
+                                    const TextStyle(color: AppColor.blackColor),
                                 children: [
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()

@@ -8,7 +8,8 @@ class ImageBaseUrls {
 
 class AppApis {
   /// Base URL
-  static String baseUrl = 'http://202.164.42.227:9898/user';
+  static String baseUrl =
+      'http://202.164.42.227:9898/user'; //Local: 192.168.1.210 and Live: 202.164.42.227
 
   /// API end points---------
   static String signin = '/login';
@@ -55,6 +56,8 @@ class AppApis {
   static String notificationManage = "/notificationManage";
 
   // Buy Product
-  static String shippingAddressAddProductBuy = "/shippingAddressAdd";
-  static String stripeWebhookConfirmPayment = "/stripeWebhook";
+  static String shippingAddressAddProductBuy =
+      "/stripeLinkGenerate"; // "/shippingAddressAdd";
+  static String stripeWebhookConfirmPayment =
+      "/stripeWebhook"; //stripePaymentIntents
 }

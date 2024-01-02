@@ -25,11 +25,13 @@ class StripePaymentService {
   static final _dio = Dio();
 
   static String stripeTestKey =
-      "pk_test_51Iy9mmSHUZtgmXhRe50T8kUlQ12fvx2vPJwAH7evpvq4DiDiqE9DgHr17cGNXcVSGmIp8IRP6xYghuJhtGl64gOP006VrHNug2";
+      "pk_test_51OU2OqBABpxXnhXrNn5BpW9bANqIAd0Z8vaCFliwhQAMzRzcZh6zNcTSFhjxQLIgILzXFrso0C5FqvY1lobI3dxE00ulCfAwAq";
+  //"pk_test_51Iy9mmSHUZtgmXhRe50T8kUlQ12fvx2vPJwAH7evpvq4DiDiqE9DgHr17cGNXcVSGmIp8IRP6xYghuJhtGl64gOP006VrHNug2";
   static String stripeLiveKey = "";
 
   static String stripeSecretKey =
-      "sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
+      "sk_test_51OU2OqBABpxXnhXrMgWJJuxuGy0d1XMRN8KF5PucVOByGoteJqkppYwkiKQprAPexH5ZyEojJEltFyFARPofYdmF00Cqo6Bg3o";
+  //"sk_test_51Iy9mmSHUZtgmXhRc7FGXiRrT2wlIQSbY2Ny85kIcFnm5xg4lhC1meTIjofJ8dIJhQyTSRRidbGC1Y8dSSEEc2Mj00IvkUE7f6";
 
   Future<void> init() async {
     Stripe.publishableKey = stripeTestKey;
@@ -67,36 +69,38 @@ class StripePaymentService {
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
-            billingDetails: billingDetails,
-            paymentIntentClientSecret: paymentIntent!['client_secret'],
-            //Gotten from payment intent
-            style: ThemeMode.light,
-            merchantDisplayName: 'Ownitoo',
-            // Extra params
-            // primaryButtonLabel: 'Pay now',
-            appearance: const PaymentSheetAppearance(
-              colors: PaymentSheetAppearanceColors(
+        billingDetails: billingDetails,
+        paymentIntentClientSecret: paymentIntent!['client_secret'],
+        //Gotten from payment intent
+        style: ThemeMode.light,
+        merchantDisplayName: 'Ownitoo',
+        // Extra params
+        // primaryButtonLabel: 'Pay now',
+        appearance: const PaymentSheetAppearance(
+          colors: PaymentSheetAppearanceColors(
+            background: Colors.white,
+            primary: AppColor.appColor,
+            componentBorder: AppColor.appColor,
+          ),
+          shapes: PaymentSheetShape(
+            borderWidth: 1,
+            shadow: PaymentSheetShadowParams(color: AppColor.appColor),
+          ),
+          primaryButton: PaymentSheetPrimaryButtonAppearance(
+            shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
+            colors: PaymentSheetPrimaryButtonTheme(
+              light: PaymentSheetPrimaryButtonThemeColors(
                 background: Colors.white,
-                primary: AppColor.appColor,
-                componentBorder: AppColor.appColor,
-              ),
-              shapes: PaymentSheetShape(
-                borderWidth: 1,
-                shadow: PaymentSheetShadowParams(color: AppColor.appColor),
-              ),
-              primaryButton: PaymentSheetPrimaryButtonAppearance(
-                shapes: PaymentSheetPrimaryButtonShape(blurRadius: 8),
-                colors: PaymentSheetPrimaryButtonTheme(
-                  light: PaymentSheetPrimaryButtonThemeColors(
-                    background: Colors.white,
-                    text: AppColor.appColor,
-                    border: Colors.white,
-                  ),
-                ),
+                text: AppColor.appColor,
+                border: Colors.white,
               ),
             ),
-          ))
-          .then((value) {});
+          ),
+        ),
+      ))
+          .then((value) {
+        AppPrint.all("Payment Successfully Completed: *** $value");
+      });
 
       //STEP 3: Display Payment sheet
       displayPaymentSheet(() {
@@ -215,6 +219,7 @@ class StripePaymentService {
       log("response ${response.toString()}");
       return response.data;
     } catch (err) {
+      log("response error${err.toString()}");
       throw Exception(err.toString());
     }
   }

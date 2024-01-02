@@ -378,7 +378,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                           .toString();
                                       await _buyFixedPriceProduct(
                                         productId: productId,
-                                        amount: totalPrice,
+                                        amount: 100, // totalPrice,
                                       );
                                     } else if (controller.myBidProduct() == 1) {
                                       // Biding Product - my last bid on product - Buy
@@ -467,49 +467,37 @@ class ProductDetailsScreen extends StatelessWidget {
 
   _buyFixedPriceProduct(
       {required String productId, required double amount}) async {
-    // await _stripePay(
-    //   () {
-    //     // Success
-    //   },
-    //   productId: productId,
-    //   amount: amount,
-    // );
-    AppDialogs.simple(
-        body: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Image.asset(
-          Assets.successIcon,
-          height: 50,
-          width: 50,
-        ),
-        const SizedBox(height: 14),
-        const AppText(
-          text: "Payment successfully done",
-          color: Colors.green,
-          textSize: 18,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 14),
-        GestureDetector(
-          onTap: () => Get.back(),
-          child: const CommonButton(
-            color: AppColor.appColor,
-            radius: 25,
-            height: 40,
-            text: " Ok ",
-            textStyle: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-      ],
-    ));
+    // await controller.buyProduct(
+    //     transactionId: "transactionId",
+    //     paymentData: {},
+    //     productId: "productId",
+    //     amount: 8,
+    //     shpingAddressId: "shpingAddressId",
+    //     chargeAccount: 8);
+    await _stripePay(
+      (transactionId) {
+        // Success
+        AppDialogs.paymentSuccess(() async {
+          Get.back();
+          Get.back();
+          await controller.stripeWebhookConfirmPayment(transactionId);
+        });
+      },
+      productId: productId,
+      amount: amount,
+    );
   }
 
   _buyBidProduct({required String productId, required double amount}) async {
     // API Request: product_id,
     await _stripePay(
-      () {
+      (transactionId) {
         // Success
+        AppDialogs.paymentSuccess(() async {
+          Get.back();
+          Get.back();
+          await controller.stripeWebhookConfirmPayment(transactionId);
+        });
       },
       productId: productId,
       amount: amount,
@@ -517,7 +505,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   /// Pick shiping address and stripe payment
-  _stripePay(Function() success,
+  _stripePay(Function(String) success,
       {required String productId, required double amount}) {
     //
     if (AddressController().initialized) {
@@ -550,7 +538,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     shpingAddressId: addressId,
                     chargeAccount: 5.0);
                 if (resp) {
-                  success();
+                  success(paymentIntent['id']);
                 }
               }
             },
@@ -1387,3 +1375,5 @@ class ProductDetailsScreen extends StatelessWidget {
         });
   }
 }
+
+// There was an error confirming the Intent. Inspect the 'paymentIntent.lastpaymentEror' or setupIntent.lastSetupError' property

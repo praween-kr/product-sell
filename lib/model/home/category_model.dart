@@ -6,6 +6,7 @@ class CategoryModel {
   String? createdAt;
   String? updatedAt;
   CategoryModel? subCategory;
+  List<String>? sizeList;
 
   CategoryModel(
       {this.id,
@@ -13,7 +14,8 @@ class CategoryModel {
       this.image,
       this.createdAt,
       this.updatedAt,
-      this.subCategory});
+      this.subCategory,
+      this.sizeList});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -25,6 +27,9 @@ class CategoryModel {
     subCategory = json['subCategory'] != null
         ? CategoryModel.fromJson(json['subCategory'])
         : null;
+    if (json['size'] != null && json['size'] != '') {
+      sizeList = json['size'].toString().split('/').toList();
+    }
   }
 
   Map<String, dynamic> toJson() {
