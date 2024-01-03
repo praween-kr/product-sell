@@ -83,49 +83,6 @@ class HomeCatProductController extends GetxController
 
     //
     getHomeData();
-
-    // Categorydata = RxList([
-    //   HomeModel(
-    //     image: Assets.assetsGirl,
-    //     Name: "Women",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsShirt,
-    //     Name: "Men",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsKids,
-    //     Name: "Kids",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsRoom,
-    //     Name: "Home & living",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsElectronic,
-    //     Name: "Electronic",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsBeauty,
-    //     Name: "Beauty",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsAmericanBall,
-    //     Name: "Sports",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsDog,
-    //     Name: "Pets",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsCard,
-    //     Name: "Cards",
-    //   ),
-    //   HomeModel(
-    //     image: Assets.assetsCar,
-    //     Name: "Vehicle",
-    //   ),
-    // ]);
   }
 
   void onPageChanged(index) {

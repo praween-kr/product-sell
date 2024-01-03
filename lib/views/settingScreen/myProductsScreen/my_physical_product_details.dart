@@ -4,15 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sell_item_controller.dart';
-import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/utils/date_time_formates.dart';
-import 'package:oninto_flutter/utils/shimmer_widget.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/date_time_formates.dart';
+import 'package:oninto_flutter/utils/details_images_view.dart';
+import 'package:oninto_flutter/utils/shimmer_widget.dart';
+
+import '../../../model/product/product_details_model.dart';
+import '../../../routes/routes.dart';
 import '../../../utils/appbar.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
-import '../../../routes/routes.dart';
 
 class MyPysicalProductDetailScreen extends StatelessWidget {
   MyPysicalProductDetailScreen({super.key});
@@ -70,6 +73,8 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 15.0, bottom: 30.0),
                       child: Column(
                         children: [
+                          Text(
+                              "---> logedin: ${UserStoredInfo().userInfo?.id}, ventor: ${_myProductController.productDetailsData.value?.details?.vendorId}"),
                           DetailsImagesView(
                               images: (_myProductController.productDetailsData
                                           .value?.details?.productImages ??
@@ -152,11 +157,8 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                 ),
                                                 const SizedBox(height: 5),
                                                 AppText(
-                                                  text: "${_myProductController
-                                                      .productDetailsData
-                                                      .value
-                                                      ?.favoriteCount ??
-                                                      '0'}",
+                                                  text:
+                                                      "${_myProductController.productDetailsData.value?.favoriteCount ?? '0'}",
                                                   textSize: 15.0,
                                                   color: AppColor.blackColor
                                                       .withOpacity(0.3),
@@ -187,6 +189,15 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                         ),
                                       ],
                                     ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: commonText(
+                                        "Tracking ID: ",
+                                        "X_SJDFF0USF76887",
+                                      ),
+                                    ),
+
                                     const SizedBox(height: 20),
                                     commonText(
                                       "Category",
@@ -402,8 +413,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   color: AppColor.appColor,
                                   height: 57,
                                   text: "Edit",
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 35),
+                                  margin: EdgeInsets.symmetric(horizontal: 35),
                                   textStyle: TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
@@ -416,6 +426,19 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                   ),
           )),
     );
+  }
+
+  /// Product Category
+  MyProduct myProduct(ProductDetailsData product) {
+    UserTransactionInfo? userTransactionInfo = _myProductController
+        .productDetailsData.value?.details?.userTransactionInfo;
+    if (userTransactionInfo == null) {
+      return MyProduct.NEW;
+    }
+    if (userTransactionInfo.userId == UserStoredInfo().userInfo?.id) {
+      return MyProduct.BUY;
+    }
+    return MyProduct.SELL;
   }
 
   /// Common Text View
@@ -442,3 +465,5 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
     );
   }
 }
+
+enum MyProduct { BUY, SELL, NEW }

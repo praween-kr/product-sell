@@ -146,3 +146,79 @@ class UserInfoModel {
     return data;
   }
 }
+
+///===============User Basic Info Model====================
+
+class UserBasicInfo {
+  int? id;
+  int? role;
+  String? customerId;
+  int? status;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? countryCode;
+  String? phone;
+  String? location;
+  String? latitude;
+  String? longitude;
+  String? image;
+  int? commissionType;
+  String? specialCommission;
+
+  UserBasicInfo({
+    this.id,
+    this.role,
+    this.customerId,
+    this.status,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.countryCode,
+    this.phone,
+    this.location,
+    this.latitude,
+    this.longitude,
+    this.image,
+    this.commissionType,
+    this.specialCommission,
+  });
+
+  UserBasicInfo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    role = json['role'];
+    customerId = json['customerId'];
+    status = json['status'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    email = json['email'];
+    countryCode = json['countryCode'];
+    phone = json['phone'];
+    location = json['location'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    image = json['image'];
+    commissionType = json['commissionType'];
+    specialCommission = json['specialCommission'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['role'] = role;
+    data['customerId'] = customerId;
+    data['status'] = status;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['countryCode'] = countryCode;
+    data['phone'] = phone;
+    data['location'] = location;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['image'] = image;
+    data['commissionType'] = commissionType;
+    data['specialCommission'] = specialCommission;
+    return data;
+  }
+}

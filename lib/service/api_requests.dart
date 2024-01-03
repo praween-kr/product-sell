@@ -564,7 +564,7 @@ class ApiRequests {
   // type 1 for myProduct 2 for CownerProducts 3 for buy product and 4 for sell product that my added product is sell
   // for filter keys is (sold,new_added,pending) with values is 1 when we apply any filter
   static getMyProducts({
-    required Function(List<ProductModel>) data,
+    required Function(List<Product>) data,
     required Function(bool) loading,
     required int type,
     bool sold = false,
@@ -591,9 +591,14 @@ class ApiRequests {
         .postReq(AppApis.myProducts, showToast: false, data: reqData);
     AppPrint.all("text::: ${jsonEncode(respdata)}");
     if (respdata != null) {
-      PageResponse<ProductModel> pageResponse =
-          PageResponse<ProductModel>.fromJson(respdata,
-              (json) => ProductModel.fromJson(json as Map<String, dynamic>));
+      PageResponse<Product> pageResponse;
+      if (type == 3 || type == 4) {
+        pageResponse = PageResponse<BuyProductModel>.fromJson(respdata,
+            (json) => BuyProductModel.fromJson(json as Map<String, dynamic>));
+      } else {
+        pageResponse = PageResponse<ProductModel>.fromJson(respdata,
+            (json) => ProductModel.fromJson(json as Map<String, dynamic>));
+      }
 
       data(pageResponse.body ?? []);
       loading(false);

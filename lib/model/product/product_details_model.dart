@@ -1,5 +1,6 @@
 import 'package:oninto_flutter/model/home/category_model.dart';
 
+import '../auth/user_info_model.dart';
 import 'product_image_model.dart';
 
 class ProductDetailsData {
@@ -74,6 +75,7 @@ class ProductDetails {
   List<ProductImages>? productImages;
   List<void>? productSizes;
   int? isFavourite;
+  UserTransactionInfo? userTransactionInfo;
 
   ProductDetails(
       {this.id,
@@ -124,7 +126,8 @@ class ProductDetails {
       this.category,
       this.productImages,
       this.productSizes,
-      this.isFavourite});
+      this.isFavourite,
+      this.userTransactionInfo});
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -188,6 +191,9 @@ class ProductDetails {
       });
     }
     isFavourite = json['isFavourite'];
+    userTransactionInfo = json['transactionUserData'] != null
+        ? UserTransactionInfo.fromJson(json['transactionUserData'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -247,6 +253,73 @@ class ProductDetails {
       // data['product_sizes'] = productSizes!.map((v) => v.toJson()).toList();
     }
     data['isFavourite'] = isFavourite;
+    if (userTransactionInfo != null) {
+      data['transactionUserData'] = userTransactionInfo!.toJson();
+    }
+    return data;
+  }
+}
+
+class UserTransactionInfo {
+  int? id;
+  int? userId;
+  int? productId;
+  String? paymentStatus;
+  String? transactionId;
+  int? amount;
+  int? chargedAmount;
+  int? shpingAddressId;
+  String? allJSON;
+  String? createdAt;
+  String? updatedAt;
+  UserBasicInfo? userInfo;
+
+  UserTransactionInfo(
+      {this.id,
+      this.userId,
+      this.productId,
+      this.paymentStatus,
+      this.transactionId,
+      this.amount,
+      this.chargedAmount,
+      this.shpingAddressId,
+      this.allJSON,
+      this.createdAt,
+      this.updatedAt,
+      this.userInfo});
+
+  UserTransactionInfo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['userId'];
+    productId = json['productId'];
+    paymentStatus = json['payment_status'];
+    transactionId = json['transaction_id'];
+    amount = json['amount'];
+    chargedAmount = json['chargedAmount'];
+    shpingAddressId = json['shpingAddressId'];
+    allJSON = json['allJSON'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    userInfo =
+        json['user'] != null ? UserBasicInfo.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['productId'] = productId;
+    data['payment_status'] = paymentStatus;
+    data['transaction_id'] = transactionId;
+    data['amount'] = amount;
+    data['chargedAmount'] = chargedAmount;
+    data['shpingAddressId'] = shpingAddressId;
+    data['allJSON'] = allJSON;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (userInfo != null) {
+      data['user'] = userInfo!.toJson();
+    }
     return data;
   }
 }

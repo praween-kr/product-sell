@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
+import 'package:oninto_flutter/model/product/product_model.dart';
+import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/common_widgets.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -179,7 +180,7 @@ class ProductScreen extends StatelessWidget {
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    /// Tab 0
+                    /// Tab 0 ======================Buy Products===================
                     RefreshIndicator(
                       onRefresh: () async {
                         await _myProductController.getMyProducts();
@@ -203,31 +204,34 @@ class ProductScreen extends StatelessWidget {
                                       _myProductController.myBuyProducts.length,
                                   itemBuilder: (context, index) {
                                     //  var data = controller.Categorydata[index];
-                                    var product = _myProductController
-                                        .myBuyProducts[index];
+                                    BuyProductModel product =
+                                        _myProductController
+                                                .myBuyProducts[index]
+                                            as BuyProductModel;
                                     return CommonWidgets.productGridCard(
                                       productImage:
-                                          (product.productImages ?? [])
+                                          (product.product?.productImages ?? [])
                                                   .isNotEmpty
-                                              ? product.productImages!.first
-                                                      .image ??
+                                              ? product.product?.productImages!
+                                                      .first.image ??
                                                   ''
                                               : '',
-                                      lastUpdate: product.updatedAt ?? '',
-                                      price:
-                                          double.parse(product.price ?? '0.0'),
-                                      title: product.name ?? '',
+                                      lastUpdate: (product).updatedAt ?? '',
+                                      price: double.parse(
+                                          product.product?.price ?? '0.0'),
+                                      title: product.product?.name ?? '',
                                       onClick: () {
                                         _myProductController.getProductDetails(
-                                            (product.id ?? '').toString());
-                                        Get.toNamed(
-                                            Routes.coOwnerProductDetailsScreen);
+                                            (product.product?.id ?? '')
+                                                .toString());
+                                        Get.toNamed(Routes
+                                            .myPhysicalProductDetailScreen);
                                       },
                                     );
                                   }),
                     ),
 
-                    /// Tab 1
+                    /// Tab 1 ===========================Sell Products=============================
                     RefreshIndicator(
                       onRefresh: () async {
                         await _myProductController.getMyProducts();
@@ -251,27 +255,30 @@ class ProductScreen extends StatelessWidget {
                                       .mySellProducts.length,
                                   itemBuilder: (context, index) {
                                     //  var data = controller.Categorydata[index];
-                                    var product = _myProductController
-                                        .mySellProducts[index];
+                                    BuyProductModel product =
+                                        _myProductController
+                                                .mySellProducts[index]
+                                            as BuyProductModel;
                                     return CommonWidgets.productGridCard(
                                       productImage:
-                                          (product.productImages ?? [])
+                                          (product.product?.productImages ?? [])
                                                   .isNotEmpty
-                                              ? product.productImages!.first
-                                                      .image ??
+                                              ? product.product?.productImages!
+                                                      .first.image ??
                                                   ''
                                               : '',
-                                      lastUpdate: product.updatedAt ?? '',
-                                      price:
-                                          double.parse(product.price ?? '0.0'),
-                                      title: product.name ?? '',
+                                      lastUpdate: (product).updatedAt ?? '',
+                                      price: double.parse(
+                                          product.product?.price ?? '0.0'),
+                                      title: product.product?.name ?? '',
                                       views: 1200,
                                       likes: 15200,
                                       onClick: () {
                                         _myProductController.getProductDetails(
-                                            (product.id ?? '').toString());
-                                        Get.toNamed(
-                                            Routes.coOwnerProductDetailsScreen);
+                                            (product.product?.id ?? '')
+                                                .toString());
+                                        Get.toNamed(Routes
+                                            .myPhysicalProductDetailScreen);
                                       },
                                     );
                                   }),
@@ -304,13 +311,14 @@ class ProductScreen extends StatelessWidget {
                                     var product = _myProductController
                                         .myCoOwnerProducts[index];
                                     return CommonWidgets.productGridCard(
-                                      productImage:
-                                          (product.productImages ?? [])
-                                                  .isNotEmpty
-                                              ? product.productImages!.first
-                                                      .image ??
-                                                  ''
-                                              : '',
+                                      productImage: ((product as ProductModel)
+                                                      .productImages ??
+                                                  [])
+                                              .isNotEmpty
+                                          ? product
+                                                  .productImages!.first.image ??
+                                              ''
+                                          : '',
                                       lastUpdate: product.updatedAt ?? '',
                                       price:
                                           double.parse(product.price ?? '0.0'),
@@ -353,21 +361,24 @@ class ProductScreen extends StatelessWidget {
                                     var product = _myProductController
                                         .myPhysicalProducts[index];
                                     return CommonWidgets.productGridCard(
-                                      productImage:
-                                          (product.productImages ?? [])
-                                                  .isNotEmpty
-                                              ? product.productImages!.first
-                                                      .image ??
-                                                  ''
-                                              : '',
-                                      lastUpdate: product.updatedAt ?? '',
-                                      price:
-                                          double.parse(product.price ?? '0.0'),
-                                      title: product.name ?? '',
-                                      soldOn: product.createdAt ?? '',
+                                      productImage: ((product as ProductModel)
+                                                      .productImages ??
+                                                  [])
+                                              .isNotEmpty
+                                          ? (product)
+                                                  .productImages!
+                                                  .first
+                                                  .image ??
+                                              ''
+                                          : '',
+                                      lastUpdate: (product).updatedAt ?? '',
+                                      price: double.parse(
+                                          (product).price ?? '0.0'),
+                                      title: (product).name ?? '',
+                                      soldOn: (product).createdAt ?? '',
                                       onClick: () {
                                         _myProductController.getProductDetails(
-                                            (product.id ?? '').toString());
+                                            ((product).id ?? '').toString());
                                         Get.toNamed(Routes
                                             .myPhysicalProductDetailScreen);
                                       },

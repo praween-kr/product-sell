@@ -348,111 +348,132 @@ class ProductDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 30),
-                                GestureDetector(
-                                  onTap: () async {
-                                    if (controller.bidingActionActive() == 0) {
-                                      AppToast.show(
-                                          "Biding will be start soon");
-                                    } else if (controller
-                                            .bidingActionActive() ==
-                                        1) {
-                                      // Can bid on continue
-                                      if (controller.productType.value ==
-                                          ProductType.biding) {
-                                        _onBid(controller
-                                            .productDetailsData.value?.details);
-                                      }
-                                    } else if (controller.myBidProduct() == 0) {
-                                      // Fixed Price - Buy
-                                      double totalPrice = double.parse(
-                                          (controller.productDetailsData.value
-                                                      ?.details?.price ??
-                                                  0.0)
-                                              .toString());
-                                      String productId = (controller
+                                controller.productDetailsData.value?.details
+                                            ?.userTransactionInfo?.id !=
+                                        null
+                                    ? const SizedBox.shrink()
+                                    : GestureDetector(
+                                        onTap: () async {
+                                          if (controller.bidingActionActive() ==
+                                              0) {
+                                            AppToast.show(
+                                                "Biding will be start soon");
+                                          } else if (controller
+                                                  .bidingActionActive() ==
+                                              1) {
+                                            // Can bid on continue
+                                            if (controller.productType.value ==
+                                                ProductType.biding) {
+                                              _onBid(controller
                                                   .productDetailsData
                                                   .value
-                                                  ?.details
-                                                  ?.id ??
-                                              '')
-                                          .toString();
-                                      await _buyFixedPriceProduct(
-                                        productId: productId,
-                                        amount: 100, // totalPrice,
-                                      );
-                                    } else if (controller.myBidProduct() == 1) {
-                                      // Biding Product - my last bid on product - Buy
-                                      double totalPrice = double.parse(
-                                          (controller.productDetailsData.value
-                                                      ?.details?.price ??
-                                                  0.0)
-                                              .toString());
-                                      String productId = (controller
-                                                  .productDetailsData
-                                                  .value
-                                                  ?.details
-                                                  ?.id ??
-                                              '')
-                                          .toString();
+                                                  ?.details);
+                                            }
+                                          } else if (controller
+                                                  .myBidProduct() ==
+                                              0) {
+                                            // Fixed Price - Buy
+                                            double totalPrice = double.parse(
+                                                (controller
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.price ??
+                                                        0.0)
+                                                    .toString());
+                                            String productId = (controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.id ??
+                                                    '')
+                                                .toString();
+                                            await _buyFixedPriceProduct(
+                                              productId: productId,
+                                              amount: 100, // totalPrice,
+                                            );
+                                          } else if (controller
+                                                  .myBidProduct() ==
+                                              1) {
+                                            // Biding Product - my last bid on product - Buy
+                                            double totalPrice = double.parse(
+                                                (controller
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.price ??
+                                                        0.0)
+                                                    .toString());
+                                            String productId = (controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.id ??
+                                                    '')
+                                                .toString();
 
-                                      await _buyBidProduct(
-                                          productId: productId,
-                                          amount: totalPrice);
-                                    }
+                                            await _buyBidProduct(
+                                                productId: productId,
+                                                amount: totalPrice);
+                                          }
 
-                                    // Map<String, dynamic> data = {
-                                    //   "data": "from",
-                                    // };
-                                    // controller.trackupload.value
-                                    //     ? uploadDialog()
-                                    //     : controller.upload.value
-                                    //         ? givereviewDialog()
-                                    //         : Get.arguments?["from"] == 1 &&
-                                    //                 !controller.upload.value
-                                    //             ? trackingDialog()
-                                    //             : Get.arguments?["from"] == 1
-                                    //                 ? givereviewDialog()
-                                    //                 : Get.toNamed(
-                                    //                     Routes.addressScreen,
-                                    //                   );
-                                  },
-                                  child: Obx(() => CommonButton(
-                                        height: 50,
-                                        radius: 15,
-                                        margin: const EdgeInsets.only(
-                                            left: 20, right: 20),
-                                        text: controller.bidingActionActive() !=
-                                                null
-                                            ? "Bid \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}"
-                                            : controller.myBidProduct() != null
-                                                ? "Buy Now"
-                                                : controller.myBidProduct() != 1
-                                                    ? "Biding End" // If biding is end and not win on biding
-                                                    : "Buy Now*",
-                                        // controller.upload.value
-                                        //     ? "Give Reviews"
-                                        //     : controller.track.value
-                                        //         ? "Edit Tracking"
-                                        //         : controller.trackupload.value
-                                        //             ? "Upload"
-                                        //             : Get.arguments?["from"] == 1
-                                        //                 ? "Add Tracking ID"
-                                        //                 : "Buy Now",
-                                        textStyle: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontFamily: "Poppins",
-                                            fontWeight: FontWeight.w400),
-                                        color: controller.myBidProduct() !=
-                                                    null ||
-                                                controller
-                                                        .bidingActionActive() ==
-                                                    1
-                                            ? AppColor.appColor
-                                            : AppColor
-                                                .grey, // 2023-12-21 15:20:00.000}
-                                      )),
-                                ),
+                                          // Map<String, dynamic> data = {
+                                          //   "data": "from",
+                                          // };
+                                          // controller.trackupload.value
+                                          //     ? uploadDialog()
+                                          //     : controller.upload.value
+                                          //         ? givereviewDialog()
+                                          //         : Get.arguments?["from"] == 1 &&
+                                          //                 !controller.upload.value
+                                          //             ? trackingDialog()
+                                          //             : Get.arguments?["from"] == 1
+                                          //                 ? givereviewDialog()
+                                          //                 : Get.toNamed(
+                                          //                     Routes.addressScreen,
+                                          //                   );
+                                        },
+                                        child: Obx(() => CommonButton(
+                                              height: 50,
+                                              radius: 15,
+                                              margin: const EdgeInsets.only(
+                                                  left: 20, right: 20),
+                                              text: controller
+                                                          .bidingActionActive() !=
+                                                      null
+                                                  ? "Bid \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}"
+                                                  : controller.myBidProduct() !=
+                                                          null
+                                                      ? "Buy Now"
+                                                      : controller.myBidProduct() !=
+                                                              1
+                                                          ? "Biding End" // If biding is end and not win on biding
+                                                          : "Buy Now*",
+                                              // controller.upload.value
+                                              //     ? "Give Reviews"
+                                              //     : controller.track.value
+                                              //         ? "Edit Tracking"
+                                              //         : controller.trackupload.value
+                                              //             ? "Upload"
+                                              //             : Get.arguments?["from"] == 1
+                                              //                 ? "Add Tracking ID"
+                                              //                 : "Buy Now",
+                                              textStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                  fontFamily: "Poppins",
+                                                  fontWeight: FontWeight.w400),
+                                              color: controller
+                                                              .myBidProduct() !=
+                                                          null ||
+                                                      controller
+                                                              .bidingActionActive() ==
+                                                          1
+                                                  ? AppColor.appColor
+                                                  : AppColor
+                                                      .grey, // 2023-12-21 15:20:00.000}
+                                            )),
+                                      ),
                                 const SizedBox(height: 10),
                               ],
                             ),

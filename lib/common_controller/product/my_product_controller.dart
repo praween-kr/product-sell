@@ -7,11 +7,11 @@ class MyProductController extends GetxController {
   var loadingData = false.obs;
   var tabController = 0.obs;
   // My Products List
-  var myProducts = <ProductModel>[].obs;
-  var myBuyProducts = <ProductModel>[].obs;
-  var mySellProducts = <ProductModel>[].obs;
-  var myCoOwnerProducts = <ProductModel>[].obs;
-  var myPhysicalProducts = <ProductModel>[].obs;
+  var myProducts = <Product>[].obs;
+  var myBuyProducts = <Product>[].obs;
+  var mySellProducts = <Product>[].obs;
+  var myCoOwnerProducts = <Product>[].obs;
+  var myPhysicalProducts = <Product>[].obs;
   //Product Details
   var productDetailsData = Rx<ProductDetailsData?>(null);
 

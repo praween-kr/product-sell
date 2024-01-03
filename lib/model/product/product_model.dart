@@ -3,7 +3,9 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 
 import 'product_image_model.dart';
 
-class ProductModel {
+abstract class Product {}
+
+class ProductModel implements Product {
   int? id;
   int? isApproved;
   int? status;
@@ -219,6 +221,70 @@ class ProductModel {
     //   data['productBidData'] = lastBidInfo!.toJson();
     // }
     data['productBidCount'] = productBidCount;
+    return data;
+  }
+}
+
+class BuyProductModel implements Product {
+  int? id;
+  int? userId;
+  int? productId;
+  String? paymentStatus;
+  String? transactionId;
+  int? amount;
+  int? chargedAmount;
+  int? shpingAddressId;
+  String? allJSON;
+  String? createdAt;
+  String? updatedAt;
+  ProductModel? product;
+
+  BuyProductModel(
+      {this.id,
+      this.userId,
+      this.productId,
+      this.paymentStatus,
+      this.transactionId,
+      this.amount,
+      this.chargedAmount,
+      this.shpingAddressId,
+      this.allJSON,
+      this.createdAt,
+      this.updatedAt,
+      this.product});
+
+  BuyProductModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['userId'];
+    productId = json['productId'];
+    paymentStatus = json['payment_status'];
+    transactionId = json['transaction_id'];
+    amount = json['amount'];
+    chargedAmount = json['chargedAmount'];
+    shpingAddressId = json['shpingAddressId'];
+    allJSON = json['allJSON'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    product =
+        json['product'] != null ? ProductModel.fromJson(json['product']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userId'] = userId;
+    data['productId'] = productId;
+    data['payment_status'] = paymentStatus;
+    data['transaction_id'] = transactionId;
+    data['amount'] = amount;
+    data['chargedAmount'] = chargedAmount;
+    data['shpingAddressId'] = shpingAddressId;
+    data['allJSON'] = allJSON;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (product != null) {
+      data['product'] = product!.toJson();
+    }
     return data;
   }
 }

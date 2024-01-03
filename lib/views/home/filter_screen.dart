@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
@@ -24,7 +24,7 @@ class FilterScreen extends StatelessWidget {
     AppPrint.all("products: ${_homecontroller.products.length}");
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CommonAppbarWidget(heading: "Filter"),
+      appBar: const CommonAppbarWidget(heading: "Filter"),
       body: Column(
         children: [
           Expanded(
@@ -57,7 +57,10 @@ class FilterScreen extends StatelessWidget {
                                       Get.arguments['from'] == 'home'
                                   ? _homecontroller.products[index]
                                   : _myProductController.myProducts[index];
-                              String img = (product.productImages ?? []).isEmpty
+                              String img = ((product as ProductModel)
+                                              .productImages ??
+                                          [])
+                                      .isEmpty
                                   ? ''
                                   : product.productImages!.first.image ?? '';
                               return Obx(

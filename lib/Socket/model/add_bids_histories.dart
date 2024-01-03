@@ -1,4 +1,6 @@
 //-----
+import '../../model/product/product_model.dart';
+
 class AddBidsHistory {
   Save? save;
   int? count;
@@ -80,7 +82,7 @@ class BidsHistory {
   String? createdAt;
   String? updatedAt;
   User? user;
-  Product? product;
+  SellProduct? product;
 
   BidsHistory(
       {this.id,
@@ -103,7 +105,7 @@ class BidsHistory {
     updatedAt = json['updatedAt'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     product =
-        json['product'] != null ? Product.fromJson(json['product']) : null;
+        json['product'] != null ? SellProduct.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -274,7 +276,7 @@ class User {
   }
 }
 
-class Product {
+class SellProduct implements Product {
   int? id;
   int? isApproved;
   int? status;
@@ -324,7 +326,7 @@ class Product {
   int? viewCount;
   int? isFavourite;
 
-  Product(
+  SellProduct(
       {this.id,
       this.isApproved,
       this.status,
@@ -374,7 +376,7 @@ class Product {
       this.viewCount,
       this.isFavourite});
 
-  Product.fromJson(Map<String, dynamic> json) {
+  SellProduct.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     isApproved = json['isApproved'];
     status = json['status'];
