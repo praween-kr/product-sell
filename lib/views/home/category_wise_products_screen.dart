@@ -171,25 +171,52 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                                 .toString());
                                                   },
                                                   onClick: () {
-                                                    Map<String, dynamic> data =
-                                                        {"from": 0};
-                                                    if (HomeCatProductController()
-                                                        .initialized) {
-                                                      Get.find<
-                                                              HomeCatProductController>()
-                                                          .getProductDetails(
-                                                              (product.id ?? '')
-                                                                  .toString());
+                                                    if (product.sellOption ==
+                                                        null) {
+                                                      Map<String, dynamic>
+                                                          data = {"from": 0};
+                                                      if (HomeCatProductController()
+                                                          .initialized) {
+                                                        Get.find<
+                                                                HomeCatProductController>()
+                                                            .getProductDetails(
+                                                                (product.id ??
+                                                                        '')
+                                                                    .toString());
+                                                      } else {
+                                                        Get.put(HomeCatProductController())
+                                                            .getProductDetails(
+                                                                (product.id ??
+                                                                        '')
+                                                                    .toString());
+                                                      }
+                                                      Get.toNamed(
+                                                          Routes
+                                                              .publicShareProductDetails,
+                                                          arguments: data);
                                                     } else {
-                                                      Get.put(HomeCatProductController())
-                                                          .getProductDetails(
-                                                              (product.id ?? '')
-                                                                  .toString());
+                                                      Map<String, dynamic>
+                                                          data = {"from": 0};
+                                                      if (HomeCatProductController()
+                                                          .initialized) {
+                                                        Get.find<
+                                                                HomeCatProductController>()
+                                                            .getProductDetails(
+                                                                (product.id ??
+                                                                        '')
+                                                                    .toString());
+                                                      } else {
+                                                        Get.put(HomeCatProductController())
+                                                            .getProductDetails(
+                                                                (product.id ??
+                                                                        '')
+                                                                    .toString());
+                                                      }
+                                                      Get.toNamed(
+                                                          Routes
+                                                              .productDetailsScreen,
+                                                          arguments: data);
                                                     }
-                                                    Get.toNamed(
-                                                        Routes
-                                                            .productDetailsScreen,
-                                                        arguments: data);
                                                   },
                                                 ),
                                               );

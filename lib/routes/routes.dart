@@ -13,6 +13,7 @@ class Routes {
   static const String productDetailsScreen = "/ProductDetailsScreen";
   static const String paymentScreen = "/PaymentScreen";
   static const String productScreen = "/ProductScreen";
+  static const String publicShareProductDetails = "/publicShareProductDetails";
   static const String signupScreen = "/SignupScreen";
   static const String categoryScreen = "/CategoryScreen";
   static const String homeBidScreen = "/HomeBidScreen";
@@ -22,7 +23,7 @@ class Routes {
   static const String biddingHistoryScreen = "/BiddingHistoryScreen";
   static const String messageScreen = "/MessageScreen";
   static const String passwordScreen = "/PasswordScreen";
-  static const String coOwnerProductDetailsScreen =
+  static const String myShareProductDetailsScreen =
       "/CoOwnerProductDetailsScreen";
   static const String addressScreen = "/AddressScreen";
   static const String cmsScreen = "/CmsScreen";
@@ -43,4 +44,5 @@ class Routes {
   static const String addNewCardScreen = "/AddNewCardScreen";
   static const String selectPlanScreen = "/SelectPlanScreen";
   static const String categoriesWiseProductsScreen = "/CategoryWiseProducts";
+  static const String myProductFilterScreen = "/my_product_filter_scr";
 }

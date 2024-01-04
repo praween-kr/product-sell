@@ -60,4 +60,5 @@ class AppApis {
       "/stripeLinkGenerate"; // "/shippingAddressAdd";
   static String stripeWebhookConfirmPayment =
       "/stripeWebhook"; //stripePaymentIntents
+  static String purchaseShare = "/purchaseShare";
 }

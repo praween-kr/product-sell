@@ -15,6 +15,7 @@ class AppColor {
   static const itemBorderColor = Color(0xffB1ADAD);
   static const grey = Color.fromARGB(255, 133, 136, 146);
   static const red = Color(0xFFF51303);
+  static const green = Colors.green;
 
   static const TextStyle defaultDateTextStyle = TextStyle(
     color: text1,

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
+import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
-import 'package:oninto_flutter/routes/routes.dart';
-import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
-class CoOwnerProductDetailsScreen extends StatelessWidget {
-  CoOwnerProductDetailsScreen({super.key});
+class MyShareProductDetails extends StatelessWidget {
+  MyShareProductDetails({super.key});
   final MyProductController _myProductController = Get.find();
 
   @override
@@ -120,12 +120,12 @@ class CoOwnerProductDetailsScreen extends StatelessWidget {
                             onTap: () {
                               Get.toNamed(Routes.navbarScreen);
                             },
-                            child: CommonButton(
+                            child: const CommonButton(
                               height: 50,
                               radius: 20,
                               color: AppColor.appColor,
                               text: "Community",
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: "Poppins",

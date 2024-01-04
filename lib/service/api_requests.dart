@@ -848,6 +848,28 @@ class ApiRequests {
     return false;
   }
 
+  // Share Purchage
+  static purchageShare({
+    required String shareId,
+    required int noOfShares,
+    required double perSharePrice,
+  }) async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.purchaseShare,
+        data: {
+          "shareId": shareId,
+          "totalSharePurchase": noOfShares,
+          "perSharePrice": perSharePrice
+        },
+        showToast: true);
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
   ///----------------------------
 
   static gPlaceSearch(String query,

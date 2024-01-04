@@ -99,8 +99,8 @@ class ProductScreen extends StatelessWidget {
 
               value: () {
                 _myProductController.getMyProducts(sold: true, filter: true);
-                Get.toNamed(Routes.filterScreen,
-                    arguments: {'from': 'my_product'});
+                Get.toNamed(Routes.myProductFilterScreen,
+                    arguments: {'filter_type': 'sold'});
               },
             ),
             PopupMenuItem(
@@ -117,8 +117,8 @@ class ProductScreen extends StatelessWidget {
               value: () {
                 _myProductController.getMyProducts(
                     newAdded: true, filter: true);
-                Get.toNamed(Routes.filterScreen,
-                    arguments: {'from': 'my_product'});
+                Get.toNamed(Routes.myProductFilterScreen,
+                    arguments: {'filter_type': 'new_added'});
               },
             ),
             PopupMenuItem(
@@ -134,8 +134,8 @@ class ProductScreen extends StatelessWidget {
               ),
               value: () {
                 _myProductController.getMyProducts(pending: true, filter: true);
-                Get.toNamed(Routes.filterScreen,
-                    arguments: {'from': 'my_product'});
+                Get.toNamed(Routes.myProductFilterScreen,
+                    arguments: {'filter_type': 'pending'});
               },
             ),
           ],
@@ -328,7 +328,7 @@ class ProductScreen extends StatelessWidget {
                                         _myProductController.getProductDetails(
                                             (product.id ?? '').toString());
                                         Get.toNamed(
-                                            Routes.coOwnerProductDetailsScreen);
+                                            Routes.myShareProductDetailsScreen);
                                       },
                                     );
                                   }),

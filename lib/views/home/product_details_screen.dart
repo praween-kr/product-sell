@@ -9,6 +9,7 @@ import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/biding_.dart';
+import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
@@ -516,7 +517,13 @@ class ProductDetailsScreen extends StatelessWidget {
         // Success
         AppDialogs.paymentSuccess(() async {
           Get.back();
-          Get.back();
+          // controller.tabController.value = 1;
+          if (MyProductController().initialized) {
+            Get.find<MyProductController>().getMyProducts();
+          } else {
+            Get.put(MyProductController()).getMyProducts();
+          }
+          Get.toNamed(Routes.productScreen);
           await controller.stripeWebhookConfirmPayment(transactionId);
         });
       },

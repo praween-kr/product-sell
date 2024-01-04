@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:oninto_flutter/views/home/public_share_product_details_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_product_filter_screen.dart';
 
 import '../views/auth_screens/forget_password_screens.dart';
 import '../views/auth_screens/login_screen.dart';
@@ -26,10 +28,10 @@ import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen
 import '../views/settingScreen/cms_screen/cms_screen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_history_screen.dart';
 import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
-import '../views/settingScreen/myProductsScreen/co_owner_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/editItem_screen.dart';
 import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
+import '../views/settingScreen/myProductsScreen/my_share_product_details_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
 import '../views/settingScreen/passwordScreen/password_screen.dart';
@@ -127,6 +129,10 @@ class AppRoutes {
       binding: ProductBinding(),
     ),
     GetPage(
+        name: Routes.publicShareProductDetails,
+        page: () => PublicShareProductDetails(),
+        binding: ProductBinding()),
+    GetPage(
       name: Routes.addNewCardScreen,
       page: () => const AddNewCardScreen(),
     ),
@@ -184,8 +190,8 @@ class AppRoutes {
       page: () => BiddingHistoryScreen(),
     ),
     GetPage(
-        name: Routes.coOwnerProductDetailsScreen,
-        page: () => CoOwnerProductDetailsScreen(),
+        name: Routes.myShareProductDetailsScreen,
+        page: () => MyShareProductDetails(),
         binding: ProductBinding()),
     GetPage(
       name: Routes.navbarScreen,
@@ -226,6 +232,11 @@ class AppRoutes {
     GetPage(
       name: Routes.myPhysicalProductDetailScreen,
       page: () => MyPysicalProductDetailScreen(),
+      binding: ProductBinding(),
+    ),
+    GetPage(
+      name: Routes.myProductFilterScreen,
+      page: () => MyProductFilterScreen(),
       binding: ProductBinding(),
     ),
     GetPage(

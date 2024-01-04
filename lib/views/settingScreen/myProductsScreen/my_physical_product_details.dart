@@ -73,8 +73,6 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 15.0, bottom: 30.0),
                       child: Column(
                         children: [
-                          Text(
-                              "---> logedin: ${UserStoredInfo().userInfo?.id}, ventor: ${_myProductController.productDetailsData.value?.details?.vendorId}"),
                           DetailsImagesView(
                               images: (_myProductController.productDetailsData
                                           .value?.details?.productImages ??
@@ -190,13 +188,16 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                       ],
                                     ),
 
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20),
-                                      child: commonText(
-                                        "Tracking ID: ",
-                                        "X_SJDFF0USF76887",
-                                      ),
-                                    ),
+                                    myProduct(_myProductController
+                                                .productDetailsData.value) ==
+                                            MyProduct.BUY
+                                        ? Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 20),
+                                            child: commonText("Tracking ID: ",
+                                                "X_SJDFF0USF76887"),
+                                          )
+                                        : const SizedBox.shrink(),
 
                                     const SizedBox(height: 20),
                                     commonText(
@@ -349,75 +350,214 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 31.0,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(
-                                    Routes.subscriptionScreen,
-                                    // arguments: "plan"
-                                  );
-                                },
-                                child: CommonButton(
-                                  color: AppColor.textColor,
-                                  height: 57,
-                                  radius: 23,
-                                  text: "Boost your post",
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 35),
-                                  textStyle: TextStyle(
-                                      color:
-                                          AppColor.blackColor.withOpacity(0.3),
-                                      fontSize: 16),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 31.0,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  //Get.toNamed(Routes.editItemScreen);
-                                  if (CategoriesController().initialized) {
-                                    Get.find<CategoriesController>()
-                                        .getCategories();
-                                  } else {
-                                    Get.put(CategoriesController())
-                                        .getCategories();
-                                  }
-                                  //
-                                  SellItemController sc;
-                                  if (SellItemController().initialized) {
-                                    sc = Get.find<SellItemController>();
-                                  } else {
-                                    sc = Get.put(SellItemController());
-                                  }
-                                  sc.tabController.value = 1;
-                                  sc.initialData(_myProductController
-                                      .productDetailsData.value?.details);
+                              myProduct(_myProductController
+                                          .productDetailsData.value) ==
+                                      MyProduct.NEW
+                                  ? Column(
+                                      children: [
+                                        const SizedBox(height: 31.0),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              Routes.subscriptionScreen,
+                                              // arguments: "plan"
+                                            );
+                                          },
+                                          child: CommonButton(
+                                            color: AppColor.textColor,
+                                            height: 57,
+                                            radius: 23,
+                                            text: "Boost your post",
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 35),
+                                            textStyle: TextStyle(
+                                                color: AppColor.blackColor
+                                                    .withOpacity(0.3),
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 31.0,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            //Get.toNamed(Routes.editItemScreen);
+                                            if (CategoriesController()
+                                                .initialized) {
+                                              Get.find<CategoriesController>()
+                                                  .getCategories();
+                                            } else {
+                                              Get.put(CategoriesController())
+                                                  .getCategories();
+                                            }
+                                            //
+                                            SellItemController sc;
+                                            if (SellItemController()
+                                                .initialized) {
+                                              sc = Get.find<
+                                                  SellItemController>();
+                                            } else {
+                                              sc =
+                                                  Get.put(SellItemController());
+                                            }
+                                            sc.tabController.value = 1;
+                                            sc.initialData(_myProductController
+                                                .productDetailsData
+                                                .value
+                                                ?.details);
 
-                                  Get.toNamed(Routes.sellItemScreen,
-                                          arguments: 'edit')!
-                                      .then((value) async {
-                                    await _myProductController
-                                        .getProductDetails((_myProductController
-                                                    .productDetailsData
-                                                    .value
-                                                    ?.details
-                                                    ?.id ??
-                                                '')
-                                            .toString());
-                                  });
-                                },
-                                child: const CommonButton(
-                                  color: AppColor.appColor,
-                                  height: 57,
-                                  text: "Edit",
-                                  margin: EdgeInsets.symmetric(horizontal: 35),
-                                  textStyle: TextStyle(
-                                      color: Colors.white, fontSize: 16),
-                                ),
-                              ),
+                                            Get.toNamed(Routes.sellItemScreen,
+                                                    arguments: 'edit')!
+                                                .then((value) async {
+                                              await _myProductController
+                                                  .getProductDetails(
+                                                      (_myProductController
+                                                                  .productDetailsData
+                                                                  .value
+                                                                  ?.details
+                                                                  ?.id ??
+                                                              '')
+                                                          .toString());
+                                            });
+                                          },
+                                          child: const CommonButton(
+                                            color: AppColor.appColor,
+                                            height: 57,
+                                            text: "Edit",
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 35),
+                                            textStyle: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : _myProductController
+                                              .productDetailsData
+                                              .value
+                                              ?.details
+                                              ?.userTransactionInfo
+                                              ?.paymentStatus ==
+                                          "succeeded"
+                                      ? Column(
+                                          children: [
+                                            Divider(
+                                                color: AppColor.blackColor
+                                                    .withOpacity(0.1),
+                                                thickness: 2),
+                                            const SizedBox(height: 8),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 30.0, right: 30.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const AppText(
+                                                    text: "Payment Completed",
+                                                    color: AppColor.green,
+                                                    textSize: 15,
+                                                    style: AppTextStyle.title,
+                                                  ),
+                                                  const SizedBox(height: 12),
+                                                  commonText(
+                                                    "Transaction ID: ",
+                                                    _myProductController
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.userTransactionInfo
+                                                            ?.transactionId ??
+                                                        '',
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  commonText(
+                                                    "Time: ",
+                                                    AppDateTime.getDateTime(
+                                                        _myProductController
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.userTransactionInfo
+                                                            ?.createdAt,
+                                                        format: DateFormat(
+                                                            "HH:mm a, dd MMM yyyy")),
+                                                  ),
+                                                  const SizedBox(height: 18),
+                                                  commonText(
+                                                    "Price ",
+                                                    '\$${(_myProductController.productDetailsData.value?.details?.userTransactionInfo?.amount ?? 0).toStringAsFixed(1)}',
+                                                    spaceBetween: true,
+                                                  ),
+                                                  const SizedBox(height: 8),
+                                                  commonText(
+                                                    "Charge ",
+                                                    '\$${(_myProductController.productDetailsData.value?.details?.userTransactionInfo?.chargedAmount ?? 0).toStringAsFixed(1)}',
+                                                    spaceBetween: true,
+                                                  ),
+                                                  const SizedBox(height: 8),
+                                                  commonText("Total Payment ",
+                                                      '\$${((_myProductController.productDetailsData.value?.details?.userTransactionInfo?.chargedAmount ?? 0) + (_myProductController.productDetailsData.value?.details?.userTransactionInfo?.amount ?? 0)).toStringAsFixed(1)}',
+                                                      spaceBetween: true,
+                                                      bold: true,
+                                                      highlight: true),
+                                                  // User Info
+                                                  myProduct(_myProductController
+                                                              .productDetailsData
+                                                              .value) ==
+                                                          MyProduct.SELL
+                                                      ? Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            const SizedBox(
+                                                                height: 14),
+                                                            const AppText(
+                                                              text: "User Info",
+                                                              color: AppColor
+                                                                  .themeColor,
+                                                              textSize: 15,
+                                                              style:
+                                                                  AppTextStyle
+                                                                      .title,
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 8),
+                                                            commonText(
+                                                              "Name: ",
+                                                              "${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.firstName ?? ''} ${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.lastName ?? ''}",
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 8),
+                                                            commonText(
+                                                              "Phone: ",
+                                                              "+${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.countryCode ?? ''} ${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.phone ?? ''}",
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 8),
+                                                            commonText(
+                                                              "Email: ",
+                                                              _myProductController
+                                                                      .productDetailsData
+                                                                      .value
+                                                                      ?.details
+                                                                      ?.userTransactionInfo
+                                                                      ?.userInfo
+                                                                      ?.email ??
+                                                                  '',
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : const SizedBox.shrink()
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : const SizedBox.shrink(),
+                              //
                             ],
                           ),
                         ],
@@ -429,7 +569,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
   }
 
   /// Product Category
-  MyProduct myProduct(ProductDetailsData product) {
+  MyProduct myProduct(ProductDetailsData? product) {
     UserTransactionInfo? userTransactionInfo = _myProductController
         .productDetailsData.value?.details?.userTransactionInfo;
     if (userTransactionInfo == null) {
@@ -442,23 +582,30 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
   }
 
   /// Common Text View
-  Widget commonText(String title, String value) {
+  Widget commonText(String title, String value,
+      {bool spaceBetween = false, bool bold = false, bool highlight = false}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(
           text: title,
-          color: AppColor.itemBorderColor,
+          color: highlight ? AppColor.blackColor : AppColor.itemBorderColor,
           textSize: 12,
           style: AppTextStyle.medium,
+          fontWeight: bold ? FontWeight.w600 : null,
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: AppText(
-            text: value,
-            color: AppColor.blackColor,
-            textSize: 12,
-            style: AppTextStyle.medium,
+          child: Align(
+            alignment:
+                spaceBetween ? Alignment.centerRight : Alignment.centerLeft,
+            child: AppText(
+              text: value,
+              color: AppColor.blackColor,
+              textSize: highlight ? 16 : 12,
+              style: AppTextStyle.medium,
+              fontWeight: bold ? FontWeight.w600 : null,
+            ),
           ),
         ),
       ],

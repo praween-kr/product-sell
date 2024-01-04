@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
@@ -13,15 +12,14 @@ import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
-class FilterScreen extends StatelessWidget {
-  FilterScreen({super.key});
+class MyProductFilterScreen extends StatelessWidget {
+  MyProductFilterScreen({super.key});
 
   final MyProductController _myProductController = Get.find();
-  final HomeCatProductController _homecontroller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    AppPrint.all("products: ${_homecontroller.products.length}");
+    AppPrint.all("products: ${_myProductController.myProducts.length}");
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const CommonAppbarWidget(heading: "Filter"),
@@ -31,55 +29,49 @@ class FilterScreen extends StatelessWidget {
             child: Obx(
               () => RefreshIndicator(
                 onRefresh: () async {
-                  if (Get.arguments != null &&
-                      Get.arguments['from'] == 'home') {
-                    _homecontroller.localFavourites.clear();
-                    await _homecontroller.filterProducts();
+                  //
+                  if (Get.arguments != null) {
+                    if (Get.arguments['filter_type'] == 'sold') {
+                      await _myProductController.getMyProducts(
+                          sold: true, filter: true);
+                    } else if (Get.arguments['filter_type'] == 'new_added') {
+                      await _myProductController.getMyProducts(
+                          newAdded: true, filter: true);
+                    } else if (Get.arguments['filter_type'] == 'pending') {
+                      await _myProductController.getMyProducts(
+                          pending: true, filter: true);
+                    }
                   }
                 },
-                child: (Get.arguments != null && Get.arguments['from'] == 'home'
-                        ? _homecontroller.filtering.value
-                        : _myProductController.loadingData.value)
+                child: _myProductController.loadingData.value
                     ? ShimmerWidgets.productListView()
-                    : (Get.arguments != null && Get.arguments['from'] == 'home'
-                            ? _homecontroller.products.isEmpty
-                            : _myProductController.myProducts.isEmpty)
+                    : _myProductController.myProducts.isEmpty
                         ? EmptyWidgets.simple()
                         : ListView.builder(
                             physics: const ClampingScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: (Get.arguments != null &&
-                                    Get.arguments['from'] == 'home'
-                                ? _homecontroller.products.length
-                                : _myProductController.myProducts.length),
+                            itemCount: _myProductController.myProducts.length,
                             itemBuilder: (BuildContext context, int index) {
-                              var product = Get.arguments != null &&
-                                      Get.arguments['from'] == 'home'
-                                  ? _homecontroller.products[index]
-                                  : _myProductController.myProducts[index];
-                              String img = ((product as ProductModel)
-                                              .productImages ??
-                                          [])
+                              ProductModel product;
+                              if ([0, 1].contains(
+                                  _myProductController.tabController.value)) {
+                                BuyProductModel temp = (_myProductController
+                                    .myProducts[index] as BuyProductModel);
+                                product = temp.product ?? ProductModel();
+                              } else {
+                                product = (_myProductController
+                                    .myProducts[index] as ProductModel);
+                              }
+
+                              String img = ((product).productImages ?? [])
                                       .isEmpty
                                   ? ''
                                   : product.productImages!.first.image ?? '';
-                              return Obx(
-                                () => filterCard(
-                                  product,
-                                  img,
-                                  onClick: () => _navigate(product),
-                                  isFavourite: _homecontroller.localFavourites[
-                                              (product.id ?? '').toString()] !=
-                                          null
-                                      ? _homecontroller.localFavourites[
-                                              (product.id ?? '').toString()] ??
-                                          false
-                                      : product.isFavourite == 1,
-                                  clickOnFav: () {
-                                    _homecontroller.addProductAsFavourite(
-                                        (product.id ?? '').toString());
-                                  },
-                                ),
+                              return filterCard(
+                                product,
+                                img,
+                                onClick: () => _navigate(product),
+                                clickOnFav: () {},
                               );
                             },
                           ),
@@ -150,17 +142,10 @@ class FilterScreen extends StatelessWidget {
       _myProductController.getProductDetails((product.id ?? '').toString());
       Get.toNamed(Routes.myShareProductDetailsScreen);
     } else {
-      if (Get.arguments != null && Get.arguments['from'] == 'my_product') {
-        AppPrint.info("Navigate: 2");
-        // Edit & View My Product
-        _myProductController.getProductDetails((product.id ?? '').toString());
-        Get.toNamed(Routes.myPhysicalProductDetailScreen);
-      } else {
-        AppPrint.info("Navigate: 3");
-        Map<String, dynamic> data = {"from": 0};
-        _homecontroller.getProductDetails((product.id ?? '').toString());
-        Get.toNamed(Routes.productDetailsScreen, arguments: data);
-      }
+      AppPrint.info("Navigate: 2");
+      // Edit & View My Product
+      _myProductController.getProductDetails((product.id ?? '').toString());
+      Get.toNamed(Routes.myPhysicalProductDetailScreen);
     }
   }
 }
