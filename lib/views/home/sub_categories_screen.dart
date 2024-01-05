@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/utils/app_text.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -37,7 +37,7 @@ class SubCategoriesScreen extends StatelessWidget {
               () => _categoriesController.loadingSubData.value
                   ? ShimmerWidgets.gridView()
                   : _categoriesController.subCategoriesList.isEmpty
-                      ? EmptyWidgets.simple()
+                      ? EmptyWidgets.simple(refresh: () {})
                       : GridView.builder(
                           physics: const ClampingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(

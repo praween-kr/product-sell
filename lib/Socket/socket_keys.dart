@@ -39,6 +39,24 @@ class SocketKeys {
   static String listenerAddBid = "add_bid";
   static String listenerLastBid = "last_bid";
   static String listenerBidOver = "over_bid";
+
+  /// Share Product
+  // Emiter
+  static String emiterGetShareProductData = "viewSingleProduct";
+  static String emiterPurchaseShare = "purchase_share";
+  // Listener
+  static String listenerGetShareProductData = "viewSingleProduct";
+  static String listenerPurchaseShare = "purchase_share";
+
+  /// Group Chat
+  // Emiter
+  static String emiterSendMessageGroup = "send_message_group";
+  static String emiterGroupUsersList = "user_constant_list_group";
+  static String emiterGroupChatHistories = "users_chat_list_group";
+  // Listener
+  static String listenerSendMessageGroup = "send_message_group";
+  static String listenerGroupUsersList = "user_constant_list_group";
+  static String listenerGroupChatHistories = "users_chat_list_group";
 }
 
 class MessageType {

@@ -359,6 +359,41 @@ class HomeCatProductController extends GetxController
   stripeWebhookConfirmPayment(String transactionId) async {
     return await ApiRequests.stripeWebhookConfirmPayment(transactionId);
   }
+
+  ///--- Share Product Socket ------
+  listenerShareProductDetails(ProductDetailsData? data) async {
+    socketPrint("Get Share Product: $data");
+    productDetailsData.value = null;
+    productDetailsData.value = data;
+    loadingData.value = false;
+  }
+
+  emitShareProductDetails(String productId) {
+    loadingData.value = true;
+    SocketEmits.getShareProductData(productId: productId);
+  }
+
+  // Purchage Share
+  TextEditingController sharesInput = TextEditingController(text: '');
+  listenerPurchageProductShare(int? productId) async {
+    AppLoader.hide();
+    if (productId != null) {
+      emitShareProductDetails(productId.toString());
+    }
+  }
+
+  emitPurchageProductShare() {
+    if (productDetailsData.value?.details?.id != null &&
+        sharesInput.text.trim() != '' &&
+        productDetailsData.value?.details?.price != null) {
+      AppLoader.show();
+      SocketEmits.purchaseProductShare(
+          productId: (productDetailsData.value?.details?.id ?? '').toString(),
+          shares: int.parse(sharesInput.text),
+          perSharePrice: double.parse(
+              (productDetailsData.value?.details?.price ?? '0').toString()));
+    }
+  }
 }
 
 // enum ProductType { BID, FIX_PRICE, SHERE }

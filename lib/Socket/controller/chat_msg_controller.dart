@@ -10,6 +10,7 @@ import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
+import '../model/group_message_model.dart';
 import '../model/message_model.dart';
 
 class ChatMsgController extends GetxController {
@@ -138,6 +139,26 @@ class ChatMsgController extends GetxController {
     }
     socketPrint("listenerReadUnread---> $sender, $reciver");
     // messages.refresh();
+  }
+
+  /// Group Chat Listeners----------------
+  var groupMessages = <GroupMessage>[].obs;
+  // Listener Group Send Message----------
+  listenerGroupSendMessage(GroupMessage? data) {
+    socketPrint("Listener:---------> (send_message_listener) ===> $data");
+    if (data != null) {
+      groupMessages.add(data);
+      groupMessages.refresh();
+      socketPrint(
+          "Listener:---------> (send_message_listener) ===> ${data.message}-- ${messages.length}");
+      socketPrint(
+          "Listener:---------> ${data.senderId.toString()} == ${activeUser.value?.id.toString()} -> ${data.senderId.toString() == activeUser.value?.id.toString()}");
+      // if (data.senderId.toString() == activeUser.value?.id.toString()) {
+      //   readUnread(data.senderId.toString());
+      // }
+      clearMsgInput();
+    }
+    // socketPrint("listenerNewMessage---> $data");
   }
 
   //----------------------------------------------------------------------------

@@ -173,22 +173,31 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                   onClick: () {
                                                     if (product.sellOption ==
                                                         null) {
+                                                      // Share Product
                                                       Map<String, dynamic>
                                                           data = {"from": 0};
                                                       if (HomeCatProductController()
                                                           .initialized) {
                                                         Get.find<
                                                                 HomeCatProductController>()
-                                                            .getProductDetails(
+                                                            .emitShareProductDetails(
                                                                 (product.id ??
                                                                         '')
                                                                     .toString());
+                                                        // .getProductDetails(
+                                                        //     (product.id ??
+                                                        //             '')
+                                                        //         .toString());
                                                       } else {
                                                         Get.put(HomeCatProductController())
-                                                            .getProductDetails(
+                                                            .emitShareProductDetails(
                                                                 (product.id ??
                                                                         '')
                                                                     .toString());
+                                                        // .getProductDetails(
+                                                        //     (product.id ??
+                                                        //             '')
+                                                        //         .toString());
                                                       }
                                                       Get.toNamed(
                                                           Routes

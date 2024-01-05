@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
+import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -12,6 +13,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'controller/chat_msg_controller.dart';
 import 'model/add_bids_histories.dart';
 import 'model/chat_product_user_model.dart';
+import 'model/group_message_model.dart';
 import 'model/message_model.dart';
 import 'socket_keys.dart';
 
@@ -233,6 +235,43 @@ class AppSocket {
 
       controller.bidOverListener(false);
     });
+
+    ///----- Share Product Details -----
+    _socketIO?.on(SocketKeys.listenerGetShareProductData, (data) async {
+      HomeCatProductController con = Get.find<HomeCatProductController>();
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerGetShareProductData}), ${jsonEncode(data)}");
+      ProductDetailsData productData = ProductDetailsData.fromJson(data);
+      con.listenerShareProductDetails(productData);
+    });
+
+    ///----- Purchage Share Product -----
+    _socketIO?.on(SocketKeys.listenerPurchaseShare, (data) {
+      HomeCatProductController con = Get.find<HomeCatProductController>();
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerPurchaseShare}), ${jsonEncode(data)}");
+      con.listenerPurchageProductShare(data['shareId']);
+    });
+
+    ///----- Group Chat Listener ------
+    // Send new group message---------------
+    _socketIO?.on(SocketKeys.listenerSendMessageGroup, (data) {
+      //
+      ChatMsgController cmc = Get.find();
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerSendMessageGroup}), ${jsonEncode(data)}");
+      GroupMessage newMsg = GroupMessage.fromJson(data);
+      cmc.listenerGroupSendMessage(newMsg);
+    });
+    // group list---------------
+    // _socketIO?.on(SocketKeys.listenerGroupUsersList, (data) {
+    //   //
+    //   ChatMsgController cmc = Get.find();
+    //   socketPrint(
+    //       "Listener:---------> (${SocketKeys.listenerGroupUsersList}), ${jsonEncode(data)}");
+    //   GroupMessage newMsg = GroupMessage.fromJson(data);
+    //   cmc.listenerGroupSendMessage(newMsg);
+    // });
   }
 }
 
@@ -373,6 +412,64 @@ class SocketEmits {
         "Emit:---------> emitReadUnread-(${SocketKeys.emitBidOver}) - $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitBidOver, req);
+  }
+
+  /// Share Product Details Emiter-----
+  static getShareProductData({required String productId}) {
+    Map<String, dynamic> req = HashMap();
+    req['userId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['id'] = productId;
+    socketPrint(
+        "Emit:---------> emitReadUnread-(${SocketKeys.emiterGetShareProductData}) - $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emiterGetShareProductData, req);
+  }
+
+  static purchaseProductShare(
+      {required String productId,
+      required int shares,
+      required double perSharePrice}) {
+    Map<String, dynamic> req = HashMap();
+    req['userId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['shareId'] = productId;
+    req['totalSharePurchase'] = shares;
+    req['perSharePrice'] = perSharePrice;
+    socketPrint(
+        "Emit:---------> emitReadUnread-(${SocketKeys.emiterPurchaseShare}) - $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emiterPurchaseShare, req);
+  }
+
+  /// Group chat
+  // Send new group message ---------------
+  static sendGroupMessage(
+      {required String groupId,
+      String? type,
+      required String msg, //groupId,senderId,message,messageType
+      String? thumbnail,
+      required String productId}) {
+    socketPrint("dkfldsjf");
+    Map<String, dynamic> req = HashMap();
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['groupId'] = groupId;
+    req['messageType'] = type ?? MessageType.text;
+    req['productId'] = productId;
+    req['message'] = msg;
+    req['thumbnail'] = thumbnail ?? '';
+    socketPrint(
+        "Emit:---------> sendMessage-(${SocketKeys.emitSendMessage}), $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emiterSendMessageGroup, req);
+  }
+
+  // Send new group message ---------------
+  static groupsList() {
+    Map<String, dynamic> req = HashMap();
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    socketPrint(
+        "Emit:---------> sendMessage-(${SocketKeys.emitSendMessage}), $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emiterSendMessageGroup, req);
   }
 }
 

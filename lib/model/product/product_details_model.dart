@@ -6,13 +6,35 @@ import 'product_image_model.dart';
 class ProductDetailsData {
   ProductDetails? details;
   int? favoriteCount;
+  ProductShareModel? lastTrad;
+  int? lastTradBuyPrice;
+  int? availableShare;
+  List<ProductShareModel>? myTrads;
 
-  ProductDetailsData({this.details, this.favoriteCount});
+  ProductDetailsData(
+      {this.details,
+      this.favoriteCount,
+      this.lastTrad,
+      this.lastTradBuyPrice,
+      this.availableShare,
+      this.myTrads});
 
   ProductDetailsData.fromJson(Map<String, dynamic> json) {
     details =
         json['result'] != null ? ProductDetails.fromJson(json['result']) : null;
     favoriteCount = json['favoriteCount'];
+    lastTrad = json['lastTrad'] != null
+        ? ProductShareModel.fromJson(json['lastTrad'])
+        : null;
+    lastTradBuyPrice =
+        json['lastTradBuyPrice'] == "" ? null : json['lastTradBuyPrice'];
+    availableShare = json['availableShare'];
+    if (json['loginUserAlreadyBuy'] != null) {
+      myTrads = <ProductShareModel>[];
+      json['loginUserAlreadyBuy'].forEach((v) {
+        myTrads!.add(ProductShareModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +43,14 @@ class ProductDetailsData {
       data['result'] = details!.toJson();
     }
     data['favoriteCount'] = favoriteCount;
+    if (lastTrad != null) {
+      data['lastTrad'] = lastTrad!.toJson();
+    }
+    data['lastTradBuyPrice'] = lastTradBuyPrice;
+    data['availableShare'] = availableShare;
+    if (myTrads != null) {
+      data['loginUserAlreadyBuy'] = myTrads!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -319,6 +349,57 @@ class UserTransactionInfo {
     data['updatedAt'] = updatedAt;
     if (userInfo != null) {
       data['user'] = userInfo!.toJson();
+    }
+    return data;
+  }
+}
+
+class ProductShareModel {
+  int? id;
+  int? shareId;
+  int? userId;
+  int? totalSharePurchase;
+  int? perSharePrice;
+  int? totalPurchaseSharePrice;
+  String? createdAt;
+  String? updatedAt;
+  UserBasicInfo? user;
+
+  ProductShareModel(
+      {this.id,
+      this.shareId,
+      this.userId,
+      this.totalSharePurchase,
+      this.perSharePrice,
+      this.totalPurchaseSharePrice,
+      this.createdAt,
+      this.updatedAt,
+      this.user});
+
+  ProductShareModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    shareId = json['shareId'];
+    userId = json['userId'];
+    totalSharePurchase = json['totalSharePurchase'];
+    perSharePrice = json['perSharePrice'];
+    totalPurchaseSharePrice = json['totalPurchaseSharePrice'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    user = json['user'] != null ? UserBasicInfo.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['shareId'] = shareId;
+    data['userId'] = userId;
+    data['totalSharePurchase'] = totalSharePurchase;
+    data['perSharePrice'] = perSharePrice;
+    data['totalPurchaseSharePrice'] = totalPurchaseSharePrice;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }
