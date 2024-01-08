@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
-import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
+import 'package:oninto_flutter/Socket/model/one-to-one/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/biding_.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';

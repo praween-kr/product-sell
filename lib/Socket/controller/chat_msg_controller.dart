@@ -3,15 +3,16 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
-import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
+import 'package:oninto_flutter/Socket/model/group/groups_list_model.dart';
+import 'package:oninto_flutter/Socket/model/one-to-one/chat_product_user_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
-import '../model/group_message_model.dart';
-import '../model/message_model.dart';
+import '../model/group/group_message_model.dart';
+import '../model/one-to-one/message_model.dart';
 
 class ChatMsgController extends GetxController {
   var messageController = 0.obs;
@@ -141,27 +142,6 @@ class ChatMsgController extends GetxController {
     // messages.refresh();
   }
 
-  /// Group Chat Listeners----------------
-  var groupMessages = <GroupMessage>[].obs;
-  // Listener Group Send Message----------
-  listenerGroupSendMessage(GroupMessage? data) {
-    socketPrint("Listener:---------> (send_message_listener) ===> $data");
-    if (data != null) {
-      groupMessages.add(data);
-      groupMessages.refresh();
-      socketPrint(
-          "Listener:---------> (send_message_listener) ===> ${data.message}-- ${messages.length}");
-      socketPrint(
-          "Listener:---------> ${data.senderId.toString()} == ${activeUser.value?.id.toString()} -> ${data.senderId.toString() == activeUser.value?.id.toString()}");
-      // if (data.senderId.toString() == activeUser.value?.id.toString()) {
-      //   readUnread(data.senderId.toString());
-      // }
-      clearMsgInput();
-    }
-    // socketPrint("listenerNewMessage---> $data");
-  }
-
-  //----------------------------------------------------------------------------
   // Navigation -------------
   var activeUser = Rx<Receiver?>(null);
   var activeProduct = Rx<Product?>(null);
@@ -271,10 +251,94 @@ class ChatMsgController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getGroupsList();
     getUsers();
   }
-}
 
+  ///=========================================================================
+  /// Group Chat Listeners----------------
+  var groupsList = <GroupConstant>[].obs;
+  var groupMessages = <GroupMessage>[].obs;
+  // Listener Group Send Message----------
+  listenerGroupSendMessage(GroupMessage? data) {
+    socketPrint("Listener:---------> (send_message_listener) ===> $data");
+    if (data != null) {
+      groupMessages.add(data);
+      groupMessages.refresh();
+      socketPrint(
+          "Listener:---------> (send_message_listener) ===> ${data.message}-- ${messages.length}");
+      socketPrint(
+          "Listener:---------> ${data.senderId.toString()} == ${activeUser.value?.id.toString()} -> ${data.senderId.toString() == activeUser.value?.id.toString()}");
+      clearMsgInput();
+    }
+  }
+
+  // socketPrint("listenerNewMessage---> $data");
+  // Listener Groups List----------
+  listenerGroupList(List<GroupConstant> data) {
+    socketPrint("Listener:---------> (listenerGroupUsersList) ===> $data");
+    if (data.isNotEmpty) {
+      groupsList.value = data;
+      groupsList.refresh();
+      socketPrint(
+          "Listener:---------> (listenerGroupUsersList) ===> $data-- ${messages.length}");
+    }
+    loadingData.value = true;
+  }
+
+  // Listener Groups List----------
+  listenerGroupChatHistory(List<GroupMessage> data) {
+    socketPrint("Listener:---------> (listenerGroupUsersList) ===> $data");
+    if (data.isNotEmpty) {
+      groupMessages.value = data;
+      groupMessages.refresh();
+      socketPrint(
+          "Listener:---------> (listenerGroupUsersList) ===> $data-- ${messages.length}");
+    }
+    loadingData.value = true;
+  }
+
+  //---------Group Emitters---------
+  sendGroupMessage(
+      {required String? groupId, required String productId}) async {
+    SocketEmits.sendGroupMessage(
+        groupId: groupId,
+        msg: newMessageInput.text.trim(),
+        type: newMessageType.value,
+        productId: productId);
+    //
+    if (groupId != null) {
+      if (newMessageType.value == MessageType.text) {
+        if (newMessageInput.text.trim() != '') {
+          SocketEmits.sendGroupMessage(
+              groupId: groupId,
+              msg: newMessageInput.text.trim(),
+              type: newMessageType.value,
+              productId: productId);
+        }
+      } else if (newMessageAttachment.value != '') {
+        socketPrint("thum: ${newMessageInputThumb.text}");
+        await _uploadAttachment(() {
+          if (newMessageAttachment.value != '') {
+            SocketEmits.sendGroupMessage(
+                groupId: groupId,
+                msg: newMessageInput.text.trim(),
+                type: newMessageType.value,
+                productId: productId,
+                thumbnail: newMessageInputThumb.text);
+          }
+        });
+      }
+      // readUnread(receiverId);
+      clearMsgInput();
+    }
+  }
+
+  getGroupsList() {
+    loadingData.value = true;
+    SocketEmits.groupsList();
+  }
+}
 
 /*
   room id create with-> connected id, user1, user2, req from comming userid, reciverJoined/Not

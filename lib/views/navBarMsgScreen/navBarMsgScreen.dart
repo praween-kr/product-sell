@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
-import 'package:oninto_flutter/Socket/model/chat_product_user_model.dart';
+import 'package:oninto_flutter/Socket/model/one-to-one/chat_product_user_model.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
@@ -10,6 +10,7 @@ import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 
+import '../../Socket/model/group/groups_list_model.dart';
 import '../../utils/app_text.dart';
 import '../../utils/appbar.dart';
 import '../../utils/color_constant.dart';
@@ -119,7 +120,7 @@ class NavBarMsgScreen extends StatelessWidget {
               child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    communities(),
+                    Obx(() => communities(_chatMsgController.groupsList)),
                     Obx(() => products(_chatMsgController.users))
                   ]),
             )
@@ -267,73 +268,95 @@ class NavBarMsgScreen extends StatelessWidget {
     );
   }
 
-  ListView communities() {
-    return ListView.builder(
-        itemCount: 2,
-        shrinkWrap: true,
-        itemBuilder: (context, position) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 35.0, vertical: 15.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.gyaradoMsgScreen);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            Assets.assetsCrowd,
-                            height: 57.0,
-                            width: 57.0,
-                          ),
-                          const SizedBox(
-                            width: 12.0,
-                          ),
-                          const AppText(
-                            text: "Gyarado EX",
-                            textSize: 15.0,
-                            color: AppColor.blackColor,
-                            style: AppTextStyle.medium,
-                          ),
-                        ],
+  Widget communities(List<GroupConstant> groups) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        await _chatMsgController.getGroupsList();
+        await Future.delayed(const Duration(seconds: 1));
+      },
+      child: groups.isEmpty
+          ? EmptyWidgets.simple(refresh: () {})
+          : ListView.builder(
+              itemCount: groups.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                GroupConstant data = groups[index];
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 35.0, vertical: 15.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.gyaradoMsgScreen);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                data.group?.productBaseInfo?.productImage !=
+                                        null
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 2.5, right: 2.5),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          child: AppImage.view(
+                                              "${ImageBaseUrls.product}${data.group?.productBaseInfo?.productImage ?? ''}",
+                                              height: 57.0,
+                                              width: 57.0,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      )
+                                    : Image.asset(
+                                        Assets.assetsCrowd,
+                                        height: 57.0,
+                                        width: 57.0,
+                                      ),
+                                const SizedBox(width: 12.0),
+                                AppText(
+                                  text: data.group?.productBaseInfo?.name ?? '',
+                                  textSize: 15.0,
+                                  color: AppColor.blackColor,
+                                  style: AppTextStyle.medium,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 10.0),
+                                  decoration: const BoxDecoration(
+                                    color: AppColor.blackColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Center(
+                                    child: AppText(
+                                      text: "2",
+                                      color: AppColor.white,
+                                      textSize: 10.0,
+                                      style: AppTextStyle.regular,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 10.0),
-                            decoration: const BoxDecoration(
-                              color: AppColor.blackColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Center(
-                              child: AppText(
-                                text: "2",
-                                color: AppColor.white,
-                                textSize: 10.0,
-                                style: AppTextStyle.regular,
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Divider(
-                color: AppColor.blackColor.withOpacity(0.1),
-                height: 1.0,
-                thickness: 1.0,
-              )
-            ],
-          );
-        });
+                    ),
+                    Divider(
+                      color: AppColor.blackColor.withOpacity(0.1),
+                      height: 1.0,
+                      thickness: 1.0,
+                    )
+                  ],
+                );
+              }),
+    );
   }
 }

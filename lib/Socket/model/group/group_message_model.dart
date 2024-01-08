@@ -1,4 +1,5 @@
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
+import 'package:oninto_flutter/model/home/category_model.dart';
 
 class GroupMessage {
   int? id;
@@ -19,7 +20,7 @@ class GroupMessage {
   String? createdAt;
   String? updatedAt;
   UserBasicInfo? sender;
-  ChatGroup? group;
+  UserBasicInfo? receiver;
 
   GroupMessage(
       {this.id,
@@ -40,7 +41,7 @@ class GroupMessage {
       this.createdAt,
       this.updatedAt,
       this.sender,
-      this.group});
+      this.receiver});
 
   GroupMessage.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -62,7 +63,9 @@ class GroupMessage {
     updatedAt = json['updatedAt'];
     sender =
         json['sender'] != null ? UserBasicInfo.fromJson(json['sender']) : null;
-    group = json['group'] != null ? ChatGroup.fromJson(json['group']) : null;
+    receiver = json['receiver'] != null
+        ? UserBasicInfo.fromJson(json['receiver'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -87,8 +90,8 @@ class GroupMessage {
     if (sender != null) {
       data['sender'] = sender!.toJson();
     }
-    if (group != null) {
-      data['group'] = group!.toJson();
+    if (receiver != null) {
+      data['receiver'] = receiver!.toJson();
     }
     return data;
   }
@@ -97,11 +100,12 @@ class GroupMessage {
 class ChatGroup {
   int? id;
   int? shareId;
-  int? groupName;
+  String? groupName;
   int? adminId;
   String? createdAt;
   String? updatedAt;
   UserBasicInfo? user;
+  ProductBaseInfo? productBaseInfo;
   List<GroupUser>? groupUser;
 
   ChatGroup(
@@ -112,16 +116,21 @@ class ChatGroup {
       this.createdAt,
       this.updatedAt,
       this.user,
+      this.productBaseInfo,
       this.groupUser});
 
   ChatGroup.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     shareId = json['shareId'];
-    groupName = json['groupName'];
+    // ignore: prefer_null_aware_operators
+    groupName = json['groupName'] == null ? null : json['groupName'].toString();
     adminId = json['adminId'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     user = json['user'] != null ? UserBasicInfo.fromJson(json['user']) : null;
+    productBaseInfo = json['product'] != null
+        ? ProductBaseInfo.fromJson(json['product'])
+        : null;
     if (json['groupUser'] != null) {
       groupUser = <GroupUser>[];
       json['groupUser'].forEach((v) {
@@ -140,6 +149,9 @@ class ChatGroup {
     data['updatedAt'] = updatedAt;
     if (user != null) {
       data['user'] = user!.toJson();
+    }
+    if (productBaseInfo != null) {
+      data['product'] = productBaseInfo!.toJson();
     }
     if (groupUser != null) {
       data['groupUser'] = groupUser!.map((v) => v.toJson()).toList();
@@ -183,6 +195,38 @@ class GroupUser {
     if (user != null) {
       data['user'] = user!.toJson();
     }
+    return data;
+  }
+}
+
+class ProductBaseInfo {
+  int? id;
+  String? name;
+  String? image;
+  String? productImage;
+  CategoryModel? category;
+
+  ProductBaseInfo(
+      {this.id, this.name, this.image, this.productImage, this.category});
+
+  ProductBaseInfo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    image = json['image'];
+    if (json['product_images'] != null) {
+      productImage = (json['product_images'] as List).isEmpty
+          ? null
+          : (json['product_images'] as List).first['image'];
+    }
+    category = json['category'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['category'] = category;
     return data;
   }
 }

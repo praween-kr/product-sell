@@ -12,9 +12,10 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'controller/chat_msg_controller.dart';
 import 'model/add_bids_histories.dart';
-import 'model/chat_product_user_model.dart';
-import 'model/group_message_model.dart';
-import 'model/message_model.dart';
+import 'model/group/group_message_model.dart';
+import 'model/group/groups_list_model.dart';
+import 'model/one-to-one/chat_product_user_model.dart';
+import 'model/one-to-one/message_model.dart';
 import 'socket_keys.dart';
 
 class AppSocket {
@@ -253,7 +254,7 @@ class AppSocket {
       con.listenerPurchageProductShare(data['shareId']);
     });
 
-    ///----- Group Chat Listener ------
+    ///=========== Group Chat Listener ==============
     // Send new group message---------------
     _socketIO?.on(SocketKeys.listenerSendMessageGroup, (data) {
       //
@@ -264,14 +265,23 @@ class AppSocket {
       cmc.listenerGroupSendMessage(newMsg);
     });
     // group list---------------
-    // _socketIO?.on(SocketKeys.listenerGroupUsersList, (data) {
-    //   //
-    //   ChatMsgController cmc = Get.find();
-    //   socketPrint(
-    //       "Listener:---------> (${SocketKeys.listenerGroupUsersList}), ${jsonEncode(data)}");
-    //   GroupMessage newMsg = GroupMessage.fromJson(data);
-    //   cmc.listenerGroupSendMessage(newMsg);
-    // });
+    _socketIO?.on(SocketKeys.listenerGroupUsersList, (data) {
+      //
+      ChatMsgController cmc = Get.find();
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerGroupUsersList}), ${jsonEncode(data)}");
+      GroupListModel groupList = GroupListModel.fromJson(data);
+      cmc.listenerGroupList(groupList.list ?? []);
+    });
+    // group chat history---------------
+    _socketIO?.on(SocketKeys.listenerGroupChatHistories, (data) {
+      //
+      ChatMsgController cmc = Get.find();
+      socketPrint(
+          "Listener:---------> (${SocketKeys.listenerGroupChatHistories}), ${jsonEncode(data)}");
+      GroupListModel groupList = GroupListModel.fromJson(data);
+      cmc.listenerGroupList(groupList.list ?? []);
+    });
   }
 }
 
@@ -440,10 +450,10 @@ class SocketEmits {
     AppSocket.socket()?.emit(SocketKeys.emiterPurchaseShare, req);
   }
 
-  /// Group chat
+  /// ///=========== Group Chat Emitter ==============
   // Send new group message ---------------
   static sendGroupMessage(
-      {required String groupId,
+      {required String? groupId,
       String? type,
       required String msg, //groupId,senderId,message,messageType
       String? thumbnail,
@@ -467,9 +477,20 @@ class SocketEmits {
     Map<String, dynamic> req = HashMap();
     req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
     socketPrint(
-        "Emit:---------> sendMessage-(${SocketKeys.emitSendMessage}), $req",
+        "Emit:---------> sendMessage-(${SocketKeys.emiterGroupUsersList}), $req",
         blue: true);
-    AppSocket.socket()?.emit(SocketKeys.emiterSendMessageGroup, req);
+    AppSocket.socket()?.emit(SocketKeys.emiterGroupUsersList, req);
+  }
+
+  // Histories of Group message ---------------
+  static groupChatHistory({required String groupId}) {
+    Map<String, dynamic> req = HashMap();
+    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
+    req['groupId'] = groupId;
+    socketPrint(
+        "Emit:---------> sendMessage-(${SocketKeys.emiterGroupChatHistories}), $req",
+        blue: true);
+    AppSocket.socket()?.emit(SocketKeys.emiterGroupChatHistories, req);
   }
 }
 
