@@ -77,14 +77,9 @@ class ChatMsgController extends GetxController {
 
   // Listener Send Message----------
   listenerNewMessage(Message? data) {
-    socketPrint("Listener:---------> (send_message_listener) ===> $data");
     if (data != null) {
       messages.add(data);
       messages.refresh();
-      socketPrint(
-          "Listener:---------> (send_message_listener) ===> ${data.message}-- ${messages.length}");
-      socketPrint(
-          "Listener:---------> ${data.senderId.toString()} == ${activeUser.value?.id.toString()} -> ${data.senderId.toString() == activeUser.value?.id.toString()}");
       if (data.senderId.toString() == activeUser.value?.id.toString()) {
         readUnread(data.senderId.toString());
       }
@@ -256,19 +251,24 @@ class ChatMsgController extends GetxController {
   }
 
   ///=========================================================================
+  // Navigation -------------
+  // var activeUser = Rx<Receiver?>(null);
+  var activeGroup = Rx<ChatGroup?>(null);
+  goToGroupChatRoom(ChatGroup? groupInfo) {
+    groupMessages.clear();
+    Get.toNamed(Routes.groupMessageScreen);
+    // readUnread((reciverInfo.receiver?.id ?? '').toString());
+    getGroupMessagesHistoriy((activeGroup.value?.id ?? '').toString());
+  }
+
   /// Group Chat Listeners----------------
   var groupsList = <GroupConstant>[].obs;
   var groupMessages = <GroupMessage>[].obs;
   // Listener Group Send Message----------
   listenerGroupSendMessage(GroupMessage? data) {
-    socketPrint("Listener:---------> (send_message_listener) ===> $data");
     if (data != null) {
       groupMessages.add(data);
       groupMessages.refresh();
-      socketPrint(
-          "Listener:---------> (send_message_listener) ===> ${data.message}-- ${messages.length}");
-      socketPrint(
-          "Listener:---------> ${data.senderId.toString()} == ${activeUser.value?.id.toString()} -> ${data.senderId.toString() == activeUser.value?.id.toString()}");
       clearMsgInput();
     }
   }
@@ -276,37 +276,26 @@ class ChatMsgController extends GetxController {
   // socketPrint("listenerNewMessage---> $data");
   // Listener Groups List----------
   listenerGroupList(List<GroupConstant> data) {
-    socketPrint("Listener:---------> (listenerGroupUsersList) ===> $data");
     if (data.isNotEmpty) {
       groupsList.value = data;
       groupsList.refresh();
-      socketPrint(
-          "Listener:---------> (listenerGroupUsersList) ===> $data-- ${messages.length}");
     }
-    loadingData.value = true;
+    loadingData.value = false;
   }
 
   // Listener Groups List----------
   listenerGroupChatHistory(List<GroupMessage> data) {
-    socketPrint("Listener:---------> (listenerGroupUsersList) ===> $data");
     if (data.isNotEmpty) {
       groupMessages.value = data;
       groupMessages.refresh();
-      socketPrint(
-          "Listener:---------> (listenerGroupUsersList) ===> $data-- ${messages.length}");
     }
-    loadingData.value = true;
+    loadingChatHistories.value = false;
   }
 
   //---------Group Emitters---------
+  // Send message
   sendGroupMessage(
       {required String? groupId, required String productId}) async {
-    SocketEmits.sendGroupMessage(
-        groupId: groupId,
-        msg: newMessageInput.text.trim(),
-        type: newMessageType.value,
-        productId: productId);
-    //
     if (groupId != null) {
       if (newMessageType.value == MessageType.text) {
         if (newMessageInput.text.trim() != '') {
@@ -334,9 +323,16 @@ class ChatMsgController extends GetxController {
     }
   }
 
+  // group list
   getGroupsList() {
     loadingData.value = true;
     SocketEmits.groupsList();
+  }
+
+  // Group Message List
+  getGroupMessagesHistoriy(String groupId) {
+    loadingChatHistories.value = true;
+    SocketEmits.groupChatHistory(groupId: groupId);
   }
 }
 

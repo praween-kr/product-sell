@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/routes/routes.dart';
+import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
@@ -10,6 +10,7 @@ import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
+import '../../Socket/model/group/group_message_model.dart';
 import '../../common_controller/home/home_controller.dart';
 
 class PublicShareProductDetails extends StatelessWidget {
@@ -147,7 +148,8 @@ class PublicShareProductDetails extends StatelessWidget {
                               ? const SizedBox.shrink()
                               : GestureDetector(
                                   onTap: () {
-                                    Get.toNamed(Routes.navbarScreen);
+                                    // Get.toNamed(Routes.navbarScreen);
+                                    _sendMessage();
                                   },
                                   child: const CommonButton(
                                     height: 50,
@@ -170,6 +172,37 @@ class PublicShareProductDetails extends StatelessWidget {
               ),
       ),
     );
+  }
+
+  _sendMessage() {
+    ChatMsgController cmc;
+    if (ChatMsgController().initialized) {
+      cmc = Get.find<ChatMsgController>();
+    } else {
+      cmc = Get.put(ChatMsgController());
+    }
+    ChatGroup chatGroup = ChatGroup(
+      id: _controller.productDetailsData.value?.groupDetail?.id,
+      shareId: _controller.productDetailsData.value?.details?.id,
+      productBaseInfo: ProductBaseInfo(
+        category: _controller.productDetailsData.value?.details?.category,
+        id: _controller.productDetailsData.value?.details?.id,
+        image: _controller.productDetailsData.value?.details?.image,
+        name: _controller.productDetailsData.value?.details?.name,
+      ),
+      user: _controller.productDetailsData.value?.groupDetail?.user,
+    );
+    cmc.activeGroup.value = chatGroup;
+    cmc.goToGroupChatRoom(chatGroup);
+    // socketPrint(
+    //     "Send First Message: ${(controller.productDetailsData.value?.details?.vendorId ?? '').toString()}!");
+    cmc.newMessageInput.text = "Hello";
+
+    // cmc.sendNewMessage(
+    //     (controller.productDetailsData.value?.details?.vendorId ?? '')
+    //         .toString(),
+    //     '1');
+    // Get.toNamed(Routes.messageScreen);
   }
 
   Future buyShareDialog(

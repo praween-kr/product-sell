@@ -4,7 +4,6 @@ import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/one-to-one/chat_product_user_model.dart';
 import 'package:oninto_flutter/generated/assets.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
@@ -288,7 +287,8 @@ class NavBarMsgScreen extends StatelessWidget {
                           horizontal: 35.0, vertical: 15.0),
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.gyaradoMsgScreen);
+                          _chatMsgController.activeGroup.value = data.group;
+                          _chatMsgController.goToGroupChatRoom(data.group);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

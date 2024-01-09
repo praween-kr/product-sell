@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/routes/routes.dart';
@@ -325,10 +326,27 @@ class ProductScreen extends StatelessWidget {
                                       title: product.name ?? '',
                                       soldOn: product.createdAt ?? '',
                                       onClick: () {
-                                        _myProductController.getProductDetails(
-                                            (product.id ?? '').toString());
+                                        // _myProductController.getProductDetails(
+                                        //     (product.id ?? '').toString());
+                                        // Get.toNamed(
+                                        //     Routes.myShareProductDetailsScreen);
+                                        // Share Product
+                                        Map<String, dynamic> data = {"from": 0};
+                                        if (HomeCatProductController()
+                                            .initialized) {
+                                          Get.find<HomeCatProductController>()
+                                              .emitShareProductDetails(
+                                                  (product.id ?? '')
+                                                      .toString());
+                                        } else {
+                                          Get.put(HomeCatProductController())
+                                              .emitShareProductDetails(
+                                                  (product.id ?? '')
+                                                      .toString());
+                                        }
                                         Get.toNamed(
-                                            Routes.myShareProductDetailsScreen);
+                                            Routes.publicShareProductDetails,
+                                            arguments: data);
                                       },
                                     );
                                   }),

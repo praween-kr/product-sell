@@ -279,8 +279,8 @@ class AppSocket {
       ChatMsgController cmc = Get.find();
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerGroupChatHistories}), ${jsonEncode(data)}");
-      GroupListModel groupList = GroupListModel.fromJson(data);
-      cmc.listenerGroupList(groupList.list ?? []);
+      GroupMessageListModel messages = GroupMessageListModel.fromJson(data);
+      cmc.listenerGroupChatHistory(messages.list ?? []);
     });
   }
 }
@@ -392,7 +392,7 @@ class SocketEmits {
     AppSocket.socket()?.emit(SocketKeys.emitReadUnread, req);
   }
 
-  ///----- Biding Emit ------
+  ///======== Biding Emit =========
   static addBid({required String productId, required double bidPrice}) {
     Map<String, dynamic> req = HashMap();
     req['userId'] = UserStoredInfo().userInfo?.id ?? '';
@@ -424,7 +424,7 @@ class SocketEmits {
     AppSocket.socket()?.emit(SocketKeys.emitBidOver, req);
   }
 
-  /// Share Product Details Emiter-----
+  /// ==============Share Product Details Emiter=======
   static getShareProductData({required String productId}) {
     Map<String, dynamic> req = HashMap();
     req['userId'] = UserStoredInfo().userInfo?.id ?? '';
@@ -494,6 +494,7 @@ class SocketEmits {
   }
 }
 
+//------------------------------------------------------------------------------------------
 socketPrint(dynamic data, {bool blue = false}) {
   if (blue) {
     debugPrint("Socket Debug: $data");

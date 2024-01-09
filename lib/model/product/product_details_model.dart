@@ -1,3 +1,4 @@
+import 'package:oninto_flutter/Socket/model/group/group_message_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 
 import '../auth/user_info_model.dart';
@@ -6,10 +7,13 @@ import 'product_image_model.dart';
 class ProductDetailsData {
   ProductDetails? details;
   int? favoriteCount;
-  ProductShareModel? lastTrad;
+  ShareTradModel? lastTrad;
   int? lastTradBuyPrice;
   int? availableShare;
-  List<ProductShareModel>? myTrads;
+  List<ShareTradModel>? myTrads;
+
+  UserTransactionInfo? userTransactionInfo;
+  ChatGroup? groupDetail;
 
   ProductDetailsData(
       {this.details,
@@ -17,24 +21,28 @@ class ProductDetailsData {
       this.lastTrad,
       this.lastTradBuyPrice,
       this.availableShare,
-      this.myTrads});
+      this.myTrads,
+      this.groupDetail});
 
   ProductDetailsData.fromJson(Map<String, dynamic> json) {
     details =
         json['result'] != null ? ProductDetails.fromJson(json['result']) : null;
     favoriteCount = json['favoriteCount'];
     lastTrad = json['lastTrad'] != null
-        ? ProductShareModel.fromJson(json['lastTrad'])
+        ? ShareTradModel.fromJson(json['lastTrad'])
         : null;
     lastTradBuyPrice =
         json['lastTradBuyPrice'] == "" ? null : json['lastTradBuyPrice'];
     availableShare = json['availableShare'];
     if (json['loginUserAlreadyBuy'] != null) {
-      myTrads = <ProductShareModel>[];
+      myTrads = <ShareTradModel>[];
       json['loginUserAlreadyBuy'].forEach((v) {
-        myTrads!.add(ProductShareModel.fromJson(v));
+        myTrads!.add(ShareTradModel.fromJson(v));
       });
     }
+    groupDetail = json['groupDetail'] != null
+        ? ChatGroup.fromJson(json['groupDetail'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -354,7 +362,7 @@ class UserTransactionInfo {
   }
 }
 
-class ProductShareModel {
+class ShareTradModel {
   int? id;
   int? shareId;
   int? userId;
@@ -365,7 +373,7 @@ class ProductShareModel {
   String? updatedAt;
   UserBasicInfo? user;
 
-  ProductShareModel(
+  ShareTradModel(
       {this.id,
       this.shareId,
       this.userId,
@@ -376,7 +384,7 @@ class ProductShareModel {
       this.updatedAt,
       this.user});
 
-  ProductShareModel.fromJson(Map<String, dynamic> json) {
+  ShareTradModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     shareId = json['shareId'];
     userId = json['userId'];

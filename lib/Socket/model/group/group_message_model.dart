@@ -1,6 +1,29 @@
 import 'package:oninto_flutter/model/auth/user_info_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 
+class GroupMessageListModel {
+  List<GroupMessage>? list;
+
+  GroupMessageListModel({this.list});
+
+  GroupMessageListModel.fromJson(Map<String, dynamic> json) {
+    if (json['chatList'] != null) {
+      list = <GroupMessage>[];
+      json['chatList'].forEach((v) {
+        list!.add(GroupMessage.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (list != null) {
+      data['chatList'] = list!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class GroupMessage {
   int? id;
   int? senderId;

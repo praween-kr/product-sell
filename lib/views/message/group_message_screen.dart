@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
-import 'package:oninto_flutter/Socket/model/one-to-one/chat_product_user_model.dart';
-import 'package:oninto_flutter/Socket/model/one-to-one/message_model.dart';
+import 'package:oninto_flutter/Socket/model/group/group_message_model.dart';
 import 'package:oninto_flutter/Socket/socket_keys.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/helper/file_picker.dart';
@@ -24,8 +24,8 @@ import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import '../../utils/app_text.dart';
 import '../../utils/color_constant.dart';
 
-class MessageScreen extends StatelessWidget {
-  MessageScreen({super.key});
+class GroupMessageScreen extends StatelessWidget {
+  GroupMessageScreen({super.key});
 
   final ChatMsgController _chatMsgController = Get.find();
 
@@ -34,10 +34,9 @@ class MessageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
-        // heading: 'Men Tshirt',
         headingChild: Obx(
           () => Text(
-            _chatMsgController.activeProduct.value?.name ?? '',
+            _chatMsgController.activeGroup.value?.productBaseInfo?.name ?? '',
             style: const TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -46,15 +45,30 @@ class MessageScreen extends StatelessWidget {
         ),
         textStyle: const TextStyle(
             fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
-        action: popupWidget(
-            title: "Clear",
-            onClick: () {
-              _chatMsgController.clearAllChats(
-                  (_chatMsgController.activeUser.value?.id ?? '').toString());
-            }),
-        // InkWell(
-        //     onTap: () {},
-        //     child: const Icon(Icons.more_vert, color: AppColor.blackColor)),
+        action: GestureDetector(
+          onTap: () {
+            customDialog(context);
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+                color: AppColor.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: AppColor.borderColor.withOpacity(0.3),
+                      blurRadius: 6)
+                ],
+                borderRadius: BorderRadius.circular(20.0)),
+            child: const Center(
+              child: Icon(
+                Icons.bar_chart_rounded,
+                color: AppColor.appColor,
+                size: 40.0,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -63,7 +77,7 @@ class MessageScreen extends StatelessWidget {
             child: Obx(
               () => _chatMsgController.loadingChatHistories.value
                   ? ShimmerWidgets.chatListView()
-                  : _chatMsgController.messages.isEmpty
+                  : _chatMsgController.groupMessages.isEmpty
                       ? EmptyWidgets.simple()
                       : SingleChildScrollView(
                           reverse: true,
@@ -71,17 +85,15 @@ class MessageScreen extends StatelessWidget {
                           child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: _chatMsgController.messages.length,
+                            itemCount: _chatMsgController.groupMessages.length,
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             itemBuilder: (context, index) {
-                              Message message =
-                                  _chatMsgController.messages[index];
+                              GroupMessage message =
+                                  _chatMsgController.groupMessages[index];
 
                               return messageCard(
                                 index,
                                 message,
-                                _chatMsgController.activeUser.value,
-                                _chatMsgController.activeProduct.value,
                                 onLongClick: () => _deleteMsg(context,
                                     msgId: message.id.toString()),
                               );
@@ -131,10 +143,14 @@ class MessageScreen extends StatelessWidget {
                 const SizedBox(width: 5),
                 InkWell(
                     onTap: () {
-                      _chatMsgController.sendNewMessage(
-                          _chatMsgController.activeUser.value?.id.toString(),
-                          (_chatMsgController.activeProduct.value?.id)
-                              .toString());
+                      _chatMsgController.sendGroupMessage(
+                        groupId:
+                            _chatMsgController.activeGroup.value?.id.toString(),
+                        productId: (_chatMsgController
+                                    .activeGroup.value?.productBaseInfo?.id ??
+                                '')
+                            .toString(),
+                      );
                     },
                     child: const Icon(Icons.send, color: AppColor.blackColor))
               ],
@@ -150,7 +166,7 @@ class MessageScreen extends StatelessWidget {
       context,
       msg: "Are you sure\nwant to delete message?",
       clickOnYes: () {
-        _chatMsgController.deleteMsg(msgId);
+        // _chatMsgController.deleteMsg(msgId);
         Get.back();
       },
     );
@@ -222,19 +238,22 @@ class MessageScreen extends StatelessWidget {
     );
   }
 
-  Widget messageCard(
-      int index, Message message, Receiver? reciverInfo, Product? product,
+  Widget messageCard(int index, GroupMessage message,
       {Function()? onLongClick, Function()? onClick}) {
     bool me = UserStoredInfo().userInfo?.id == message.senderId;
     bool isRead = message.readStatus == 1;
     //
-    String productImg = ImageBaseUrls.product;
-    if ((product?.image ?? '') == '') {
-      if ((product?.productImages ?? []).isNotEmpty) {
-        productImg += (product?.productImages ?? []).first.image ?? '';
-      }
-    } else {
-      productImg += product?.image ?? '';
+    String? userImg =
+        (message.sender?.image ?? '') == '' ? null : message.sender?.image;
+    String userNameChar = '';
+    String userName = '';
+    if ((message.sender?.firstName ?? '') != '') {
+      userNameChar += (message.sender?.firstName ?? '')[0];
+      userName += message.sender?.firstName ?? '';
+    }
+    if ((message.sender?.lastName ?? '') != '') {
+      userNameChar += (message.sender?.lastName ?? '')[0];
+      userName += " ${message.sender?.lastName ?? ''}";
     }
 
     ///----- Divider -----
@@ -246,7 +265,7 @@ class MessageScreen extends StatelessWidget {
     String? secLastMessageDate = index == 0
         ? null
         : DateFormat("dd-MMM-yyyy").format(DateTime.parse(
-            _chatMsgController.messages[index - 1].createdAt ?? ''));
+            _chatMsgController.groupMessages[index - 1].createdAt ?? ''));
     //
     String dt = '';
     if (index == 0) {
@@ -278,13 +297,13 @@ class MessageScreen extends StatelessWidget {
               onLongPress: onLongClick,
               onTap: onClick,
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: Get.width * 0.65),
+                constraints: BoxConstraints(maxWidth: Get.width * 0.7),
                 child: Column(
                   crossAxisAlignment:
                       me ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         me
                             ? const SizedBox.shrink()
@@ -295,38 +314,72 @@ class MessageScreen extends StatelessWidget {
                                   height: Get.context!.width * 0.12,
                                   width: Get.context!.width * 0.12,
                                   color: Colors.grey.shade300,
-                                  child: AppImage.view(productImg,
-                                      fit: BoxFit.cover),
+                                  child: userImg == null
+                                      ? Center(
+                                          child: Text(
+                                            userNameChar,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColor.themeColor),
+                                          ),
+                                        )
+                                      : AppImage.view(userImg,
+                                          fit: BoxFit.cover),
                                 ),
                               ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 14),
-                          decoration: BoxDecoration(
-                              color: me
-                                  ? Colors.grey.shade700
-                                  : AppColor.themeColor.withOpacity(0.0),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12))),
-                          child:
-                              message.messageType.toString() == MessageType.text
-                                  ? AppText(
-                                      text: message.message ?? '',
-                                      lineHeight: 1.5,
-                                      letterSpacing: 0.6,
-                                      color: me ? Colors.white : Colors.black,
-                                      fontFamily: "Oswald",
-                                      fontWeight: FontWeight.w500,
-                                      textSize: 14)
-                                  : _attachmentView(
-                                      message.messageType.toString() ==
-                                              MessageType.video
-                                          ? message.thumbnail ?? ''
-                                          : message.message ?? '',
-                                      video: message.messageType.toString() ==
-                                              MessageType.video
-                                          ? message.message
-                                          : null),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: me
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
+                            children: [
+                              me
+                                  ? const SizedBox.shrink()
+                                  : Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 14),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 3),
+                                      decoration: BoxDecoration(
+                                          color: AppColor.grey.withOpacity(0.2),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(2))),
+                                      child: Text(
+                                        userName,
+                                        style: const TextStyle(fontSize: 10),
+                                      )),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 14),
+                                decoration: BoxDecoration(
+                                    color: me
+                                        ? Colors.grey.shade700
+                                        : AppColor.themeColor.withOpacity(0.0),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12))),
+                                child: message.messageType.toString() ==
+                                        MessageType.text
+                                    ? AppText(
+                                        text: message.message ?? '',
+                                        lineHeight: 1.5,
+                                        letterSpacing: 0.6,
+                                        color: me ? Colors.white : Colors.black,
+                                        fontFamily: "Oswald",
+                                        fontWeight: FontWeight.w500,
+                                        textSize: 14)
+                                    : _attachmentView(
+                                        message.messageType.toString() ==
+                                                MessageType.video
+                                            ? message.thumbnail ?? ''
+                                            : message.message ?? '',
+                                        video: message.messageType.toString() ==
+                                                MessageType.video
+                                            ? message.message
+                                            : null),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -483,7 +536,195 @@ class MessageScreen extends StatelessWidget {
               ),
             );
 
+  /// Dialog View
+  customDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Material(
+              type: MaterialType.transparency,
+              child: Align(
+                child: Container(
+                  height: 390.0, width: 300.0,
+                  // padding: const EdgeInsets.symmetric(vertical: 30.0),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 35.0, vertical: 20.0),
+                  decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 12.0, bottom: 30.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Align(
+                          alignment: Alignment.center,
+                          child: AppText(
+                            text: "Poll",
+                            style: AppTextStyle.title,
+                            textSize: 13,
+                            color: AppColor.blackColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 24.0,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 13.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: "Question",
+                                style: AppTextStyle.title,
+                                textSize: 9,
+                                color: AppColor.blackColor,
+                              ),
+                              SizedBox(
+                                height: 7.0,
+                              ),
+                              AppText(
+                                text: "What's your poll question ?",
+                                textSize: 9,
+                                color: AppColor.blackColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 13.0,
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: AppColor.blackColor.withOpacity(0.2),
+                        ),
+                        const SizedBox(
+                          height: 12.0,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 13.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: "Expiration",
+                                style: AppTextStyle.title,
+                                textSize: 9,
+                                color: AppColor.blackColor,
+                              ),
+                              SizedBox(
+                                height: 11.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_outlined,
+                                    color: AppColor.appColor,
+                                    size: 15.0,
+                                  ),
+                                  SizedBox(
+                                    width: 11.0,
+                                  ),
+                                  AppText(
+                                    text: "13-12-2022",
+                                    textSize: 9,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 19.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.watch_later,
+                                    color: AppColor.appColor,
+                                    size: 15.0,
+                                  ),
+                                  SizedBox(
+                                    width: 11.0,
+                                  ),
+                                  AppText(
+                                    text: "16:35",
+                                    textSize: 9,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 13.0,
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: AppColor.blackColor.withOpacity(0.2),
+                        ),
+                        const SizedBox(
+                          height: 13.0,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 13.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: "Options",
+                                style: AppTextStyle.title,
+                                textSize: 9,
+                                color: AppColor.blackColor,
+                              ),
+                              SizedBox(
+                                height: 11.0,
+                              ),
+                              AppText(
+                                text: "Option 1",
+                                textSize: 9,
+                                color: AppColor.blackColor,
+                              ),
+                              SizedBox(
+                                height: 22.0,
+                              ),
+                              AppText(
+                                text: "Option 2",
+                                textSize: 9,
+                                color: AppColor.blackColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: const CommonButton(
+                            color: AppColor.appColor,
+                            radius: 17,
+                            margin: EdgeInsets.only(right: 30, left: 30),
+                            //height: 39,
+                            text: "Create Poll",
+                            textStyle:
+                                TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ));
+        });
+  }
+
   List fileTypes = ['pdf', 'docx', 'doc', 'txt', 'pptx', 'ppt', 'xlsx', 'xls'];
 
-  List imageTypes = ["png", "jpeg"];
+  List imageTypes = ["png", "jpeg", "jpg"];
 }

@@ -19,8 +19,8 @@ import '../views/home/payment_screen.dart';
 import '../views/home/product_details_screen.dart';
 import '../views/home/sub_categories_screen.dart';
 import '../views/insight_screen/insight_screen.dart';
+import '../views/message/group_message_screen.dart';
 import '../views/message/message_screen.dart';
-import '../views/navBarMsgScreen/gyaradoMsgScreen/gyaradoMsgScreen.dart';
 import '../views/navBarMsgScreen/navBarMsgScreen.dart';
 import '../views/sellItemScreen/sell_item_screen.dart';
 import '../views/settingScreen/addressScreen/address_screen.dart';
@@ -198,8 +198,8 @@ class AppRoutes {
       page: () => NavBarMsgScreen(),
     ),
     GetPage(
-      name: Routes.gyaradoMsgScreen,
-      page: () => const GyaradoMsgScreen(),
+      name: Routes.groupMessageScreen,
+      page: () => GroupMessageScreen(),
     ),
     GetPage(
       name: Routes.profileScreen,
