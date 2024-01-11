@@ -31,142 +31,152 @@ class GroupMessageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CommonAppbarWidget(
-        headingChild: Obx(
-          () => Text(
-            _chatMsgController.activeGroup.value?.productBaseInfo?.name ?? '',
-            style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                overflow: TextOverflow.ellipsis),
+    return PopScope(
+      onPopInvoked: (b) {
+        _chatMsgController.activeGroup.value = null;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: CommonAppbarWidget(
+          headingChild: Obx(
+            () => Text(
+              _chatMsgController.activeGroup.value?.productBaseInfo?.name ?? '',
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  overflow: TextOverflow.ellipsis),
+            ),
           ),
-        ),
-        textStyle: const TextStyle(
-            fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
-        action: GestureDetector(
-          onTap: () {
-            customDialog(context);
-          },
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            decoration: BoxDecoration(
-                color: AppColor.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: AppColor.borderColor.withOpacity(0.3),
-                      blurRadius: 6)
-                ],
-                borderRadius: BorderRadius.circular(20.0)),
-            child: const Center(
-              child: Icon(
-                Icons.bar_chart_rounded,
-                color: AppColor.appColor,
-                size: 40.0,
+          textStyle: const TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
+          action: GestureDetector(
+            onTap: () {
+              customDialog(context);
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                  color: AppColor.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: AppColor.borderColor.withOpacity(0.3),
+                        blurRadius: 6)
+                  ],
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: const Center(
+                child: Icon(
+                  Icons.bar_chart_rounded,
+                  color: AppColor.appColor,
+                  size: 40.0,
+                ),
               ),
             ),
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          Expanded(
-            child: Obx(
-              () => _chatMsgController.loadingChatHistories.value
-                  ? ShimmerWidgets.chatListView()
-                  : _chatMsgController.groupMessages.isEmpty
-                      ? EmptyWidgets.simple()
-                      : SingleChildScrollView(
-                          reverse: true,
-                          physics: const ClampingScrollPhysics(),
-                          child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: _chatMsgController.groupMessages.length,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            itemBuilder: (context, index) {
-                              GroupMessage message =
-                                  _chatMsgController.groupMessages[index];
+        body: Column(
+          children: [
+            const SizedBox(height: 10),
+            Expanded(
+              child: Obx(
+                () => _chatMsgController.loadingChatHistories.value
+                    ? ShimmerWidgets.chatListView()
+                    : _chatMsgController.groupMessages.isEmpty
+                        ? EmptyWidgets.simple()
+                        : SingleChildScrollView(
+                            reverse: true,
+                            physics: const ClampingScrollPhysics(),
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  _chatMsgController.groupMessages.length,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              itemBuilder: (context, index) {
+                                GroupMessage message =
+                                    _chatMsgController.groupMessages[index];
 
-                              return messageCard(
-                                index,
-                                message,
-                                onLongClick: () => _deleteMsg(context,
-                                    msgId: message.id.toString()),
-                              );
-                            },
+                                return messageCard(
+                                  index,
+                                  message,
+                                  onLongClick: () => _deleteMsg(context,
+                                      index: index,
+                                      groupId: message.groupId,
+                                      msgId: message.id.toString()),
+                                );
+                              },
+                            ),
                           ),
-                        ),
+              ),
             ),
-          ),
-          Obx(
-            () => localAttachmentView(
-                type: _chatMsgController.newMessageType.value,
-                attachment: _chatMsgController.newMessageAttachment.value,
-                thubnail:
-                    _chatMsgController.newMessageType.value == MessageType.video
-                        ? _chatMsgController.newMessageAttachmentThumbnail.value
-                        : null,
-                onClose: () {
-                  _chatMsgController.clearMsgInput();
-                }),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                  color: Color(0xff1c000000),
-                  offset: Offset(0, -10),
-                  blurRadius: 30)
-            ]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: AppTextField(
-                    controller: _chatMsgController.newMessageInput,
-                    title: "Type here ……..",
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Poppins",
+            Obx(
+              () => localAttachmentView(
+                  type: _chatMsgController.newMessageType.value,
+                  attachment: _chatMsgController.newMessageAttachment.value,
+                  thubnail: _chatMsgController.newMessageType.value ==
+                          MessageType.video
+                      ? _chatMsgController.newMessageAttachmentThumbnail.value
+                      : null,
+                  onClose: () {
+                    _chatMsgController.clearMsgInput();
+                  }),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    color: Color(0xff1c000000),
+                    offset: Offset(0, -10),
+                    blurRadius: 30)
+              ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: AppTextField(
+                      controller: _chatMsgController.newMessageInput,
+                      title: "Type here ……..",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Poppins",
+                      ),
                     ),
                   ),
-                ),
-                InkWell(
-                    onTap: () => _addAttachments(),
-                    child: Image.asset(Assets.assetsAttachment,
-                        height: 20, width: 20)),
-                const SizedBox(width: 5),
-                InkWell(
-                    onTap: () {
-                      _chatMsgController.sendGroupMessage(
-                        groupId:
-                            _chatMsgController.activeGroup.value?.id.toString(),
-                        productId: (_chatMsgController
-                                    .activeGroup.value?.productBaseInfo?.id ??
-                                '')
-                            .toString(),
-                      );
-                    },
-                    child: const Icon(Icons.send, color: AppColor.blackColor))
-              ],
-            ),
-          )
-        ],
+                  InkWell(
+                      onTap: () => _addAttachments(),
+                      child: Image.asset(Assets.assetsAttachment,
+                          height: 20, width: 20)),
+                  const SizedBox(width: 5),
+                  InkWell(
+                      onTap: () {
+                        _chatMsgController.sendGroupMessage(
+                          groupId: _chatMsgController.activeGroup.value?.id
+                              .toString(),
+                          productId: (_chatMsgController
+                                      .activeGroup.value?.productBaseInfo?.id ??
+                                  '')
+                              .toString(),
+                        );
+                      },
+                      child: const Icon(Icons.send, color: AppColor.blackColor))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  _deleteMsg(BuildContext context, {required String msgId}) {
+  _deleteMsg(BuildContext context,
+      {required String msgId, required int index, required int? groupId}) {
     AppDialogs.confirm(
       context,
       msg: "Are you sure\nwant to delete message?",
       clickOnYes: () {
-        // _chatMsgController.deleteMsg(msgId);
+        _chatMsgController.deleteMsg(msgId, index, groupId: groupId);
         Get.back();
       },
     );

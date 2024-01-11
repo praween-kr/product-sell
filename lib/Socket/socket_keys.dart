@@ -12,7 +12,6 @@ class SocketKeys {
   static String emitDeleteMsg = "delete_message";
   static String emitTyping = "stopTyping";
   //
-  static String emitReportUser = "";
   static String emitBlockUser = "block_user";
   static String emitClearChat = "clear_chat";
 
@@ -26,7 +25,6 @@ class SocketKeys {
   static String listenerDeleteMsg = "delete_message_listener";
   static String listenerTyping = "stopTyping";
   //
-  static String listenerReportUser = "";
   static String listenerBlockUser = "block_user_listener";
   static String listenerClearChat = "clear_chat_listener";
 

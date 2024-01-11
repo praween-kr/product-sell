@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
-import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'controller/chat_msg_controller.dart';
@@ -143,6 +142,7 @@ class AppSocket {
           "Listener:---------> (${SocketKeys.listenerChatHistories}), ${jsonEncode({
             "msgs": data
           })}");
+      socketPrint("listenerChatHistories---> $data");
       cmc.listenerChatHistories(messagesModel.messages ?? []);
     });
 
@@ -156,19 +156,6 @@ class AppSocket {
           })}"); //
 
       cmc.listenerClearChat(true);
-    });
-
-    // Report User---------------
-    _socketIO?.on(SocketKeys.listenerReportUser, (data) {
-      //
-      ChatMsgController cmc = Get.find();
-      socketPrint(
-          "Listener:---------> (${SocketKeys.listenerReportUser}), ${jsonEncode({
-            "msgs": data
-          })}");
-      AppToast.show(data?['success_message'] ?? '');
-
-      cmc.listenerReportUser(true);
     });
 
     // Read/Unread messages ---------------
@@ -257,7 +244,6 @@ class AppSocket {
     ///=========== Group Chat Listener ==============
     // Send new group message---------------
     _socketIO?.on(SocketKeys.listenerSendMessageGroup, (data) {
-      //
       ChatMsgController cmc = Get.find();
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerSendMessageGroup}), ${jsonEncode(data)}");
@@ -266,7 +252,6 @@ class AppSocket {
     });
     // group list---------------
     _socketIO?.on(SocketKeys.listenerGroupUsersList, (data) {
-      //
       ChatMsgController cmc = Get.find();
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerGroupUsersList}), ${jsonEncode(data)}");
@@ -275,7 +260,6 @@ class AppSocket {
     });
     // group chat history---------------
     _socketIO?.on(SocketKeys.listenerGroupChatHistories, (data) {
-      //
       ChatMsgController cmc = Get.find();
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerGroupChatHistories}), ${jsonEncode(data)}");
@@ -339,8 +323,8 @@ class SocketEmits {
   // Get Chat Histories---------------
   static getChatHistories(String receiverId) {
     Map<String, dynamic> req = HashMap();
-    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
-    req['receiverId'] = receiverId;
+    req['senderId'] = receiverId;
+    req['receiverId'] = UserStoredInfo().userInfo?.id ?? '';
     socketPrint(
         "Emit:---------> getChatHistories-(${SocketKeys.emitChatHistories}), $req",
         blue: true);
@@ -359,26 +343,14 @@ class SocketEmits {
   }
 
   // Delete Message Chat ---------------
-  static deleteMessage(String messageId) {
+  static deleteMessage(String messageId, {int? groupId}) {
     Map<String, dynamic> req = HashMap();
-    req['senderId'] = UserStoredInfo().userInfo?.id ?? '';
-    req['id'] = messageId;
+    req['senderId'] = groupId ?? UserStoredInfo().userInfo?.id ?? '';
+    req['messageId'] = messageId;
     socketPrint(
         "Emit:---------> emitClearChat-(${SocketKeys.emitDeleteMsg}), $req",
         blue: true);
     AppSocket.socket()?.emit(SocketKeys.emitDeleteMsg, req);
-  }
-
-  // Report User ---------------
-  static reportUser({required String msg, required reportTo}) {
-    Map<String, dynamic> req = HashMap();
-    req['reportBy'] = UserStoredInfo().userInfo?.id ?? '';
-    req['reportTo'] = reportTo;
-    req['message'] = msg;
-    socketPrint(
-        "Emit:---------> emitReportUser-(${SocketKeys.emitReportUser}), $req",
-        blue: true);
-    AppSocket.socket()?.emit(SocketKeys.emitReportUser, req);
   }
 
   // Read/Unread messages ---------------

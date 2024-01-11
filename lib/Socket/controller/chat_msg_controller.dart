@@ -89,8 +89,21 @@ class ChatMsgController extends GetxController {
   }
 
   // Listener Delete Message---------
+  var deletedMessage = <int>[
+    -1,
+    -1
+  ].obs; //left: is index and right is type (0 for one-one message and 1 for group message)
   listenerDeleteMessage() {
-    socketPrint("listenerDeleteMessage---> In Controller");
+    if (deletedMessage[1] == 0 && deletedMessage[0] != -1) {
+      messages.removeAt(deletedMessage[0]);
+      messages.refresh();
+    } else if (deletedMessage[1] == 1 && deletedMessage[0] != -1) {
+      groupMessages.removeAt(deletedMessage[0]);
+      groupMessages.refresh();
+    }
+    deletedMessage.value = [-1, -1];
+    socketPrint(
+        "listenerDeleteMessage---> In Controller ${activeGroup.value?.user?.email} - ${activeUser.value?.email}");
   }
 
   // Listener Chat Histories----------
@@ -98,7 +111,6 @@ class ChatMsgController extends GetxController {
     messages.value = data;
     await Future.delayed(const Duration(seconds: 1));
     loadingChatHistories.value = false;
-    socketPrint("listenerChatHistories---> $data");
   }
 
   // Clear chat----------
@@ -107,17 +119,6 @@ class ChatMsgController extends GetxController {
     messages.clear();
     messages.refresh();
     AppToast.show("Messages are clear successfully");
-  }
-
-  // Report User----------
-  listenerReportUser(bool data) {
-    AppLoader.hide();
-
-    Get.back();
-    Get.back();
-    reportMsg.clear();
-
-    socketPrint("listenerReportUser---> successfully reported!");
   }
 
   // Report User----------
@@ -186,8 +187,9 @@ class ChatMsgController extends GetxController {
   }
 
   // Delete Message Emit
-  deleteMsg(String messageId) {
-    SocketEmits.deleteMessage(messageId);
+  deleteMsg(String messageId, int index, {int? groupId}) {
+    deletedMessage.value = [index, groupId == null ? 0 : 1];
+    SocketEmits.deleteMessage(messageId, groupId: groupId);
   }
 
   clearMsgInput() {
@@ -200,29 +202,13 @@ class ChatMsgController extends GetxController {
 
   /// Clear chats -------
   clearAllChats(String receiverId) {
-    //---
     SocketEmits.clearChat(receiverId);
     socketPrint("emited for clear all chats...");
   }
 
   /// Report User -------
-  reportUser(String reciverId) {
-    if (reportMsg.text.trim() == '') {
-      AppToast.show("Please enter your reason");
-    } else {
-      AppLoader.show();
-      socketPrint("Report: ${reportMsg.text}");
-      SocketEmits.reportUser(msg: reportMsg.text.trim(), reportTo: reciverId);
-      //--
-
-      socketPrint("emited for report user...");
-    }
-  }
-
-  /// Report User -------
   readUnread(String reciverId) {
     SocketEmits.readUnread(reciverId);
-    //--
     socketPrint("emited for read all messages...");
   }
 
@@ -252,7 +238,6 @@ class ChatMsgController extends GetxController {
 
   ///=========================================================================
   // Navigation -------------
-  // var activeUser = Rx<Receiver?>(null);
   var activeGroup = Rx<ChatGroup?>(null);
   goToGroupChatRoom(ChatGroup? groupInfo) {
     groupMessages.clear();
@@ -273,7 +258,6 @@ class ChatMsgController extends GetxController {
     }
   }
 
-  // socketPrint("listenerNewMessage---> $data");
   // Listener Groups List----------
   listenerGroupList(List<GroupConstant> data) {
     if (data.isNotEmpty) {
@@ -296,6 +280,8 @@ class ChatMsgController extends GetxController {
   // Send message
   sendGroupMessage(
       {required String? groupId, required String productId}) async {
+    socketPrint(
+        "listenerDeleteMessage---> In Controller ${activeGroup.value?.productBaseInfo?.name} - ${activeUser.value?.email}");
     if (groupId != null) {
       if (newMessageType.value == MessageType.text) {
         if (newMessageInput.text.trim() != '') {

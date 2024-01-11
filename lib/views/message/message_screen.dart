@@ -31,126 +31,135 @@ class MessageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CommonAppbarWidget(
-        // heading: 'Men Tshirt',
-        headingChild: Obx(
-          () => Text(
-            _chatMsgController.activeProduct.value?.name ?? '',
-            style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                overflow: TextOverflow.ellipsis),
-          ),
-        ),
-        textStyle: const TextStyle(
-            fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
-        action: popupWidget(
-            title: "Clear",
-            onClick: () {
-              _chatMsgController.clearAllChats(
-                  (_chatMsgController.activeUser.value?.id ?? '').toString());
-            }),
-        // InkWell(
-        //     onTap: () {},
-        //     child: const Icon(Icons.more_vert, color: AppColor.blackColor)),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          Expanded(
-            child: Obx(
-              () => _chatMsgController.loadingChatHistories.value
-                  ? ShimmerWidgets.chatListView()
-                  : _chatMsgController.messages.isEmpty
-                      ? EmptyWidgets.simple()
-                      : SingleChildScrollView(
-                          reverse: true,
-                          physics: const ClampingScrollPhysics(),
-                          child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: _chatMsgController.messages.length,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            itemBuilder: (context, index) {
-                              Message message =
-                                  _chatMsgController.messages[index];
-
-                              return messageCard(
-                                index,
-                                message,
-                                _chatMsgController.activeUser.value,
-                                _chatMsgController.activeProduct.value,
-                                onLongClick: () => _deleteMsg(context,
-                                    msgId: message.id.toString()),
-                              );
-                            },
-                          ),
-                        ),
+    return PopScope(
+      onPopInvoked: (b) {
+        _chatMsgController.activeProduct.value = null;
+        _chatMsgController.activeUser.value = null;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: CommonAppbarWidget(
+          // heading: 'Men Tshirt',
+          headingChild: Obx(
+            () => Text(
+              _chatMsgController.activeProduct.value?.name ?? '',
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  overflow: TextOverflow.ellipsis),
             ),
           ),
-          Obx(
-            () => localAttachmentView(
-                type: _chatMsgController.newMessageType.value,
-                attachment: _chatMsgController.newMessageAttachment.value,
-                thubnail:
-                    _chatMsgController.newMessageType.value == MessageType.video
-                        ? _chatMsgController.newMessageAttachmentThumbnail.value
-                        : null,
-                onClose: () {
-                  _chatMsgController.clearMsgInput();
-                }),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                  color: Color(0xff1c000000),
-                  offset: Offset(0, -10),
-                  blurRadius: 30)
-            ]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: AppTextField(
-                    controller: _chatMsgController.newMessageInput,
-                    title: "Type here ……..",
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Poppins",
+          textStyle: const TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
+          action: popupWidget(
+              title: "Clear",
+              onClick: () {
+                _chatMsgController.clearAllChats(
+                    (_chatMsgController.activeUser.value?.id ?? '').toString());
+              }),
+          // InkWell(
+          //     onTap: () {},
+          //     child: const Icon(Icons.more_vert, color: AppColor.blackColor)),
+        ),
+        body: Column(
+          children: [
+            const SizedBox(height: 10),
+            Expanded(
+              child: Obx(
+                () => _chatMsgController.loadingChatHistories.value
+                    ? ShimmerWidgets.chatListView()
+                    : _chatMsgController.messages.isEmpty
+                        ? EmptyWidgets.simple()
+                        : SingleChildScrollView(
+                            reverse: true,
+                            physics: const ClampingScrollPhysics(),
+                            child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _chatMsgController.messages.length,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              itemBuilder: (context, index) {
+                                Message message =
+                                    _chatMsgController.messages[index];
+
+                                return messageCard(
+                                  index,
+                                  message,
+                                  _chatMsgController.activeUser.value,
+                                  _chatMsgController.activeProduct.value,
+                                  onLongClick: () => _deleteMsg(context,
+                                      msgId: message.id.toString(),
+                                      index: index),
+                                );
+                              },
+                            ),
+                          ),
+              ),
+            ),
+            Obx(
+              () => localAttachmentView(
+                  type: _chatMsgController.newMessageType.value,
+                  attachment: _chatMsgController.newMessageAttachment.value,
+                  thubnail: _chatMsgController.newMessageType.value ==
+                          MessageType.video
+                      ? _chatMsgController.newMessageAttachmentThumbnail.value
+                      : null,
+                  onClose: () {
+                    _chatMsgController.clearMsgInput();
+                  }),
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    color: Color(0xff1c000000),
+                    offset: Offset(0, -10),
+                    blurRadius: 30)
+              ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: AppTextField(
+                      controller: _chatMsgController.newMessageInput,
+                      title: "Type here ……..",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Poppins",
+                      ),
                     ),
                   ),
-                ),
-                InkWell(
-                    onTap: () => _addAttachments(),
-                    child: Image.asset(Assets.assetsAttachment,
-                        height: 20, width: 20)),
-                const SizedBox(width: 5),
-                InkWell(
-                    onTap: () {
-                      _chatMsgController.sendNewMessage(
-                          _chatMsgController.activeUser.value?.id.toString(),
-                          (_chatMsgController.activeProduct.value?.id)
-                              .toString());
-                    },
-                    child: const Icon(Icons.send, color: AppColor.blackColor))
-              ],
-            ),
-          )
-        ],
+                  InkWell(
+                      onTap: () => _addAttachments(),
+                      child: Image.asset(Assets.assetsAttachment,
+                          height: 20, width: 20)),
+                  const SizedBox(width: 5),
+                  InkWell(
+                      onTap: () {
+                        _chatMsgController.sendNewMessage(
+                            _chatMsgController.activeUser.value?.id.toString(),
+                            (_chatMsgController.activeProduct.value?.id)
+                                .toString());
+                      },
+                      child: const Icon(Icons.send, color: AppColor.blackColor))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  _deleteMsg(BuildContext context, {required String msgId}) {
+  _deleteMsg(BuildContext context,
+      {required String msgId, required int index}) {
     AppDialogs.confirm(
       context,
       msg: "Are you sure\nwant to delete message?",
       clickOnYes: () {
-        _chatMsgController.deleteMsg(msgId);
+        _chatMsgController.deleteMsg(msgId, index);
         Get.back();
       },
     );
@@ -266,7 +275,7 @@ class MessageScreen extends StatelessWidget {
     }
 
     ///----
-    socketPrint("message.thumbnail ?? '': ${message.thumbnail ?? ''}");
+    // socketPrint("message.thumbnail ?? '': ${message.thumbnail ?? ''}");
     return Column(
       children: [
         dt == '' ? const SizedBox.shrink() : dividerByDate(dt),

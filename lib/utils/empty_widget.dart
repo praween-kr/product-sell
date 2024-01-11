@@ -14,7 +14,10 @@ class EmptyWidgets {
           height: Get.height * 0.8,
           child: Center(
               child: Padding(
-            padding: const EdgeInsets.only(bottom: 0, left: 20, right: 20),
+            padding: EdgeInsets.only(
+                bottom: 0,
+                left: Get.context!.width * 0.15,
+                right: Get.context!.width * 0.15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
