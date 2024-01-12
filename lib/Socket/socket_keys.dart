@@ -61,4 +61,5 @@ class MessageType {
   static String text = '0';
   static String image = '2';
   static String video = '3';
+  static String poll = '4';
 }
