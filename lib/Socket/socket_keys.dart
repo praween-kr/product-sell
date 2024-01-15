@@ -62,4 +62,5 @@ class MessageType {
   static String image = '2';
   static String video = '3';
   static String poll = '4';
+  static String replay = '5';
 }

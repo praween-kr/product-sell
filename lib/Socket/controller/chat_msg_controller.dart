@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/model/group/groups_list_model.dart';
@@ -283,7 +284,23 @@ class ChatMsgController extends GetxController {
     socketPrint(
         "listenerDeleteMessage---> In Controller ${activeGroup.value?.productBaseInfo?.name} - ${activeUser.value?.email}");
     if (groupId != null) {
-      if (newMessageType.value == MessageType.text) {
+      if (newMessageType.value == MessageType.replay &&
+          replayOnMessage.value != null) {
+        String replayText = newMessageInput.text.trim();
+        Map<String, dynamic> newReplayMsg = {};
+        newReplayMsg
+            .addAll({"replayon_msgid": replayOnMessage.value?.id ?? ''});
+        newReplayMsg.addAll({"replayon_msg": replayOnMessage.value?.message});
+        newReplayMsg
+            .addAll({"replayon_datetime": replayOnMessage.value?.createdAt});
+        newReplayMsg.addAll({"message": replayText});
+        //
+        newMessageInput.text = jsonEncode(newReplayMsg);
+      }
+      if (newMessageType.value == MessageType.text ||
+          newMessageType.value == MessageType.poll ||
+          (newMessageType.value == MessageType.replay &&
+              replayOnMessage.value != null)) {
         if (newMessageInput.text.trim() != '') {
           SocketEmits.sendGroupMessage(
               groupId: groupId,
@@ -320,6 +337,15 @@ class ChatMsgController extends GetxController {
     loadingChatHistories.value = true;
     SocketEmits.groupChatHistory(groupId: groupId);
   }
+
+  ///======== POLL INPUT =======
+  var pollQuestion = TextEditingController(text: '');
+  var pollOption = TextEditingController(text: '');
+  var pollExpTime = Rx<TimeOfDay?>(null);
+  var pollExpDate = Rx<DateTime?>(null);
+  var pollOptions = <String>[].obs;
+  //
+  var replayOnMessage = Rx<GroupMessage?>(null);
 }
 
 /*

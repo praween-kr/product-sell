@@ -253,3 +253,57 @@ class ProductBaseInfo {
     return data;
   }
 }
+
+class PollMessage {
+  String? question;
+  String? expDate;
+  String? expTime;
+  List<String>? options;
+
+  PollMessage({this.question, this.expDate, this.expTime, this.options});
+
+  PollMessage.fromJson(Map<String, dynamic> json) {
+    question = json['question'];
+    expDate = json['exp_date'];
+    expTime = json['exp_time'];
+    options = json['options'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['question'] = question;
+    data['exp_date'] = expDate;
+    data['exp_time'] = expTime;
+    data['options'] = options;
+    return data;
+  }
+}
+
+class ReplayMessage {
+  int? replayonMsgid;
+  String? replayonMsg;
+  String? replayonDatetime;
+  String? message;
+
+  ReplayMessage(
+      {this.replayonMsgid,
+      this.replayonMsg,
+      this.replayonDatetime,
+      this.message});
+
+  ReplayMessage.fromJson(Map<String, dynamic> json) {
+    replayonMsgid = json['replayon_msgid'];
+    replayonMsg = json['replayon_msg'];
+    replayonDatetime = json['replayon_datetime'];
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['replayon_msgid'] = replayonMsgid;
+    data['replayon_msg'] = replayonMsg;
+    data['replayon_datetime'] = replayonDatetime;
+    data['message'] = message;
+    return data;
+  }
+}

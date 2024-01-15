@@ -7,8 +7,6 @@ import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/app_type_status.dart';
 
-import '../../utils/color_constant.dart';
-
 class SellItemController extends GetxController {
   var tabController = 1.obs;
 
@@ -23,31 +21,6 @@ class SellItemController extends GetxController {
     'Condition 2',
     'Condition 3',
   ].obs;
-
-  /// datePicker View
-  void pickDate(int value, {required Function(DateTime?) onChanged}) async {
-    DateTime? pickedDate = await showDatePicker(
-        builder: (context, Widget? child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: const ColorScheme.dark(
-                onPrimary: AppColor.white,
-                primary: AppColor.appColor,
-                surface: AppColor.white,
-                onSurface: AppColor.blackColor,
-              ),
-              dialogBackgroundColor: AppColor.white,
-            ),
-            child: child!,
-          );
-        },
-        context: Get.context!,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        //DateTime.now() - not to allow to choose before today.
-        lastDate: DateTime(2040));
-    onChanged(pickedDate);
-  }
 
   /// ----------- FORM AND API ------------------------------ ///
 

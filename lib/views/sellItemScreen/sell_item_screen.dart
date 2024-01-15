@@ -1196,7 +1196,7 @@ class SellItemScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(23),
           containerColor: AppColor.textColor,
           suffix: IconButton(
-              onPressed: () => controller.pickDate(0, onChanged: date1),
+              onPressed: () => AppDateTimePicker.pickDate(onChanged: date1),
               icon: Icon(Icons.calendar_month_outlined,
                   size: 16, color: AppColor.blackColor.withOpacity(0.3))),
         ),
@@ -1225,7 +1225,7 @@ class SellItemScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(23),
           containerColor: AppColor.textColor,
           suffix: IconButton(
-              onPressed: () => controller.pickDate(2, onChanged: date2),
+              onPressed: () => AppDateTimePicker.pickDate(onChanged: date2),
               icon: Icon(
                 Icons.calendar_month_outlined,
                 size: 16,
