@@ -21,7 +21,7 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (Get.arguments != null) {
-      _myProductController.tabController.value = Get.arguments;
+      _myProductController.tabController.value = Get.arguments['from'];
     }
     return Scaffold(
       backgroundColor: Colors.white,

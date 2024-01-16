@@ -88,6 +88,7 @@ class ProductDetails {
   String? endDate;
   String? bidTime;
   int? share;
+  int? totalShare;
   String? description;
   String? otherDescription;
   String? image;
@@ -140,6 +141,7 @@ class ProductDetails {
       this.endDate,
       this.bidTime,
       this.share,
+      this.totalShare,
       this.description,
       this.otherDescription,
       this.image,
@@ -192,6 +194,7 @@ class ProductDetails {
     endDate = json['endDate'];
     bidTime = json['bidTime'];
     share = json['share'];
+    totalShare = json['totalShare'];
     description = json['description'];
     otherDescription = json['otherDescription'];
     image = json['image'];
@@ -260,6 +263,7 @@ class ProductDetails {
     data['endDate'] = endDate;
     data['bidTime'] = bidTime;
     data['share'] = share;
+    data['totalShare'] = totalShare;
     data['description'] = description;
     data['otherDescription'] = otherDescription;
     data['image'] = image;

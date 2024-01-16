@@ -31,7 +31,6 @@ import '../views/settingScreen/myProductsScreen/biding_product_details_screen.da
 import '../views/settingScreen/myProductsScreen/editItem_screen.dart';
 import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
-import '../views/settingScreen/myProductsScreen/my_share_product_details_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
 import '../views/settingScreen/passwordScreen/password_screen.dart';
@@ -189,10 +188,10 @@ class AppRoutes {
       name: Routes.biddingHistoryScreen,
       page: () => BiddingHistoryScreen(),
     ),
-    GetPage(
-        name: Routes.myShareProductDetailsScreen,
-        page: () => MyShareProductDetails(),
-        binding: ProductBinding()),
+    // GetPage(
+    //     name: Routes.myShareProductDetailsScreen,
+    //     page: () => MyShareProductDetails(),
+    //     binding: ProductBinding()),
     GetPage(
       name: Routes.navbarScreen,
       page: () => NavBarMsgScreen(),

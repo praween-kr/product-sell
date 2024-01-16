@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
+import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
@@ -120,35 +121,39 @@ class PublicShareProductDetails extends StatelessWidget {
                                   textSize: 14),
                               AppText(
                                   text:
-                                      "Available Shares: ${_controller.productDetailsData.value?.availableShare ?? 0}/${_controller.productDetailsData.value?.details?.share ?? 0}",
+                                      "Available Shares: ${_controller.productDetailsData.value?.availableShare ?? 0}/${_controller.productDetailsData.value?.details?.totalShare ?? 0}",
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
                                   textSize: 14),
                             ],
                           ),
                           const SizedBox(height: 40),
-                          GestureDetector(
-                            onTap: () {
-                              buyShareDialog(
-                                input: _controller.sharesInput,
-                                buynow: () {
-                                  Get.back();
-                                  _controller.emitPurchageProductShare();
-                                },
-                              );
-                            },
-                            child: const CommonButton(
-                              height: 50,
-                              radius: 20,
-                              color: AppColor.appColor,
-                              text: "Buy Now",
-                              textStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: "Poppins",
-                                  color: Colors.white),
-                            ),
-                          ),
+                          _controller.productDetailsData.value?.details
+                                      ?.vendorId ==
+                                  UserStoredInfo().userInfo?.id
+                              ? const SizedBox.shrink()
+                              : GestureDetector(
+                                  onTap: () {
+                                    buyShareDialog(
+                                      input: _controller.sharesInput,
+                                      buynow: () {
+                                        Get.back();
+                                        _controller.emitPurchageProductShare();
+                                      },
+                                    );
+                                  },
+                                  child: const CommonButton(
+                                    height: 50,
+                                    radius: 20,
+                                    color: AppColor.appColor,
+                                    text: "Buy Now",
+                                    textStyle: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: "Poppins",
+                                        color: Colors.white),
+                                  ),
+                                ),
                           const SizedBox(height: 20),
                           (_controller.productDetailsData.value?.myTrads ?? [])
                                   .isEmpty
