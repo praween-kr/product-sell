@@ -22,7 +22,6 @@ class PublicShareProductDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
-        // heading: "Gyarados Ex",
         headingChild: Obx(
           () => _controller.loadingData.value
               ? ShimmerWidgets.text(w: Get.width * 0.4)
@@ -75,32 +74,40 @@ class PublicShareProductDetails extends StatelessWidget {
                             lineHeight: 1.5,
                             fontWeight: FontWeight.w400,
                           ),
-                          const SizedBox(height: 5),
-                          const Divider(thickness: 1),
+                          const Divider(thickness: 1, height: 20),
                           const SizedBox(height: 5),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              AppText(
-                                  text:
-                                      "Volume: ${_controller.productDetailsData.value?.details?.share ?? 0}",
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Poppins",
-                                  textSize: 14),
-                              const AppText(
-                                  text: "High: 1.00",
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Poppins",
-                                  textSize: 14),
-                              const AppText(
-                                  text: "Low: 1.00",
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Poppins",
-                                  textSize: 14)
+                              Flexible(
+                                flex: 1,
+                                child: AppText(
+                                    text:
+                                        "Volume: ${_controller.productDetailsData.value?.details?.share ?? 0}",
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Poppins",
+                                    textSize: 14),
+                              ),
+                              const Flexible(
+                                flex: 1,
+                                child: AppText(
+                                    text:
+                                        "High: 1.00", // Static Hight Share Price
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Poppins",
+                                    textSize: 14),
+                              ),
+                              const Flexible(
+                                flex: 1,
+                                child: AppText(
+                                    text: "Low: 1.00", // Static Low Share Price
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Poppins",
+                                    textSize: 14),
+                              )
                             ],
                           ),
-                          const SizedBox(height: 5),
-                          const Divider(thickness: 1),
+                          const Divider(thickness: 1, height: 20),
                           const SizedBox(height: 5),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

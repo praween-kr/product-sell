@@ -506,10 +506,10 @@ class GroupMessageScreen extends StatelessWidget {
                         color: me ? Colors.white : Colors.black,
                         fontFamily: "Oswald",
                         fontWeight: FontWeight.w600,
-                        textSize: 16),
+                        textSize: 15),
                   ),
                   Icon(
-                    Icons.replay,
+                    Icons.reply_sharp,
                     color: me ? Colors.white : Colors.black,
                   ),
                 ],
@@ -524,7 +524,7 @@ class GroupMessageScreen extends StatelessWidget {
                   color: me ? Colors.white : Colors.black,
                   fontFamily: "Oswald",
                   fontWeight: FontWeight.w600,
-                  textSize: 16),
+                  textSize: 14),
               const SizedBox(height: 8),
               AppText(
                   text:
@@ -534,7 +534,7 @@ class GroupMessageScreen extends StatelessWidget {
                   color: me ? Colors.white : Colors.black,
                   fontFamily: "Oswald",
                   fontWeight: FontWeight.w600,
-                  textSize: 12),
+                  textSize: 10),
             ],
           ),
         ),
@@ -546,7 +546,7 @@ class GroupMessageScreen extends StatelessWidget {
             color: me ? Colors.white : Colors.black,
             fontFamily: "Oswald",
             fontWeight: FontWeight.w600,
-            textSize: 16),
+            textSize: 14),
       ],
     );
   }
@@ -568,7 +568,7 @@ class GroupMessageScreen extends StatelessWidget {
                   color: Colors.black,
                   fontFamily: "Oswald",
                   fontWeight: FontWeight.w600,
-                  textSize: 16),
+                  textSize: 15),
             ),
             GestureDetector(
                 onTap: () {
@@ -623,7 +623,7 @@ class GroupMessageScreen extends StatelessWidget {
                 color: Colors.black,
                 fontFamily: "Oswald",
                 fontWeight: FontWeight.w500,
-                textSize: 14),
+                textSize: 13),
           ],
         ),
         const SizedBox(height: 8),
@@ -775,10 +775,7 @@ class GroupMessageScreen extends StatelessWidget {
                         children: [
                           const Row(
                             children: [
-                              Icon(
-                                Icons.replay,
-                                color: Colors.black,
-                              ),
+                              Icon(Icons.reply_sharp, color: Colors.black),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.topRight,
@@ -789,7 +786,7 @@ class GroupMessageScreen extends StatelessWidget {
                                       color: Colors.black,
                                       fontFamily: "Oswald",
                                       fontWeight: FontWeight.w600,
-                                      textSize: 16),
+                                      textSize: 15),
                                 ),
                               ),
                               SizedBox(width: 8),

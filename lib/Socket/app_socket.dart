@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
+import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import 'controller/chat_msg_controller.dart';
@@ -235,10 +236,15 @@ class AppSocket {
 
     ///----- Purchage Share Product -----
     _socketIO?.on(SocketKeys.listenerPurchaseShare, (data) {
+      bool success = true;
+      if (!(data['status'] ?? false)) {
+        success = false;
+        AppToast.show(data['message'].toString());
+      }
       HomeCatProductController con = Get.find<HomeCatProductController>();
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerPurchaseShare}), ${jsonEncode(data)}");
-      con.listenerPurchageProductShare(data['shareId']);
+      con.listenerPurchageProductShare(data['id'].toString(), success);
     });
 
     ///=========== Group Chat Listener ==============

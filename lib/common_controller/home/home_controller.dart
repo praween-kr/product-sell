@@ -375,10 +375,10 @@ class HomeCatProductController extends GetxController
 
   // Purchage Share
   TextEditingController sharesInput = TextEditingController(text: '');
-  listenerPurchageProductShare(int? productId) async {
+  listenerPurchageProductShare(String? shareId, bool success) async {
     AppLoader.hide();
-    if (productId != null) {
-      emitShareProductDetails(productId.toString());
+    if (success && shareId != null) {
+      emitShareProductDetails(shareId.toString());
     }
   }
 
