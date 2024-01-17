@@ -5,11 +5,11 @@ import 'package:oninto_flutter/common_controller/cms_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
-import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 

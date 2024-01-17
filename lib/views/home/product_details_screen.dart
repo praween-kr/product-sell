@@ -86,32 +86,28 @@ class ProductDetailsScreen extends StatelessWidget {
                               textSize: 13,
                               fontFamily: "Poppins"),
                         ),
-                        Obx(
-                          () => AppTimer(
-                            productId: (controller.productDetailsData.value
-                                        ?.details?.id ??
-                                    '')
-                                .toString(),
-                            textType: true,
-                            bidNow: () {},
-                            endTime: controller
-                                .bidingEndAfter.value, //"2023-12-20 18:37:00"
-                            textSize: 14,
-                            firstBid: (controller.bidingData.value?.history ??
-                                        [])
-                                    .isEmpty
-                                ? null
-                                : DateTime.parse(
-                                        (controller.bidingData.value?.history ??
-                                                [])
-                                            .first
-                                            .createdAt!)
-                                    .toLocal(),
-                            onChanged: (TimerType data) {
-                              controller.bidingTimerStatus.value = data.status;
-                              print("Timer Start to --> - ${data.value}");
-                            },
-                          ),
+                        AppTimer(
+                          bidNow: () {},
+                          viewType: true,
+                          textSize: 14,
+                          // Timer status change listener
+                          onChanged: (TimerType data) {
+                            controller.bidingTimerStatus.value = data.status;
+                            // print("Timer Start to --> - ${data.value}");
+                          },
+                          // Biding timer duration
+                          duration: const Duration(minutes: 5),
+                          // No bid added yet then-> Start bid date time else-> last bid date time
+                          startDateTime: controller.bidingData.value?.save ==
+                                  null
+                              ? DateTime.parse(
+                                  "${controller.productDetailsData.value?.details?.startDate}T${controller.productDetailsData.value?.details?.bidTime}")
+                              : DateTime.parse(controller
+                                      .bidingData.value?.save?.createdAt ??
+                                  ''),
+                          // At list one bid added then will be [bidingStarted: true] else [bidingStarted: false]
+                          bidingStarted:
+                              controller.bidingData.value?.save != null,
                         ),
                       ],
                     ),
@@ -355,13 +351,12 @@ class ProductDetailsScreen extends StatelessWidget {
                                     ? const SizedBox.shrink()
                                     : GestureDetector(
                                         onTap: () async {
-                                          if (controller.bidingActionActive() ==
-                                              0) {
+                                          if (controller
+                                                  .bidingTimerStatus.value ==
+                                              TimerTypeStatus.UPCOMING) {
                                             AppToast.show(
                                                 "Biding will be start soon");
-                                          } else if (controller
-                                                  .bidingActionActive() ==
-                                              1) {
+                                          } else if (_bidingActionActive()) {
                                             // Can bid on continue
                                             if (controller.productType.value ==
                                                 ProductType.biding) {
@@ -370,9 +365,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   .value
                                                   ?.details);
                                             }
-                                          } else if (controller
-                                                  .myBidProduct() ==
-                                              0) {
+                                          } else if (_fixedPriceProduct()) {
                                             // Fixed Price - Buy
                                             double totalPrice = double.parse(
                                                 (controller
@@ -393,9 +386,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                               productId: productId,
                                               amount: 100, // totalPrice,
                                             );
-                                          } else if (controller
-                                                  .myBidProduct() ==
-                                              1) {
+                                          } else if (_myBidedProduct()) {
                                             // Biding Product - my last bid on product - Buy
                                             double totalPrice = double.parse(
                                                 (controller
@@ -439,17 +430,18 @@ class ProductDetailsScreen extends StatelessWidget {
                                               radius: 15,
                                               margin: const EdgeInsets.only(
                                                   left: 20, right: 20),
-                                              text: controller
-                                                          .bidingActionActive() !=
-                                                      null
+                                              text: _bidingActionActive() ||
+                                                      controller
+                                                              .bidingTimerStatus
+                                                              .value ==
+                                                          TimerTypeStatus
+                                                              .UPCOMING
                                                   ? "Bid \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}"
-                                                  : controller.myBidProduct() !=
-                                                          null
+                                                  : _myBidedProduct()
                                                       ? "Buy Now"
-                                                      : controller.myBidProduct() !=
-                                                              1
+                                                      : _bidingEnd()
                                                           ? "Biding End" // If biding is end and not win on biding
-                                                          : "Buy Now*",
+                                                          : "Buy Now",
                                               // controller.upload.value
                                               //     ? "Give Reviews"
                                               //     : controller.track.value
@@ -464,12 +456,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   fontSize: 15,
                                                   fontFamily: "Poppins",
                                                   fontWeight: FontWeight.w400),
-                                              color: controller
-                                                              .myBidProduct() !=
-                                                          null ||
-                                                      controller
-                                                              .bidingActionActive() ==
-                                                          1
+                                              color: _myBidedProduct() ||
+                                                      _bidingActionActive()
                                                   ? AppColor.appColor
                                                   : AppColor
                                                       .grey, // 2023-12-21 15:20:00.000}
@@ -486,6 +474,31 @@ class ProductDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
+  //
+  bool _bidingActionActive() {
+    print("---> ${controller.bidingTimerStatus.value}");
+    return ([TimerTypeStatus.GOINGON_NO_BID_YET, TimerTypeStatus.GOINGON]
+        .contains(controller.bidingTimerStatus.value));
+  }
+
+  bool _myBidedProduct() {
+    return controller.bidingData.value?.save?.userId ==
+            UserStoredInfo().userInfo?.id &&
+        TimerTypeStatus.END == controller.bidingTimerStatus.value;
+  }
+
+  bool _fixedPriceProduct() {
+    return controller.productDetailsData.value?.details?.sellOption ==
+        ProductType.fixedPrice;
+  }
+
+  bool _bidingEnd() {
+    return controller.bidingData.value?.save?.userId !=
+            UserStoredInfo().userInfo?.id ||
+        TimerTypeStatus.END == controller.bidingTimerStatus.value;
+  }
+  //
 
   _buyFixedPriceProduct(
       {required String productId, required double amount}) async {
@@ -807,22 +820,22 @@ class ProductDetailsScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      RichText(
-                        text: TextSpan(
-                          text: "Extended Biding Interval ",
-                          style: const TextStyle(color: AppColor.blackColor),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "30 Minutes",
-                                style: const TextStyle(color: AppColor.grey),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.toNamed(Routes.biddingHistoryScreen);
-                                  }),
-                          ],
-                        ),
-                      )
+                      // const SizedBox(height: 8),
+                      // RichText(
+                      //   text: TextSpan(
+                      //     text: "Extended Biding Interval ",
+                      //     style: const TextStyle(color: AppColor.blackColor),
+                      //     children: <TextSpan>[
+                      //       TextSpan(
+                      //           text: "30 Minutes",
+                      //           style: const TextStyle(color: AppColor.grey),
+                      //           recognizer: TapGestureRecognizer()
+                      //             ..onTap = () {
+                      //               Get.toNamed(Routes.biddingHistoryScreen);
+                      //             }),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ))
                 ],
@@ -835,15 +848,23 @@ class ProductDetailsScreen extends StatelessWidget {
   _onBid(ProductDetails? product) async {
     await controller.getBidHistories(productId: (product?.id ?? '').toString());
     timerDialog(
-        productId: (product?.id ?? '').toString(),
-        endTime: controller
-            .bidingEndAfter.value, // DateTime.parse("2023-12-20 18:37:00"),
-        firstBid: (controller.bidingData.value?.history ?? []).isEmpty
-            ? null
-            : DateTime.parse((controller.bidingData.value?.history ?? [])
-                    .first
-                    .createdAt!)
-                .toLocal(),
+        bidingStarted: controller.bidingData.value?.save != null,
+        startDateTime: controller.bidingData.value?.save == null
+            ? DateTime.parse(
+                "${controller.productDetailsData.value?.details?.startDate}T${controller.productDetailsData.value?.details?.bidTime}")
+            : DateTime.parse(
+                controller.bidingData.value?.save?.createdAt ?? ''),
+        onChnage: (TimerType data) {
+          if (data.status == TimerTypeStatus.END) {
+            controller.bidOver(
+                productId:
+                    (controller.productDetailsData.value?.details?.id ?? '')
+                        .toString());
+          }
+          controller.bidingTimerStatus.value = data.status;
+
+          // print("Timer Start to --> - ${data.value}");
+        },
         bidNow: () {
           Get.back();
           AppDialogs.bidHistoryDialog(

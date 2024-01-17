@@ -8,7 +8,6 @@ import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
-import 'package:oninto_flutter/utils/app_timer.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
@@ -788,14 +787,14 @@ class CategoryWiseProductsScreen extends StatelessWidget {
         useSafeArea: false,
         context: Get.context!,
         builder: (BuildContext context) {
-          return Material(
-            type: MaterialType.transparency,
-            child: AppTimer(
-              productId: '',
-              bidNow: bidNow,
-              endTime: endTime,
-            ),
-          );
+          return const Material(
+              type: MaterialType.transparency, child: Text("Dummy Timer")
+              // AppTimer(
+              //   productId: '',
+              //   bidNow: bidNow,
+              //   endTime: endTime,
+              // ),
+              );
         });
   }
 }

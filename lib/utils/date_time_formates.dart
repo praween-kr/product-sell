@@ -23,6 +23,7 @@ class AppDateTime {
       return null;
     } else {
       String temp = dt!;
+      print("formating dt:: $temp");
       if (!dt.toString().contains('T')) {
         temp += 'T00:00:00';
       }

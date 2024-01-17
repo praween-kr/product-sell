@@ -69,6 +69,8 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
             child: _myProductController.loadingData.value
                 ? ShimmerWidgets.product()
                 : SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 15.0, bottom: 30.0),
                       child: Column(
@@ -175,7 +177,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                   height: 5,
                                                 ),
                                                 AppText(
-                                                  text: "199",
+                                                  text: "99",
                                                   textSize: 15.0,
                                                   color: AppColor.blackColor
                                                       .withOpacity(0.3),

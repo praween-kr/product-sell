@@ -4,9 +4,9 @@ import 'package:oninto_flutter/utils/app_timer.dart';
 
 Future timerDialog(
     {required Function bidNow,
-    required DateTime? endTime,
-    required String productId,
-    DateTime? firstBid}) async {
+    required DateTime startDateTime,
+    required Function(TimerType) onChnage,
+    required bool bidingStarted}) async {
   print("clicked---- ");
   return showDialog(
     barrierDismissible: true,
@@ -16,10 +16,18 @@ Future timerDialog(
       return Material(
         type: MaterialType.transparency,
         child: AppTimer(
-            bidNow: bidNow,
-            endTime: endTime,
-            firstBid: firstBid,
-            productId: productId),
+          bidNow: bidNow,
+          viewType: false,
+          textSize: 14,
+          // Timer status change listener
+          onChanged: onChnage,
+          // Biding timer duration
+          duration: const Duration(minutes: 5),
+          // No bid added yet then-> Start bid date time else-> last bid date time
+          startDateTime: startDateTime,
+          // At list one bid added then will be [bidingStarted: true] else [bidingStarted: false]
+          bidingStarted: bidingStarted,
+        ),
       );
     },
   );
