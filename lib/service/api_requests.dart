@@ -388,7 +388,7 @@ class ApiRequests {
               endDate), //"${endDate.year}-${endDate.month}-${endDate.day}",
       "bidTime": AppDateTime.time24hr(timeOfDay: startBidingTime),
       "boostCode": "",
-      "size": "XL,36"
+      "size": "[XL,36]"
     };
     AppPrint.all(
         "Add Product Req: data--> $mapData images---> $images videos---> $videos");
