@@ -86,7 +86,7 @@ class AppDialogs {
             type: MaterialType.transparency,
             child: Align(
               child: Container(
-                width: 250,
+                margin: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
                 decoration: BoxDecoration(
                     color: AppColor.white,
                     borderRadius: BorderRadius.circular(25)),

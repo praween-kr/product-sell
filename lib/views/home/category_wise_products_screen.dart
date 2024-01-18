@@ -27,6 +27,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
   CategoryWiseProductsScreen({super.key});
   // final Homecontroller controller = Get.find();
   final CategoriesController _categoriesController = Get.find();
+  final HomeCatProductController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -418,28 +419,28 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                     const SizedBox(height: 10),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        timerDialog(
+                                                        timerDialog(product,
                                                             endTime: DateTime.parse(
                                                                 "2023-12-10 18:37:00"),
                                                             bidNow: () {
+                                                          Get.back();
+                                                          AppDialogs
+                                                              .bidHistoryDialog(
+                                                            bidingData:
+                                                                AddBidsHistory(),
+                                                            confirm: () {
                                                               Get.back();
-                                                              AppDialogs
-                                                                  .bidHistoryDialog(
-                                                                bidingData:
-                                                                    AddBidsHistory(),
-                                                                confirm: () {
-                                                                  Get.back();
-                                                                  _bidNow((product
-                                                                              .id ??
-                                                                          '')
-                                                                      .toString());
-                                                                },
-                                                                seeAll: () {
-                                                                  Get.toNamed(Routes
-                                                                      .biddingHistoryScreen);
-                                                                },
-                                                              );
-                                                            });
+                                                              _bidNow((product
+                                                                          .id ??
+                                                                      '')
+                                                                  .toString());
+                                                            },
+                                                            seeAll: () {
+                                                              Get.toNamed(Routes
+                                                                  .biddingHistoryScreen);
+                                                            },
+                                                          );
+                                                        });
                                                       },
                                                       child: CommonButton(
                                                         height: 40,
@@ -779,7 +780,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
     );
   }
 
-  Future timerDialog(
+  Future timerDialog(ProductModel product,
       {required Function bidNow, required DateTime endTime}) async {
     print("clicked---- ");
     return showDialog(
@@ -788,11 +789,30 @@ class CategoryWiseProductsScreen extends StatelessWidget {
         context: Get.context!,
         builder: (BuildContext context) {
           return const Material(
-              type: MaterialType.transparency, child: Text("Dummy Timer")
-              // AppTimer(
-              //   productId: '',
-              //   bidNow: bidNow,
-              //   endTime: endTime,
+              type: MaterialType.transparency, child: Text("Timer")
+              // Obx(
+              //   () =>
+              //   AppTimer(
+              //     bidNow: () {},
+              //     viewType: true,
+              //     textSize: 14,
+              //     // Timer status change listener
+              //     onChanged: (TimerType data) {
+              //       _homeController.bidingTimerStatus.value = data.status;
+              //       // print("Timer Start to --> - ${data.value}");
+              //     },
+              //     // Biding timer duration
+              //     duration: const Duration(minutes: 5),
+              //     // No bid added yet then-> Start bid date time else-> last bid date time
+              //     startDateTime: _homeController.bidingData.value?.save == null
+              //         ? DateTime.parse(
+              //             "${_homeController.productDetailsData.value?.details?.startDate}T${_homeController.productDetailsData.value?.details?.bidTime}")
+              //         : DateTime.parse(
+              //             _homeController.bidingData.value?.save?.createdAt ??
+              //                 ''),
+              //     // At list one bid added then will be [bidingStarted: true] else [bidingStarted: false]
+              //     bidingStarted: _homeController.bidingData.value?.save != null,
+              //   ),
               // ),
               );
         });

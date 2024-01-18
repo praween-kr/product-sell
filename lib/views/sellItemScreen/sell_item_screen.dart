@@ -17,6 +17,7 @@ import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/helper/file_picker.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
+import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../routes/routes.dart';
@@ -209,6 +210,8 @@ class SellItemScreen extends StatelessWidget {
                         controller: controller.title,
                         height: 46.0,
                         title: "Add",
+                        style: const TextStyle(
+                            color: AppColor.blackColor, fontSize: 13.0),
                         margin: const EdgeInsets.only(right: 0.0),
                         borderRadius: BorderRadius.circular(23),
                         containerColor: AppColor.textColor),
@@ -236,6 +239,8 @@ class SellItemScreen extends StatelessWidget {
                               location.cordinates?.location?.lng ?? 0.0);
                         }),
                       ),
+                      style: const TextStyle(
+                          color: AppColor.blackColor, fontSize: 13.0),
                       readOnly: true,
                       controller: controller.location,
                       height: 46.0,
@@ -526,73 +531,117 @@ class SellItemScreen extends StatelessWidget {
                                     textSize: 13.0,
                                     style: AppTextStyle.medium),
                                 const SizedBox(height: 14.0),
-                                Obx(
-                                  () => DropdownButtonHideUnderline(
-                                    child: DropdownButton2<String>(
-                                      onChanged: (newValue) {
-                                        controller.itemSize.value = newValue!;
-                                      },
-                                      value: controller.itemSize.value,
-                                      items: controller.sizeItems.map((items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: AppText(
-                                            text: items,
-                                            style: AppTextStyle.regular,
-                                            color: AppColor.blackColor,
-                                            textSize: 13,
-                                          ),
-                                        );
-                                      }).toList(),
-                                      buttonStyleData: ButtonStyleData(
-                                        height: 44,
-                                        width: Get.width,
-                                        padding: const EdgeInsets.only(
-                                            left: 14.0, right: 16.0),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(23),
-                                          color: AppColor.textColor,
-                                        ),
-                                        //elevation: 2,
-                                      ),
-                                      iconStyleData: const IconStyleData(
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                        ),
-                                        iconSize: 20,
-                                        iconEnabledColor: AppColor.blackColor,
-                                        iconDisabledColor: AppColor.blackColor,
-                                      ),
-                                      dropdownStyleData: DropdownStyleData(
-                                        maxHeight: 200,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(23),
-                                            color: AppColor.white,
-                                            border: Border.all(
-                                                color:
-                                                    AppColor.itemBorderColor)),
-                                        offset: const Offset(-2, 0),
-                                        scrollbarTheme: ScrollbarThemeData(
-                                          radius: const Radius.circular(40),
-                                          thickness:
-                                              MaterialStateProperty.all<double>(
-                                                  6),
-                                          thumbVisibility:
-                                              MaterialStateProperty.all<bool>(
-                                                  true),
-                                        ),
-                                      ),
-                                      menuItemStyleData:
-                                          const MenuItemStyleData(
-                                        height: 40,
-                                        padding: EdgeInsets.only(
-                                            left: 23, right: 24),
-                                      ),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 14, vertical: 8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.end,
+                                    children: List.generate(
+                                      controller.selectedSizes.length + 1,
+                                      (index) => index == 0
+                                          ? const SizedBox.shrink()
+                                          : controller.selectedSizes.length ==
+                                                  index
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    // Add size dialog here
+                                                    _selectProductSizeDialog();
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.add_circle,
+                                                    size: 34,
+                                                    color: AppColor.appColor,
+                                                  ),
+                                                )
+                                              : productSizeCard(
+                                                  title: controller
+                                                      .selectedSizes[index],
+                                                  isSelected: false,
+                                                  onClick: () {
+                                                    //
+                                                  },
+                                                  remove: () {
+                                                    controller.selectedSizes
+                                                        .remove(controller
+                                                                .selectedSizes[
+                                                            index]);
+                                                    controller.selectedSizes
+                                                        .refresh();
+                                                  }),
                                     ),
                                   ),
                                 ),
+                                // Obx(
+                                //   () => DropdownButtonHideUnderline(
+                                //     child: DropdownButton2<String>(
+                                //       onChanged: (newValue) {
+                                //         controller.itemSize.value = newValue!;
+                                //       },
+                                //       value: controller.itemSize.value,
+                                //       items: controller.sizeItems.map((items) {
+                                //         return DropdownMenuItem(
+                                //           value: items,
+                                //           child: AppText(
+                                //             text: items,
+                                //             style: AppTextStyle.regular,
+                                //             color: AppColor.blackColor,
+                                //             textSize: 13,
+                                //           ),
+                                //         );
+                                //       }).toList(),
+                                //       buttonStyleData: ButtonStyleData(
+                                //         height: 44,
+                                //         width: Get.width,
+                                //         padding: const EdgeInsets.only(
+                                //             left: 14.0, right: 16.0),
+                                //         decoration: BoxDecoration(
+                                //           borderRadius:
+                                //               BorderRadius.circular(23),
+                                //           color: AppColor.textColor,
+                                //         ),
+                                //         //elevation: 2,
+                                //       ),
+                                //       iconStyleData: const IconStyleData(
+                                //         icon: Icon(
+                                //           Icons.keyboard_arrow_down_rounded,
+                                //         ),
+                                //         iconSize: 20,
+                                //         iconEnabledColor: AppColor.blackColor,
+                                //         iconDisabledColor: AppColor.blackColor,
+                                //       ),
+                                //       dropdownStyleData: DropdownStyleData(
+                                //         maxHeight: 200,
+                                //         decoration: BoxDecoration(
+                                //             borderRadius:
+                                //                 BorderRadius.circular(23),
+                                //             color: AppColor.white,
+                                //             border: Border.all(
+                                //                 color:
+                                //                     AppColor.itemBorderColor)),
+                                //         offset: const Offset(-2, 0),
+                                //         scrollbarTheme: ScrollbarThemeData(
+                                //           radius: const Radius.circular(40),
+                                //           thickness:
+                                //               MaterialStateProperty.all<double>(
+                                //                   6),
+                                //           thumbVisibility:
+                                //               MaterialStateProperty.all<bool>(
+                                //                   true),
+                                //         ),
+                                //       ),
+                                //       menuItemStyleData:
+                                //           const MenuItemStyleData(
+                                //         height: 40,
+                                //         padding: EdgeInsets.only(
+                                //             left: 23, right: 24),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 const SizedBox(height: 16.0),
 
                                 /// Brand---
@@ -815,7 +864,8 @@ class SellItemScreen extends StatelessWidget {
                                             height: 46.0,
                                             title: "Start Date",
                                             style: const TextStyle(
-                                                color: AppColor.grey),
+                                                color: AppColor.blackColor,
+                                                fontSize: 13.0),
                                             hintStyle: const TextStyle(
                                                 color: AppColor.grey,
                                                 fontSize: 14),
@@ -865,8 +915,11 @@ class SellItemScreen extends StatelessWidget {
                                   controller: controller.price,
                                   height: 46.0,
                                   title: "Price",
-                                  hintStyle:
-                                      const TextStyle(color: AppColor.grey),
+                                  style: const TextStyle(
+                                      color: AppColor.blackColor,
+                                      fontSize: 13.0),
+                                  hintStyle: const TextStyle(
+                                      color: AppColor.grey, fontSize: 13.0),
                                   //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
                                   margin: const EdgeInsets.only(right: 0.0),
                                   borderRadius: BorderRadius.circular(23),
@@ -903,13 +956,16 @@ class SellItemScreen extends StatelessWidget {
                         maxLines: null,
                         cursorColor: AppColor.blackColor,
                         keyboardType: TextInputType.multiline,
+                        style: const TextStyle(
+                            color: AppColor.blackColor, fontSize: 13.0),
                         decoration: InputDecoration(
                           counterText: "",
                           hintText: "Write here...",
                           contentPadding:
                               const EdgeInsets.only(left: 20, top: 20),
-                          hintStyle:
-                              TextStyle(color: Colors.black.withOpacity(0.4)),
+                          hintStyle: TextStyle(
+                              color: Colors.black.withOpacity(0.4),
+                              fontSize: 13.0),
                           border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
@@ -967,6 +1023,99 @@ class SellItemScreen extends StatelessWidget {
           ),
         ),
       ]),
+    );
+  }
+
+  _selectProductSizeDialog() {
+    AppDialogs.simple(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Center(
+            child: AppText(
+              text: "Select Product Sizes",
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Obx(
+              () => Wrap(
+                children: List.generate(
+                  controller.sizeItems.length,
+                  (index) => index == 0
+                      ? const SizedBox.shrink()
+                      : productSizeCard(
+                          color: Colors.grey.shade200,
+                          title: controller.sizeItems[index],
+                          isSelected: controller.selectedSizes
+                              .contains(controller.sizeItems[index]),
+                          onClick: () {
+                            if (controller.selectedSizes
+                                .contains(controller.sizeItems[index])) {
+                              controller.selectedSizes
+                                  .remove(controller.sizeItems[index]);
+                            } else {
+                              controller.selectedSizes
+                                  .add(controller.sizeItems[index]);
+                            }
+                            controller.selectedSizes.refresh();
+                          }),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.topRight,
+            child: productSizeCard(
+              color: Colors.grey.shade200,
+              title: "Done",
+              isSelected: true,
+              onClick: () {
+                Get.back();
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget productSizeCard(
+      {required String title,
+      bool isSelected = false,
+      Color? color,
+      required Function onClick,
+      Function? remove}) {
+    return GestureDetector(
+      onTap: () => onClick(),
+      child: Container(
+        margin: const EdgeInsets.only(right: 8, top: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColor.appColor : color ?? Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            AppText(
+              text: title,
+              textAlign: TextAlign.center,
+              color: isSelected ? AppColor.white : null,
+            ),
+            remove == null ? const SizedBox.shrink() : const SizedBox(width: 8),
+            remove == null
+                ? const SizedBox.shrink()
+                : GestureDetector(
+                    onTap: () => remove(),
+                    child: Icon(Icons.cancel, color: Colors.grey.shade500))
+          ],
+        ),
+      ),
     );
   }
 
@@ -1189,7 +1338,8 @@ class SellItemScreen extends StatelessWidget {
           ),
           height: 46.0,
           title: "Start Date",
-          style: TextStyle(color: initialDate1 == null ? AppColor.grey : null),
+          style: TextStyle(
+              color: initialDate1 == null ? AppColor.grey : null, fontSize: 13),
           hintStyle: const TextStyle(color: AppColor.blackColor, fontSize: 13),
           //contentPadding: const EdgeInsets.only(top: 8.0,left: 13.0),
           margin: const EdgeInsets.only(right: 0.0),
@@ -1214,7 +1364,8 @@ class SellItemScreen extends StatelessWidget {
           readOnly: true,
           height: 46.0,
           title: "End Date",
-          style: TextStyle(color: initialDate2 == null ? AppColor.grey : null),
+          style: TextStyle(
+              color: initialDate2 == null ? AppColor.grey : null, fontSize: 13),
           hintStyle: TextStyle(
               color: initialDate2?.day == null
                   ? AppColor.grey

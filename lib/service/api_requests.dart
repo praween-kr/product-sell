@@ -353,7 +353,7 @@ class ApiRequests {
     required String category,
     required String subcategory,
     required String color,
-    required String size,
+    required List<String> sizes,
     required String brand,
     required String condition,
     required String selloption,
@@ -363,6 +363,8 @@ class ApiRequests {
     required String price,
     required String description,
   }) async {
+    String sizesInput = "";
+
     Map<String, dynamic> mapData = {
       "name": title,
       "location": location,
@@ -386,6 +388,7 @@ class ApiRequests {
               endDate), //"${endDate.year}-${endDate.month}-${endDate.day}",
       "bidTime": AppDateTime.time24hr(timeOfDay: startBidingTime),
       "boostCode": "",
+      "size": "XL,36"
     };
     AppPrint.all(
         "Add Product Req: data--> $mapData images---> $images videos---> $videos");
@@ -416,7 +419,7 @@ class ApiRequests {
     String? category,
     String? subcategory,
     String? color,
-    String? size,
+    List<String>? sizes,
     String? brand,
     String? condition,
     String? selloption,

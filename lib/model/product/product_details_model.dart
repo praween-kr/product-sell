@@ -7,6 +7,7 @@ import 'product_image_model.dart';
 class ProductDetailsData {
   ProductDetails? details;
   int? favoriteCount;
+  int? viewCount;
   ShareTradModel? lastTrad;
   int? lastTradBuyPrice;
   int? availableShare;
@@ -18,6 +19,7 @@ class ProductDetailsData {
   ProductDetailsData(
       {this.details,
       this.favoriteCount,
+      this.viewCount,
       this.lastTrad,
       this.lastTradBuyPrice,
       this.availableShare,
@@ -28,6 +30,7 @@ class ProductDetailsData {
     details =
         json['result'] != null ? ProductDetails.fromJson(json['result']) : null;
     favoriteCount = json['favoriteCount'];
+    viewCount = json['viewCount'];
     lastTrad = json['lastTrad'] != null
         ? ShareTradModel.fromJson(json['lastTrad'])
         : null;
@@ -51,6 +54,7 @@ class ProductDetailsData {
       data['result'] = details!.toJson();
     }
     data['favoriteCount'] = favoriteCount;
+    data['viewCount'] = viewCount;
     if (lastTrad != null) {
       data['lastTrad'] = lastTrad!.toJson();
     }

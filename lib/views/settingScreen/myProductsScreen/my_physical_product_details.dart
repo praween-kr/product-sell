@@ -7,6 +7,7 @@ import 'package:oninto_flutter/common_controller/product/sell_item_controller.da
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
@@ -100,19 +101,6 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                // AppText(
-                                                //   text: _myProductController
-                                                //           .productDetails
-                                                //           .value
-                                                //           ?.name ??
-                                                //       '',
-                                                //   textSize: 17.0,
-                                                //   color: AppColor.appcolor,
-                                                //   style: AppTextStyle.medium,
-                                                // ),
-                                                // const SizedBox(
-                                                //   height: 10,
-                                                // ),
                                                 AppText(
                                                   text: _myProductController
                                                           .productDetailsData
@@ -173,11 +161,14 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                   Icons.visibility,
                                                   color: AppColor.appColor,
                                                 ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
+                                                const SizedBox(height: 5),
                                                 AppText(
-                                                  text: "99",
+                                                  text: (_myProductController
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.viewCount ??
+                                                          0)
+                                                      .toString(), // Product View Count
                                                   textSize: 15.0,
                                                   color: AppColor.blackColor
                                                       .withOpacity(0.3),
@@ -190,48 +181,103 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                       ],
                                     ),
 
-                                    myProduct(_myProductController
-                                                .productDetailsData.value) ==
-                                            MyProduct.BUY
-                                        ? Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 20),
-                                            child: commonText("Tracking ID: ",
-                                                "X_SJDFF0USF76887"),
-                                          )
-                                        : const SizedBox.shrink(),
-
-                                    const SizedBox(height: 20),
-                                    commonText(
-                                      "Category",
-                                      _myProductController.productDetailsData
-                                              .value?.details?.category?.name ??
-                                          '',
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              myProduct(_myProductController
+                                                          .productDetailsData
+                                                          .value) ==
+                                                      MyProduct.BUY
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 20),
+                                                      child: commonText(
+                                                          "Tracking ID: ",
+                                                          "X_SJDFF0USF76887"),
+                                                    )
+                                                  : const SizedBox.shrink(),
+                                              const SizedBox(height: 20),
+                                              commonText(
+                                                "Category",
+                                                _myProductController
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.category
+                                                        ?.name ??
+                                                    '',
+                                              ),
+                                              const SizedBox(height: 10),
+                                              commonText(
+                                                "Sub Category",
+                                                _myProductController
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.category
+                                                        ?.subCategory
+                                                        ?.name ??
+                                                    '',
+                                              ),
+                                              const SizedBox(height: 10),
+                                              commonText(
+                                                  "Color",
+                                                  _myProductController
+                                                          .productDetailsData
+                                                          .value
+                                                          ?.details
+                                                          ?.color ??
+                                                      ''),
+                                              const SizedBox(height: 10),
+                                              commonText(
+                                                  "Brand",
+                                                  _myProductController
+                                                          .productDetailsData
+                                                          .value
+                                                          ?.details
+                                                          ?.brand ??
+                                                      ''),
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              AppText(
+                                                text: _myProductController
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.sellOption ==
+                                                        ProductType.biding
+                                                    ? "Auction"
+                                                    : "Fix Price",
+                                                underline: true,
+                                                underlineColor:
+                                                    AppColor.appColor,
+                                                textSize: 14.0,
+                                                color: AppColor.appColor,
+                                                style: AppTextStyle.regular,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(height: 10),
-                                    commonText(
-                                      "Sub Category",
-                                      _myProductController
-                                              .productDetailsData
-                                              .value
-                                              ?.details
-                                              ?.category
-                                              ?.subCategory
-                                              ?.name ??
-                                          '',
-                                    ),
-                                    const SizedBox(height: 10),
-                                    commonText(
-                                        "Color",
-                                        _myProductController.productDetailsData
-                                                .value?.details?.color ??
-                                            ''),
-                                    const SizedBox(height: 10),
-                                    commonText(
-                                        "Brand",
-                                        _myProductController.productDetailsData
-                                                .value?.details?.brand ??
-                                            ''),
                                     //const SizedBox(height: 20,),
                                   ],
                                 ),

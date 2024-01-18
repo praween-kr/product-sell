@@ -7,6 +7,8 @@ import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/app_type_status.dart';
 
+import '../home/categories_controller.dart';
+
 class SellItemController extends GetxController {
   var tabController = 1.obs;
 
@@ -44,7 +46,7 @@ class SellItemController extends GetxController {
   // co-owner
   var selectedCategory = Rx<CategoryModel?>(null);
   var selectedSubCategory = Rx<CategoryModel?>(null);
-  var itemSize = 'Select Size'.obs;
+  var selectedSizes = ['Select Size'].obs;
   var itemColor = TextEditingController(text: '');
   var brand = TextEditingController(text: '');
   var condition = 'Excellent'.obs;
@@ -107,7 +109,7 @@ class SellItemController extends GetxController {
     //Co-owner
     selectedCategory.value = null;
     selectedSubCategory.value = null;
-    itemSize.value = 'Select Size';
+    selectedSizes.value = ['Select Size'];
     itemColor.clear();
     brand.clear();
     condition.value = 'Excellent';
@@ -118,10 +120,11 @@ class SellItemController extends GetxController {
   }
 
   initialData(ProductDetails? product) {
+    if (product == null) return;
     // multipleImages.value = [];
-    productIdForEdit.value = (product?.id ?? '').toString();
+    productIdForEdit.value = (product.id ?? '').toString();
 
-    multipleImages.value = (product?.productImages ?? [])
+    multipleImages.value = (product.productImages ?? [])
         .map((e) => AttachmentModel(
             path: e.image ?? '',
             type: e.thumbnail == null ? '0' : '2',
@@ -130,28 +133,49 @@ class SellItemController extends GetxController {
             id: e.id))
         .toList();
     //
-    title.text = product?.name ?? '';
-    location.text = product?.location ?? '';
-    cordinates.value = LatLng(double.parse(product?.latitude ?? "0.0"),
-        double.parse(product?.longitude ?? "0.0"));
-    description.text = product?.description ?? '';
-    //Physical
-    shares.text = (product?.share ?? 0).toString();
-    basePrice.text = product?.price ?? '';
-    //Co-owner
-    for (var element in categoriesList) {
-      if (element.id == product?.category?.id) {
-        selectedCategory.value = element;
-        break;
+    title.text = product.name ?? '';
+    location.text = product.location ?? '';
+    cordinates.value = LatLng(double.parse(product.latitude ?? "0.0"),
+        double.parse(product.longitude ?? "0.0"));
+    description.text = product.description ?? '';
+
+    selectedCategory.value = product.category;
+    selectedSubCategory.value = product.category?.subCategory;
+    if (selectedSubCategory.value != null) {
+      CategoriesController categoriesController;
+      if (CategoriesController().initialized) {
+        categoriesController = Get.find<CategoriesController>();
+      } else {
+        categoriesController = Get.put(CategoriesController());
       }
+      categoriesController
+          .getSubCategories((selectedCategory.value?.id ?? '').toString());
+      selectedSubCategory.value = null;
     }
+    // itemSize.value = product.s
+    //Physical
+    shares.text = (product.share ?? 0).toString();
+    basePrice.text = product.price ?? '';
+    if ((product.startDate ?? '') != '') {
+      startDate.value = DateTime.parse(product.startDate!);
+    }
+    if ((product.endDate ?? '') != '') {
+      endDate.value = DateTime.parse(product.endDate!);
+    }
+    if ((product.bidTime ?? '') != '') {
+      List<String> time = product.bidTime!.split(":");
+      startBidingTime.value =
+          TimeOfDay(hour: int.parse(time[0]), minute: int.parse(time[1]));
+    }
+    //Co-owner
+
     // selectedSubCategory.value = product?.category?.subCategory;
-    itemSize.value = 'Select Size';
-    itemColor.text = product?.color ?? '';
-    brand.text = product?.brand ?? '';
+    selectedSizes.value = ['Select Size'];
+    itemColor.text = product.color ?? '';
+    brand.text = product.brand ?? '';
     condition.value = 'Excellent';
-    sellOption.value = product?.sellOption ?? ProductType.biding;
-    price.text = product?.price ?? '';
+    sellOption.value = product.sellOption ?? ProductType.biding;
+    price.text = product.price ?? '';
   }
 
   bool fieldsValidations() {
@@ -200,7 +224,7 @@ class SellItemController extends GetxController {
       AppToast.show("Please enter color");
       return false;
     }
-    if (tabController.value == 1 && itemSize.value.trim() == 'Select Size') {
+    if (tabController.value == 1 && selectedSizes.length <= 1) {
       AppToast.show("Please select size");
       return false;
     }
@@ -241,6 +265,11 @@ class SellItemController extends GetxController {
         imgs.add(element.path);
       }
     }
+    List<String> sizes = [];
+
+    for (int i = 1; i < selectedSizes.length; i++) {
+      sizes.add(selectedSizes[i]);
+    }
     return await ApiRequests.addPhysicalProduct(
         images: imgs,
         videos: videos,
@@ -250,7 +279,7 @@ class SellItemController extends GetxController {
         category: (selectedCategory.value?.id ?? '').toString(),
         subcategory: (selectedSubCategory.value?.id ?? '').toString(),
         color: itemColor.text.trim(),
-        size: itemSize.value.trim(),
+        sizes: sizes,
         brand: brand.text.trim(),
         condition: condition.value.trim(),
         selloption: sellOption.value.trim(),
@@ -296,6 +325,10 @@ class SellItemController extends GetxController {
         }
       }
     }
+    List<String> sizes = [];
+    for (int i = 1; i < selectedSizes.length; i++) {
+      sizes.add(selectedSizes[i]);
+    }
     return await ApiRequests.editPhysicalProduct(
         id: productIdForEdit.value,
         images: imgs,
@@ -307,7 +340,7 @@ class SellItemController extends GetxController {
         category: (selectedCategory.value?.id ?? '').toString(),
         subcategory: (selectedSubCategory.value?.id ?? '').toString(),
         color: itemColor.text.trim(),
-        size: itemSize.value.trim(),
+        sizes: sizes,
         brand: brand.text.trim(),
         condition: condition.value.trim(),
         selloption: sellOption.value.trim(),
