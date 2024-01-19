@@ -627,42 +627,45 @@ class GroupMessageScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppText(
-                text: "Options".toUpperCase(),
-                lineHeight: 1.5,
-                letterSpacing: 0.6,
-                color: Colors.black54,
-                fontFamily: "Oswald",
-                fontWeight: FontWeight.w600,
-                textSize: 14),
-            const SizedBox(height: 5),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: (pollMsg.options ?? [])
-                  .map((option) => Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        margin: const EdgeInsets.only(bottom: 5, right: 5),
-                        decoration: BoxDecoration(
-                            color: AppColor.appColor.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: AppText(
-                            text: option,
-                            lineHeight: 1.5,
-                            letterSpacing: 0.6,
-                            color: Colors.black,
-                            fontFamily: "Oswald",
-                            fontWeight: FontWeight.w600,
-                            textSize: 14),
-                      ))
-                  .toList(),
-            ),
-          ],
-        ),
+        pollMsg.options == null
+            ? const SizedBox.shrink()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                      text: "Options".toUpperCase(),
+                      lineHeight: 1.5,
+                      letterSpacing: 0.6,
+                      color: Colors.black54,
+                      fontFamily: "Oswald",
+                      fontWeight: FontWeight.w600,
+                      textSize: 14),
+                  const SizedBox(height: 5),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: (pollMsg.options ?? [])
+                        .map((option) => Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              margin:
+                                  const EdgeInsets.only(bottom: 5, right: 5),
+                              decoration: BoxDecoration(
+                                  color: AppColor.appColor.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: AppText(
+                                  text: option,
+                                  lineHeight: 1.5,
+                                  letterSpacing: 0.6,
+                                  color: Colors.black,
+                                  fontFamily: "Oswald",
+                                  fontWeight: FontWeight.w600,
+                                  textSize: 14),
+                            ))
+                        .toList(),
+                  ),
+                ],
+              ),
         // AppText(
         //     text: message.message ?? '',
         //     lineHeight: 1.5,

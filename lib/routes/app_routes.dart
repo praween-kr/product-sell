@@ -28,7 +28,6 @@ import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen
 import '../views/settingScreen/cms_screen/cms_screen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_history_screen.dart';
 import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
-import '../views/settingScreen/myProductsScreen/editItem_screen.dart';
 import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
@@ -238,10 +237,10 @@ class AppRoutes {
       page: () => MyProductFilterScreen(),
       binding: ProductBinding(),
     ),
-    GetPage(
-      name: Routes.editItemScreen,
-      page: () => EditItemScreen(),
-    ),
+    // GetPage(
+    //   name: Routes.editItemScreen,
+    //   page: () => EditItemScreen(),
+    // ),
     GetPage(
       name: Routes.insightScreen,
       page: () => InsightsScreen(),

@@ -15,18 +15,17 @@ import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
-import 'package:oninto_flutter/utils/helper/file_picker.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
-import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../../routes/routes.dart';
 import '../../utils/app_text.dart';
+import 'action/sell_item_screen_action.dart';
 
 class SellItemScreen extends StatelessWidget {
   SellItemScreen({super.key});
   final SellItemController controller = Get.find();
-
+  final SellItemScreenAction _action = SellItemScreenAction(Get.find());
   @override
   Widget build(BuildContext context) {
     AppPrint.all(
@@ -100,7 +99,7 @@ class SellItemScreen extends StatelessWidget {
                         url: controller.singleImage.value,
                         type: controller.singleImageType.value,
                         onClick: () {
-                          _addMoreAttachments();
+                          _action.addMoreAttachments();
                         },
                       ),
                     ),
@@ -163,9 +162,9 @@ class SellItemScreen extends StatelessWidget {
                                 onClick: () {
                                   if (position <
                                       controller.multipleImages.length) {
-                                    _addAndRemoveAttachment(position);
+                                    _action.addAndRemoveAttachment(position);
                                   } else {
-                                    _addAttachment(position);
+                                    _action.addAttachment(position);
                                   }
                                 },
                                 type: urlType),
@@ -180,7 +179,7 @@ class SellItemScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: GestureDetector(
                       onTap: () {
-                        _addMoreAttachments();
+                        _action.addMoreAttachments();
                       },
                       child: const CommonButton(
                           color: AppColor.appColor,
@@ -414,12 +413,18 @@ class SellItemScreen extends StatelessWidget {
                                         if (newValue?.id != null) {
                                           controller.selectedSubCategory.value =
                                               newValue;
-                                          controller.sizeItems.value = [
-                                            'Select Size'
-                                          ];
+                                          controller.sizeItems.value =
+                                              <String, int?>{
+                                            'Select Size': null
+                                          };
                                           if (newValue?.sizeList != null) {
-                                            controller.sizeItems.addAll(
-                                                newValue?.sizeList ?? []);
+                                            for (String v
+                                                in (newValue?.sizeList ?? [])) {
+                                              controller.sizeItems
+                                                  .addAll({v: null});
+                                            }
+                                            // controller.sizeItems.addAll(
+                                            //     newValue?.sizeList ?? []);
                                           }
                                           controller.sizeItems.refresh();
                                         }
@@ -541,15 +546,17 @@ class SellItemScreen extends StatelessWidget {
                                   child: Wrap(
                                     crossAxisAlignment: WrapCrossAlignment.end,
                                     children: List.generate(
-                                      controller.selectedSizes.length + 1,
+                                      controller.pickedSizes.length +
+                                          1, // controller.selectedSizes.length + 1,
                                       (index) => index == 0
                                           ? const SizedBox.shrink()
-                                          : controller.selectedSizes.length ==
+                                          : controller.pickedSizes.length ==
                                                   index
                                               ? GestureDetector(
                                                   onTap: () {
                                                     // Add size dialog here
-                                                    _selectProductSizeDialog();
+                                                    _action
+                                                        .selectProductSizeDialog();
                                                   },
                                                   child: const Icon(
                                                     Icons.add_circle,
@@ -557,19 +564,33 @@ class SellItemScreen extends StatelessWidget {
                                                     color: AppColor.appColor,
                                                   ),
                                                 )
-                                              : productSizeCard(
+                                              : _action.productSizeCard(
                                                   title: controller
-                                                      .selectedSizes[index],
+                                                      .pickedSizes.keys
+                                                      .toList()[index],
                                                   isSelected: false,
                                                   onClick: () {
                                                     //
                                                   },
                                                   remove: () {
-                                                    controller.selectedSizes
+                                                    // Remove from db
+                                                    int? id = controller
+                                                            .pickedSizes[
+                                                        controller
+                                                            .pickedSizes.keys
+                                                            .toList()[index]];
+                                                    if (id != null &&
+                                                        !controller.removeSizes
+                                                            .contains(id)) {
+                                                      controller.removeSizes
+                                                          .add(id);
+                                                    }
+                                                    //---
+                                                    controller.pickedSizes
                                                         .remove(controller
-                                                                .selectedSizes[
-                                                            index]);
-                                                    controller.selectedSizes
+                                                            .pickedSizes.keys
+                                                            .toList()[index]);
+                                                    controller.pickedSizes
                                                         .refresh();
                                                   }),
                                     ),
@@ -1026,218 +1047,7 @@ class SellItemScreen extends StatelessWidget {
     );
   }
 
-  _selectProductSizeDialog() {
-    AppDialogs.simple(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Center(
-            child: AppText(
-              text: "Select Product Sizes",
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Obx(
-              () => Wrap(
-                children: List.generate(
-                  controller.sizeItems.length,
-                  (index) => index == 0
-                      ? const SizedBox.shrink()
-                      : productSizeCard(
-                          color: Colors.grey.shade200,
-                          title: controller.sizeItems[index],
-                          isSelected: controller.selectedSizes
-                              .contains(controller.sizeItems[index]),
-                          onClick: () {
-                            if (controller.selectedSizes
-                                .contains(controller.sizeItems[index])) {
-                              controller.selectedSizes
-                                  .remove(controller.sizeItems[index]);
-                            } else {
-                              controller.selectedSizes
-                                  .add(controller.sizeItems[index]);
-                            }
-                            controller.selectedSizes.refresh();
-                          }),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Align(
-            alignment: Alignment.topRight,
-            child: productSizeCard(
-              color: Colors.grey.shade200,
-              title: "Done",
-              isSelected: true,
-              onClick: () {
-                Get.back();
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget productSizeCard(
-      {required String title,
-      bool isSelected = false,
-      Color? color,
-      required Function onClick,
-      Function? remove}) {
-    return GestureDetector(
-      onTap: () => onClick(),
-      child: Container(
-        margin: const EdgeInsets.only(right: 8, top: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColor.appColor : color ?? Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            AppText(
-              text: title,
-              textAlign: TextAlign.center,
-              color: isSelected ? AppColor.white : null,
-            ),
-            remove == null ? const SizedBox.shrink() : const SizedBox(width: 8),
-            remove == null
-                ? const SizedBox.shrink()
-                : GestureDetector(
-                    onTap: () => remove(),
-                    child: Icon(Icons.cancel, color: Colors.grey.shade500))
-          ],
-        ),
-      ),
-    );
-  }
-
   ///--------
-  _addAndRemoveAttachment(int position) {
-    Get.bottomSheet(ClipRRect(
-      child: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 14),
-            GestureDetector(
-              onTap: () {
-                Get.back();
-                _addAttachment(position);
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Text(
-                      "Change",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14),
-                    )),
-                    Icon(Icons.change_circle),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Get.back();
-                if (controller.multipleImages[position].isNetwork) {
-                  controller.oldImagesIdList
-                      .add(controller.multipleImages[position].id.toString());
-                }
-                controller.multipleImages.removeAt(position);
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Text(
-                      "Remove",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14),
-                    )),
-                    Icon(Icons.close),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    ));
-  }
-
-  _addAttachment(int position) {
-    if (position < controller.multipleImages.length) {
-      controller.selectedImageForUpdate.value = position;
-    }
-    AppPicker().image((path, type, thumb) {
-      String typeKey = "0";
-      if (type == AttachmentPicker.IMG) {
-        typeKey = "0";
-      } else if (type == AttachmentPicker.VIDEO) {
-        typeKey = "2";
-      } else {
-        typeKey = "1";
-      }
-      if (path != null) {
-        if (controller.selectedImageForUpdate.value == position) {
-          if (controller.multipleImages[position].isNetwork) {
-            controller.oldImagesIdList
-                .add(controller.multipleImages[position].id.toString());
-          }
-          AppPrint.all(
-              "controller.oldImagesIdList: ${controller.oldImagesIdList}");
-          //
-          controller.multipleImages.replaceRange(position, position + 1,
-              [AttachmentModel(path: path, type: typeKey, thumb: thumb)]);
-        } else {
-          controller.multipleImages
-              .add(AttachmentModel(path: path, type: typeKey, thumb: thumb));
-        }
-        controller.singleImage.value = typeKey == '2' ? thumb ?? '' : path;
-        controller.singleImageType.value = typeKey;
-        controller.multipleImages.refresh();
-      }
-    });
-  }
-
-  _addMoreAttachments() {
-    AppPicker().image((path, type, thumb) {
-      String typeKey = "0";
-      if (type == AttachmentPicker.IMG) {
-        typeKey = "0";
-      } else if (type == AttachmentPicker.VIDEO) {
-        typeKey = "2";
-      } else {
-        typeKey = "1";
-      }
-      if (path != null) {
-        controller.multipleImages
-            .add(AttachmentModel(path: path, type: typeKey, thumb: thumb));
-        controller.multipleImages.refresh();
-        controller.singleImage.value = typeKey == '2' ? thumb ?? '' : path;
-        controller.singleImageType.value = typeKey;
-      }
-    });
-  }
 
   ///--------
 

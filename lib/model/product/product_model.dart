@@ -49,6 +49,7 @@ class ProductModel implements Product {
   String? createdAt;
   String? updatedAt;
   List<ProductImages>? productImages;
+  List<ProductSize>? productSizes;
   CategoryModel? category;
   int? isFavourite;
   BidsHistory? lastBidInfo;
@@ -98,6 +99,7 @@ class ProductModel implements Product {
     this.createdAt,
     this.updatedAt,
     this.productImages,
+    this.productSizes,
     this.category,
     this.isFavourite,
     this.lastBidInfo,
@@ -151,6 +153,12 @@ class ProductModel implements Product {
       productImages = <ProductImages>[];
       json['product_images'].forEach((v) {
         productImages!.add(ProductImages.fromJson(v));
+      });
+    }
+    if (json['product_sizes'] != null) {
+      productSizes = <ProductSize>[];
+      json['product_sizes'].forEach((v) {
+        productSizes!.add(ProductSize.fromJson(v));
       });
     }
     category = json['category'] != null
@@ -212,6 +220,9 @@ class ProductModel implements Product {
     data['updatedAt'] = updatedAt;
     if (productImages != null) {
       data['product_images'] = productImages!.map((v) => v.toJson()).toList();
+    }
+    if (productSizes != null) {
+      data['product_sizes'] = productSizes!.map((e) => e.toJson()).toList();
     }
     if (category != null) {
       data['category'] = category!.toJson();
@@ -285,6 +296,36 @@ class BuyProductModel implements Product {
     if (product != null) {
       data['product'] = product!.toJson();
     }
+    return data;
+  }
+}
+
+// Product Size
+class ProductSize {
+  int? id;
+  int? productId;
+  String? size;
+  String? createdAt;
+  String? updatedAt;
+
+  ProductSize(
+      {this.id, this.productId, this.size, this.createdAt, this.updatedAt});
+
+  ProductSize.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    productId = json['product_id'];
+    size = json['size'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['product_id'] = productId;
+    data['size'] = size;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

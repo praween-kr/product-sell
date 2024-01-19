@@ -363,8 +363,6 @@ class ApiRequests {
     required String price,
     required String description,
   }) async {
-    String sizesInput = "";
-
     Map<String, dynamic> mapData = {
       "name": title,
       "location": location,
@@ -388,7 +386,7 @@ class ApiRequests {
               endDate), //"${endDate.year}-${endDate.month}-${endDate.day}",
       "bidTime": AppDateTime.time24hr(timeOfDay: startBidingTime),
       "boostCode": "",
-      "size": "[XL,36]"
+      "size": jsonEncode(sizes)
     };
     AppPrint.all(
         "Add Product Req: data--> $mapData images---> $images videos---> $videos");
@@ -420,6 +418,7 @@ class ApiRequests {
     String? subcategory,
     String? color,
     List<String>? sizes,
+    List<int>? removeSizes,
     String? brand,
     String? condition,
     String? selloption,
@@ -484,9 +483,19 @@ class ApiRequests {
       }
       mapData.addAll({"old_images_id": "[$ids]"});
     }
+    if ((sizes ?? []).isNotEmpty) {
+      mapData.addAll({"size": jsonEncode(sizes)});
+    }
     // if(price!=null){
     //   mapData.addAll({"boostCode": price});
     // }
+    if (removeSizes != null) {
+      String ids = "";
+      for (int i = 0; i < removeSizes.length; i++) {
+        ids += "${removeSizes[i]}${(i == removeSizes.length - 1) ? '' : ','}";
+      }
+      mapData.addAll({"old_size": "[$ids]"});
+    }
 
     AppPrint.all(
         "Add Product Req: data--> $mapData images---> $images videos---> $videos");

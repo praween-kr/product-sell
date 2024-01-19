@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
+import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/app_type_status.dart';
@@ -13,7 +14,7 @@ class SellItemController extends GetxController {
   var tabController = 1.obs;
 
   // List of items in our dropdown menu
-  RxList<String> sizeItems = ['Select Size'].obs;
+  var sizeItems = <String, int?>{'Select Size': null}.obs;
   RxString dropDownValue5 = 'Tommy'.obs;
   // List of items in our dropdown menu
 
@@ -46,7 +47,11 @@ class SellItemController extends GetxController {
   // co-owner
   var selectedCategory = Rx<CategoryModel?>(null);
   var selectedSubCategory = Rx<CategoryModel?>(null);
-  var selectedSizes = ['Select Size'].obs;
+  // Product Size
+  // var selectedSizes = ['Select Size'].obs;
+  var pickedSizes = <String, int?>{"Select Size": null}.obs;
+  var removeSizes = <int>[].obs;
+  //
   var itemColor = TextEditingController(text: '');
   var brand = TextEditingController(text: '');
   var condition = 'Excellent'.obs;
@@ -109,7 +114,9 @@ class SellItemController extends GetxController {
     //Co-owner
     selectedCategory.value = null;
     selectedSubCategory.value = null;
-    selectedSizes.value = ['Select Size'];
+    // selectedSizes.value = ['Select Size'];
+    pickedSizes.value = <String, int?>{"Select Size": null};
+    removeSizes.value = [];
     itemColor.clear();
     brand.clear();
     condition.value = 'Excellent';
@@ -170,7 +177,14 @@ class SellItemController extends GetxController {
     //Co-owner
 
     // selectedSubCategory.value = product?.category?.subCategory;
-    selectedSizes.value = ['Select Size'];
+    // selectedSizes.value = ['Select Size'];
+    pickedSizes.value = <String, int?>{"Select Size": null};
+    for (ProductSize s in product.productSizes ?? []) {
+      if (s.id != null && s.size != null) {
+        pickedSizes.addAll({s.size!: s.id});
+      }
+    }
+    // if(product.)
     itemColor.text = product.color ?? '';
     brand.text = product.brand ?? '';
     condition.value = 'Excellent';
@@ -224,7 +238,8 @@ class SellItemController extends GetxController {
       AppToast.show("Please enter color");
       return false;
     }
-    if (tabController.value == 1 && selectedSizes.length <= 1) {
+    if (tabController.value == 1 && pickedSizes.length <= 1) {
+      // selectedSizes.length <= 1) {
       AppToast.show("Please select size");
       return false;
     }
@@ -267,8 +282,11 @@ class SellItemController extends GetxController {
     }
     List<String> sizes = [];
 
-    for (int i = 1; i < selectedSizes.length; i++) {
-      sizes.add(selectedSizes[i]);
+    // for (int i = 1; i < selectedSizes.length; i++) {
+    //   sizes.add(selectedSizes[i]);
+    // }
+    for (int i = 1; i < pickedSizes.keys.length; i++) {
+      sizes.add(pickedSizes.keys.toList()[i]);
     }
     return await ApiRequests.addPhysicalProduct(
         images: imgs,
@@ -326,29 +344,34 @@ class SellItemController extends GetxController {
       }
     }
     List<String> sizes = [];
-    for (int i = 1; i < selectedSizes.length; i++) {
-      sizes.add(selectedSizes[i]);
+    // for (int i = 1; i < selectedSizes.length; i++) {
+    //   sizes.add(selectedSizes[i]);
+    // }
+    for (int i = 1; i < pickedSizes.keys.length; i++) {
+      sizes.add(pickedSizes.keys.toList()[i]);
     }
     return await ApiRequests.editPhysicalProduct(
-        id: productIdForEdit.value,
-        images: imgs,
-        oldImagesId: oldImagesIdList,
-        videos: videos,
-        title: title.text.trim(),
-        location: location.text.trim(),
-        cordinates: cordinates.value ?? const LatLng(0.0, 0.0),
-        category: (selectedCategory.value?.id ?? '').toString(),
-        subcategory: (selectedSubCategory.value?.id ?? '').toString(),
-        color: itemColor.text.trim(),
-        sizes: sizes,
-        brand: brand.text.trim(),
-        condition: condition.value.trim(),
-        selloption: sellOption.value.trim(),
-        price: price.text.trim(),
-        description: description.text.trim(),
-        startBidingTime: startBidingTime.value,
-        startDate: startDate.value,
-        endDate: endDate.value);
+      id: productIdForEdit.value,
+      images: imgs,
+      oldImagesId: oldImagesIdList,
+      videos: videos,
+      title: title.text.trim(),
+      location: location.text.trim(),
+      cordinates: cordinates.value ?? const LatLng(0.0, 0.0),
+      category: (selectedCategory.value?.id ?? '').toString(),
+      subcategory: (selectedSubCategory.value?.id ?? '').toString(),
+      color: itemColor.text.trim(),
+      sizes: sizes,
+      removeSizes: removeSizes,
+      brand: brand.text.trim(),
+      condition: condition.value.trim(),
+      selloption: sellOption.value.trim(),
+      price: price.text.trim(),
+      description: description.text.trim(),
+      startBidingTime: startBidingTime.value,
+      startDate: startDate.value,
+      endDate: endDate.value,
+    );
   }
   //
 }

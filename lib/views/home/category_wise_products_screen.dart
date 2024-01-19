@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
@@ -9,12 +8,12 @@ import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/blur_widget.dart';
-import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 import '../../generated/assets.dart';
@@ -170,63 +169,9 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                             (product.id ?? '')
                                                                 .toString());
                                                   },
-                                                  onClick: () {
-                                                    if (product.sellOption ==
-                                                        null) {
-                                                      // Share Product
-                                                      Map<String, dynamic>
-                                                          data = {"from": 0};
-                                                      if (HomeCatProductController()
-                                                          .initialized) {
-                                                        Get.find<
-                                                                HomeCatProductController>()
-                                                            .emitShareProductDetails(
-                                                                (product.id ??
-                                                                        '')
-                                                                    .toString());
-                                                        // .getProductDetails(
-                                                        //     (product.id ??
-                                                        //             '')
-                                                        //         .toString());
-                                                      } else {
-                                                        Get.put(HomeCatProductController())
-                                                            .emitShareProductDetails(
-                                                                (product.id ??
-                                                                        '')
-                                                                    .toString());
-                                                        // .getProductDetails(
-                                                        //     (product.id ??
-                                                        //             '')
-                                                        //         .toString());
-                                                      }
-                                                      Get.toNamed(
-                                                          Routes
-                                                              .publicShareProductDetails,
-                                                          arguments: data);
-                                                    } else {
-                                                      Map<String, dynamic>
-                                                          data = {"from": 0};
-                                                      if (HomeCatProductController()
-                                                          .initialized) {
-                                                        Get.find<
-                                                                HomeCatProductController>()
-                                                            .getProductDetails(
-                                                                (product.id ??
-                                                                        '')
-                                                                    .toString());
-                                                      } else {
-                                                        Get.put(HomeCatProductController())
-                                                            .getProductDetails(
-                                                                (product.id ??
-                                                                        '')
-                                                                    .toString());
-                                                      }
-                                                      Get.toNamed(
-                                                          Routes
-                                                              .productDetailsScreen,
-                                                          arguments: data);
-                                                    }
-                                                  },
+                                                  onClick: () =>
+                                                      _gotoProductDetaiesScreen(
+                                                          product),
                                                 ),
                                               );
                                             },
@@ -419,36 +364,47 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                     const SizedBox(height: 10),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        timerDialog(product,
-                                                            endTime: DateTime.parse(
-                                                                "2023-12-10 18:37:00"),
-                                                            bidNow: () {
-                                                          Get.back();
-                                                          AppDialogs
-                                                              .bidHistoryDialog(
-                                                            bidingData:
-                                                                AddBidsHistory(),
-                                                            confirm: () {
-                                                              Get.back();
-                                                              _bidNow((product
-                                                                          .id ??
-                                                                      '')
-                                                                  .toString());
-                                                            },
-                                                            seeAll: () {
-                                                              Get.toNamed(Routes
-                                                                  .biddingHistoryScreen);
-                                                            },
-                                                          );
-                                                        });
+                                                        _gotoProductDetaiesScreen(
+                                                            product);
+                                                        // timerDialog(
+                                                        //   product,
+                                                        //   endTime: DateTime.parse(
+                                                        //       "2023-12-10 18:37:00"),
+                                                        //   bidNow: () {
+                                                        //     Get.back();
+                                                        //     AppDialogs
+                                                        //         .bidHistoryDialog(
+                                                        //       bidingData:
+                                                        //           AddBidsHistory(),
+                                                        //       confirm: () {
+                                                        //         Get.back();
+                                                        //         _bidNow((product
+                                                        //                     .id ??
+                                                        //                 '')
+                                                        //             .toString());
+                                                        //       },
+                                                        //       seeAll: () {
+                                                        //         Get.toNamed(Routes
+                                                        //             .biddingHistoryScreen);
+                                                        //       },
+                                                        //     );
+                                                        //   },
+                                                        // );
                                                       },
                                                       child: CommonButton(
                                                         height: 40,
                                                         radius: 15,
                                                         color:
                                                             AppColor.appColor,
-                                                        text:
-                                                            "Bid \$${product.lastBidInfo == null ? product.price ?? '0.0' : product.lastBidInfo?.bidPrice ?? '0.0'}",
+                                                        text: product
+                                                                    .sellOption ==
+                                                                null
+                                                            ? "Buy Share"
+                                                            : product.sellOption ==
+                                                                    ProductType
+                                                                        .fixedPrice
+                                                                ? "Buy"
+                                                                : "Bid \$${product.lastBidInfo == null ? product.price ?? '0.0' : product.lastBidInfo?.bidPrice ?? '0.0'}",
                                                         textStyle:
                                                             const TextStyle(
                                                           fontSize: 15,
@@ -469,65 +425,71 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                     //   fontWeight:
                                                     //       FontWeight.w400,
                                                     // ),
-                                                    const SizedBox(height: 10),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        Get.toNamed(Routes
-                                                            .biddingHistoryScreen);
-                                                      },
-                                                      child: RichText(
-                                                          text: TextSpan(
-                                                              text: (product.productBidCount ??
-                                                                          0) <
-                                                                      2
-                                                                  ? "${product.productBidCount ?? 0} Bid "
-                                                                  : "${product.productBidCount ?? 0} Bids ",
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize: 10,
-                                                                fontFamily:
-                                                                    "Poppins",
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                              ),
-                                                              children: [
-                                                            TextSpan(
-                                                                text:
-                                                                    "Show bid history",
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontFamily:
-                                                                        "Poppins",
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .underline),
-                                                                recognizer:
-                                                                    TapGestureRecognizer()
-                                                                      ..onTap =
-                                                                          () {
-                                                                        if (HomeCatProductController()
-                                                                            .initialized) {
-                                                                          Get.find<HomeCatProductController>()
-                                                                              .getBidHistories(productId: (product.id ?? '').toString());
-                                                                        } else {
-                                                                          Get.put(HomeCatProductController())
-                                                                              .getBidHistories(productId: (product.id ?? '').toString());
-                                                                        }
+                                                    product.sellOption ==
+                                                            ProductType
+                                                                .fixedPrice
+                                                        ? const SizedBox
+                                                            .shrink()
+                                                        : const SizedBox(
+                                                            height: 10),
+                                                    product.sellOption ==
+                                                            ProductType
+                                                                .fixedPrice
+                                                        ? const SizedBox
+                                                            .shrink()
+                                                        : GestureDetector(
+                                                            onTap: () {
+                                                              Get.toNamed(Routes
+                                                                  .biddingHistoryScreen);
+                                                            },
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: (product.productBidCount ??
+                                                                                0) <
+                                                                            2
+                                                                        ? "${product.productBidCount ?? 0} Bid "
+                                                                        : "${product.productBidCount ?? 0} Bids ",
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          10,
+                                                                      fontFamily:
+                                                                          "Poppins",
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                    ),
+                                                                    children: [
+                                                                  TextSpan(
+                                                                      text:
+                                                                          "Show bid history",
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              10,
+                                                                          fontFamily:
+                                                                              "Poppins",
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          decoration: TextDecoration
+                                                                              .underline),
+                                                                      recognizer:
+                                                                          TapGestureRecognizer()
+                                                                            ..onTap =
+                                                                                () {
+                                                                              if (HomeCatProductController().initialized) {
+                                                                                Get.find<HomeCatProductController>().getBidHistories(productId: (product.id ?? '').toString());
+                                                                              } else {
+                                                                                Get.put(HomeCatProductController()).getBidHistories(productId: (product.id ?? '').toString());
+                                                                              }
 
-                                                                        Get.toNamed(
-                                                                            Routes.biddingHistoryScreen);
-                                                                      })
-                                                          ])),
-                                                    )
+                                                                              Get.toNamed(Routes.biddingHistoryScreen);
+                                                                            })
+                                                                ])),
+                                                          )
                                                   ],
                                                 ),
                                               ),
@@ -661,6 +623,31 @@ class CategoryWiseProductsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _gotoProductDetaiesScreen(ProductModel product) {
+    if (product.sellOption == null) {
+      // Share Product
+      Map<String, dynamic> data = {"from": 0};
+      if (HomeCatProductController().initialized) {
+        Get.find<HomeCatProductController>()
+            .emitShareProductDetails((product.id ?? '').toString());
+      } else {
+        Get.put(HomeCatProductController())
+            .emitShareProductDetails((product.id ?? '').toString());
+      }
+      Get.toNamed(Routes.publicShareProductDetails, arguments: data);
+    } else {
+      Map<String, dynamic> data = {"from": 0};
+      if (HomeCatProductController().initialized) {
+        Get.find<HomeCatProductController>()
+            .getProductDetails((product.id ?? '').toString());
+      } else {
+        Get.put(HomeCatProductController())
+            .getProductDetails((product.id ?? '').toString());
+      }
+      Get.toNamed(Routes.productDetailsScreen, arguments: data);
+    }
   }
 
   bool _isFavourite(CategoriesController cc, ProductModel product) =>

@@ -40,7 +40,7 @@ class Routes {
   static const String settingPaymentScreen = "/SettingPaymentScreen";
   static const String myPhysicalProductDetailScreen =
       "/MyPhysicalProductDetailScreen";
-  static const String editItemScreen = "/EditItemScreen";
+  // static const String editItemScreen = "/EditItemScreen";
   static const String addNewCardScreen = "/AddNewCardScreen";
   static const String selectPlanScreen = "/SelectPlanScreen";
   static const String categoriesWiseProductsScreen = "/CategoryWiseProducts";

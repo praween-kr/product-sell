@@ -1,5 +1,6 @@
 import 'package:oninto_flutter/Socket/model/group/group_message_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
+import 'package:oninto_flutter/model/product/product_model.dart';
 
 import '../auth/user_info_model.dart';
 import 'product_image_model.dart';
@@ -116,7 +117,7 @@ class ProductDetails {
   int? favorite;
   CategoryModel? category;
   List<ProductImages>? productImages;
-  List<void>? productSizes;
+  List<ProductSize>? productSizes;
   int? isFavourite;
   UserTransactionInfo? userTransactionInfo;
 
@@ -230,9 +231,9 @@ class ProductDetails {
       });
     }
     if (json['product_sizes'] != null) {
-      productSizes = <Null>[];
+      productSizes = <ProductSize>[];
       json['product_sizes'].forEach((v) {
-        //productSizes!.add(new Null.fromJson(v));
+        productSizes!.add(ProductSize.fromJson(v));
       });
     }
     isFavourite = json['isFavourite'];
@@ -296,7 +297,7 @@ class ProductDetails {
       data['product_images'] = productImages!.map((v) => v.toJson()).toList();
     }
     if (productSizes != null) {
-      // data['product_sizes'] = productSizes!.map((v) => v.toJson()).toList();
+      data['product_sizes'] = productSizes!.map((v) => v.toJson()).toList();
     }
     data['isFavourite'] = isFavourite;
     if (userTransactionInfo != null) {

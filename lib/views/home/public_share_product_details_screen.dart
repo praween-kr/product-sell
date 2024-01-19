@@ -115,7 +115,7 @@ class PublicShareProductDetails extends StatelessWidget {
                             children: [
                               AppText(
                                   text:
-                                      "Last Trade Price: \$${(_controller.productDetailsData.value?.lastTradBuyPrice ?? 0).toStringAsFixed(1)}",
+                                      "Last Trade Price: \$${_controller.productDetailsData.value?.lastTradBuyPrice == null ? (double.parse((_controller.productDetailsData.value?.details?.price ?? "0"))).toStringAsFixed(1) : (_controller.productDetailsData.value?.lastTradBuyPrice ?? 0).toStringAsFixed(1)}",
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
                                   textSize: 14),

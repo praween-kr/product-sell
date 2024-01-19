@@ -266,7 +266,9 @@ class PollMessage {
     question = json['question'];
     expDate = json['exp_date'];
     expTime = json['exp_time'];
-    options = json['options'].cast<String>();
+    if (json['options'] != null) {
+      options = json['options'].cast<String>();
+    }
   }
 
   Map<String, dynamic> toJson() {
