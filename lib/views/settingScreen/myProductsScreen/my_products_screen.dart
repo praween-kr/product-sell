@@ -100,6 +100,7 @@ class ProductScreen extends StatelessWidget {
 
               value: () {
                 _myProductController.getMyProducts(sold: true, filter: true);
+
                 Get.toNamed(Routes.myProductFilterScreen,
                     arguments: {'filter_type': 'sold'});
               },
@@ -222,11 +223,14 @@ class ProductScreen extends StatelessWidget {
                                           product.product?.price ?? '0.0'),
                                       title: product.product?.name ?? '',
                                       onClick: () {
-                                        _myProductController.getProductDetails(
-                                            (product.product?.id ?? '')
-                                                .toString());
-                                        Get.toNamed(Routes
-                                            .myPhysicalProductDetailScreen);
+                                        if (product.product?.id != null) {
+                                          _myProductController
+                                              .getProductDetails(
+                                                  (product.product?.id ?? '')
+                                                      .toString());
+                                          Get.toNamed(Routes
+                                              .myPhysicalProductDetailScreen);
+                                        }
                                       },
                                     );
                                   }),
@@ -275,11 +279,14 @@ class ProductScreen extends StatelessWidget {
                                       views: 1200,
                                       likes: 15200,
                                       onClick: () {
-                                        _myProductController.getProductDetails(
-                                            (product.product?.id ?? '')
-                                                .toString());
-                                        Get.toNamed(Routes
-                                            .myPhysicalProductDetailScreen);
+                                        if (product.product?.id != null) {
+                                          _myProductController
+                                              .getProductDetails(
+                                                  (product.product?.id ?? '')
+                                                      .toString());
+                                          Get.toNamed(Routes
+                                              .myPhysicalProductDetailScreen);
+                                        }
                                       },
                                     );
                                   }),
@@ -326,27 +333,27 @@ class ProductScreen extends StatelessWidget {
                                       title: product.name ?? '',
                                       soldOn: product.createdAt ?? '',
                                       onClick: () {
-                                        // _myProductController.getProductDetails(
-                                        //     (product.id ?? '').toString());
-                                        // Get.toNamed(
-                                        //     Routes.myShareProductDetailsScreen);
-                                        // Share Product
-                                        Map<String, dynamic> data = {"from": 0};
-                                        if (HomeCatProductController()
-                                            .initialized) {
-                                          Get.find<HomeCatProductController>()
-                                              .emitShareProductDetails(
-                                                  (product.id ?? '')
-                                                      .toString());
-                                        } else {
-                                          Get.put(HomeCatProductController())
-                                              .emitShareProductDetails(
-                                                  (product.id ?? '')
-                                                      .toString());
+                                        if (product.id != null) {
+                                          // Share Product
+                                          Map<String, dynamic> data = {
+                                            "from": 0
+                                          };
+                                          if (HomeCatProductController()
+                                              .initialized) {
+                                            Get.find<HomeCatProductController>()
+                                                .emitShareProductDetails(
+                                                    (product.id ?? '')
+                                                        .toString());
+                                          } else {
+                                            Get.put(HomeCatProductController())
+                                                .emitShareProductDetails(
+                                                    (product.id ?? '')
+                                                        .toString());
+                                          }
+                                          Get.toNamed(
+                                              Routes.publicShareProductDetails,
+                                              arguments: data);
                                         }
-                                        Get.toNamed(
-                                            Routes.publicShareProductDetails,
-                                            arguments: data);
                                       },
                                     );
                                   }),
@@ -360,7 +367,9 @@ class ProductScreen extends StatelessWidget {
                       child: _myProductController.loadingData.value
                           ? ShimmerWidgets.productGridView()
                           : _myProductController.myPhysicalProducts.isEmpty
-                              ? EmptyWidgets.simple()
+                              ? EmptyWidgets.simple(refresh: () async {
+                                  await _myProductController.getMyProducts();
+                                })
                               : GridView.builder(
                                   physics: const ClampingScrollPhysics(
                                       parent: AlwaysScrollableScrollPhysics()),
@@ -395,10 +404,14 @@ class ProductScreen extends StatelessWidget {
                                       title: (product).name ?? '',
                                       soldOn: (product).createdAt ?? '',
                                       onClick: () {
-                                        _myProductController.getProductDetails(
-                                            ((product).id ?? '').toString());
-                                        Get.toNamed(Routes
-                                            .myPhysicalProductDetailScreen);
+                                        if (product.id != null) {
+                                          _myProductController
+                                              .getProductDetails(
+                                                  ((product).id ?? '')
+                                                      .toString());
+                                          Get.toNamed(Routes
+                                              .myPhysicalProductDetailScreen);
+                                        }
                                       },
                                     );
                                   }),

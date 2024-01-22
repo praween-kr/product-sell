@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 
-class AppPagination {
-  int currentPage;
-  int totalPage;
-  int totalItems;
-  int pageLimit;
-  AppPagination(
-      {this.currentPage = 1,
-      this.totalPage = 1,
-      this.totalItems = 0,
-      this.pageLimit = 10});
-}
-
 class AppPaginationViews {
   static loading() => Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),

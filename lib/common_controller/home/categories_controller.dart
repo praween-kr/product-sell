@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
@@ -60,57 +61,40 @@ class CategoriesController extends GetxController {
       {String? categoryId,
       String? subCategoryId,
       int? pageno,
-      int? limit}) async {
+      Function(bool)? pageLoading,
+      Function? nodata}) async {
     await ApiRequests.getProducts(
         categoryId: categoryId,
         subCategoryId: subCategoryId,
-        limit: limit,
+        limit: limit.value,
         pageno: pageno,
         data: (data) async {
           if (pageno != null) {
-            if (data.isEmpty) {
-              noMoreData.value = true;
-              await Future.delayed(const Duration(seconds: 5));
-              noMoreData.value = false;
+            if (data.isEmpty && nodata != null) {
+              nodata();
             } else {
               products.addAll(data);
               products.refresh();
             }
           } else {
             products.value = data;
+            clearPagination();
           }
         },
         loading: (loading) {
           if (pageno != null) {
-            nextPageIsLoading.value = loading;
+            if (pageLoading != null) pageLoading(loading);
           } else {
             loadingData.value = loading;
           }
         });
   }
 
-  // Pagination
-  var pageno = 0.obs;
-  var limit = 10.obs;
-  var nextPageIsLoading = false.obs;
-  var noMoreData = false.obs;
-
-  getNextProducts(
-      {String? categoryId,
-      String? subCategoryId,
-      int? pageno,
-      int? limit}) async {
-    await getProducts(
-        categoryId: categoryId,
-        subCategoryId: subCategoryId,
-        limit: limit,
-        pageno: pageno);
-  }
-
+  ///
   var localFavourites = <String, bool>{}.obs;
 
   addProductAsFavourite(String productId) async {
-    bool success = await ApiRequests.addProductAsFavourite(
+    await ApiRequests.addProductAsFavourite(
       productId,
       loading: (loading) {},
       status: (status) {
@@ -120,4 +104,54 @@ class CategoriesController extends GetxController {
       },
     );
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController = ScrollController();
+    paginationListener();
+  }
+
+  // --------------- Pagination ------------------------------------
+  var pageno = 0.obs;
+  var limit = 5.obs;
+  var nextPageIsLoading = false.obs;
+  var noMoreData = false.obs;
+  ScrollController? scrollController;
+  paginationListener() {
+    if (scrollController != null) {
+      scrollController?.addListener(() async {
+        if (scrollController?.position.maxScrollExtent ==
+            scrollController?.position.pixels) {
+          print("dddddd-d-d-d-d---d");
+          getNextPage();
+        }
+      });
+    }
+  }
+
+  clearPagination() {
+    pageno.value = 0;
+    nextPageIsLoading.value = false;
+    noMoreData.value = false;
+  }
+
+  getNextPage({String? categoryId, String? subCategoryId}) async {
+    if (!nextPageIsLoading.value) {
+      await getProducts(
+          categoryId: categoryId,
+          subCategoryId: subCategoryId,
+          pageno: ++pageno.value,
+          pageLoading: (loading) async {
+            if (noMoreData.value && !loading) {
+              await Future.delayed(const Duration(seconds: 1));
+            }
+            nextPageIsLoading.value = loading;
+          },
+          nodata: () async {
+            noMoreData.value = true;
+          });
+    }
+  }
+  // ----------------------------------------------------------------
 }

@@ -20,6 +20,7 @@ class NavBarMsgScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _chatMsgController.messageController.value = 0;
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: const CommonAppbarWidget(
@@ -158,17 +159,17 @@ class NavBarMsgScreen extends StatelessWidget {
                     data.receiver?.id == UserStoredInfo().userInfo?.id
                         ? data.sender
                         : data.receiver;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 35.0, vertical: 15.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: GestureDetector(
-                      onTap: () {
-                        _chatMsgController.activeProduct.value = data.product;
-                        _chatMsgController.activeUser.value = user;
-                        _chatMsgController.goToChatRoom(user);
-                      },
+                return InkWell(
+                  onTap: () {
+                    _chatMsgController.activeProduct.value = data.product;
+                    _chatMsgController.activeUser.value = user;
+                    _chatMsgController.goToChatRoom(user);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 35.0, vertical: 15.0),
+                    child: SizedBox(
+                      width: double.infinity,
                       child: Container(
                         color: Colors.transparent,
                         child: Row(
@@ -263,7 +264,8 @@ class NavBarMsgScreen extends StatelessWidget {
                     ),
                   ),
                 );
-              }),
+              },
+            ),
     );
   }
 
@@ -275,88 +277,85 @@ class NavBarMsgScreen extends StatelessWidget {
       },
       child: groups.isEmpty
           ? EmptyWidgets.simple(refresh: () {})
-          : ListView.builder(
+          : ListView.separated(
               itemCount: groups.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 GroupConstant data = groups[index];
-                return Column(
-                  children: [
-                    Padding(
+                return InkWell(
+                  onTap: () {
+                    _chatMsgController.activeGroup.value = data.group;
+                    _chatMsgController.goToGroupChatRoom(data.group);
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 35.0, vertical: 15.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          _chatMsgController.activeGroup.value = data.group;
-                          _chatMsgController.goToGroupChatRoom(data.group);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                data.group?.productBaseInfo?.productImage !=
-                                        null
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 2.5, right: 2.5),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: AppImage.view(
-                                              "${ImageBaseUrls.product}${data.group?.productBaseInfo?.productImage ?? ''}",
-                                              height: 57.0,
-                                              width: 57.0,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      )
-                                    : Image.asset(
-                                        Assets.assetsCrowd,
-                                        height: 57.0,
-                                        width: 57.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              data.group?.productBaseInfo?.productImage != null
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 2.5, right: 2.5),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: AppImage.view(
+                                            "${ImageBaseUrls.product}${data.group?.productBaseInfo?.productImage ?? ''}",
+                                            height: 57.0,
+                                            width: 57.0,
+                                            fit: BoxFit.cover),
                                       ),
-                                const SizedBox(width: 12.0),
-                                AppText(
-                                  text: data.group?.productBaseInfo?.name ?? '',
-                                  textSize: 15.0,
-                                  color: AppColor.blackColor,
-                                  style: AppTextStyle.medium,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10.0),
-                                  decoration: const BoxDecoration(
-                                    color: AppColor.blackColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Center(
-                                    child: AppText(
-                                      text: "2",
-                                      color: AppColor.white,
-                                      textSize: 10.0,
-                                      style: AppTextStyle.regular,
+                                    )
+                                  : Image.asset(
+                                      Assets.assetsCrowd,
+                                      height: 57.0,
+                                      width: 57.0,
                                     ),
+                              const SizedBox(width: 12.0),
+                              AppText(
+                                text: data.group?.productBaseInfo?.name ?? '',
+                                textSize: 15.0,
+                                color: AppColor.blackColor,
+                                style: AppTextStyle.medium,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 10.0),
+                                decoration: const BoxDecoration(
+                                  color: AppColor.blackColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Center(
+                                  child: AppText(
+                                    text: "2",
+                                    color: AppColor.white,
+                                    textSize: 10.0,
+                                    style: AppTextStyle.regular,
                                   ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                    Divider(
-                      color: AppColor.blackColor.withOpacity(0.1),
-                      height: 1.0,
-                      thickness: 1.0,
-                    )
-                  ],
+                  ),
                 );
-              }),
+              },
+              separatorBuilder: (_, __) => Divider(
+                  color: AppColor.blackColor.withOpacity(0.1),
+                  height: 1.0,
+                  thickness: 1.0),
+            ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:oninto_flutter/common_controller/home/categories_controller.dart
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
+import 'package:oninto_flutter/service/pagination_model.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
@@ -127,6 +128,11 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                     : _categoriesController.products.isEmpty
                                         ? EmptyWidgets.simple()
                                         : ListView.separated(
+                                            controller: _categoriesController
+                                                .scrollController,
+                                            physics: const ClampingScrollPhysics(
+                                                parent:
+                                                    AlwaysScrollableScrollPhysics()),
                                             separatorBuilder: (_, __) =>
                                                 const Divider(height: 1),
                                             itemCount: _categoriesController
@@ -566,7 +572,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                         ),
                 ),
               ),
-            )
+            ),
 
             /// SubCategory View
             //     : Expanded(
@@ -619,6 +625,14 @@ class CategoryWiseProductsScreen extends StatelessWidget {
             //         );
             //       }),
             // ),
+
+            Obx(
+              () => _categoriesController.nextPageIsLoading.value
+                  ? _categoriesController.noMoreData.value
+                      ? AppPaginationViews.noMore()
+                      : AppPaginationViews.loading()
+                  : const SizedBox.shrink(),
+            )
           ],
         ),
       ),
