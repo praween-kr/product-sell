@@ -113,9 +113,7 @@ class PasswordScreen extends StatelessWidget {
                           },
                         )),
                   ),
-                  const SizedBox(
-                    height: 22.0,
-                  ),
+                  const SizedBox(height: 22.0),
                   const AppText(
                     text: "Confirm New Password",
                     style: AppTextStyle.medium,
@@ -125,32 +123,32 @@ class PasswordScreen extends StatelessWidget {
                   const SizedBox(height: 14.0),
                   Obx(
                     () => AppTextField(
-                        height: 46.0,
-                        isObscure: confirmPassVisible.value,
-                        controller: settingsController.confirmPassword,
-                        maxLines: 1,
-                        contentPadding:
-                            const EdgeInsets.only(top: 8.0, left: 13.0),
-                        //margin: const EdgeInsets.only(right: 35.0),
-                        borderRadius: BorderRadius.circular(40),
-                        containerColor: AppColor.textColor,
-                        suffix: IconButton(
-                          icon: confirmPassVisible.value
-                              ? Icon(
-                                  Icons.visibility_off,
-                                  size: 20,
-                                  color: AppColor.blackColor.withOpacity(0.3),
-                                )
-                              : Icon(
-                                  Icons.visibility,
-                                  size: 20,
-                                  color: AppColor.blackColor.withOpacity(0.3),
-                                ),
-                          onPressed: () {
-                            confirmPassVisible.value =
-                                !confirmPassVisible.value;
-                          },
-                        )),
+                      height: 46.0,
+                      isObscure: confirmPassVisible.value,
+                      controller: settingsController.confirmPassword,
+                      maxLines: 1,
+                      contentPadding:
+                          const EdgeInsets.only(top: 8.0, left: 13.0),
+                      //margin: const EdgeInsets.only(right: 35.0),
+                      borderRadius: BorderRadius.circular(40),
+                      containerColor: AppColor.textColor,
+                      suffix: IconButton(
+                        icon: confirmPassVisible.value
+                            ? Icon(
+                                Icons.visibility_off,
+                                size: 20,
+                                color: AppColor.blackColor.withOpacity(0.3),
+                              )
+                            : Icon(
+                                Icons.visibility,
+                                size: 20,
+                                color: AppColor.blackColor.withOpacity(0.3),
+                              ),
+                        onPressed: () {
+                          confirmPassVisible.value = !confirmPassVisible.value;
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -163,7 +161,6 @@ class PasswordScreen extends StatelessWidget {
             },
             child: const CommonButton(
               color: AppColor.appColor,
-              margin: EdgeInsets.only(right: 30, left: 30, bottom: 35),
               height: 57,
               text: "Update",
               textStyle: TextStyle(color: Colors.white, fontSize: 16),

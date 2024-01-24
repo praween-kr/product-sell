@@ -13,6 +13,7 @@ class CategoriesController extends GetxController {
   var categoriesList = <CategoryModel>[].obs;
   var subCategoriesList = <CategoryModel>[].obs;
   var selectedCategory = Rx<CategoryModel?>(null);
+  var selectedSubCategory = Rx<CategoryModel?>(null);
 
   getCategories() async {
     await ApiRequests.getCategories(

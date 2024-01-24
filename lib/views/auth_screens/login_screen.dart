@@ -4,15 +4,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
-import 'package:oninto_flutter/utils/app_text_field.dart';
-import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/helper/social_login_helper.dart';
 import 'package:oninto_flutter/utils/regex.dart';
-
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -132,6 +131,11 @@ class LoginScreen extends StatelessWidget {
               Obx(
                 () => AppTextField(
                   controller: authController.inputPassword,
+                  onChanged: (text) {
+                    if (text.trim() == '') {
+                      authController.inputPassword.clear();
+                    }
+                  },
                   title: "*******",
                   hintStyle: const TextStyle(
                       color: AppColor.blackColor,
@@ -195,7 +199,7 @@ class LoginScreen extends StatelessWidget {
                         Get.toNamed(Routes.forgotScreen);
                       },
                       child: const AppText(
-                        text: "Trouble logging In? ",
+                        text: "Forgot password",
                         color: Colors.black,
                         underline: true,
                         underlineColor: Colors.black,
@@ -261,22 +265,36 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  socialLoginButton(image:Assets.assetsGoogle,onTap: ()async{
-                  var result = await  SocialLoginHelper.loginWithGoogle();
-                  print("result $result");
-                  }),
-                  const SizedBox(width: 15,),
-                  socialLoginButton(image:Assets.assetsFb,onTap: ()async{
-                    var fbResult = await  SocialLoginHelper.loginWithFacebook();
-                    print("fbResult $fbResult");
-                  }),
+                  socialLoginButton(
+                      image: Assets.assetsGoogle,
+                      onTap: () async {
+                        var result = await SocialLoginHelper.loginWithGoogle();
+                        print("result $result");
+                      }),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  socialLoginButton(
+                      image: Assets.assetsFb,
+                      onTap: () async {
+                        var fbResult =
+                            await SocialLoginHelper.loginWithFacebook();
+                        print("fbResult $fbResult");
+                      }),
                   GetPlatform.isIOS
-                      ? const SizedBox(width: 15,):Container(),
+                      ? const SizedBox(
+                          width: 15,
+                        )
+                      : Container(),
                   GetPlatform.isIOS
-                      ? socialLoginButton(image:Assets.assetsApple,onTap: ()async{
-                    var appleResult = await  SocialLoginHelper.loginWithApple();
-                    print("appleResult $appleResult");
-                  }):Container(),
+                      ? socialLoginButton(
+                          image: Assets.assetsApple,
+                          onTap: () async {
+                            var appleResult =
+                                await SocialLoginHelper.loginWithApple();
+                            print("appleResult $appleResult");
+                          })
+                      : Container(),
                 ],
               ),
               const SizedBox(
@@ -312,19 +330,15 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget socialLoginButton({required String image,required Function onTap}){
+  Widget socialLoginButton({required String image, required Function onTap}) {
     return GestureDetector(
-      onTap: ()=>onTap(),
+      onTap: () => onTap(),
       child: Card(
         elevation: 3,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10)
-        ),
-        child: Image.asset(image,
-            height: 50, width: 50),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Image.asset(image, height: 50, width: 50),
       ),
     );
   }
-
 }

@@ -47,11 +47,17 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            useMaterial3: false,
-            fontFamily: 'Poppins',
-            primaryColor: Colors.transparent,
-            progressIndicatorTheme:
-                const ProgressIndicatorThemeData(color: AppColor.themeColor)),
+          useMaterial3: false,
+          fontFamily: 'Poppins',
+          primaryColor: Colors.transparent,
+          // Colors
+          colorScheme: ThemeData().colorScheme.copyWith(
+                secondary: AppColor.appColor,
+                primary: AppColor.appColor,
+              ),
+          progressIndicatorTheme:
+              const ProgressIndicatorThemeData(color: AppColor.themeColor),
+        ),
         title: 'Flutter Demo',
         initialRoute: Routes.splashScreen,
         supportedLocales: const [

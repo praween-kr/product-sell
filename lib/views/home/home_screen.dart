@@ -185,6 +185,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
               /// Body ///
               Expanded(
                 child: RefreshIndicator(

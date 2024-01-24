@@ -56,7 +56,13 @@ class SubCategoriesScreen extends StatelessWidget {
                                 // _categoriesController.touchTap.value = true;
                                 // Get.toNamed(Routes.productDetailScreen);
                                 //-----
-                                _categoriesController.getProducts();
+                                _categoriesController
+                                    .selectedSubCategory.value = data;
+                                _categoriesController.getProducts(
+                                    categoryId: _categoriesController
+                                        .selectedCategory.value?.id
+                                        .toString(),
+                                    subCategoryId: data.id.toString());
                                 Get.toNamed(
                                     Routes.categoriesWiseProductsScreen);
                               },

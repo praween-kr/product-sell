@@ -287,9 +287,10 @@ class SettingScreen extends GetView<SettingsController> {
 
               /// Logout Row
               commonRow(
+                reverseIcon: true,
                 icon: Icons.logout_sharp,
                 title: "Logout",
-                color: AppColor.prdTextColor,
+                color: AppColor.blackColor,
                 boxColor: AppColor.prdTextColor,
                 onClick: () => AppDialogs.confirm(
                   context,
@@ -315,7 +316,8 @@ class SettingScreen extends GetView<SettingsController> {
       Color? color,
       Color? boxColor,
       required String title,
-      required Function onClick}) {
+      required Function onClick,
+      bool reverseIcon = false}) {
     return GestureDetector(
       onTap: () {
         onClick();
@@ -331,11 +333,21 @@ class SettingScreen extends GetView<SettingsController> {
               decoration: BoxDecoration(
                   color: boxColor ?? AppColor.appColor, shape: BoxShape.circle),
               child: Center(
-                child: Icon(
-                  icon,
-                  color: AppColor.white,
-                  size: 25,
-                ),
+                child: reverseIcon
+                    ? Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationY(60),
+                        child: Icon(
+                          icon,
+                          color: AppColor.white,
+                          size: 25,
+                        ),
+                      )
+                    : Icon(
+                        icon,
+                        color: AppColor.white,
+                        size: 25,
+                      ),
               ),
             ),
             const SizedBox(

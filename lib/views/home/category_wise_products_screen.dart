@@ -121,7 +121,14 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                               child: RefreshIndicator(
                                 onRefresh: () async {
                                   _categoriesController.localFavourites.clear();
-                                  await _categoriesController.getProducts();
+                                  await _categoriesController.getProducts(
+                                    categoryId: _categoriesController
+                                        .selectedCategory.value?.id
+                                        .toString(),
+                                    subCategoryId: _categoriesController
+                                        .selectedSubCategory.value?.id
+                                        .toString(),
+                                  );
                                 },
                                 child: _categoriesController.loadingData.value
                                     ? ShimmerWidgets.productListView()
@@ -153,6 +160,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                               }
                                               return Obx(
                                                 () => productCard(
+                                                  price: double.parse(
+                                                      product.price ?? '0.0'),
                                                   about: product.name ?? '',
                                                   size: "XL/42",
                                                   image: img,
@@ -169,7 +178,6 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                       : product.isFavourite ==
                                                           1,
                                                   clickOnFavourite: () {
-                                                    print("dfdfsdfsf");
                                                     _categoriesController
                                                         .addProductAsFavourite(
                                                             (product.id ?? '')

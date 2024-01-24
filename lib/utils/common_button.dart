@@ -17,6 +17,7 @@ class CommonButton extends StatelessWidget {
   final double? borderWidth;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? imagePadding;
+  final EdgeInsetsGeometry? padding;
   final IconData? iconData;
 
   const CommonButton(
@@ -37,11 +38,13 @@ class CommonButton extends StatelessWidget {
       this.borderColor,
       this.borderWidth,
       this.iconData,
-      this.imagePadding});
+      this.imagePadding,
+      this.padding});
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+      padding:
+          padding ?? const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       margin: margin,
       height: height ?? 50,
       width: width,

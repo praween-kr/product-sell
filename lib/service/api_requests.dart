@@ -186,7 +186,7 @@ class ApiRequests {
       Map<String, dynamic> newdata = data['body'] as Map<String, dynamic>;
       newdata.addAll({"token": UserStoredInfo().userInfo!.token ?? ''});
 
-      AppPrint.all("Update Profile Req: $newdata");
+      AppPrint.all("Update Profile Req: $data");
       if (newdata.isNotEmpty) {
         UserInfoModel userInfoModel = UserInfoModel.fromJson(newdata);
         UserStoredInfo().storeUserInfo(userInfoModel);
@@ -656,10 +656,10 @@ class ApiRequests {
       reqData.addAll({"recentBid": 1});
     }
     if (categoryId != null) {
-      reqData.addAll({"categoryId1": categoryId});
+      reqData.addAll({"categoryId": categoryId});
     }
     if (subCategoryId != null) {
-      reqData.addAll({"subCategoryId1": subCategoryId});
+      reqData.addAll({"subCategoryId": subCategoryId});
     }
     if (limit != null) {
       reqData.addAll({"limit": limit});

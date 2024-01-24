@@ -76,7 +76,7 @@ class EditProfileController extends GetxController {
     if (phone.text.trim() == '') {
       AppToast.show("Please enter phone number");
       return false;
-    } else if (email.text.trim().length < 8) {
+    } else if (phone.text.trim().length < 8) {
       AppToast.show("Please enter valid phone number");
       return false;
     } else if (!AppRegex.num0to9.hasMatch(phone.text.trim())) {

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
-import 'package:oninto_flutter/utils/app_text.dart';
 import '../../../../utils/app_text_field.dart';
 import '../../../../utils/appbar.dart';
 import '../../../../utils/color_constant.dart';
@@ -21,7 +21,7 @@ class EditProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: const CommonAppbarWidget(
         heading: "Edit Profile",
         textStyle: TextStyle(
@@ -30,10 +30,11 @@ class EditProfileScreen extends StatelessWidget {
             fontWeight: FontWeight.w500,
             fontFamily: "Poppins"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
               padding:
                   const EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
               child: Column(
@@ -44,15 +45,13 @@ class EditProfileScreen extends StatelessWidget {
                     textSize: 15.0,
                     color: AppColor.blackColor.withOpacity(0.5),
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   AppTextField(
                     controller: editProfileController.firstName,
                     height: 57.0,
-                    title: "John",
+                    title: "First name",
                     hintStyle: const TextStyle(
-                        color: AppColor.blackColor,
+                        color: AppColor.grey,
                         fontSize: 15,
                         fontWeight: FontWeight.w400),
                     style: const TextStyle(
@@ -69,23 +68,19 @@ class EditProfileScreen extends StatelessWidget {
                       color: AppColor.blackColor,
                     ),
                   ),
-                  const SizedBox(
-                    height: 17,
-                  ),
+                  const SizedBox(height: 17),
                   AppText(
                     text: "Last Name",
                     textSize: 15.0,
                     color: AppColor.blackColor.withOpacity(0.5),
                   ),
-                  const SizedBox(
-                    height: 7,
-                  ),
+                  const SizedBox(height: 7),
                   AppTextField(
                     controller: editProfileController.lastName,
                     height: 57.0,
-                    title: "Smith",
+                    title: "Last name",
                     hintStyle: const TextStyle(
-                        color: AppColor.blackColor,
+                        color: AppColor.grey,
                         fontSize: 15,
                         fontWeight: FontWeight.w400),
                     style: const TextStyle(
@@ -104,23 +99,20 @@ class EditProfileScreen extends StatelessWidget {
                       color: AppColor.blackColor,
                     ),
                   ),
-                  const SizedBox(
-                    height: 22,
-                  ),
+                  const SizedBox(height: 22),
                   AppText(
                     text: "Email",
                     textSize: 15.0,
                     color: AppColor.blackColor.withOpacity(0.5),
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   AppTextField(
                     controller: editProfileController.email,
                     height: 57.0,
-                    title: "Jennysmith@gmail.com",
+                    readOnly: true,
+                    title: "example@gmail.com",
                     hintStyle: const TextStyle(
-                        color: AppColor.blackColor,
+                        color: AppColor.grey,
                         fontSize: 15,
                         fontWeight: FontWeight.w400),
                     style: const TextStyle(
@@ -162,7 +154,7 @@ class EditProfileScreen extends StatelessWidget {
                     containerColor: AppColor.textColor,
                     title: "Location",
                     hintStyle: const TextStyle(
-                        color: AppColor.blackColor,
+                        color: AppColor.grey,
                         fontSize: 15,
                         fontWeight: FontWeight.w400),
                     style: const TextStyle(
@@ -175,9 +167,7 @@ class EditProfileScreen extends StatelessWidget {
                       color: AppColor.appColor,
                     ),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
+                  const SizedBox(height: 18),
                   AppText(
                     text: "Phone Number",
                     textSize: 15.0,
@@ -185,63 +175,82 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   AppTextField(
-                    controller: editProfileController.phone,
-                    height: 50,
-                    margin: const EdgeInsets.only(right: 0),
-                    borderRadius: BorderRadius.circular(20),
-                    containerColor: AppColor.textColor,
-                    textInputType: TextInputType.phone,
-                    prefix: Container(
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: const BoxDecoration(
-                          color: AppColor.appColor,
-                          borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CountryCodePicker(
-                              textStyle:
-                                  TextStyle(color: Colors.white, fontSize: 15),
-                              enabled: true,
-                              showFlag: false,
-                              alignLeft: false),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ],
+                      controller: editProfileController.phone,
+                      height: 50,
+                      margin: const EdgeInsets.only(right: 0),
+                      borderRadius: BorderRadius.circular(20),
+                      containerColor: AppColor.textColor,
+                      textInputType: TextInputType.phone,
+                      prefix: Container(
+                        margin: const EdgeInsets.only(right: 15),
+                        decoration: const BoxDecoration(
+                            color: AppColor.appColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Obx(
+                                  () => Text(
+                                    "+${editProfileController.countryCode.value}",
+                                    style: const TextStyle(
+                                        color: AppColor.white, fontSize: 15),
+                                  ),
+                                ),
+                                CountryCodePicker(
+                                  padding: EdgeInsets.zero,
+                                  textStyle: const TextStyle(
+                                      color: Colors.transparent, fontSize: 15),
+                                  enabled: true,
+                                  showFlag: false,
+                                  onChanged: (CountryCode country) {
+                                    if (country.dialCode != null) {
+                                      editProfileController.countryCode.value =
+                                          country.dialCode!.split('+').last;
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.white,
+                              size: 25,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    title: "Phone number",
-                    hintStyle: const TextStyle(
-                        color: AppColor.blackColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
-                    style: const TextStyle(
-                        color: AppColor.blackColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
-                    maxLength: 8,
-                  ),
+                      title: "Phone number",
+                      hintStyle: const TextStyle(
+                          color: AppColor.grey,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400),
+                      style: const TextStyle(
+                          color: AppColor.blackColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400),
+                      maxLength: 12),
                 ],
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              //Get.toNamed(Routes.editProfileScreen);
-              await editProfileController.updateProfile();
-            },
-            child: const CommonButton(
-              color: AppColor.appColor,
-              height: 57,
-              text: "Update",
-              margin: EdgeInsets.only(left: 25, right: 25, bottom: 30),
-              textStyle: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          )
-        ],
+            SizedBox(height: Get.height * 0.08),
+            GestureDetector(
+              onTap: () async {
+                await editProfileController.updateProfile();
+              },
+              child: const CommonButton(
+                color: AppColor.appColor,
+                height: 57,
+                text: "Update",
+                margin: EdgeInsets.only(left: 25, right: 25, bottom: 30),
+                textStyle: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

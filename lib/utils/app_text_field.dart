@@ -15,7 +15,7 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? isObscure;
   final bool? readOnly;
-  final TextInputType? textInputType ;
+  final TextInputType? textInputType;
   final double? height;
   final TextStyle? hintStyle;
   final TextInputAction? keyBoardType;

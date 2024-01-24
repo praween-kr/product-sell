@@ -150,6 +150,9 @@ class ProductScreen extends StatelessWidget {
           child: Column(
             children: [
               TabBar(
+                labelPadding: const EdgeInsets.symmetric(horizontal: 5),
+                indicatorPadding: EdgeInsets.zero,
+                dividerHeight: 0,
                 splashFactory: NoSplash.splashFactory,
                 overlayColor: MaterialStateProperty.resolveWith<Color?>(
                     (Set<MaterialState> states) {
@@ -166,16 +169,7 @@ class ProductScreen extends StatelessWidget {
                 indicator:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 indicatorWeight: 1,
-                tabs: [
-                  tabbutton("Buy",
-                      selected: _myProductController.tabController.value == 0),
-                  tabbutton("Sell",
-                      selected: _myProductController.tabController.value == 1),
-                  tabbutton("Co-owner",
-                      selected: _myProductController.tabController.value == 2),
-                  tabbutton("Physical",
-                      selected: _myProductController.tabController.value == 3),
-                ],
+                tabs: List.generate(tabs.length, (index) => tabs[index]),
                 isScrollable: true,
               ),
               Expanded(
@@ -418,7 +412,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -426,11 +420,24 @@ class ProductScreen extends StatelessWidget {
     );
   }
 
-  Widget tabbutton(String title, {bool selected = false}) {
+  List<Widget> get tabs => [
+        tabbutton("Buy",
+            selected: _myProductController.tabController.value == 0,
+            margin: const EdgeInsets.only(left: 20, top: 10)),
+        tabbutton("Sell",
+            selected: _myProductController.tabController.value == 1),
+        tabbutton("Co-owner",
+            selected: _myProductController.tabController.value == 2),
+        tabbutton("Physical",
+            selected: _myProductController.tabController.value == 3),
+      ];
+
+  Widget tabbutton(String title,
+      {bool selected = false, EdgeInsetsGeometry? margin}) {
     return Container(
       height: 40,
       width: 100,
-      margin: const EdgeInsets.only(top: 10),
+      margin: margin ?? const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           color: selected ? AppColor.appColor : Colors.white,
           border: Border.all(

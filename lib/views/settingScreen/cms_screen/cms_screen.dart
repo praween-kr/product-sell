@@ -35,7 +35,7 @@ class CmsScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               )
             : SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Html(data: cmsController.cmsData.value),

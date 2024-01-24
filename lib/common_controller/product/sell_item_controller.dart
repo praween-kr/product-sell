@@ -348,7 +348,9 @@ class SellItemController extends GetxController {
     //   sizes.add(selectedSizes[i]);
     // }
     for (int i = 1; i < pickedSizes.keys.length; i++) {
-      sizes.add(pickedSizes.keys.toList()[i]);
+      if (pickedSizes[pickedSizes.keys.toList()[i]] == null) {
+        sizes.add(pickedSizes.keys.toList()[i]);
+      }
     }
     return await ApiRequests.editPhysicalProduct(
       id: productIdForEdit.value,

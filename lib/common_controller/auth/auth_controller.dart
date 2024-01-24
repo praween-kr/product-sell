@@ -148,7 +148,16 @@ class AuthController extends GetxController {
   /* Sign In */
   signInputValid() {
     if (inputPhoneEmail.text.trim() == '') {
-      AppToast.show("Please enter username(phone or email)");
+      AppToast.show("Please enter email or phone number");
+      return false;
+    }
+    if (usernameIsPhoneType.value && inputPhoneEmail.text.trim().length < 8) {
+      AppToast.show("Please enter correct phone number");
+      return false;
+    }
+    if (!usernameIsPhoneType.value &&
+        !AppRegex.emailReg.hasMatch(inputPhoneEmail.text.trim())) {
+      AppToast.show("Please enter correct email");
       return false;
     }
     if (inputPassword.text.trim() == '') {
@@ -181,7 +190,7 @@ class AuthController extends GetxController {
     if (phone.text.trim() == '') {
       AppToast.show("Please enter phone number");
       return false;
-    } else if (email.text.trim().length < 8) {
+    } else if (phone.text.trim().length < 8) {
       AppToast.show("Please enter valid phone number");
       return false;
     } else if (!AppRegex.num0to9.hasMatch(phone.text.trim())) {

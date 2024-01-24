@@ -28,6 +28,14 @@ class AddressController extends GetxController {
   var houseNo = TextEditingController(text: '');
   var landmark = TextEditingController(text: '');
 
+  clearFields() {
+    location.clear();
+    cordinates.value = null;
+    street.clear();
+    houseNo.clear();
+    landmark.clear();
+  }
+
   saveAddress() async {
     if (validation()) {
       bool success = await ApiRequests.addAddress(
@@ -40,6 +48,7 @@ class AddressController extends GetxController {
 
       if (success) {
         AppPrint.all("Add address successfully!");
+        getAddresses();
         Get.back();
       }
     }
