@@ -189,13 +189,18 @@ class AddressScreen extends StatelessWidget {
                     textSize: 13.0,
                     color: AppColor.blackColor.withOpacity(0.3),
                   ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
+                  const SizedBox(height: 5.0),
                   AppText(
-                    text: "+1-0000-0000",
+                    text: address.street ?? '',
                     style: AppTextStyle.medium,
-                    textSize: 12.0,
+                    textSize: 11.0,
+                    color: AppColor.blackColor.withOpacity(0.3),
+                  ),
+                  const SizedBox(height: 5.0),
+                  AppText(
+                    text: address.landMark ?? '',
+                    style: AppTextStyle.medium,
+                    textSize: 11.0,
                     color: AppColor.blackColor.withOpacity(0.3),
                   ),
                 ],
@@ -206,11 +211,8 @@ class AddressScreen extends StatelessWidget {
                 // mapDialog(LatLng(double.parse(address.latitude ?? '0.0'),
                 //     double.parse(address.longitude ?? '0.0')));
               },
-              child: Image.asset(
-                Assets.assetsLocationImage,
-                height: 61.0,
-                width: 61.0,
-              ),
+              child: Image.asset(Assets.assetsLocationImage,
+                  height: 61.0, width: 61.0),
             ),
             // ClipRRect(
             //   borderRadius: BorderRadius.circular(30),

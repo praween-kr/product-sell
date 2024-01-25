@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400),
                 onChanged: (v) {
                   authController.usernameIsPhoneType.value =
-                      AppRegex.num0to9Only.hasMatch(v.trim());
+                      v.trim() != '' && AppRegex.num0to9Only.hasMatch(v.trim());
                   AppPrint.info(
                       authController.usernameIsPhoneType.value.toString());
                   if (v == '') {
