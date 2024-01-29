@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'color_constant.dart';
@@ -23,7 +24,7 @@ class AppDateTime {
       return null;
     } else {
       String temp = dt!;
-      print("formating dt:: $temp");
+      AppPrint.info("formating dt:: $temp");
       if (!dt.toString().contains('T')) {
         temp += 'T00:00:00';
       }

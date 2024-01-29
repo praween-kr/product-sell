@@ -4,6 +4,7 @@ import 'package:oninto_flutter/common_controller/home/categories_controller.dart
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
@@ -50,6 +51,8 @@ class SubCategoriesScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             var data =
                                 _categoriesController.subCategoriesList[index];
+                            AppPrint.all(
+                                "sub img: ${"${ImageBaseUrls.category}${data.image ?? ''}"}");
                             return GestureDetector(
                               onTap: () {
                                 // _categoriesController.menu.value = true;

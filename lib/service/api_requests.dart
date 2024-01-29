@@ -4,29 +4,30 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:oninto_flutter/model/auth/cms_model.dart';
-import 'package:oninto_flutter/model/auth/user_info_model.dart';
-import 'package:oninto_flutter/model/g_place_model.dart';
-import 'package:oninto_flutter/model/home/category_model.dart';
-import 'package:oninto_flutter/model/home/home_model.dart';
-import 'package:oninto_flutter/model/product/product_details_model.dart';
-import 'package:oninto_flutter/model/product/product_model.dart';
-import 'package:oninto_flutter/model/settings/address_model.dart';
-import 'package:oninto_flutter/model/settings/my_favourite_product_model.dart';
-import 'package:oninto_flutter/service/dio/shared/page_response.dart';
-import 'package:oninto_flutter/service/local/db_helper.dart';
-import 'package:oninto_flutter/service/local/local_store_keys.dart';
-import 'package:oninto_flutter/service/local/user_info_global.dart';
-import 'package:oninto_flutter/utils/app_print.dart';
-import 'package:oninto_flutter/utils/app_toast_loader.dart';
-import 'package:oninto_flutter/utils/date_time_formates.dart';
 
+import '../model/auth/cms_model.dart';
+import '../model/auth/user_info_model.dart';
+import '../model/g_place_model.dart';
+import '../model/home/category_model.dart';
+import '../model/home/home_model.dart';
+import '../model/product/product_details_model.dart';
+import '../model/product/product_model.dart';
+import '../model/settings/address_model.dart';
+import '../model/settings/my_favourite_product_model.dart';
+import '../utils/app_print.dart';
+import '../utils/app_toast_loader.dart';
+import '../utils/date_time_formates.dart';
 import '../views/bid_screen/notification_model.dart';
 import 'apis.dart';
 import 'base_api_call.dart';
 import 'dio/shared/data_response.dart';
+import 'dio/shared/page_response.dart';
+import 'local/db_helper.dart';
+import 'local/local_store_keys.dart';
+import 'local/user_info_global.dart';
 
 class ApiRequests {
+  ApiRequests._();
   // Api requests...
 
   /// ---------Sign Up----------

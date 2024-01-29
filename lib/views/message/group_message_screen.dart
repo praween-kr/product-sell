@@ -26,6 +26,7 @@ import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import '../../utils/app_text.dart';
 import '../../utils/color_constant.dart';
 
+// ignore: must_be_immutable
 class GroupMessageScreen extends StatelessWidget {
   GroupMessageScreen({super.key});
 
@@ -680,7 +681,7 @@ class GroupMessageScreen extends StatelessWidget {
 
   Widget _attachmentView(String url, {String? video}) {
     String ext = url.split('.').last;
-    print("Msg Attachment: $url");
+    socketPrint("Msg Attachment: $url");
     return ConstrainedBox(
         constraints: BoxConstraints(
           minWidth: 60,

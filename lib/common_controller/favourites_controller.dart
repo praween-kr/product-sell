@@ -32,7 +32,7 @@ class FavouritesController extends GetxController {
 
   addProductAsFavourite(String productId, int index,
       {bool typeRemove = true}) async {
-    bool success = await ApiRequests.addProductAsFavourite(
+    await ApiRequests.addProductAsFavourite(
       productId,
       loading: (loading) async {
         if (loading) {

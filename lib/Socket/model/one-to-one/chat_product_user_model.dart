@@ -154,6 +154,7 @@ class Product {
   String? name;
   String? image;
   List<ProductImages>? productImages;
+  // ignore: prefer_typing_uninitialized_variables
   var category;
 
   Product({this.id, this.name, this.image, this.productImages, this.category});

@@ -10,6 +10,7 @@ import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import 'package:oninto_flutter/utils/app_type_status.dart';
+import 'package:oninto_flutter/utils/core/core_method.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
@@ -27,7 +28,6 @@ class CategoryWiseProductsScreen extends StatelessWidget {
   CategoryWiseProductsScreen({super.key});
   // final Homecontroller controller = Get.find();
   final CategoriesController _categoriesController = Get.find();
-  final HomeCatProductController _homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                           _categoriesController.listViewTab.value = false;
                           _categoriesController.filter.value = false;
                           _categoriesController.selectValue.value = 0;
-                          print(
+
+                          AppPrint.all(
                               "menu value${_categoriesController.listViewTab.value}");
                         },
                         child: _categoriesController.selectValue.value == 0
@@ -85,7 +86,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                             _categoriesController.filter.value = true;
                             _categoriesController.listViewTab.value = true;
                             _categoriesController.selectValue.value = 1;
-                            print(
+                            AppPrint.all(
                                 "menu value${_categoriesController.listViewTab.value}");
                           },
                           child: _categoriesController.selectValue.value == 1
@@ -158,12 +159,24 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                         ?.first.image ??
                                                     '';
                                               }
+
                                               return Obx(
                                                 () => productCard(
                                                   price: double.parse(
                                                       product.price ?? '0.0'),
                                                   about: product.name ?? '',
-                                                  size: "XL/42",
+                                                  size: AppCore.productSizeText(List<
+                                                          String>.generate(
+                                                      (product.productSizes ??
+                                                              [])
+                                                          .length,
+                                                      (index) =>
+                                                          (product.productSizes ??
+                                                                  [])[index]
+                                                              .size ??
+                                                          '').toList()),
+
+                                                  //"XL/42",
                                                   image: img,
                                                   isFavourite: _categoriesController
                                                                   .localFavourites[
@@ -677,15 +690,15 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           ? cc.localFavourites[(product.id ?? '').toString()] ?? false
           : product.isFavourite == 1);
 
-  _bidNow(String productId) {
-    Map<String, dynamic> data = {"from": 0};
-    if (HomeCatProductController().initialized) {
-      Get.find<HomeCatProductController>().getProductDetails(productId);
-    } else {
-      Get.put(HomeCatProductController()).getProductDetails(productId);
-    }
-    Get.toNamed(Routes.productDetailsScreen, arguments: data);
-  }
+  // _bidNow(String productId) {
+  //   Map<String, dynamic> data = {"from": 0};
+  //   if (HomeCatProductController().initialized) {
+  //     Get.find<HomeCatProductController>().getProductDetails(productId);
+  //   } else {
+  //     Get.put(HomeCatProductController()).getProductDetails(productId);
+  //   }
+  //   Get.toNamed(Routes.productDetailsScreen, arguments: data);
+  // }
 
   Widget likeDeslikeBtn(
       {required bool isFav,
@@ -791,7 +804,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
 
   Future timerDialog(ProductModel product,
       {required Function bidNow, required DateTime endTime}) async {
-    print("clicked---- ");
+    AppPrint.all("clicked---- ");
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,

@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -38,66 +39,71 @@ class NotificationScreen extends StatelessWidget {
               ? ShimmerWidgets.listView()
               : controller.notificationList.isEmpty
                   ? EmptyWidgets.simple()
-                  : ListView.separated(
-                      itemCount: controller.notificationList.length,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      itemBuilder: (context, index) {
-                        var data = controller.notificationList[index];
-                        return Slidable(
-                          endActionPane: ActionPane(
-                            dragDismissible: false,
-                            motion: const ScrollMotion(),
-                            children: [
-                              SlidableAction(
-                                onPressed: (context) {
-                                  controller.isSelectedNotification.value =
-                                      index;
-                                  controller.deleteNotification(
-                                      notificationId: "${data.id}");
-                                },
-                                backgroundColor: Colors.red,
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete,
-                                label: 'Delete',
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                Assets.assetsBack,
-                                height: 50,
-                                width: 50,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AppText(
-                                        text: data.message ?? "", textSize: 11),
-                                    const SizedBox(height: 10),
-                                    const AppText(
-                                        text: "Feb 23, 2023 | 12:00 PM",
-                                        textSize: 10),
-                                  ],
+                  : SizedBox(
+                      height: double.infinity,
+                      child: ListView.separated(
+                        itemCount: controller.notificationList.length,
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 15),
+                        itemBuilder: (context, index) {
+                          var data = controller.notificationList[index];
+                          return Slidable(
+                            endActionPane: ActionPane(
+                              dragDismissible: false,
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    controller.isSelectedNotification.value =
+                                        index;
+                                    controller.deleteNotification(
+                                        notificationId: "${data.id}");
+                                  },
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          height: 15,
-                        );
-                      },
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  Assets.assetsBack,
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppText(
+                                          text: data.message ?? "",
+                                          textSize: 11),
+                                      const SizedBox(height: 10),
+                                      const AppText(
+                                          text: "Feb 23, 2023 | 12:00 PM",
+                                          textSize: 10),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            height: 15,
+                          );
+                        },
+                      ),
                     ),
         ),
       ),

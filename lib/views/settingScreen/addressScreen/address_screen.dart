@@ -62,7 +62,7 @@ class AddressScreen extends StatelessWidget {
                           child: addressController.addresses.isEmpty
                               ? EmptyWidgets.simple()
                               : ListView.builder(
-                                  physics: const BouncingScrollPhysics(
+                                  physics: const ClampingScrollPhysics(
                                       parent: AlwaysScrollableScrollPhysics()),
                                   itemCount: addressController.addresses.length,
                                   shrinkWrap: true,

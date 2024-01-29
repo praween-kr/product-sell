@@ -124,7 +124,7 @@ class CategoriesController extends GetxController {
       scrollController?.addListener(() async {
         if (scrollController?.position.maxScrollExtent ==
             scrollController?.position.pixels) {
-          print("dddddd-d-d-d-d---d");
+          AppPrint.all("dddddd-d-d-d-d---d");
           getNextPage();
         }
       });

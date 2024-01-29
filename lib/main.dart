@@ -47,14 +47,20 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          useMaterial3: false,
+          useMaterial3: true,
           fontFamily: 'Poppins',
           primaryColor: Colors.transparent,
           // Colors
-          colorScheme: ThemeData().colorScheme.copyWith(
-                secondary: AppColor.appColor,
-                primary: AppColor.appColor,
-              ),
+          dialogTheme: const DialogTheme(elevation: 1),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColor.appColor,
+            secondary: AppColor.appColor,
+            primary: AppColor.appColor,
+          ),
+          // colorScheme: ThemeData().colorScheme.copyWith(
+          //       secondary: AppColor.appColor,
+          //       primary: AppColor.appColor,
+          //     ),
           progressIndicatorTheme:
               const ProgressIndicatorThemeData(color: AppColor.themeColor),
         ),

@@ -10,6 +10,7 @@ import 'package:oninto_flutter/views/home/home_screen.dart';
 import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
+// ignore: must_be_immutable
 class BottomScreen extends StatelessWidget {
   BottomScreen({
     super.key,

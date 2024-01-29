@@ -269,7 +269,7 @@ class LoginScreen extends StatelessWidget {
                       image: Assets.assetsGoogle,
                       onTap: () async {
                         var result = await SocialLoginHelper.loginWithGoogle();
-                        print("result $result");
+                        AppPrint.all("result $result");
                       }),
                   const SizedBox(
                     width: 15,
@@ -279,7 +279,7 @@ class LoginScreen extends StatelessWidget {
                       onTap: () async {
                         var fbResult =
                             await SocialLoginHelper.loginWithFacebook();
-                        print("fbResult $fbResult");
+                        AppPrint.all("fbResult $fbResult");
                       }),
                   GetPlatform.isIOS
                       ? const SizedBox(
@@ -292,7 +292,7 @@ class LoginScreen extends StatelessWidget {
                           onTap: () async {
                             var appleResult =
                                 await SocialLoginHelper.loginWithApple();
-                            print("appleResult $appleResult");
+                            AppPrint.all("appleResult $appleResult");
                           })
                       : Container(),
                 ],

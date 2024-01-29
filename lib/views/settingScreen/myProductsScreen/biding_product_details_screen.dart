@@ -15,6 +15,7 @@ import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
+import '../../../utils/app_print.dart';
 import '../../../utils/color_constant.dart';
 
 class BidingProductDetailsScreen extends StatelessWidget {
@@ -36,7 +37,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("dddd: ${_favouritesController.productDetailsData}");
+    AppPrint.info("dddd: ${_favouritesController.productDetailsData}");
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -55,7 +56,7 @@ class BidingProductDetailsScreen extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppColor.appColor,
                   borderRadius: BorderRadius.circular(15)),
-              child: const Icon(Icons.arrow_back_ios),
+              child: const Icon(Icons.arrow_back_ios, color: AppColor.white),
             ),
           ),
           headingChild: Obx(

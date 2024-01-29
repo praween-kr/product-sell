@@ -96,6 +96,7 @@ class LoggingInterceptors extends Interceptor {
         }
       }
       debugPrint(
+          // ignore: unnecessary_null_comparison
           "--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}");
     }
     return super.onRequest(options, handler);
@@ -130,6 +131,7 @@ class LoggingInterceptors extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
       debugPrint(
+          // ignore: unnecessary_null_comparison
           "<-- ${response.statusCode} ${(response.requestOptions != null ? (response.requestOptions.baseUrl + response.requestOptions.path) : 'URL')}");
       debugPrint("Headers:");
       response.headers.forEach((k, v) => debugPrint('$k: $v'));

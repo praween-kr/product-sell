@@ -200,7 +200,7 @@ class HomeCatProductController extends GetxController
   var localFavourites = <String, bool>{}.obs;
 
   addProductAsFavourite(String productId) async {
-    bool success = await ApiRequests.addProductAsFavourite(
+    await ApiRequests.addProductAsFavourite(
       productId,
       loading: (loading) {},
       status: (status) {
@@ -400,4 +400,4 @@ class HomeCatProductController extends GetxController
 
 // enum ProductType { BID, FIX_PRICE, SHERE }
 
-enum ProductStatus { BIDED_ON }
+// enum ProductStatus { BIDED_ON }

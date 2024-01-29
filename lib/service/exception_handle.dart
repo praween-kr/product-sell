@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
 
 class ApiException {
@@ -26,6 +27,8 @@ class ApiException {
 
   ///
   static printError(String text) {
-    print("\x1B[31m$text\x1B[0m");
+    if (kDebugMode) {
+      print("\x1B[31m$text\x1B[0m");
+    }
   }
 }

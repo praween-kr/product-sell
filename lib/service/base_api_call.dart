@@ -4,7 +4,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http_parser/http_parser.dart';
+// ignore: depend_on_referenced_packages
 import 'package:mime/mime.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_toast_loader.dart';
@@ -50,7 +52,7 @@ class BaseApiCall {
       }
       if (multiParams != null) {
         for (final entry in multiParams.entries) {
-          if (entry.value != '') {
+          if (entry.value.isNotEmpty) {
             for (var v in entry.value) {
               if (!newEndPoint.contains('?')) {
                 newEndPoint += "?${entry.key}=$v";

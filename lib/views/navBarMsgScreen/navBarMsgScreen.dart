@@ -64,13 +64,13 @@ class NavBarMsgScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:
                                 _chatMsgController.messageController.value == 0
-                                    ? AppColor.blackColor
+                                    ? AppColor.themeColor
                                     : Colors.white,
                             border: Border.all(
                               color:
                                   _chatMsgController.messageController.value ==
                                           0
-                                      ? AppColor.blackColor
+                                      ? AppColor.themeColor
                                       : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
@@ -93,13 +93,13 @@ class NavBarMsgScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color:
                                 _chatMsgController.messageController.value == 1
-                                    ? AppColor.blackColor
+                                    ? AppColor.themeColor
                                     : Colors.white,
                             border: Border.all(
                               color:
                                   _chatMsgController.messageController.value ==
                                           1
-                                      ? AppColor.blackColor
+                                      ? AppColor.themeColor
                                       : Colors.grey.shade300,
                             ),
                             borderRadius: BorderRadius.circular(20)),
@@ -135,10 +135,11 @@ class NavBarMsgScreen extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         await _chatMsgController.getUsers();
-        await Future.delayed(const Duration(seconds: 1));
       },
       child: productUsers.isEmpty
-          ? EmptyWidgets.simple()
+          ? EmptyWidgets.simple(refresh: () async {
+              await _chatMsgController.getUsers();
+            })
           : ListView.builder(
               itemCount: productUsers.length,
               shrinkWrap: true,
@@ -243,7 +244,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10.0, vertical: 10.0),
                                         decoration: const BoxDecoration(
-                                          color: AppColor.blackColor,
+                                          color: AppColor.themeColor,
                                           shape: BoxShape.circle,
                                         ),
                                         child: Center(
@@ -276,7 +277,9 @@ class NavBarMsgScreen extends StatelessWidget {
         await Future.delayed(const Duration(seconds: 1));
       },
       child: groups.isEmpty
-          ? EmptyWidgets.simple(refresh: () {})
+          ? EmptyWidgets.simple(refresh: () async {
+              await _chatMsgController.getGroupsList();
+            })
           : ListView.separated(
               itemCount: groups.length,
               shrinkWrap: true,
@@ -331,12 +334,12 @@ class NavBarMsgScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 10.0),
                                 decoration: const BoxDecoration(
-                                  color: AppColor.blackColor,
+                                  color: AppColor.themeColor,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: AppText(
-                                    text: "2",
+                                    text: (data.unreadCount ?? 0).toString(),
                                     color: AppColor.white,
                                     textSize: 10.0,
                                     style: AppTextStyle.regular,

@@ -111,20 +111,33 @@ class PublicShareProductDetails extends StatelessWidget {
                           const Divider(thickness: 1, height: 20),
                           const SizedBox(height: 5),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppText(
+                              Expanded(
+                                flex: 1,
+                                child: AppText(
                                   text:
                                       "Last Trade Price: \$${_controller.productDetailsData.value?.lastTradBuyPrice == null ? (double.parse((_controller.productDetailsData.value?.details?.price ?? "0"))).toStringAsFixed(1) : (_controller.productDetailsData.value?.lastTradBuyPrice ?? 0).toStringAsFixed(1)}",
                                   fontWeight: FontWeight.w400,
                                   fontFamily: "Poppins",
-                                  textSize: 14),
-                              AppText(
-                                  text:
-                                      "Available Shares: ${_controller.productDetailsData.value?.availableShare ?? 0}/${_controller.productDetailsData.value?.details?.totalShare ?? 0}",
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Poppins",
-                                  textSize: 14),
+                                  textSize: 14,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: AppText(
+                                      text:
+                                          "Available Shares: ${_controller.productDetailsData.value?.availableShare ?? 0}/${_controller.productDetailsData.value?.details?.totalShare ?? 0}",
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Poppins",
+                                      textAlign: TextAlign.right,
+                                      lineHeight: 1.2,
+                                      textSize: 14),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 40),

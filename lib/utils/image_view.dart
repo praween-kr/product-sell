@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'color_constant.dart';
@@ -29,7 +30,7 @@ class AppImage {
         ),
         fit: fit,
         errorWidget: (context, url, error) {
-          print("Image View Error: $error");
+          AppPrint.error("Image View Error: $error");
           return Center(
             child: Container(
               height: height,

@@ -13,7 +13,6 @@ class _SwapperWidgetState extends State<SwapperWidget> {
   List<Widget> list = <Widget>[];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     list.add(drag("1"));
     list.add(drag("2"));

@@ -1,14 +1,15 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
-import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/common_button.dart';
 
 import '../../utils/color_constant.dart';
 
+// ignore: must_be_immutable
 class PaymentScreen extends StatelessWidget {
   PaymentScreen({super.key});
 
@@ -20,7 +21,9 @@ class PaymentScreen extends StatelessWidget {
         appBar: CommonAppbarWidget(
           heading: "Pay Now",
           textStyle: const TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w500, color: AppColor.blackColor),
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: AppColor.blackColor),
           leading: GestureDetector(
               onTap: () {
                 Get.back();

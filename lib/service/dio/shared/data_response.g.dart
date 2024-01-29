@@ -10,7 +10,7 @@ DataResponse<TModel> _$DataResponseFromJson<TModel>(
   Map<String, dynamic> json,
   TModel Function(Object? json) fromJsonTModel,
 ) {
-  print("-----000000)))))>>>>> ${json['body'].runtimeType}");
+  AppPrint.all("-----000000)))))>>>>> ${json['body'].runtimeType}");
   return DataResponse<TModel>(
     success: json['success'] as bool?,
     code: json['code'] as int?,

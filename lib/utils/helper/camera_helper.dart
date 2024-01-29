@@ -111,6 +111,7 @@ class CameraHelper {
                     ),
                     onTap: () async {
                       if (await isCameraEnabled()) {
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                         cropAspectRatioPreset != null
                             ? getImageWithCropping(ImageSource.camera)
@@ -209,6 +210,7 @@ class CameraHelper {
             ),
             onPressed: (context) async {
               if (await isCameraEnabled()) {
+                // ignore: use_build_context_synchronously
                 Navigator.pop(context);
                 cropAspectRatioPreset != null
                     ? getImageWithCropping(ImageSource.camera)

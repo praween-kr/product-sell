@@ -150,7 +150,7 @@ class ProductScreen extends StatelessWidget {
           child: Column(
             children: [
               TabBar(
-                labelPadding: const EdgeInsets.symmetric(horizontal: 5),
+                labelPadding: const EdgeInsets.symmetric(horizontal: 6),
                 indicatorPadding: EdgeInsets.zero,
                 dividerHeight: 0,
                 splashFactory: NoSplash.splashFactory,
@@ -325,7 +325,7 @@ class ProductScreen extends StatelessWidget {
                                       price:
                                           double.parse(product.price ?? '0.0'),
                                       title: product.name ?? '',
-                                      soldOn: product.createdAt ?? '',
+                                      isSold: product.createdAt ?? '',
                                       onClick: () {
                                         if (product.id != null) {
                                           // Share Product
@@ -396,7 +396,7 @@ class ProductScreen extends StatelessWidget {
                                       price: double.parse(
                                           (product).price ?? '0.0'),
                                       title: (product).name ?? '',
-                                      soldOn: (product).createdAt ?? '',
+                                      isSold: (product).createdAt ?? '',
                                       onClick: () {
                                         if (product.id != null) {
                                           _myProductController
@@ -423,7 +423,7 @@ class ProductScreen extends StatelessWidget {
   List<Widget> get tabs => [
         tabbutton("Buy",
             selected: _myProductController.tabController.value == 0,
-            margin: const EdgeInsets.only(left: 20, top: 10)),
+            margin: const EdgeInsets.only(left: 0, top: 10)),
         tabbutton("Sell",
             selected: _myProductController.tabController.value == 1),
         tabbutton("Co-owner",

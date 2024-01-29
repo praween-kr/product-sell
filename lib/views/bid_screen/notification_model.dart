@@ -1,4 +1,3 @@
-
 class NotificationModel {
   int? id;
   int? senderId;
@@ -10,12 +9,12 @@ class NotificationModel {
 
   NotificationModel(
       {this.id,
-        this.senderId,
-        this.reciverId,
-        this.message,
-        this.isRead,
-        this.createdAt,
-        this.updatedAt});
+      this.senderId,
+      this.reciverId,
+      this.message,
+      this.isRead,
+      this.createdAt,
+      this.updatedAt});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -28,14 +27,14 @@ class NotificationModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['senderId'] = this.senderId;
-    data['reciverId'] = this.reciverId;
-    data['message'] = this.message;
-    data['is_read'] = this.isRead;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['senderId'] = senderId;
+    data['reciverId'] = reciverId;
+    data['message'] = message;
+    data['is_read'] = isRead;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

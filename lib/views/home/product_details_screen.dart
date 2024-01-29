@@ -31,6 +31,7 @@ import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
 
 import '../../utils/color_constant.dart';
+import '../../utils/core/core_method.dart';
 
 /// Fixed price product
 /// Biding product
@@ -238,16 +239,33 @@ class ProductDetailsScreen extends StatelessWidget {
                                             const EdgeInsets.only(left: 20),
                                         child: Column(
                                           children: [
-                                            const Row(
+                                            Row(
                                               children: [
-                                                AppText(
+                                                const AppText(
                                                   text: "Size :",
                                                   textSize: 12,
                                                   fontWeight: FontWeight.w400,
                                                   color: Color(0x4d000000),
                                                 ),
                                                 AppText(
-                                                  text: "XL / 42 / 14",
+                                                  text: AppCore.productSizeText(List<
+                                                          String>.generate(
+                                                      (controller
+                                                                  .productDetailsData
+                                                                  .value
+                                                                  ?.details
+                                                                  ?.productSizes ??
+                                                              [])
+                                                          .length,
+                                                      (index) =>
+                                                          (controller
+                                                                      .productDetailsData
+                                                                      .value
+                                                                      ?.details
+                                                                      ?.productSizes ??
+                                                                  [])[index]
+                                                              .size ??
+                                                          '').toList()),
                                                   textSize: 12,
                                                   fontWeight: FontWeight.w400,
                                                   color: AppColor.blackColor,
@@ -367,14 +385,13 @@ class ProductDetailsScreen extends StatelessWidget {
                                             }
                                           } else if (_fixedPriceProduct()) {
                                             // Fixed Price - Buy
-                                            double totalPrice = double.parse(
-                                                (controller
-                                                            .productDetailsData
-                                                            .value
-                                                            ?.details
-                                                            ?.price ??
-                                                        0.0)
-                                                    .toString());
+                                            double.parse((controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.price ??
+                                                    0.0)
+                                                .toString());
                                             String productId = (controller
                                                         .productDetailsData
                                                         .value
@@ -477,7 +494,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   //
   bool _bidingActionActive() {
-    print("---> ${controller.bidingTimerStatus.value}");
+    AppPrint.all("---> ${controller.bidingTimerStatus.value}");
     return ([TimerTypeStatus.GOINGON_NO_BID_YET, TimerTypeStatus.GOINGON]
         .contains(controller.bidingTimerStatus.value));
   }
@@ -911,7 +928,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Future reviewDialog() async {
-    print("clicked---- ");
+    AppPrint.all("clicked---- ");
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -1031,7 +1048,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Future uploadDialog() async {
-    print("clicked---- ");
+    AppPrint.all("clicked---- ");
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -1172,7 +1189,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Future trackingDialog() async {
-    print("clicked---- ");
+    AppPrint.all("clicked---- ");
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,
@@ -1317,7 +1334,7 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   Future givereviewDialog() async {
-    print("clicked---- ");
+    AppPrint.all("clicked---- ");
     return showDialog(
         barrierDismissible: true,
         useSafeArea: false,

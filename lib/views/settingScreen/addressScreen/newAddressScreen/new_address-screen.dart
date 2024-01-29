@@ -73,7 +73,7 @@ class NewAddressScreen extends StatelessWidget {
                         child: Text(
                           "Latitude: ${addressController.cordinates.value?.latitude}, Longitude: ${addressController.cordinates.value?.latitude}",
                           style:
-                              const TextStyle(fontSize: 11, color: Colors.grey),
+                              const TextStyle(fontSize: 10, color: Colors.grey),
                         ),
                       ),
               ),

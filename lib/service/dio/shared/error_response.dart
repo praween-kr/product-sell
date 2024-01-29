@@ -1,8 +1,10 @@
+// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'error_response.g.dart';
+
 @JsonSerializable(includeIfNull: false)
-class ErrorModel{
+class ErrorModel {
   bool? success;
   int? code;
   String? message;

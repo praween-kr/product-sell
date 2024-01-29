@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/service/apis.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 
 import 'app_text.dart';
 import 'date_time_formates.dart';
@@ -16,7 +16,7 @@ class CommonWidgets {
           required String title,
           required double price,
           required String productImage,
-          String? soldOn,
+          String? isSold,
           int? likes,
           int? views}) =>
       GestureDetector(
@@ -48,7 +48,7 @@ class CommonWidgets {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        soldOn != null
+                        isSold != null
                             ? Container(
                                 height: 20,
                                 width: 50,
@@ -61,7 +61,7 @@ class CommonWidgets {
                                       textSize: 10,
                                       color: Colors.white),
                                 ))
-                            : Container(),
+                            : const SizedBox.shrink(),
                         // const Icon(Icons.more_vert, color: Colors.white)
                       ],
                     )),
@@ -137,7 +137,7 @@ class CommonWidgets {
                   ),
                 ),
               ),
-              soldOn == null
+              isSold == null
                   ? const SizedBox.shrink()
                   : Align(
                       alignment: Alignment.bottomLeft,
@@ -145,7 +145,7 @@ class CommonWidgets {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: AppText(
                           text:
-                              "Sold on : ${AppDateTime.getDateTime(soldOn, format: DateFormat("dd MMM yyyy"))}", //29 May 2023
+                              "Sold on : ${AppDateTime.getDateTime(isSold, format: DateFormat("dd MMM yyyy"))}", //29 May 2023
                           textSize: 10,
                           color: const Color(0x4d000000),
                           fontWeight: FontWeight.w500,

@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
-import 'package:oninto_flutter/utils/appbar.dart';
-import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/appbar.dart';
+import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatelessWidget {
@@ -13,11 +14,13 @@ class VerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "ppsss--->> ${UserStoredInfo().userInfo?.email ?? ''} --- ${authController.verifyEmail.value}");
+    if (kDebugMode) {
+      print(
+          "ppsss--->> ${UserStoredInfo().userInfo?.email ?? ''} --- ${authController.verifyEmail.value}");
+    }
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CommonAppbarWidget(),
+      appBar: const CommonAppbarWidget(),
       body: Padding(
         padding: const EdgeInsets.only(left: 30, top: 20, right: 20),
         child: SingleChildScrollView(

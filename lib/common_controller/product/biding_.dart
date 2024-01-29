@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_timer.dart';
 
 Future timerDialog(
@@ -7,7 +8,7 @@ Future timerDialog(
     required DateTime startDateTime,
     required Function(TimerType) onChnage,
     required bool bidingStarted}) async {
-  print("clicked---- ");
+  AppPrint.info("clicked---- ");
   return showDialog(
     barrierDismissible: true,
     useSafeArea: false,

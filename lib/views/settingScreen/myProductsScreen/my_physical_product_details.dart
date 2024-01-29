@@ -50,7 +50,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: AppColor.appColor,
                 borderRadius: BorderRadius.circular(15)),
-            child: const Icon(Icons.arrow_back_ios),
+            child: const Icon(Icons.arrow_back_ios, color: AppColor.white),
           ),
         ),
         // heading: "Samsung Note 10",
@@ -329,9 +329,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                 color: AppColor.blackColor.withOpacity(0.1),
                                 thickness: 2,
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 30.0, right: 30.0),
@@ -339,34 +337,30 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     commonText(
-                                        "Location :",
-                                        _myProductController.productDetailsData
-                                                .value?.details?.location ??
-                                            ''),
+                                      "Location :",
+                                      _myProductController.productDetailsData
+                                              .value?.details?.location ??
+                                          '',
+                                    ),
                                     const SizedBox(height: 10),
                                     commonText(
-                                        "Posted Date",
-                                        AppDateTime.getDateTime(
-                                            _myProductController
-                                                    .productDetailsData
-                                                    .value
-                                                    ?.details
-                                                    ?.createdAt ??
-                                                '',
-                                            format: DateFormat("dd MMM yyyy"))),
+                                      "Posted Date",
+                                      AppDateTime.getDateTime(
+                                        _myProductController.productDetailsData
+                                                .value?.details?.createdAt ??
+                                            '',
+                                        format: DateFormat("dd MMM yyyy"),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              const SizedBox(height: 20),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Image.asset(Assets.assetsSale),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
+                                  const SizedBox(height: 15),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 30.0),
                                     child: Column(
@@ -379,9 +373,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                           fontFamily: "Poppins",
                                           color: AppColor.blackColor,
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        const SizedBox(height: 5),
                                         AppText(
                                             text: _myProductController
                                                     .productDetailsData
@@ -424,9 +416,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                 fontSize: 16),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 31.0,
-                                        ),
+                                        const SizedBox(height: 31.0),
                                         GestureDetector(
                                           onTap: () {
                                             //Get.toNamed(Routes.editItemScreen);

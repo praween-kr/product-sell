@@ -7,8 +7,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'get_current_location.dart';
 
 class PickLocationMap extends StatefulWidget {
-  const PickLocationMap({super.key, required this.onChanged});
+  const PickLocationMap({super.key, required this.onChanged, this.cordinates});
   final Function(CurrentLocationData?) onChanged;
+  final LatLng? cordinates;
 
   @override
   State<PickLocationMap> createState() => _AppMapViewState();
@@ -19,6 +20,13 @@ class _AppMapViewState extends State<PickLocationMap> {
   final Completer<GoogleMapController> _mapController = Completer();
   LatLng latLng = const LatLng(0.0, 0.0);
   CurrentLocationData? selectedLocation;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   if (widget.cordinates != null) {
+  //     latLng = widget.cordinates!;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

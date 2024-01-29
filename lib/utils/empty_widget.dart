@@ -6,7 +6,11 @@ import 'package:oninto_flutter/generated/assets.dart';
 import 'color_constant.dart';
 
 class EmptyWidgets {
-  static Widget simple({String? text, Color? textColor, Function? refresh}) =>
+  static Widget simple(
+          {String? text,
+          Color? textColor,
+          Function? refresh,
+          bool inCenter = true}) =>
       SingleChildScrollView(
         physics: const ClampingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
@@ -19,8 +23,10 @@ class EmptyWidgets {
                 left: Get.context!.width * 0.15,
                 right: Get.context!.width * 0.15),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment:
+                  inCenter ? MainAxisAlignment.center : MainAxisAlignment.start,
               children: [
+                SizedBox(height: inCenter ? 0 : Get.height * 0.1),
                 Lottie.asset(Assets.lottieNoData),
                 const SizedBox(height: 25),
                 refresh == null
@@ -40,10 +46,10 @@ class EmptyWidgets {
                               ),
                             ],
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.refresh,
                             color: AppColor.white,
-                            size: Get.width * 0.1,
+                            size: 30,
                           ),
                         ),
                       ),
