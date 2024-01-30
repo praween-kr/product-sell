@@ -47,7 +47,9 @@ class InsightsScreen extends StatelessWidget {
                             child: AppText(
                               text: items,
                               style: AppTextStyle.regular,
-                              color: AppColor.white,
+                              color: controller.dropDownValue.value == items
+                                  ? AppColor.white
+                                  : AppColor.blackColor,
                               textSize: 13,
                             ),
                           );
@@ -100,28 +102,19 @@ class InsightsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 30.0,
+              const SizedBox(height: 30.0),
+              const ProductsProgressChart(
+                header: "Overview",
+                // data: [(Time Line, Sell Price)]
+                data: [
+                  (1, 1.2),
+                  (1.2, 3.6),
+                  (2.6, 5.7),
+                  (4, 6),
+                  (5, 8),
+                  (8, 9)
+                ],
               ),
-              const Align(
-                alignment: Alignment.center,
-                child: AppText(
-                  text: "Overview",
-                  style: AppTextStyle.medium,
-                  textSize: 15.0,
-                  color: AppColor.blackColor,
-                ),
-              ),
-              const SizedBox(
-                height: 14.0,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  Assets.assetsGraphImage,
-                ),
-              ),
-              const ProductsProgressChart(header: "Overview"),
               const SizedBox(height: 30.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
