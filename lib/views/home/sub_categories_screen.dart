@@ -38,7 +38,13 @@ class SubCategoriesScreen extends StatelessWidget {
               () => _categoriesController.loadingSubData.value
                   ? ShimmerWidgets.gridView()
                   : _categoriesController.subCategoriesList.isEmpty
-                      ? EmptyWidgets.simple(refresh: () {})
+                      ? EmptyWidgets.simple(refresh: () {
+                          _categoriesController.getSubCategories(
+                              (_categoriesController
+                                          .selectedCategory.value?.id ??
+                                      '')
+                                  .toString());
+                        })
                       : GridView.builder(
                           physics: const ClampingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(

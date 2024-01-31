@@ -11,8 +11,8 @@ import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
-import '../../Socket/model/group/group_message_model.dart';
-import '../../common_controller/home/home_controller.dart';
+import '../../../Socket/model/group/group_message_model.dart';
+import '../../../common_controller/home/home_controller.dart';
 
 class PublicShareProductDetails extends StatelessWidget {
   PublicShareProductDetails({super.key});

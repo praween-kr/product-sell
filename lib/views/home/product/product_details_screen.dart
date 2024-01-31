@@ -30,8 +30,8 @@ import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
 
-import '../../utils/color_constant.dart';
-import '../../utils/core/core_method.dart';
+import '../../../utils/color_constant.dart';
+import '../../../utils/core/core_method.dart';
 
 /// Fixed price product
 /// Biding product

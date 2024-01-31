@@ -30,7 +30,9 @@ class CategoryScreen extends StatelessWidget {
               () => _categoriesController.loadingData.value
                   ? ShimmerWidgets.gridView()
                   : _categoriesController.categoriesList.isEmpty
-                      ? EmptyWidgets.simple()
+                      ? EmptyWidgets.simple(refresh: () async {
+                          await _categoriesController.getCategories();
+                        })
                       : GridView.builder(
                           physics: const ClampingScrollPhysics(),
                           padding: const EdgeInsets.symmetric(

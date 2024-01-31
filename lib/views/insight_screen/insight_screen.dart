@@ -36,7 +36,7 @@ class InsightsScreen extends StatelessWidget {
                   Obx(
                     () => DropdownButtonHideUnderline(
                       child: DropdownButton2<String>(
-                        style: const TextStyle(color: AppColor.blackColor),
+                        style: const TextStyle(color: AppColor.red),
                         onChanged: (newValue) {
                           controller.dropDownValue.value = newValue!;
                         },
@@ -47,9 +47,7 @@ class InsightsScreen extends StatelessWidget {
                             child: AppText(
                               text: items,
                               style: AppTextStyle.regular,
-                              color: controller.dropDownValue.value == items
-                                  ? AppColor.white
-                                  : AppColor.blackColor,
+                              color: AppColor.blackColor.withOpacity(0.5),
                               textSize: 13,
                             ),
                           );
@@ -65,9 +63,7 @@ class InsightsScreen extends StatelessWidget {
                           //elevation: 2,
                         ),
                         iconStyleData: const IconStyleData(
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                          ),
+                          icon: Icon(Icons.arrow_drop_down_outlined),
                           iconSize: 28,
                           iconEnabledColor: AppColor.white,
                           iconDisabledColor: AppColor.white,
@@ -89,7 +85,6 @@ class InsightsScreen extends StatelessWidget {
                         ),
                         menuItemStyleData: const MenuItemStyleData(
                           height: 40,
-                          //padding: EdgeInsets.symmetric(horizontal: 10.0),
                         ),
                       ),
                     ),
@@ -107,12 +102,12 @@ class InsightsScreen extends StatelessWidget {
                 header: "Overview",
                 // data: [(Time Line, Sell Price)]
                 data: [
-                  (1, 1.2),
-                  (1.2, 3.6),
-                  (2.6, 5.7),
-                  (4, 6),
-                  (5, 8),
-                  (8, 9)
+                  (1, 11.2),
+                  (1.2, 13.6),
+                  (2.6, 15.7),
+                  (4, 16),
+                  (5, 28),
+                  (8, 35)
                 ],
               ),
               const SizedBox(height: 30.0),

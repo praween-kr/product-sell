@@ -19,6 +19,7 @@ import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../utils/app_print.dart';
 import '../../utils/app_text_field.dart';
+import 'product/product_details_navigation.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -343,13 +344,8 @@ class HomeScreen extends StatelessWidget {
                                                               '0.0'),
                                                       title: product.name ?? '',
                                                       onClick: () {
-                                                        controller
-                                                            .getProductDetails(
-                                                                (product.id ??
-                                                                        '')
-                                                                    .toString());
-                                                        Get.toNamed(Routes
-                                                            .productDetailsScreen);
+                                                        gotoProductDetaiesScreen(
+                                                            product);
                                                       },
                                                     ),
                                                   );

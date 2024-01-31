@@ -23,6 +23,7 @@ import '../../routes/routes.dart';
 import '../../utils/appbar.dart';
 import '../../utils/color_constant.dart';
 import '../../utils/common_button.dart';
+import 'product/product_details_navigation.dart';
 
 class CategoryWiseProductsScreen extends StatelessWidget {
   CategoryWiseProductsScreen({super.key});
@@ -134,7 +135,24 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                 child: _categoriesController.loadingData.value
                                     ? ShimmerWidgets.productListView()
                                     : _categoriesController.products.isEmpty
-                                        ? EmptyWidgets.simple()
+                                        ? EmptyWidgets.simple(
+                                            refresh: () async {
+                                            _categoriesController
+                                                .localFavourites
+                                                .clear();
+                                            await _categoriesController
+                                                .getProducts(
+                                              categoryId: _categoriesController
+                                                  .selectedCategory.value?.id
+                                                  .toString(),
+                                              subCategoryId:
+                                                  _categoriesController
+                                                      .selectedSubCategory
+                                                      .value
+                                                      ?.id
+                                                      .toString(),
+                                            );
+                                          })
                                         : ListView.separated(
                                             controller: _categoriesController
                                                 .scrollController,
@@ -197,7 +215,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                                 .toString());
                                                   },
                                                   onClick: () =>
-                                                      _gotoProductDetaiesScreen(
+                                                      gotoProductDetaiesScreen(
                                                           product),
                                                 ),
                                               );
@@ -391,7 +409,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                     const SizedBox(height: 10),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        _gotoProductDetaiesScreen(
+                                                        gotoProductDetaiesScreen(
                                                             product);
                                                         // timerDialog(
                                                         //   product,
@@ -658,31 +676,6 @@ class CategoryWiseProductsScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  _gotoProductDetaiesScreen(ProductModel product) {
-    if (product.sellOption == null) {
-      // Share Product
-      Map<String, dynamic> data = {"from": 0};
-      if (HomeCatProductController().initialized) {
-        Get.find<HomeCatProductController>()
-            .emitShareProductDetails((product.id ?? '').toString());
-      } else {
-        Get.put(HomeCatProductController())
-            .emitShareProductDetails((product.id ?? '').toString());
-      }
-      Get.toNamed(Routes.publicShareProductDetails, arguments: data);
-    } else {
-      Map<String, dynamic> data = {"from": 0};
-      if (HomeCatProductController().initialized) {
-        Get.find<HomeCatProductController>()
-            .getProductDetails((product.id ?? '').toString());
-      } else {
-        Get.put(HomeCatProductController())
-            .getProductDetails((product.id ?? '').toString());
-      }
-      Get.toNamed(Routes.productDetailsScreen, arguments: data);
-    }
   }
 
   bool _isFavourite(CategoriesController cc, ProductModel product) =>

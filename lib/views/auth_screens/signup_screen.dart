@@ -38,7 +38,10 @@ class SignUpScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: AppColor.appColor,
                         borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(Icons.arrow_back_ios),
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColor.white,
+                    ),
                   ),
                 ),
               ),

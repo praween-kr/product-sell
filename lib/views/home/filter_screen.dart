@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
@@ -13,6 +12,8 @@ import 'package:oninto_flutter/utils/favourite_button.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
+import 'product/product_details_navigation.dart';
+
 class FilterScreen extends StatelessWidget {
   FilterScreen({super.key});
 
@@ -21,7 +22,8 @@ class FilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppPrint.all("products: ${_homecontroller.products.length}");
+    AppPrint.all(
+        "public products filter screen: ${_homecontroller.products.length}");
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const CommonAppbarWidget(heading: "Filter"),
@@ -67,7 +69,8 @@ class FilterScreen extends StatelessWidget {
                                 () => filterCard(
                                   product,
                                   img,
-                                  onClick: () => _navigate(product),
+                                  onClick: () =>
+                                      gotoProductDetaiesScreen(product),
                                   isFavourite: _homecontroller.localFavourites[
                                               (product.id ?? '').toString()] !=
                                           null
@@ -96,7 +99,7 @@ class FilterScreen extends StatelessWidget {
       required Function clickOnFav,
       bool isFavourite = false}) {
     return GestureDetector(
-      onTap: () => _navigate(product),
+      onTap: () => gotoProductDetaiesScreen(product),
       child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 14),
           padding:
@@ -144,23 +147,23 @@ class FilterScreen extends StatelessWidget {
     );
   }
 
-  _navigate(ProductModel product) {
-    if (product.type == 2) {
-      AppPrint.info("Navigate: 1");
-      _myProductController.getProductDetails((product.id ?? '').toString());
-      Get.toNamed(Routes.myShareProductDetailsScreen);
-    } else {
-      if (Get.arguments != null && Get.arguments['from'] == 'my_product') {
-        AppPrint.info("Navigate: 2");
-        // Edit & View My Product
-        _myProductController.getProductDetails((product.id ?? '').toString());
-        Get.toNamed(Routes.myPhysicalProductDetailScreen);
-      } else {
-        AppPrint.info("Navigate: 3");
-        Map<String, dynamic> data = {"from": 0};
-        _homecontroller.getProductDetails((product.id ?? '').toString());
-        Get.toNamed(Routes.productDetailsScreen, arguments: data);
-      }
-    }
-  }
+  // _navigate(ProductModel product) {
+  //   if (product.type == 2) {
+  //     AppPrint.info("Navigate: 1");
+  //     _myProductController.getProductDetails((product.id ?? '').toString());
+  //     Get.toNamed(Routes.myShareProductDetailsScreen);
+  //   } else {
+  //     if (Get.arguments != null && Get.arguments['from'] == 'my_product') {
+  //       AppPrint.info("Navigate: 2");
+  //       // Edit & View My Product
+  //       _myProductController.getProductDetails((product.id ?? '').toString());
+  //       Get.toNamed(Routes.myPhysicalProductDetailScreen);
+  //     } else {
+  //       AppPrint.info("Navigate: 3");
+  //       Map<String, dynamic> data = {"from": 0};
+  //       _homecontroller.getProductDetails((product.id ?? '').toString());
+  //       Get.toNamed(Routes.productDetailsScreen, arguments: data);
+  //     }
+  //   }
+  // }
 }

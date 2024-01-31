@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/favourites_controller.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
-import 'package:oninto_flutter/routes/routes.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
@@ -11,9 +10,9 @@ import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
-import '../../model/product/product_model.dart';
 import '../../utils/appbar.dart';
 import '../../utils/color_constant.dart';
+import 'product/product_details_navigation.dart';
 
 class FavouriteScreen extends StatelessWidget {
   FavouriteScreen({super.key});
@@ -67,7 +66,7 @@ class FavouriteScreen extends StatelessWidget {
                               if (favProduct.product != null) {
                                 _favouritesController.getProductDetails(
                                     (favProduct.product?.id ?? '').toString());
-                                _gotoProductDetaiesScreen(favProduct.product!);
+                                gotoProductDetaiesScreen(favProduct.product!);
                                 // Get.toNamed(Routes.bidingProductDetails);
                               }
                             },
@@ -159,30 +158,5 @@ class FavouriteScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  _gotoProductDetaiesScreen(ProductModel product) {
-    if (product.sellOption == null) {
-      // Share Product
-      Map<String, dynamic> data = {"from": 0};
-      if (HomeCatProductController().initialized) {
-        Get.find<HomeCatProductController>()
-            .emitShareProductDetails((product.id ?? '').toString());
-      } else {
-        Get.put(HomeCatProductController())
-            .emitShareProductDetails((product.id ?? '').toString());
-      }
-      Get.toNamed(Routes.publicShareProductDetails, arguments: data);
-    } else {
-      Map<String, dynamic> data = {"from": 0};
-      if (HomeCatProductController().initialized) {
-        Get.find<HomeCatProductController>()
-            .getProductDetails((product.id ?? '').toString());
-      } else {
-        Get.put(HomeCatProductController())
-            .getProductDetails((product.id ?? '').toString());
-      }
-      Get.toNamed(Routes.productDetailsScreen, arguments: data);
-    }
   }
 }

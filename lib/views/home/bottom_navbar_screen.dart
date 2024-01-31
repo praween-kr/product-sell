@@ -7,7 +7,7 @@ import 'package:oninto_flutter/common_controller/bottom_nav_controller.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/views/home/favourite_screen.dart';
 import 'package:oninto_flutter/views/home/home_screen.dart';
-import 'package:oninto_flutter/views/navBarMsgScreen/navBarMsgScreen.dart';
+import 'package:oninto_flutter/views/message/navBarMsgScreen.dart';
 import 'package:oninto_flutter/views/settingScreen/settings_screen.dart';
 
 // ignore: must_be_immutable

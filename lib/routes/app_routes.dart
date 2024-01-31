@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:oninto_flutter/views/home/public_share_product_details_screen.dart';
+import 'package:oninto_flutter/views/home/product/public_share_product_details_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_product_filter_screen.dart';
 
 import '../views/auth_screens/forget_password_screens.dart';
@@ -16,12 +16,12 @@ import '../views/home/favourite_screen.dart';
 import '../views/home/filter_screen.dart';
 import '../views/home/home_screen.dart';
 import '../views/home/payment_screen.dart';
-import '../views/home/product_details_screen.dart';
+import '../views/home/product/product_details_screen.dart';
 import '../views/home/sub_categories_screen.dart';
 import '../views/insight_screen/insight_screen.dart';
 import '../views/message/group_message_screen.dart';
 import '../views/message/message_screen.dart';
-import '../views/navBarMsgScreen/navBarMsgScreen.dart';
+import '../views/message/navBarMsgScreen.dart';
 import '../views/sellItemScreen/sell_item_screen.dart';
 import '../views/settingScreen/addressScreen/address_screen.dart';
 import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
