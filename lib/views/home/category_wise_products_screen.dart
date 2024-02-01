@@ -34,21 +34,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: CommonAppbarWidget(
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.only(left: 12),
-            decoration: BoxDecoration(
-                color: AppColor.appColor,
-                borderRadius: BorderRadius.circular(15)),
-            child: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          ),
-        ),
-      ),
+      appBar: const CommonAppbarWidget(),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(

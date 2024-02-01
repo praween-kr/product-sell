@@ -19,6 +19,7 @@ class AuthController extends GetxController {
   //
   TextEditingController inputPhoneEmail = TextEditingController(text: '');
   var countryCode = "93".obs;
+  var pickedProfileImage = "".obs;
   var usernameIsPhoneType = false.obs;
   TextEditingController inputPassword = TextEditingController(text: '');
   //
@@ -77,6 +78,7 @@ class AuthController extends GetxController {
   signup() async {
     if (signUpInputValid()) {
       bool success = await ApiRequests.signup(
+          profileImage: pickedProfileImage.value.trim(),
           firstName: firstName.text.trim(),
           lastName: lastName.text.trim(),
           countryCode: countryCode.value,

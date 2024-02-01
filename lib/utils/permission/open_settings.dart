@@ -18,11 +18,13 @@ void openSettingsForPermission(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             child: Column(
               children: [
-                const Text("Permission",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue)),
+                const Text(
+                  "Permission",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue),
+                ),
                 const SizedBox(height: 8),
                 Text(
                   "To $purposeText, allow Onito access to your $typeText.\nTap Settings > Permissions, and turn $typeText on.",

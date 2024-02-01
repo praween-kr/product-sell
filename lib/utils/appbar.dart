@@ -5,7 +5,7 @@ import 'package:oninto_flutter/utils/color_constant.dart';
 class CommonAppbarWidget extends StatelessWidget
     implements PreferredSizeWidget {
   final String? heading;
-  final  Widget? headingChild;
+  final Widget? headingChild;
   final VoidCallback? onBackPress;
   final IconData? iconData;
   final TextStyle? textStyle;
@@ -27,7 +27,7 @@ class CommonAppbarWidget extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -48,7 +48,8 @@ class CommonAppbarWidget extends StatelessWidget
                     Get.back();
                   },
               child: Container(
-                margin: const EdgeInsets.all(5),
+                margin: const EdgeInsets.only(
+                    left: 20, right: 5, top: 5, bottom: 5),
                 padding: const EdgeInsets.only(left: 12),
                 decoration: BoxDecoration(
                     color: AppColor.appColor,
@@ -56,7 +57,16 @@ class CommonAppbarWidget extends StatelessWidget
                 child: const Icon(Icons.arrow_back_ios, color: Colors.white),
               ),
             ),
-        actions: action == null ? [] : [action ?? const Icon(Icons.add)],
+        leadingWidth: 70,
+        actions: action == null
+            ? []
+            : [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 5, right: 20, top: 5, bottom: 5),
+                  child: action ?? const Icon(Icons.add),
+                )
+              ],
       ),
     );
   }

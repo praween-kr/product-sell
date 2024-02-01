@@ -9,6 +9,7 @@ import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
+import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
 import '../settingScreen/cms_screen/cms_screen.dart';
@@ -24,30 +25,9 @@ class SignUpScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const CommonAppbarWidget(),
             Padding(
-              padding: EdgeInsets.zero,
-              child: CommonAppbarWidget(
-                leading: GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
-                    padding: const EdgeInsets.only(left: 12),
-                    decoration: BoxDecoration(
-                        color: AppColor.appColor,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColor.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 20),
+              padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -58,18 +38,31 @@ class SignUpScreen extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     textSize: 30,
                   ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  const AppText(
-                    text: "Signup your details",
-                    color: Color(0x80000000),
-                    fontFamily: "poppins",
-                    fontWeight: FontWeight.w400,
-                    textSize: 15,
-                  ),
-                  const SizedBox(
-                    height: 20,
+                  const SizedBox(height: 7),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Expanded(
+                        child: AppText(
+                          text: "Signup your details",
+                          color: Color(0x80000000),
+                          fontFamily: "poppins",
+                          fontWeight: FontWeight.w400,
+                          textSize: 15,
+                        ),
+                      ),
+                      Obx(
+                        () => AppImage.profile(
+                          context,
+                          viewOnly: false,
+                          onChanged: (String? value) {
+                            authController.pickedProfileImage.value =
+                                value ?? '';
+                          },
+                          url: authController.pickedProfileImage.value,
+                        ),
+                      ),
+                    ],
                   ),
                   const AppText(
                     text: "First Name",
@@ -82,7 +75,6 @@ class SignUpScreen extends StatelessWidget {
                     controller: authController.firstName,
                     height: 50,
                     borderRadius: BorderRadius.circular(15),
-                    margin: const EdgeInsets.only(right: 20),
                     title: "Your first name",
                     prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.textColor,
@@ -100,7 +92,6 @@ class SignUpScreen extends StatelessWidget {
                     controller: authController.lastName,
                     height: 50,
                     borderRadius: BorderRadius.circular(19),
-                    margin: const EdgeInsets.only(right: 20),
                     title: "Your last name",
                     prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.textColor,
@@ -117,7 +108,6 @@ class SignUpScreen extends StatelessWidget {
                     controller: authController.email,
                     height: 50,
                     borderRadius: BorderRadius.circular(19),
-                    margin: const EdgeInsets.only(right: 20),
                     title: "example@gmail.com",
                     prefix: const Icon(Icons.person_outline),
                     containerColor: AppColor.textColor,
@@ -134,12 +124,11 @@ class SignUpScreen extends StatelessWidget {
                   AppTextField(
                     controller: authController.phone,
                     height: 50,
-                    margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
                     containerColor: AppColor.textColor,
                     textInputType: TextInputType.phone,
                     prefix: Container(
-                      margin: const EdgeInsets.only(right: 15),
+                      margin: const EdgeInsets.only(right: 5),
                       decoration: const BoxDecoration(
                           color: AppColor.appColor,
                           borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -189,7 +178,6 @@ class SignUpScreen extends StatelessWidget {
                     readOnly: true,
                     controller: authController.location,
                     height: 50,
-                    margin: const EdgeInsets.only(right: 20),
                     borderRadius: BorderRadius.circular(20),
                     containerColor: AppColor.textColor,
                     title: "Add",
@@ -214,7 +202,6 @@ class SignUpScreen extends StatelessWidget {
                         controller: authController.password,
                         height: 50,
                         borderRadius: BorderRadius.circular(19),
-                        margin: const EdgeInsets.only(right: 20),
                         title: "Password",
                         prefix: const Icon(Icons.lock_outline_sharp),
                         containerColor: AppColor.textColor,
@@ -251,7 +238,6 @@ class SignUpScreen extends StatelessWidget {
                         controller: authController.confirmPassword,
                         height: 50,
                         borderRadius: BorderRadius.circular(19),
-                        margin: const EdgeInsets.only(right: 20),
                         title: "Confirm password",
                         prefix: const Icon(Icons.lock_outline_sharp),
                         containerColor: AppColor.textColor,
@@ -276,7 +262,7 @@ class SignUpScreen extends StatelessWidget {
                         )),
                   ),
                   ///////
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Obx(
                     () => Row(
                       children: [
@@ -288,8 +274,10 @@ class SignUpScreen extends StatelessWidget {
                           },
                           child: !authController.agree.value
                               ? const Icon(
-                                  Icons.check_box_outline_blank_outlined)
-                              : const Icon(Icons.check_box),
+                                  Icons.check_box_outline_blank_outlined,
+                                  color: AppColor.grey)
+                              : const Icon(Icons.check_box,
+                                  color: AppColor.appColor),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -332,7 +320,6 @@ class SignUpScreen extends StatelessWidget {
                     },
                     child: Center(
                       child: Container(
-                        margin: const EdgeInsets.only(top: 20),
                         alignment: Alignment.center,
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.height * 0.40,

@@ -8,6 +8,8 @@ import 'package:oninto_flutter/utils/regex.dart';
 
 class EditProfileController extends GetxController {
   //
+  var profileImageNetwork = ''.obs;
+  var pickedProfileImage = ''.obs;
   TextEditingController firstName = TextEditingController(text: '');
   TextEditingController lastName = TextEditingController(text: '');
   TextEditingController email = TextEditingController(text: '');
@@ -18,6 +20,8 @@ class EditProfileController extends GetxController {
 
   initialData() {
     GlobalController gc = Get.find();
+    profileImageNetwork.value = gc.userInfo.value?.image ?? '';
+    pickedProfileImage.value = '';
     firstName.text = gc.userInfo.value?.firstName ?? '';
     lastName.text = gc.userInfo.value?.lastName ?? '';
     email.text = gc.userInfo.value?.email ?? '';
@@ -34,6 +38,7 @@ class EditProfileController extends GetxController {
   updateProfile() async {
     if (validation()) {
       bool success = await ApiRequests.updateProfile(
+          profileImage: pickedProfileImage.value.trim(),
           firstName: firstName.text.trim(),
           lastName: lastName.text.trim(),
           countryCode: countryCode.value,

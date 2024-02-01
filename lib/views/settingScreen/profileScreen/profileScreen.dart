@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
-import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
+import 'package:oninto_flutter/utils/app_text_field.dart';
+
+import '../../../generated/assets.dart';
+import '../../../routes/routes.dart';
+import '../../../service/apis.dart';
 import '../../../utils/appbar.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
-import '../../../generated/assets.dart';
-import '../../../routes/routes.dart';
+import '../../../utils/image_view.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -31,11 +34,20 @@ class ProfileScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(25, 30, 24, 20),
+              padding: const EdgeInsets.fromLTRB(25, 0, 24, 20),
               child: Obx(
                 () => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: AppImage.profile(
+                        context,
+                        isNetwork: true,
+                        url:
+                            "${ImageBaseUrls.profile}${globleController.userInfo.value?.image ?? ''}",
+                      ),
+                    ),
                     AppText(
                       text: "First Name",
                       textSize: 15.0,

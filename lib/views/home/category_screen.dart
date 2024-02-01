@@ -22,9 +22,7 @@ class CategoryScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          const CommonAppbarWidget(
-            heading: "Categories",
-          ),
+          const CommonAppbarWidget(heading: "Categories"),
           Expanded(
             child: Obx(
               () => _categoriesController.loadingData.value

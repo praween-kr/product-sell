@@ -169,9 +169,11 @@ class PublicShareProductDetails extends StatelessWidget {
                                 ),
                           const SizedBox(height: 20),
                           (_controller.productDetailsData.value?.myTrads ?? [])
-                                  .isEmpty
-                              ? const SizedBox.shrink()
-                              : GestureDetector(
+                                      .isNotEmpty ||
+                                  _controller.productDetailsData.value?.details
+                                          ?.vendorId ==
+                                      UserStoredInfo().userInfo?.id
+                              ? GestureDetector(
                                   onTap: () {
                                     // Get.toNamed(Routes.navbarScreen);
                                     _sendMessage();
@@ -187,7 +189,8 @@ class PublicShareProductDetails extends StatelessWidget {
                                         fontFamily: "Poppins",
                                         color: Colors.white),
                                   ),
-                                ),
+                                )
+                              : const SizedBox.shrink(),
                           const SizedBox(height: 20),
                         ],
                       ),

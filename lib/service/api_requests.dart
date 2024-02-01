@@ -65,7 +65,8 @@ class ApiRequests {
   }
 
   static Future<bool> signup(
-      {required String firstName,
+      {String? profileImage,
+      required String firstName,
       required String lastName,
       required String email,
       required String countryCode,
@@ -91,7 +92,11 @@ class ApiRequests {
       "confirmPassword": confirmPassword
     };
     AppPrint.all("Signup Req: $reqdata");
-    var data = await BaseApiCall().postReq(AppApis.signUp, data: reqdata);
+    var data = await BaseApiCall().postFormReq(
+      AppApis.signUp,
+      data: reqdata,
+      attachments: profileImage == null ? null : {"images": profileImage},
+    );
 
     AppPrint.all("Signup Resp: $data");
     if (data != null) {
@@ -162,6 +167,7 @@ class ApiRequests {
 
   /// --------Update Profile---------
   static Future<bool> updateProfile({
+    String? profileImage,
     required String firstName,
     required String lastName,
     required String email,
@@ -172,16 +178,18 @@ class ApiRequests {
   }) async {
     AppLoader.show();
     debugPrint("location.text.trim(): $location");
-    var data = await BaseApiCall().putReq(AppApis.updateProfile, data: {
-      "firstName": firstName,
-      "lastName": lastName,
-      "email": email,
-      "countryCode": countryCode,
-      "phone": phone,
-      "location": location,
-      "latitude": cordinates?.latitude ?? 0.0,
-      "longitude": cordinates?.longitude ?? 0.0,
-    });
+    var data = await BaseApiCall().putFormReq(AppApis.updateProfile,
+        data: {
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "countryCode": countryCode,
+          "phone": phone,
+          "location": location,
+          "latitude": cordinates?.latitude ?? 0.0,
+          "longitude": cordinates?.longitude ?? 0.0,
+        },
+        attachments: profileImage == null ? null : {"images": profileImage});
 
     if (data != null) {
       Map<String, dynamic> newdata = data['body'] as Map<String, dynamic>;

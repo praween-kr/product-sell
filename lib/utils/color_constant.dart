@@ -14,6 +14,7 @@ class AppColor {
   static const chatColor = Color(0xff3F3F3F);
   static const itemBorderColor = Color(0xffB1ADAD);
   static const grey = Color.fromARGB(255, 133, 136, 146);
+  static const greylight = Color.fromARGB(255, 200, 206, 223);
   static const red = Color(0xFFF51303);
   static const green = Colors.green;
 

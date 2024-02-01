@@ -45,20 +45,6 @@ class BidingProductDetailsScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: CommonAppbarWidget(
-          leading: GestureDetector(
-            onTap: () {
-              controller.menu.value = true;
-              Get.back();
-            },
-            child: Container(
-              margin: const EdgeInsets.all(5),
-              padding: const EdgeInsets.only(left: 12),
-              decoration: BoxDecoration(
-                  color: AppColor.appColor,
-                  borderRadius: BorderRadius.circular(15)),
-              child: const Icon(Icons.arrow_back_ios, color: AppColor.white),
-            ),
-          ),
           headingChild: Obx(
             () => _favouritesController.loadingData.value
                 ? ShimmerWidgets.text(w: Get.width * 0.4)

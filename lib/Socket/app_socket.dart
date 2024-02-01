@@ -18,6 +18,30 @@ import 'model/one-to-one/chat_product_user_model.dart';
 import 'model/one-to-one/message_model.dart';
 import 'socket_keys.dart';
 
+abstract class AppChatSocketListener {
+  listenerGetUsers(List<ChatProductUser> data);
+  listenerNewMessage(Message? data);
+  listenerDeleteMessage();
+  listenerChatHistories(List<Message> data);
+  listenerClearChat(bool data);
+  listenerReadUnread(String sender, String reciver);
+  //
+  listenerGroupSendMessage(GroupMessage? data);
+  listenerGroupList(List<GroupConstant> data);
+  listenerGroupChatHistory(List<GroupMessage> data);
+}
+
+abstract class AppBidSocketListener {
+  addBidListener(AddBidsHistory? model);
+  getBidHistoriesListener(AddBidsHistory? data);
+  bidOverListener(bool data);
+}
+
+abstract class AppShareSocketListener {
+  listenerShareProductDetails(ProductDetailsData? data);
+  listenerPurchageProductShare(String? shareId, bool success);
+}
+
 class AppSocket {
   static final AppSocket _singleton = AppSocket._internal();
 
@@ -481,5 +505,3 @@ socketPrint(dynamic data, {bool blue = false}) {
     // debugPrint("Socket Debug: $data");
   }
 }
-
-class SocketChatListener {}

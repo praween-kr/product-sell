@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/views/search_google_address.dart';
 
@@ -11,6 +12,7 @@ import '../../../../utils/app_text_field.dart';
 import '../../../../utils/appbar.dart';
 import '../../../../utils/color_constant.dart';
 import '../../../../utils/common_button.dart';
+import '../../../../utils/image_view.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
@@ -35,11 +37,30 @@ class EditProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
+              padding: const EdgeInsets.only(left: 30.0, right: 30.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Obx(
+                      () => AppImage.profile(
+                        context,
+                        viewOnly: false,
+                        isNetwork:
+                            editProfileController.pickedProfileImage.value ==
+                                '',
+                        onChanged: (String? value) {
+                          editProfileController.pickedProfileImage.value =
+                              value ?? '';
+                        },
+                        url: editProfileController.pickedProfileImage.value ==
+                                ''
+                            ? "${ImageBaseUrls.profile}${editProfileController.profileImageNetwork.value}"
+                            : editProfileController.pickedProfileImage.value,
+                      ),
+                    ),
+                  ),
                   AppText(
                     text: "First Name",
                     textSize: 15.0,

@@ -74,8 +74,6 @@ class MyApp extends StatelessWidget {
         ],
         getPages: AppRoutes.routes,
         navigatorObservers: [ClearFocusOnPush()],
-
-        // home: const SwapperWidget(),
       ),
     );
   }

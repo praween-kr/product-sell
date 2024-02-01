@@ -78,12 +78,12 @@ class GroupMessageScreen extends StatelessWidget {
                         color: AppColor.borderColor.withOpacity(0.3),
                         blurRadius: 6)
                   ],
-                  borderRadius: BorderRadius.circular(20.0)),
+                  borderRadius: BorderRadius.circular(16.0)),
               child: const Center(
                 child: Icon(
                   Icons.bar_chart_rounded,
                   color: AppColor.appColor,
-                  size: 40.0,
+                  size: 28.0,
                 ),
               ),
             ),

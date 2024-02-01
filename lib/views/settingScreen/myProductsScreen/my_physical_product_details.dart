@@ -40,20 +40,6 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                       fontSize: 15),
                 ),
         ),
-        leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
-          child: Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.only(left: 12),
-            decoration: BoxDecoration(
-                color: AppColor.appColor,
-                borderRadius: BorderRadius.circular(15)),
-            child: const Icon(Icons.arrow_back_ios, color: AppColor.white),
-          ),
-        ),
-        // heading: "Samsung Note 10",
         textStyle: const TextStyle(
             fontSize: 20,
             color: AppColor.blackColor,

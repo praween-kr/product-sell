@@ -13,6 +13,9 @@ import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/cms_screen/cms_screen.dart';
 
+import '../../service/apis.dart';
+import '../../utils/image_view.dart';
+
 class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
   @override
@@ -49,7 +52,13 @@ class SettingScreen extends GetView<SettingsController> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(Assets.assetsPersonIcon, scale: 1.0),
+                        AppImage.profile(
+                          context,
+                          isNetwork: true,
+                          radius: 30,
+                          url:
+                              "${ImageBaseUrls.profile}${globleController.userInfo.value?.image ?? ''}",
+                        ),
                         const SizedBox(width: 3),
                         Expanded(
                           child: Column(
@@ -85,36 +94,36 @@ class SettingScreen extends GetView<SettingsController> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 4.0),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(Routes.insightScreen);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0, vertical: 5.0),
-                                  decoration: BoxDecoration(
-                                      color: AppColor.appColor,
-                                      borderRadius: BorderRadius.circular(7.0)),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        Assets.assetsGraphIcon,
-                                        height: 12.0,
-                                        width: 12.0,
-                                      ),
-                                      const SizedBox(width: 2.0),
-                                      const AppText(
-                                        text: "Insights",
-                                        textSize: 13.0,
-                                        color: AppColor.white,
-                                        style: AppTextStyle.regular,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
+                              // const SizedBox(height: 4.0),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     Get.toNamed(Routes.insightScreen);
+                              //   },
+                              //   child: Container(
+                              //     padding: const EdgeInsets.symmetric(
+                              //         horizontal: 8.0, vertical: 5.0),
+                              //     decoration: BoxDecoration(
+                              //         color: AppColor.appColor,
+                              //         borderRadius: BorderRadius.circular(7.0)),
+                              //     child: Row(
+                              //       mainAxisSize: MainAxisSize.min,
+                              //       children: [
+                              //         Image.asset(
+                              //           Assets.assetsGraphIcon,
+                              //           height: 12.0,
+                              //           width: 12.0,
+                              //         ),
+                              //         const SizedBox(width: 2.0),
+                              //         const AppText(
+                              //           text: "Insights",
+                              //           textSize: 13.0,
+                              //           color: AppColor.white,
+                              //           style: AppTextStyle.regular,
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         ),

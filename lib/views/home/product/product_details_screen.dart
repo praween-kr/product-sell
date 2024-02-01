@@ -50,9 +50,6 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CommonAppbarWidget(
-        onBackPress: () {
-          Get.back();
-        },
         headingChild: Obx(
           () => controller.loadingData.value
               ? ShimmerWidgets.text(w: Get.width * 0.4)

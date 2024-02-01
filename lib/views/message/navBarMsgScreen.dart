@@ -328,26 +328,24 @@ class NavBarMsgScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 10.0),
-                                decoration: const BoxDecoration(
-                                  color: AppColor.themeColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: AppText(
-                                    text: (data.unreadCount ?? 0).toString(),
-                                    color: AppColor.white,
-                                    textSize: 10.0,
-                                    style: AppTextStyle.regular,
+                          (data.unreadCount ?? 0) == 0
+                              ? const SizedBox.shrink()
+                              : Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 10.0),
+                                  decoration: const BoxDecoration(
+                                    color: AppColor.themeColor,
+                                    shape: BoxShape.circle,
                                   ),
-                                ),
-                              )
-                            ],
-                          )
+                                  child: Center(
+                                    child: AppText(
+                                      text: (data.unreadCount ?? 0).toString(),
+                                      color: AppColor.white,
+                                      textSize: 10.0,
+                                      style: AppTextStyle.regular,
+                                    ),
+                                  ),
+                                )
                         ],
                       ),
                     ),

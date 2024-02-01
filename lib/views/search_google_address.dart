@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:oninto_flutter/model/g_place_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 
+import '../utils/appbar.dart';
+
 class SearchGoogleAddress extends StatefulWidget {
   const SearchGoogleAddress({super.key, required this.onChanged});
   final Function(PlaceResults) onChanged;
@@ -36,11 +38,7 @@ class _SearchGoogleAddressState extends State<SearchGoogleAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: themeColor,
-        title: const Text("Search Place"),
-        centerTitle: false,
-      ),
+      appBar: const CommonAppbarWidget(heading: "Search Place"),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

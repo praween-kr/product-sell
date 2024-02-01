@@ -15,7 +15,8 @@ import 'package:oninto_flutter/utils/app_toast_loader.dart';
 import '../model/group/group_message_model.dart';
 import '../model/one-to-one/message_model.dart';
 
-class ChatMsgController extends GetxController {
+class ChatMsgController extends GetxController
+    implements AppChatSocketListener {
   var messageController = 0.obs;
 
   ///--------------------------
@@ -68,6 +69,7 @@ class ChatMsgController extends GetxController {
   }
 
   // Listener Get Users ----------
+  @override
   listenerGetUsers(List<ChatProductUser> data) {
     socketPrint("-----> ===> $data");
     users.value = data;
@@ -77,6 +79,7 @@ class ChatMsgController extends GetxController {
   }
 
   // Listener Send Message----------
+  @override
   listenerNewMessage(Message? data) {
     if (data != null) {
       messages.add(data);
@@ -94,6 +97,7 @@ class ChatMsgController extends GetxController {
     -1,
     -1
   ].obs; //left: is index and right is type (0 for one-one message and 1 for group message)
+  @override
   listenerDeleteMessage() {
     if (deletedMessage[1] == 0 && deletedMessage[0] != -1) {
       messages.removeAt(deletedMessage[0]);
@@ -108,6 +112,7 @@ class ChatMsgController extends GetxController {
   }
 
   // Listener Chat Histories----------
+  @override
   listenerChatHistories(List<Message> data) async {
     messages.value = data;
     await Future.delayed(const Duration(seconds: 1));
@@ -115,6 +120,7 @@ class ChatMsgController extends GetxController {
   }
 
   // Clear chat----------
+  @override
   listenerClearChat(bool data) {
     socketPrint("listenerClearChat---> $data");
     messages.clear();
@@ -124,6 +130,7 @@ class ChatMsgController extends GetxController {
 
   // Report User----------
   var newReadedMsg = <String>[].obs;
+  @override
   listenerReadUnread(String sender, String reciver) {
     if (UserStoredInfo().userInfo?.id.toString() == reciver) {
       for (int i = messages.length - 1; i >= 0; i--) {

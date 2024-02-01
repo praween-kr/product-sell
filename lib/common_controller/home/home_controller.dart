@@ -21,7 +21,7 @@ import '../../utils/helper/camera_helper.dart';
 import '../../views/bid_screen/notification_model.dart';
 
 class HomeCatProductController extends GetxController
-    implements CameraOnCompleteListener {
+    implements CameraOnCompleteListener, AppBidSocketListener {
   // RxBool homePass = true.obs;
   // RxBool Switch = false.obs;
   RxBool upload = false.obs;
@@ -291,6 +291,7 @@ class HomeCatProductController extends GetxController
     }
   }
 
+  @override
   addBidListener(AddBidsHistory? data) {
     bidingData.value = data;
     if (data?.save?.createdAt != null) {
@@ -308,6 +309,7 @@ class HomeCatProductController extends GetxController
     SocketEmits.getLastBidAndHistory(productId: productId);
   }
 
+  @override
   getBidHistoriesListener(AddBidsHistory? data) {
     bidingData.value = data;
 
@@ -336,6 +338,7 @@ class HomeCatProductController extends GetxController
     SocketEmits.bidOver(productId: productId);
   }
 
+  @override
   bidOverListener(bool data) {
     socketPrint("Biding over...");
   }
