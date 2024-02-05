@@ -23,6 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       navigate();
     });
+    // AppPrint.info(
+    //     'Internet Status: ${Get.find<GlobalController>().connectionStatus.value}');
     super.initState();
   }
 

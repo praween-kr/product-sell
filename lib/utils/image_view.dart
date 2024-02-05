@@ -99,7 +99,10 @@ class AppImage {
       required String? url,
       bool isNetwork = false,
       bool viewOnly = true,
-      bool showEditIcon = false}) {
+      bool showEditIcon = false,
+      double? squareTypeRadius,
+      String? char}) {
+    // AppPrint.all("Profile Image: $url");
     return GestureDetector(
       onTap: viewOnly
           ? null
@@ -126,21 +129,33 @@ class AppImage {
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
               color: AppColor.greylight,
-              borderRadius: BorderRadius.circular(context.width * 0.2),
+              borderRadius: BorderRadius.circular(
+                  squareTypeRadius ?? context.width * 0.2),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(context.width * 0.2),
-              child: (url ?? '') != ''
-                  ? isNetwork
-                      ? view(url ?? '', fit: BoxFit.cover, isProfile: true)
-                      : Image.file(
-                          File(url ?? ''),
+              borderRadius: BorderRadius.circular(
+                  squareTypeRadius ?? context.width * 0.2),
+              child: char != null
+                  ? Center(
+                      child: Text(
+                      char,
+                      style: const TextStyle(
+                        color: AppColor.appColor,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ))
+                  : (url ?? '') != ''
+                      ? isNetwork
+                          ? view(url ?? '', fit: BoxFit.cover, isProfile: true)
+                          : Image.file(
+                              File(url ?? ''),
+                              fit: BoxFit.cover,
+                            )
+                      : Image.asset(
+                          Assets.assetsPersonIcon,
                           fit: BoxFit.cover,
-                        )
-                  : Image.asset(
-                      Assets.assetsPersonIcon,
-                      fit: BoxFit.cover,
-                    ),
+                        ),
             ),
           ),
           viewOnly

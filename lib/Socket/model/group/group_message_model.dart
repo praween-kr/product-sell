@@ -3,10 +3,13 @@ import 'package:oninto_flutter/model/home/category_model.dart';
 
 class GroupMessageListModel {
   List<GroupMessage>? list;
-
+  GroupInfo? groupInfo;
   GroupMessageListModel({this.list});
 
   GroupMessageListModel.fromJson(Map<String, dynamic> json) {
+    groupInfo = json['senderDetail'] != null
+        ? GroupInfo.fromJson(json['senderDetail'])
+        : null;
     if (json['chatList'] != null) {
       list = <GroupMessage>[];
       json['chatList'].forEach((v) {
@@ -17,6 +20,9 @@ class GroupMessageListModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (groupInfo != null) {
+      data['senderDetail'] = groupInfo!.toJson();
+    }
     if (list != null) {
       data['chatList'] = list!.map((v) => v.toJson()).toList();
     }
@@ -309,3 +315,123 @@ class ReplayMessage {
     return data;
   }
 }
+
+//--------------------------
+class GroupInfo {
+  int? id;
+  int? senderId;
+  int? receiverId;
+  int? groupId;
+  int? productId;
+  int? lastMessageId;
+  int? typing;
+  int? deletedId;
+  int? deletedLastMessageId;
+  int? isInListing;
+  String? createdAt;
+  String? updatedAt;
+  int? unreadCount;
+  bool? onlineStatus;
+  UserBasicInfo? sender;
+  ChatGroup? group;
+
+  GroupInfo(
+      {this.id,
+      this.senderId,
+      this.receiverId,
+      this.groupId,
+      this.productId,
+      this.lastMessageId,
+      this.typing,
+      this.deletedId,
+      this.deletedLastMessageId,
+      this.isInListing,
+      this.createdAt,
+      this.updatedAt,
+      this.unreadCount,
+      this.onlineStatus,
+      this.sender,
+      this.group});
+
+  GroupInfo.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    senderId = json['senderId'];
+    receiverId = json['receiverId'];
+    groupId = json['groupId'];
+    productId = json['productId'];
+    lastMessageId = json['lastMessageId'];
+    typing = json['typing'];
+    deletedId = json['deletedId'];
+    deletedLastMessageId = json['deletedLastMessageId'];
+    isInListing = json['is_in_listing'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    unreadCount = json['unreadCount'];
+    onlineStatus = json['onlineStatus'];
+    sender =
+        json['sender'] != null ? UserBasicInfo.fromJson(json['sender']) : null;
+    group = json['group'] != null ? ChatGroup.fromJson(json['group']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['senderId'] = senderId;
+    data['receiverId'] = receiverId;
+    data['groupId'] = groupId;
+    data['productId'] = productId;
+    data['lastMessageId'] = lastMessageId;
+    data['typing'] = typing;
+    data['deletedId'] = deletedId;
+    data['deletedLastMessageId'] = deletedLastMessageId;
+    data['is_in_listing'] = isInListing;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['unreadCount'] = unreadCount;
+    data['onlineStatus'] = onlineStatus;
+    if (sender != null) {
+      data['sender'] = sender!.toJson();
+    }
+    if (group != null) {
+      data['group'] = group!.toJson();
+    }
+    return data;
+  }
+}
+
+// class Sender {
+//   int? id;
+//   String? username;
+//   String? firstName;
+//   String? lastName;
+//   String? image;
+//   String? email;
+
+//   Sender(
+//       {this.id,
+//       this.username,
+//       this.firstName,
+//       this.lastName,
+//       this.image,
+//       this.email});
+
+//   Sender.fromJson(Map<String, dynamic> json) {
+//     id = json['id'];
+//     username = json['username'];
+//     firstName = json['firstName'];
+//     lastName = json['lastName'];
+//     image = json['image'];
+//     email = json['email'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data['id'] = id;
+//     data['username'] = username;
+//     data['firstName'] = firstName;
+//     data['lastName'] = lastName;
+//     data['image'] = image;
+//     data['email'] = email;
+//     return data;
+//   }
+// }

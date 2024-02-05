@@ -273,7 +273,7 @@ class StripePaymentService {
     }
     Get.closeAllSnackbars();
     Get.snackbar(
-      "App Name",
+      "Ownitoo",
       message,
       padding: const EdgeInsets.only(left: 20, top: 12),
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -282,7 +282,7 @@ class StripePaymentService {
       snackPosition: SnackPosition.TOP,
       colorText: Colors.white,
       titleText: const Text(
-        "App Name",
+        "Ownitoo",
         textAlign: TextAlign.start,
         style: TextStyle(
           color: Colors.white,

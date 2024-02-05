@@ -81,7 +81,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                       TimerTypeStatus.GOINGON_NO_BID_YET
                                   ? "Biding started"
                                   : "Bid ${controller.bidingTimerStatus.value == TimerTypeStatus.UPCOMING ? 'Start' : 'Ending'} Soon:",
-                              textSize: 13,
+                              textSize: 14,
                               fontFamily: "Poppins"),
                         ),
                         AppTimer(
@@ -206,18 +206,18 @@ class ProductDetailsScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w400,
                                         color: AppColor.appColor,
                                       ),
-                                      SizedBox(height: 5),
+                                      SizedBox(height: 8),
                                       AppText(
                                         text: "New with tags",
-                                        textSize: 13,
+                                        textSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: AppColor.blackColor,
                                       ),
-                                      SizedBox(height: 5),
+                                      SizedBox(height: 8),
                                       AppText(
                                         text:
                                             "A brand-new, unused item with tags attached\nor in the original packing.",
-                                        textSize: 12,
+                                        textSize: 14,
                                         fontWeight: FontWeight.w400,
                                         lineHeight: 1.3,
                                         color: Color(0x4d000000),
@@ -240,7 +240,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                               children: [
                                                 const AppText(
                                                   text: "Size :",
-                                                  textSize: 12,
+                                                  textSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   color: Color(0x4d000000),
                                                 ),
@@ -263,20 +263,21 @@ class ProductDetailsScreen extends StatelessWidget {
                                                                   [])[index]
                                                               .size ??
                                                           '').toList()),
-                                                  textSize: 12,
+                                                  textSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   color: AppColor.blackColor,
                                                   fontFamily: "Poppins",
                                                 )
                                               ],
                                             ),
+                                            const SizedBox(height: 8),
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const AppText(
                                                     text: "Location  :",
-                                                    textSize: 12,
+                                                    textSize: 14,
                                                     color: Color(0x4d000000),
                                                     fontWeight:
                                                         FontWeight.w400),
@@ -288,7 +289,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                               ?.details
                                                               ?.location ??
                                                           '',
-                                                      textSize: 12,
+                                                      textSize: 14,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color:
@@ -297,14 +298,12 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 )
                                               ],
                                             ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
+                                            const SizedBox(height: 8),
                                             Row(
                                               children: [
                                                 const AppText(
                                                   text: "Posted Date :",
-                                                  textSize: 12,
+                                                  textSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   color: Color(0x4d000000),
                                                 ),
@@ -318,13 +317,14 @@ class ProductDetailsScreen extends StatelessWidget {
                                                           '',
                                                       format: DateFormat(
                                                           "dd MMM yyyy")),
-                                                  textSize: 12,
+                                                  textSize: 14,
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily: "Poppins",
                                                   color: AppColor.blackColor,
                                                 )
                                               ],
                                             ),
+                                            const SizedBox(height: 8),
                                           ],
                                         ),
                                       ),
@@ -343,9 +343,9 @@ class ProductDetailsScreen extends StatelessWidget {
                                     children: [
                                       const AppText(
                                           text: "Item Description",
-                                          textSize: 13,
+                                          textSize: 14,
                                           fontFamily: "Poppins"),
-                                      const SizedBox(height: 5),
+                                      const SizedBox(height: 8),
                                       AppText(
                                           text: controller
                                                   .productDetailsData
@@ -353,7 +353,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   ?.details
                                                   ?.description ??
                                               '',
-                                          textSize: 13,
+                                          textSize: 14,
                                           fontFamily: "Poppins",
                                           color: const Color(0x4d000000)),
                                     ],
@@ -366,7 +366,30 @@ class ProductDetailsScreen extends StatelessWidget {
                                     ? const SizedBox.shrink()
                                     : GestureDetector(
                                         onTap: () async {
-                                          if (controller
+                                          if (controller.productDetailsData
+                                                  .value?.details?.sellOption ==
+                                              ProductType.fixedPrice) {
+                                            // Fixed Price - Buy
+                                            double totalPrice = double.parse(
+                                                (controller
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.price ??
+                                                        0.0)
+                                                    .toString());
+                                            String productId = (controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.id ??
+                                                    '')
+                                                .toString();
+                                            await _buyFixedPriceProduct(
+                                              productId: productId,
+                                              amount: totalPrice,
+                                            );
+                                          } else if (controller
                                                   .bidingTimerStatus.value ==
                                               TimerTypeStatus.UPCOMING) {
                                             AppToast.show(
@@ -382,13 +405,14 @@ class ProductDetailsScreen extends StatelessWidget {
                                             }
                                           } else if (_fixedPriceProduct()) {
                                             // Fixed Price - Buy
-                                            double.parse((controller
-                                                        .productDetailsData
-                                                        .value
-                                                        ?.details
-                                                        ?.price ??
-                                                    0.0)
-                                                .toString());
+                                            double totalPrice = double.parse(
+                                                (controller
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.price ??
+                                                        0.0)
+                                                    .toString());
                                             String productId = (controller
                                                         .productDetailsData
                                                         .value
@@ -398,7 +422,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 .toString();
                                             await _buyFixedPriceProduct(
                                               productId: productId,
-                                              amount: 100, // totalPrice,
+                                              amount: totalPrice,
                                             );
                                           } else if (_myBidedProduct()) {
                                             // Biding Product - my last bid on product - Buy
@@ -444,18 +468,25 @@ class ProductDetailsScreen extends StatelessWidget {
                                               radius: 15,
                                               margin: const EdgeInsets.only(
                                                   left: 20, right: 20),
-                                              text: _bidingActionActive() ||
-                                                      controller
-                                                              .bidingTimerStatus
-                                                              .value ==
-                                                          TimerTypeStatus
-                                                              .UPCOMING
-                                                  ? "Bid \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}"
-                                                  : _myBidedProduct()
-                                                      ? "Buy Now"
-                                                      : _bidingEnd()
-                                                          ? "Biding End" // If biding is end and not win on biding
-                                                          : "Buy Now",
+                                              text: controller
+                                                          .productDetailsData
+                                                          .value
+                                                          ?.details
+                                                          ?.sellOption ==
+                                                      ProductType.fixedPrice
+                                                  ? "Buy Now"
+                                                  : _bidingActionActive() ||
+                                                          controller
+                                                                  .bidingTimerStatus
+                                                                  .value ==
+                                                              TimerTypeStatus
+                                                                  .UPCOMING
+                                                      ? "Bid \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}"
+                                                      : _myBidedProduct()
+                                                          ? "Buy Now"
+                                                          : _bidingEnd()
+                                                              ? "Biding End" // If biding is end and not win on biding
+                                                              : "Buy Now",
                                               // controller.upload.value
                                               //     ? "Give Reviews"
                                               //     : controller.track.value
@@ -470,11 +501,18 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   fontSize: 15,
                                                   fontFamily: "Poppins",
                                                   fontWeight: FontWeight.w400),
-                                              color: _myBidedProduct() ||
-                                                      _bidingActionActive()
+                                              color: controller
+                                                          .productDetailsData
+                                                          .value
+                                                          ?.details
+                                                          ?.sellOption ==
+                                                      ProductType.fixedPrice
                                                   ? AppColor.appColor
-                                                  : AppColor
-                                                      .grey, // 2023-12-21 15:20:00.000}
+                                                  : _myBidedProduct() ||
+                                                          _bidingActionActive()
+                                                      ? AppColor.appColor
+                                                      : AppColor
+                                                          .grey, // 2023-12-21 15:20:00.000}
                                             )),
                                       ),
                                 const SizedBox(height: 10),
@@ -503,6 +541,8 @@ class ProductDetailsScreen extends StatelessWidget {
   }
 
   bool _fixedPriceProduct() {
+    print(
+        "djfk::: ${controller.productDetailsData.value?.details?.sellOption}");
     return controller.productDetailsData.value?.details?.sellOption ==
         ProductType.fixedPrice;
   }
@@ -624,7 +664,7 @@ class ProductDetailsScreen extends StatelessWidget {
               },
               child: const AppText(
                 text: "/4.5",
-                textSize: 12,
+                textSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Color(0x4d000000),
                 fontFamily: "Poppins",
@@ -632,7 +672,7 @@ class ProductDetailsScreen extends StatelessWidget {
             )
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         AppText(
           text:
               "\$${controller.productDetailsData.value?.details?.price ?? '0.0'}",
@@ -640,10 +680,10 @@ class ProductDetailsScreen extends StatelessWidget {
           fontWeight: FontWeight.w400,
           color: AppColor.appColor,
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         const AppText(
           text: "Inclusive of all taxes",
-          textSize: 12,
+          textSize: 14,
           color: Color(0x32000000),
           fontWeight: FontWeight.w500,
         ),
@@ -663,7 +703,7 @@ class ProductDetailsScreen extends StatelessWidget {
           children: [
             const AppText(
               text: "Category : ",
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: Color(0xff9F9F9F),
               fontFamily: "Poppins",
@@ -672,18 +712,18 @@ class ProductDetailsScreen extends StatelessWidget {
               text: controller
                       .productDetailsData.value?.details?.category?.name ??
                   '',
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColor.blackColor,
             ),
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         Row(
           children: [
             const AppText(
               text: "Sub Category : ",
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: Color(0xff9F9F9F),
               fontFamily: "Poppins",
@@ -692,43 +732,43 @@ class ProductDetailsScreen extends StatelessWidget {
               text: controller.productDetailsData.value?.details?.category
                       ?.subCategory?.name ??
                   '',
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColor.blackColor,
             ),
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         Row(
           children: [
             const AppText(
               text: "Color :  ",
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: Color(0xff9F9F9F),
               fontFamily: "Poppins",
             ),
             AppText(
               text: controller.productDetailsData.value?.details?.color ?? '',
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColor.blackColor,
             ),
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 8),
         Row(
           children: [
             const AppText(
               text: "Brand : ",
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: Color(0xff9F9F9F),
               fontFamily: "Poppins",
             ),
             AppText(
               text: controller.productDetailsData.value?.details?.brand ?? '',
-              textSize: 12,
+              textSize: 14,
               fontWeight: FontWeight.w400,
               color: AppColor.blackColor,
             ),
@@ -752,7 +792,7 @@ class ProductDetailsScreen extends StatelessWidget {
               },
               child: const AppText(
                 text: "/4.5",
-                textSize: 12,
+                textSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Color(0x4d000000),
                 fontFamily: "Poppins",

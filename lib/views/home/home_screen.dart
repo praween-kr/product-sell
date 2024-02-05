@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                             child: Obx(
                               () => AppText(
                                 text:
-                                    "  Hello, ${Get.find<GlobalController>().userInfo.value?.firstName ?? ''} ${Get.find<GlobalController>().userInfo.value?.lastName ?? ''}",
+                                    "  Hello, ${UserStoredInfo().controller.userInfo.value?.firstName ?? ''} ${UserStoredInfo().controller.userInfo.value?.lastName ?? ''}",
                                 textSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
@@ -73,7 +73,8 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: Obx(
                                   () => AppText(
-                                    text: Get.find<GlobalController>()
+                                    text: UserStoredInfo()
+                                            .controller
                                             .userInfo
                                             .value
                                             ?.location ??
@@ -273,7 +274,7 @@ class HomeScreen extends StatelessWidget {
                                 controller.searchAndFilterApplied.value
                                     ? controller.products.isEmpty
                                         ? EmptyWidgets.simple(
-                                            inCenter: false,
+                                            inCenter: true,
                                             refresh: () async {
                                               controller.localFavourites
                                                   .clear();

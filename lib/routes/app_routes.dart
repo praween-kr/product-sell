@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oninto_flutter/views/home/product/public_share_product_details_screen.dart';
+import 'package:oninto_flutter/views/message/group_details_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_product_filter_screen.dart';
 
 import '../views/auth_screens/forget_password_screens.dart';
@@ -198,6 +199,10 @@ class AppRoutes {
     GetPage(
       name: Routes.groupMessageScreen,
       page: () => GroupMessageScreen(),
+    ),
+    GetPage(
+      name: Routes.groupDetailsScreen,
+      page: () => GroupDetailsScreen(),
     ),
     GetPage(
       name: Routes.profileScreen,

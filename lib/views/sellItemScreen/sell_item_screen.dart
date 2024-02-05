@@ -283,6 +283,7 @@ class SellItemScreen extends StatelessWidget {
                                     style: AppTextStyle.medium),
                                 const SizedBox(height: 14.0),
                                 AppTextField(
+                                  textInputType: TextInputType.number,
                                   controller: controller.basePrice,
                                   height: 46.0,
                                   title: "Select date",
@@ -930,6 +931,7 @@ class SellItemScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 14.0),
                                 AppTextField(
+                                  textInputType: TextInputType.number,
                                   prefix: const SizedBox(
                                       width: 40,
                                       child: Center(child: Text("\$"))),

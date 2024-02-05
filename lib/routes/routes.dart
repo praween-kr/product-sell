@@ -30,6 +30,7 @@ class Routes {
   static const String navBarMessage = "/NavBarMessage";
   static const String sellItemScreen = "/SellItemScreen";
   static const String groupMessageScreen = "/GroupMessageScreen";
+  static const String groupDetailsScreen = "/GroupDetailsScreen";
   static const String profileScreen = "/ProfileScreen";
   static const String editProfileScreen = "/EditProfileScreen";
   static const String navbarScreen = "/NavbarScreen";

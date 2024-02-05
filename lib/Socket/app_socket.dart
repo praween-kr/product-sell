@@ -28,7 +28,7 @@ abstract class AppChatSocketListener {
   //
   listenerGroupSendMessage(GroupMessage? data);
   listenerGroupList(List<GroupConstant> data);
-  listenerGroupChatHistory(List<GroupMessage> data);
+  listenerGroupChatHistory(GroupMessageListModel data);
 }
 
 abstract class AppBidSocketListener {
@@ -294,7 +294,7 @@ class AppSocket {
       socketPrint(
           "Listener:---------> (${SocketKeys.listenerGroupChatHistories}), ${jsonEncode(data)}");
       GroupMessageListModel messages = GroupMessageListModel.fromJson(data);
-      cmc.listenerGroupChatHistory(messages.list ?? []);
+      cmc.listenerGroupChatHistory(messages);
     });
   }
 }

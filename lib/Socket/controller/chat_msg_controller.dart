@@ -247,17 +247,23 @@ class ChatMsgController extends GetxController
   ///=========================================================================
   // Navigation -------------
   var activeGroup = Rx<ChatGroup?>(null);
-  goToGroupChatRoom(ChatGroup? groupInfo) {
+  goToGroupChatRoom(ChatGroup? group) {
     groupMessages.clear();
     Get.toNamed(Routes.groupMessageScreen);
     // readUnread((reciverInfo.receiver?.id ?? '').toString());
     getGroupMessagesHistoriy((activeGroup.value?.id ?? '').toString());
   }
 
+  var groupInfo = Rx<GroupInfo?>(null);
+  goToGroupDetails() {
+    Get.toNamed(Routes.groupDetailsScreen);
+  }
+
   /// Group Chat Listeners----------------
   var groupsList = <GroupConstant>[].obs;
   var groupMessages = <GroupMessage>[].obs;
   // Listener Group Send Message----------
+  @override
   listenerGroupSendMessage(GroupMessage? data) {
     if (data != null) {
       groupMessages.add(data);
@@ -267,6 +273,7 @@ class ChatMsgController extends GetxController
   }
 
   // Listener Groups List----------
+  @override
   listenerGroupList(List<GroupConstant> data) {
     if (data.isNotEmpty) {
       groupsList.value = data;
@@ -276,11 +283,13 @@ class ChatMsgController extends GetxController
   }
 
   // Listener Groups List----------
-  listenerGroupChatHistory(List<GroupMessage> data) {
-    if (data.isNotEmpty) {
-      groupMessages.value = data;
+  @override
+  listenerGroupChatHistory(GroupMessageListModel data) {
+    if ((data.list ?? []).isNotEmpty) {
+      groupMessages.value = data.list ?? [];
       groupMessages.refresh();
     }
+    groupInfo.value = data.groupInfo;
     loadingChatHistories.value = false;
   }
 

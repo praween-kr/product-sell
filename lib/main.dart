@@ -112,3 +112,56 @@ class MyHttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
+
+/**
+ * 
+ * 
+* -----Done-----
+1. Sign In, Signup & verification and Logout
+2. Profile view and edit
+3. Add and view shipping address(with google search and pick by google map)
+4. Change password
+ 
+2. Add Product (Action, Fixed Price and Share Product)
+3. Show Product listing and also details
+    -My Buy products
+    -My Sell products, 
+    -My products(Co-owner(share), Physical) --for selling
+    -Filte products
+4. Edit product info
+
+5. Home screen searching and filtering
+6. show products categories by category and near by
+7. Fiexed price product 
+   -buy with payment(stripe) and shipping address
+   -connect with chat to vendor
+9. Biding-
+   -Biding functionlity
+   -Show biding histories
+   -After bid buy product
+   -connect with chat to vendor
+10. Co-owner(Share product)
+   -buy share
+   -Connect with group chat
+11. My favourite
+12. Message
+   -Community chat(Share product group) and also poll functionality
+   -One to one chat(to ventor)
+ 
+
+*-----Pending-----
+1. Co-owner product
+   -Add stripe (Buy shares)
+   -Show share info and need to manage it
+2. Manage amount/prices during paymement(price and changes)
+3. Normal info change in product details screen
+4. Subscription
+5. Social Login
+6. Push Notification
+ *
+ * 
+ * 
+ * 
+ * 
+ * biding issue change details sreen to fiexed price product 
+*/

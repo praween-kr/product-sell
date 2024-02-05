@@ -219,8 +219,10 @@ class MessageScreen extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(20))),
               child: Text(
                 dt,
-                style:
-                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.blackColor.withOpacity(0.5)),
               ),
             ),
             const Expanded(child: Divider()),

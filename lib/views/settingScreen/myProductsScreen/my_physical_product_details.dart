@@ -106,7 +106,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                   color: AppColor.appColor,
                                                   style: AppTextStyle.title,
                                                 ),
-                                                const SizedBox(height: 5),
+                                                const SizedBox(height: 8),
                                                 AppText(
                                                   text:
                                                       "Inclusive of all taxes",
@@ -129,7 +129,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                   Icons.favorite,
                                                   color: AppColor.appColor,
                                                 ),
-                                                const SizedBox(height: 5),
+                                                const SizedBox(height: 8),
                                                 AppText(
                                                   text:
                                                       "${_myProductController.productDetailsData.value?.favoriteCount ?? '0'}",
@@ -147,7 +147,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                   Icons.visibility,
                                                   color: AppColor.appColor,
                                                 ),
-                                                const SizedBox(height: 5),
+                                                const SizedBox(height: 8),
                                                 AppText(
                                                   text: (_myProductController
                                                               .productDetailsData
@@ -287,25 +287,21 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                       textSize: 15,
                                       style: AppTextStyle.title,
                                     ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
+                                    const SizedBox(height: 8),
                                     const AppText(
                                       text: "New with tags",
                                       color: AppColor.blackColor,
-                                      textSize: 13,
+                                      textSize: 14,
                                       style: AppTextStyle.title,
                                     ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
+                                    const SizedBox(height: 8),
                                     AppText(
                                       text:
                                           "A brand-new, unused item with tags attached or "
                                           "in the original packing.",
                                       color:
                                           AppColor.blackColor.withOpacity(0.3),
-                                      textSize: 12,
+                                      textSize: 14,
                                       style: AppTextStyle.medium,
                                     )
                                   ],
@@ -355,11 +351,11 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                       children: [
                                         const AppText(
                                           text: "Item Description",
-                                          textSize: 13,
+                                          textSize: 14,
                                           fontFamily: "Poppins",
                                           color: AppColor.blackColor,
                                         ),
-                                        const SizedBox(height: 5),
+                                        const SizedBox(height: 8),
                                         AppText(
                                             text: _myProductController
                                                     .productDetailsData
@@ -367,7 +363,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                     ?.details
                                                     ?.description ??
                                                 '',
-                                            textSize: 13,
+                                            textSize: 14,
                                             fontFamily: "Poppins",
                                             color: AppColor.blackColor
                                                 .withOpacity(0.3)),
@@ -495,7 +491,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                             ?.transactionId ??
                                                         '',
                                                   ),
-                                                  const SizedBox(height: 5),
+                                                  const SizedBox(height: 8),
                                                   commonText(
                                                     "Time: ",
                                                     AppDateTime.getDateTime(
@@ -614,7 +610,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
         AppText(
           text: title,
           color: highlight ? AppColor.blackColor : AppColor.itemBorderColor,
-          textSize: 12,
+          textSize: 14,
           style: AppTextStyle.medium,
           fontWeight: bold ? FontWeight.w600 : null,
         ),

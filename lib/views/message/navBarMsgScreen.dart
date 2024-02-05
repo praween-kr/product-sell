@@ -145,21 +145,21 @@ class NavBarMsgScreen extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 ChatProductUser data = productUsers[index];
-                String productImg = ImageBaseUrls.product;
-                if ((data.product?.image ?? '') == '') {
-                  if ((data.product?.productImages ?? []).isNotEmpty) {
-                    productImg +=
-                        (data.product?.productImages ?? []).first.image ?? '';
-                  }
-                } else {
-                  productImg += data.product?.image ?? '';
-                }
-                socketPrint("Product Image: $productImg");
-
                 Receiver? user =
                     data.receiver?.id == UserStoredInfo().userInfo?.id
                         ? data.sender
                         : data.receiver;
+                String productImg = ImageBaseUrls.profile + (user?.image ?? '');
+                // if ((data.product?.image ?? '') == '') {
+                //   if ((data.product?.productImages ?? []).isNotEmpty) {
+                //     productImg +=
+                //         (data.product?.productImages ?? []).first.image ?? '';
+                //   }
+                // } else {
+                //   productImg += data.product?.image ?? '';
+                // }
+                socketPrint("Product Image: $productImg");
+
                 return InkWell(
                   onTap: () {
                     _chatMsgController.activeProduct.value = data.product;
@@ -191,7 +191,8 @@ class NavBarMsgScreen extends StatelessWidget {
                                           child: AppImage.view(productImg,
                                               height: 57.0,
                                               width: 57.0,
-                                              fit: BoxFit.cover),
+                                              fit: BoxFit.cover,
+                                              isProfile: true),
                                         ),
                                       ),
                                       (data.onlineStatus ?? false)
