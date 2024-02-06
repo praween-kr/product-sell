@@ -158,10 +158,12 @@ class MyHttpOverrides extends HttpOverrides {
 4. Subscription
 5. Social Login
 6. Push Notification
- *
- * 
- * 
- * 
- * 
- * biding issue change details sreen to fiexed price product 
+
+
+*-----Discuss On-----
+1. Bid
+   -After biding end, that products will be show publicly or not
+   -If user bid product history, will be show in user account?(got or not got products)
+2. Product
+ * biding issue change details sreen to fiexed price product
 */

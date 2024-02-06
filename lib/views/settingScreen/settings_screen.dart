@@ -200,9 +200,7 @@ class SettingScreen extends GetView<SettingsController> {
                     _myProductController.getMyProducts();
                     Get.toNamed(Routes.productScreen);
                   }),
-              const SizedBox(
-                height: 17.0,
-              ),
+              const SizedBox(height: 17.0),
 
               /// Password Row
               commonRow(
@@ -220,6 +218,7 @@ class SettingScreen extends GetView<SettingsController> {
                 icon: Icons.payment,
                 title: "Payment",
                 onClick: () {
+                  // Get.toNamed(Routes.settingPaymentScreen);
                   Get.toNamed(Routes.settingPaymentScreen);
                 },
               ),

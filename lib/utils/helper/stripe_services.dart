@@ -179,11 +179,11 @@ class StripePaymentService {
       var data = await Stripe.instance.presentPaymentSheet(
           options: const PaymentSheetPresentOptions(timeout: 1200000));
       AppPrint.all("Payment Successfully Completed: $data");
-      errorSnackBar('Payment successfully completed');
+      errorSnackBar('Payment successfully completed', success: true);
       success();
     } on Exception catch (e) {
       if (e is StripeException) {
-        errorSnackBar('Error from Stripe: ${e.error.localizedMessage}');
+        errorSnackBar('Payment not completed');
       } else {
         errorSnackBar('Unforeseen error: $e');
       }
@@ -267,7 +267,7 @@ class StripePaymentService {
     return null;
   }
 
-  static errorSnackBar(String? message) {
+  static errorSnackBar(String? message, {bool success = false}) {
     if (message == null) {
       return;
     }
@@ -277,7 +277,7 @@ class StripePaymentService {
       message,
       padding: const EdgeInsets.only(left: 20, top: 12),
       margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-      backgroundColor: Colors.red,
+      backgroundColor: success ? Colors.green : Colors.red,
       borderRadius: 5,
       snackPosition: SnackPosition.TOP,
       colorText: Colors.white,
@@ -301,9 +301,7 @@ class StripePaymentService {
               color: Colors.white,
               size: 20,
             ),
-            const SizedBox(
-              width: 12,
-            ),
+            const SizedBox(width: 12),
             Flexible(
               child: Text(
                 message,

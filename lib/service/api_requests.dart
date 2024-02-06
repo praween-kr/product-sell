@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oninto_flutter/model/transaction_model.dart';
 
 import '../model/auth/cms_model.dart';
 import '../model/auth/user_info_model.dart';
@@ -866,6 +867,28 @@ class ApiRequests {
       return true;
     }
     AppLoader.hide();
+    return false;
+  }
+
+  /// -------- Transaction Histories --------
+  static getTransactionsHistory(
+      {required Function(List<TransactionModel>) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.transactionHistory, showToast: false);
+    if (respdata != null) {
+      PageResponse<TransactionModel> pageResponse =
+          PageResponse<TransactionModel>.fromJson(
+              respdata,
+              (json) =>
+                  TransactionModel.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
     return false;
   }
 

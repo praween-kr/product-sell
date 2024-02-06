@@ -427,11 +427,8 @@ class ProductDetailsScreen extends StatelessWidget {
                                           } else if (_myBidedProduct()) {
                                             // Biding Product - my last bid on product - Buy
                                             double totalPrice = double.parse(
-                                                (controller
-                                                            .productDetailsData
-                                                            .value
-                                                            ?.details
-                                                            ?.price ??
+                                                (controller.bidingData.value
+                                                            ?.save?.bidPrice ??
                                                         0.0)
                                                     .toString());
                                             String productId = (controller

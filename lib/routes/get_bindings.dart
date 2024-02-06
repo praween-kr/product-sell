@@ -9,6 +9,7 @@ import 'package:oninto_flutter/common_controller/product/sell_item_controller.da
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/edit_profile_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/settings_controller.dart';
+import 'package:oninto_flutter/common_controller/settings/transaction_controller.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 
 class AuthBinding extends Bindings {
@@ -92,5 +93,12 @@ class ChatMsgBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ChatMsgController());
+  }
+}
+
+class TransactionsBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => TransactionsController());
   }
 }
