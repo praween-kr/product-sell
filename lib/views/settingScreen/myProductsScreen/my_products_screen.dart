@@ -389,6 +389,13 @@ class ProductScreen extends StatelessWidget {
                                       isSold: (product).createdAt ?? '',
                                       onClick: () {
                                         if (product.id != null) {
+                                          // if (product.startDate != null &&
+                                          //     product.bidTime != '') {
+                                          //   DateTime temp = DateTime.parse(
+                                          //       '${product.startDate!}T${product.bidTime!}');
+                                          //   print(
+                                          //       "d--> ${DateTime.parse('2024-02-05 18:50:00.000').difference(temp).inHours} ---> $temp");
+                                          // }
                                           _myProductController
                                               .getProductDetails(
                                                   ((product).id ?? '')

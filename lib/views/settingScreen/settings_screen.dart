@@ -209,9 +209,7 @@ class SettingScreen extends GetView<SettingsController> {
                   onClick: () {
                     Get.toNamed(Routes.passwordScreen);
                   }),
-              const SizedBox(
-                height: 17.0,
-              ),
+              const SizedBox(height: 17.0),
 
               /// Payment Row
               commonRow(

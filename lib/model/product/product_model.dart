@@ -27,6 +27,7 @@ class ProductModel implements Product {
   String? price;
   String? boostCode;
   String? startDate;
+  String? bidTime;
   String? endDate;
   int? share;
   String? description;
@@ -77,6 +78,7 @@ class ProductModel implements Product {
     this.price,
     this.boostCode,
     this.startDate,
+    this.bidTime,
     this.endDate,
     this.share,
     this.description,
@@ -128,6 +130,7 @@ class ProductModel implements Product {
     price = json['price'];
     boostCode = json['boostCode'];
     startDate = json['startDate'];
+    bidTime = json['bidTime'];
     endDate = json['endDate'];
     share = json['share'];
     description = json['description'];
@@ -197,6 +200,7 @@ class ProductModel implements Product {
     data['price'] = price;
     data['boostCode'] = boostCode;
     data['startDate'] = startDate;
+    data['bidTime'] = bidTime;
     data['endDate'] = endDate;
     data['share'] = share;
     data['description'] = description;
