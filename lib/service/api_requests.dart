@@ -12,6 +12,7 @@ import '../model/g_place_model.dart';
 import '../model/home/category_model.dart';
 import '../model/home/home_model.dart';
 import '../model/product/product_details_model.dart';
+import '../model/product/product_fav_view_model.dart';
 import '../model/product/product_model.dart';
 import '../model/settings/address_model.dart';
 import '../model/settings/my_favourite_product_model.dart';
@@ -734,6 +735,29 @@ class ApiRequests {
               (json) => MyFavProduct.fromJson(json as Map<String, dynamic>));
 
       data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  /// ---- Get Views and Likes of Products -------
+  static getViewsAndLikesOfProduct(
+      {required String id,
+      required Function(ProductFavViewModel?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.viewAndLikesOfProduct, showToast: false, id: id);
+    if (respdata != null) {
+      DataResponse<ProductFavViewModel> viewsLikes =
+          DataResponse<ProductFavViewModel>.fromJson(
+              respdata,
+              (json) =>
+                  ProductFavViewModel.fromJson(json as Map<String, dynamic>));
+
+      data(viewsLikes.body);
       loading(false);
       return true;
     }

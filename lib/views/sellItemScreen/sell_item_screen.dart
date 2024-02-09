@@ -345,7 +345,7 @@ class SellItemScreen extends StatelessWidget {
                                       return DropdownMenuItem(
                                         value: items,
                                         child: AppText(
-                                          text: items.name ?? '',
+                                          text: items.name ?? '*',
                                           style: AppTextStyle.regular,
                                           color: AppColor.blackColor,
                                           textSize: 13,

@@ -13,6 +13,8 @@ class Routes {
   static const String productDetailsScreen = "/ProductDetailsScreen";
   static const String paymentScreen = "/PaymentScreen";
   static const String productScreen = "/ProductScreen";
+  static const String likeAndViewsOfProductScreen =
+      "/LikeAndViewsOfProductScreen";
   static const String publicShareProductDetails = "/publicShareProductDetails";
   static const String signupScreen = "/SignupScreen";
   static const String categoryScreen = "/CategoryScreen";

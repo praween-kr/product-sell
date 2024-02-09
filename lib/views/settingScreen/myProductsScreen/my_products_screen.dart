@@ -315,7 +315,7 @@ class ProductScreen extends StatelessWidget {
                                       price:
                                           double.parse(product.price ?? '0.0'),
                                       title: product.name ?? '',
-                                      isSold: product.createdAt ?? '',
+                                      isSold: product.isSold ?? false,
                                       onClick: () {
                                         if (product.id != null) {
                                           // Share Product
@@ -386,7 +386,7 @@ class ProductScreen extends StatelessWidget {
                                       price: double.parse(
                                           (product).price ?? '0.0'),
                                       title: (product).name ?? '',
-                                      isSold: (product).createdAt ?? '',
+                                      isSold: (product).isSold ?? false,
                                       onClick: () {
                                         if (product.id != null) {
                                           // if (product.startDate != null &&

@@ -55,6 +55,7 @@ class ProductModel implements Product {
   int? isFavourite;
   BidsHistory? lastBidInfo;
   int? productBidCount;
+  bool? isSold;
 
   ProductModel({
     this.id,
@@ -106,6 +107,7 @@ class ProductModel implements Product {
     this.isFavourite,
     this.lastBidInfo,
     this.productBidCount,
+    this.isSold,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -175,6 +177,7 @@ class ProductModel implements Product {
           : null;
     }
     productBidCount = json['productBidCount'];
+    isSold = json['soldStatus'];
   }
 
   Map<String, dynamic> toJson() {
@@ -236,6 +239,8 @@ class ProductModel implements Product {
     //   data['productBidData'] = lastBidInfo!.toJson();
     // }
     data['productBidCount'] = productBidCount;
+    data['soldStatus'] = isSold;
+
     return data;
   }
 }

@@ -3,9 +3,12 @@ import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 
+import '../../model/product/product_fav_view_model.dart';
+
 class MyProductController extends GetxController {
   var loadingData = false.obs;
   var tabController = 0.obs;
+
   // My Products List
   var myProducts = <Product>[].obs;
   var myBuyProducts = <Product>[].obs;
@@ -63,5 +66,20 @@ class MyProductController extends GetxController {
     }, loading: (loading) {
       loadingData.value = loading;
     });
+  }
+
+  /// Likes And Views Screen
+  var isViews = true.obs;
+  var reactionOnProduct = Rx<ProductFavViewModel?>(null);
+  getPrductReactions(String productId) async {
+    ApiRequests.getViewsAndLikesOfProduct(
+      id: productId,
+      data: (data) {
+        reactionOnProduct.value = data;
+      },
+      loading: (loading) {
+        loadingData.value = loading;
+      },
+    );
   }
 }

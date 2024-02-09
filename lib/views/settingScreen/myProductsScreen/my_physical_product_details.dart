@@ -119,50 +119,64 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              children: [
-                                                const Icon(
-                                                  Icons.favorite,
-                                                  color: AppColor.appColor,
-                                                ),
-                                                const SizedBox(height: 8),
-                                                AppText(
-                                                  text:
-                                                      "${_myProductController.productDetailsData.value?.favoriteCount ?? '0'}",
-                                                  textSize: 15.0,
-                                                  color: AppColor.blackColor
-                                                      .withOpacity(0.3),
-                                                  style: AppTextStyle.regular,
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 20),
-                                            Column(
-                                              children: [
-                                                const Icon(
-                                                  Icons.visibility,
-                                                  color: AppColor.appColor,
-                                                ),
-                                                const SizedBox(height: 8),
-                                                AppText(
-                                                  text: (_myProductController
-                                                              .productDetailsData
-                                                              .value
-                                                              ?.viewCount ??
-                                                          0)
-                                                      .toString(), // Product View Count
-                                                  textSize: 15.0,
-                                                  color: AppColor.blackColor
-                                                      .withOpacity(0.3),
-                                                  style: AppTextStyle.regular,
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                                        GestureDetector(
+                                          onTap: () {
+                                            _myProductController
+                                                .getPrductReactions(
+                                                    (_myProductController
+                                                            .productDetailsData
+                                                            .value
+                                                            ?.details
+                                                            ?.id)
+                                                        .toString());
+                                            Get.toNamed(Routes
+                                                .likeAndViewsOfProductScreen);
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.favorite,
+                                                    color: AppColor.appColor,
+                                                  ),
+                                                  const SizedBox(height: 8),
+                                                  AppText(
+                                                    text:
+                                                        "${_myProductController.productDetailsData.value?.favoriteCount ?? '0'}",
+                                                    textSize: 15.0,
+                                                    color: AppColor.blackColor
+                                                        .withOpacity(0.3),
+                                                    style: AppTextStyle.regular,
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(width: 20),
+                                              Column(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.visibility,
+                                                    color: AppColor.appColor,
+                                                  ),
+                                                  const SizedBox(height: 8),
+                                                  AppText(
+                                                    text: (_myProductController
+                                                                .productDetailsData
+                                                                .value
+                                                                ?.viewCount ??
+                                                            0)
+                                                        .toString(), // Product View Count
+                                                    textSize: 15.0,
+                                                    color: AppColor.blackColor
+                                                        .withOpacity(0.3),
+                                                    style: AppTextStyle.regular,
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),

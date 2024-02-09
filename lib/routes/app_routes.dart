@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/views/home/product/public_share_product_details_screen.dart';
 import 'package:oninto_flutter/views/message/group_details_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_product_filter_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/myProductsScreen/product_likes_views_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/transaction_histories.dart';
 
 import '../views/auth_screens/forget_password_screens.dart';
@@ -126,6 +127,11 @@ class AppRoutes {
     GetPage(
       name: Routes.productScreen,
       page: () => ProductScreen(),
+      binding: ProductBinding(),
+    ),
+    GetPage(
+      name: Routes.likeAndViewsOfProductScreen,
+      page: () => LikeAndViewsOfProductScreen(),
       binding: ProductBinding(),
     ),
     GetPage(

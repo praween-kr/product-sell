@@ -16,7 +16,7 @@ class CommonWidgets {
           required String title,
           required double price,
           required String productImage,
-          String? isSold,
+          bool? isSold,
           int? likes,
           int? views}) =>
       GestureDetector(
@@ -48,7 +48,7 @@ class CommonWidgets {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        isSold != null
+                        (isSold ?? false)
                             ? Container(
                                 height: 20,
                                 width: 50,
@@ -137,22 +137,22 @@ class CommonWidgets {
                   ),
                 ),
               ),
-              isSold == null
-                  ? const SizedBox.shrink()
-                  : Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: AppText(
-                          text:
-                              "Sold on : ${AppDateTime.getDateTime(isSold, format: DateFormat("dd MMM yyyy"))}", //29 May 2023
-                          textSize: 10,
-                          color: const Color(0x4d000000),
-                          fontWeight: FontWeight.w500,
-                          maxlines: 1,
-                        ),
-                      ),
-                    ),
+              // isSold == null
+              //     ? const SizedBox.shrink()
+              //     : Align(
+              //         alignment: Alignment.bottomLeft,
+              //         child: Padding(
+              //           padding: const EdgeInsets.symmetric(horizontal: 10),
+              //           child: AppText(
+              //             text:
+              //                 "Sold on : ${AppDateTime.getDateTime(isSold, format: DateFormat("dd MMM yyyy"))}", //29 May 2023
+              //             textSize: 10,
+              //             color: const Color(0x4d000000),
+              //             fontWeight: FontWeight.w500,
+              //             maxlines: 1,
+              //           ),
+              //         ),
+              //       ),
             ],
           ),
         ),
