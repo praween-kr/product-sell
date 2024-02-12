@@ -169,16 +169,20 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                   price: double.parse(
                                                       product.price ?? '0.0'),
                                                   about: product.name ?? '',
-                                                  size: AppCore.productSizeText(List<
-                                                          String>.generate(
-                                                      (product.productSizes ??
-                                                              [])
-                                                          .length,
-                                                      (index) =>
+                                                  isShareType:
+                                                      product.sellOption ==
+                                                          null,
+                                                  productSize: AppCore
+                                                      .productSizeText(List<
+                                                              String>.generate(
                                                           (product.productSizes ??
-                                                                  [])[index]
-                                                              .size ??
-                                                          '').toList()),
+                                                                  [])
+                                                              .length,
+                                                          (index) =>
+                                                              (product.productSizes ??
+                                                                      [])[index]
+                                                                  .size ??
+                                                              '').toList()),
 
                                                   //"XL/42",
                                                   image: img,
@@ -723,9 +727,10 @@ class CategoryWiseProductsScreen extends StatelessWidget {
       String? image,
       double? price,
       bool isFavourite = false,
+      bool isShareType = false,
+      String? productSize,
       required String about,
-      required Function clickOnFavourite,
-      String? size}) {
+      required Function clickOnFavourite}) {
     return GestureDetector(
       onTap: () => onClick(),
       child: Column(
@@ -763,17 +768,15 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                     color: AppColor.blackColor,
                     fontWeight: FontWeight.w400,
                   ),
-                  size == null
-                      ? const SizedBox.shrink()
-                      : const SizedBox(height: 8),
-                  size == null
-                      ? const SizedBox.shrink()
+                  const SizedBox(height: 8),
+                  isShareType
+                      ? AppCore.shreTag()
                       : AppText(
-                          text: size,
-                          textSize: 10,
-                          color: AppColor.blackColor,
-                          fontWeight: FontWeight.w600,
-                        ),
+                          text: productSize ?? '',
+                          textSize: 13,
+                          color: const Color(0xff000000),
+                          fontWeight: FontWeight.w500,
+                          maxlines: 1),
                 ],
               )),
         ],

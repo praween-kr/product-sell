@@ -128,7 +128,14 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                             .value
                                                             ?.details
                                                             ?.id)
-                                                        .toString());
+                                                        .toString(),
+                                                    productName:
+                                                        _myProductController
+                                                                .productDetailsData
+                                                                .value
+                                                                ?.details
+                                                                ?.name ??
+                                                            '');
                                             Get.toNamed(Routes
                                                 .likeAndViewsOfProductScreen);
                                           },

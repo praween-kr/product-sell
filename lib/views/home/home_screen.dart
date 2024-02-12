@@ -19,6 +19,7 @@ import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../utils/app_print.dart';
 import '../../utils/app_text_field.dart';
+import '../../utils/core/core_method.dart';
 import 'product/product_details_navigation.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -279,7 +280,8 @@ class HomeScreen extends StatelessWidget {
                                               controller.localFavourites
                                                   .clear();
                                               await controller.searchProducts();
-                                            })
+                                            },
+                                          )
                                         : Padding(
                                             padding: const EdgeInsets.only(
                                                 bottom: 12.0),
@@ -306,6 +308,21 @@ class HomeScreen extends StatelessWidget {
                                                   return Obx(
                                                     () => CommonWidgets
                                                         .productGridCard2(
+                                                      isShareType:
+                                                          product.sellOption ==
+                                                              null,
+                                                      productSize: AppCore
+                                                          .productSizeText(List<
+                                                                  String>.generate(
+                                                              (product.productSizes ??
+                                                                      [])
+                                                                  .length,
+                                                              (index) =>
+                                                                  (product.productSizes ??
+                                                                              [])[
+                                                                          index]
+                                                                      .size ??
+                                                                  '').toList()),
                                                       isFavourite: controller
                                                                       .localFavourites[
                                                                   (product.id ??

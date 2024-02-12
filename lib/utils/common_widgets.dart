@@ -5,6 +5,7 @@ import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 
 import 'app_text.dart';
+import 'core/core_method.dart';
 import 'date_time_formates.dart';
 import 'favourite_button.dart';
 import 'image_view.dart';
@@ -165,6 +166,8 @@ class CommonWidgets {
           required double price,
           required String productImage,
           bool isFavourite = false,
+          bool isShareType = false,
+          String? productSize,
           Function? favouriteClick,
           String? soldOn,
           int? likes,
@@ -264,12 +267,14 @@ class CommonWidgets {
                                   fontWeight: FontWeight.w500,
                                   maxlines: 1),
                               const SizedBox(height: 4),
-                              const AppText(
-                                  text: "XL/42",
-                                  textSize: 13,
-                                  color: Color(0xff000000),
-                                  fontWeight: FontWeight.w500,
-                                  maxlines: 1),
+                              isShareType
+                                  ? AppCore.shreTag()
+                                  : AppText(
+                                      text: productSize ?? '',
+                                      textSize: 13,
+                                      color: const Color(0xff000000),
+                                      fontWeight: FontWeight.w500,
+                                      maxlines: 1),
                               const SizedBox(height: 4),
                             ],
                           ),

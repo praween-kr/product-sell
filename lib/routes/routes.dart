@@ -49,4 +49,6 @@ class Routes {
   static const String categoriesWiseProductsScreen = "/CategoryWiseProducts";
   static const String myProductFilterScreen = "/my_product_filter_scr";
   static const String transactionHistories = "/transaction_histories";
+  //
+  static const String myPurchaseShareDetails = "/MyPurchaseShareDetails";
 }

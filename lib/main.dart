@@ -166,4 +166,13 @@ class MyHttpOverrides extends HttpOverrides {
    -If user bid product history, will be show in user account?(got or not got products)
 2. Product
  * biding issue change details sreen to fiexed price product
+ * 
+ * 
+
+
+
+-->>> 
+1. My bought share product listing
+2. 
+
 */

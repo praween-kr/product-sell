@@ -18,12 +18,24 @@ class LikeAndViewsOfProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CommonAppbarWidget(),
+      appBar: CommonAppbarWidget(
+        headingChild: Obx(
+          () => Text(
+            _myProductController.productTitle.value,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           await _myProductController.getPrductReactions(
             (_myProductController.productDetailsData.value?.details?.id)
                 .toString(),
+            productName: _myProductController.productTitle.value,
           );
         },
         child: SingleChildScrollView(
@@ -39,44 +51,22 @@ class LikeAndViewsOfProductScreen extends StatelessWidget {
                   child: Obx(
                     () => Row(
                       children: [
-                        GestureDetector(
-                          onTap: () {
+                        myTab(
+                          title:
+                              "Views (${(_myProductController.reactionOnProduct.value?.viewUserList ?? []).length})",
+                          active: _myProductController.isViews.value,
+                          onClick: () {
                             _myProductController.isViews.value = true;
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: _myProductController.isViews.value
-                                  ? AppColor.appColor
-                                  : AppColor.grey.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const AppText(
-                              text: "Views",
-                              color: Colors.white,
-                            ),
-                          ),
                         ),
                         const SizedBox(width: 20),
-                        GestureDetector(
-                          onTap: () {
+                        myTab(
+                          title:
+                              "Favourite (${(_myProductController.reactionOnProduct.value?.favoriteUserList ?? []).length})",
+                          active: !_myProductController.isViews.value,
+                          onClick: () {
                             _myProductController.isViews.value = false;
                           },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: _myProductController.isViews.value
-                                  ? AppColor.grey.withOpacity(0.5)
-                                  : AppColor.appColor,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const AppText(
-                              text: "Favourite",
-                              color: Colors.white,
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -254,6 +244,24 @@ class LikeAndViewsOfProductScreen extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget myTab(
+      {required Function onClick, required String title, bool active = true}) {
+    return GestureDetector(
+      onTap: () => onClick(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+            color: active ? AppColor.appColor : Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: AppColor.appColor)),
+        child: AppText(
+          text: title,
+          color: active ? Colors.white : AppColor.appColor,
         ),
       ),
     );

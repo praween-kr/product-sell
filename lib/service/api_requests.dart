@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oninto_flutter/model/product/my_purchase_share_model.dart';
 import 'package:oninto_flutter/model/transaction_model.dart';
 
 import '../model/auth/cms_model.dart';
@@ -11,6 +12,7 @@ import '../model/auth/user_info_model.dart';
 import '../model/g_place_model.dart';
 import '../model/home/category_model.dart';
 import '../model/home/home_model.dart';
+import '../model/product/my_purchase_share_details_model.dart';
 import '../model/product/product_details_model.dart';
 import '../model/product/product_fav_view_model.dart';
 import '../model/product/product_model.dart';
@@ -790,6 +792,50 @@ class ApiRequests {
     return false;
   }
 
+  /// ---- Get All Purchase Shares -------
+  static getAllMyPurchaseShares(
+      {required Function(MySharesModel?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall()
+        .getReq(AppApis.allMyPurchaseShares, showToast: false);
+    if (respdata != null) {
+      DataResponse<MySharesModel> resqData =
+          DataResponse<MySharesModel>.fromJson(respdata,
+              (json) => MySharesModel.fromJson(json as Map<String, dynamic>));
+
+      data(resqData.body);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  /// ---- Get Purchase Shares Details -------
+  static getMyPurchaseShareDetails(String shareId,
+      {required Function(PurchaseShareDetails?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata = await BaseApiCall().postReq(
+        AppApis.getMyPurchaseShareDetails,
+        data: {"shareId": shareId},
+        showToast: false);
+    if (respdata != null) {
+      DataResponse<PurchaseShareDetails> resqData =
+          DataResponse<PurchaseShareDetails>.fromJson(
+              respdata,
+              (json) =>
+                  PurchaseShareDetails.fromJson(json as Map<String, dynamic>));
+
+      data(resqData.body);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
   ///------------
   // transaction_id,paymentJSON,productId,amount,shpingAddressId,chargedAmount
   static buyAndAddShippingAddress(
@@ -808,66 +854,6 @@ class ApiRequests {
       "shpingAddressId": shpingAddressId,
       "chargedAmount": chargeAccount
     };
-    // Map<String, dynamic>? requestData = {
-    //   "transaction_id": "pi_3OU4fqBABpxXnhXr1kWWm8iL",
-    //   "paymentJSON": jsonEncode({
-    //     "id": "pi_3OU4fqBABpxXnhXr1kWWm8iL",
-    //     "object": "payment_intent",
-    //     "amount": 10000,
-    //     "amount_capturable": 0,
-    //     "amount_details": {"tip": {}},
-    //     "amount_received": 0,
-    //     "application": null,
-    //     "application_fee_amount": null,
-    //     "automatic_payment_methods": {
-    //       "allow_redirects": "always",
-    //       "enabled": true
-    //     },
-    //     "canceled_at": null,
-    //     "cancellation_reason": null,
-    //     "capture_method": "automatic",
-    //     "client_secret":
-    //         "pi_3OU4fqBABpxXnhXr1kWWm8iL_secret_U5sgoTtXbKWfoYpWGMmbuGXsA",
-    //     "confirmation_method": "automatic",
-    //     "created": 1704189254,
-    //     "currency": "inr",
-    //     "customer": null,
-    //     "description": null,
-    //     "invoice": null,
-    //     "last_payment_error": null,
-    //     "latest_charge": null,
-    //     "livemode": false,
-    //     "metadata": {},
-    //     "next_action": null,
-    //     "on_behalf_of": null,
-    //     "payment_method": null,
-    //     "payment_method_configuration_details": null,
-    //     "payment_method_options": {
-    //       "card": {
-    //         "installments": null,
-    //         "mandate_options": null,
-    //         "network": null,
-    //         "request_three_d_secure": "automatic"
-    //       }
-    //     },
-    //     "payment_method_types": ["card"],
-    //     "processing": null,
-    //     "receipt_email": null,
-    //     "review": null,
-    //     "setup_future_usage": null,
-    //     "shipping": null,
-    //     "source": null,
-    //     "statement_descriptor": null,
-    //     "statement_descriptor_suffix": null,
-    //     "status": "requires_payment_method",
-    //     "transfer_data": null,
-    //     "transfer_group": null
-    //   }),
-    //   "productId": 52,
-    //   "amount": 100.0,
-    //   "shpingAddressId": 9,
-    //   "chargedAmount": 5.0
-    // };
     AppPrint.all("requestData: buyAndAddShippingAddress-Req> $requestData");
     var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
         data: requestData, showToast: true);
