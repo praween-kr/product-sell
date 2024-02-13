@@ -36,7 +36,7 @@ class MySharesModel {
 class MyShare {
   int? shareId;
   String? totalInvestment;
-  Null totalProfit;
+  String? totalProfit;
   String? productImage;
   MyShareBasicInfo? share;
 

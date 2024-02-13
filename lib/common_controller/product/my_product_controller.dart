@@ -29,11 +29,11 @@ class MyProductController extends GetxController {
     int type = 3;
     if (tabController.value == 0) {
       type = 3;
-    } else if (tabController.value == 1) {
-      type = 4;
     } else if (tabController.value == 2) {
-      type = 2;
+      type = 4;
     } else if (tabController.value == 3) {
+      type = 2;
+    } else if (tabController.value == 4) {
       type = 1;
     }
     await ApiRequests.getMyProducts(
@@ -108,6 +108,8 @@ class MyProductController extends GetxController {
 
   // Deatils of My Share Product Model
   var purchaseShareDetails = Rx<PurchaseShareDetails?>(null);
+  // var totalShares = 0.obs;
+  // var totalInvestment = 0.0.obs;
   getPurchaseShareDetails(String id) async {
     await ApiRequests.getMyPurchaseShareDetails(
       id,

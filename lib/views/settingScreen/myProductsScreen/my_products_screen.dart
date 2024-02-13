@@ -14,6 +14,7 @@ import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../../model/product/my_purchase_share_model.dart';
 import '../../../utils/appbar.dart';
+import '../../../utils/common_button.dart';
 
 class ProductScreen extends StatelessWidget {
   ProductScreen({
@@ -361,7 +362,7 @@ class ProductScreen extends StatelessWidget {
               child: Obx(
                 () => Row(
                   children: [
-                    subTab(
+                    AppButton.tabText(
                       title: "Active Shares",
                       onClick: () {
                         _myProductController.activeShareTab.value = true;
@@ -369,7 +370,7 @@ class ProductScreen extends StatelessWidget {
                       active: _myProductController.activeShareTab.value,
                     ),
                     const SizedBox(width: 14),
-                    subTab(
+                    AppButton.tabText(
                       title: "Sold Shares",
                       onClick: () {
                         _myProductController.activeShareTab.value = false;
@@ -391,10 +392,9 @@ class ProductScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             MyShare data = _myProductController
                                 .myActivePurchaseShares[index];
-                            return shareTile(data, onClick: () async {
-                              await _myProductController
-                                  .getPurchaseShareDetails(
-                                      (data.shareId ?? '').toString());
+                            return shareTile(data, onClick: () {
+                              _myProductController.getPurchaseShareDetails(
+                                  (data.shareId ?? '').toString());
                               Get.toNamed(Routes.myPurchaseShareDetails);
                             });
                           },
@@ -460,7 +460,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10.0),
                     AppText(
-                      text: "Shares: ${data.totalInvestment ?? '0'}",
+                      text: "Total Invest: \$${data.totalInvestment ?? '0'}",
                       textSize: 14.0,
                       style: AppTextStyle.regular,
                     ),
@@ -469,31 +469,6 @@ class ProductScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget subTab(
-      {required String title, required Function onClick, bool active = false}) {
-    return GestureDetector(
-      onTap: () => onClick(),
-      child: Container(
-        color: Colors.transparent,
-        child: Column(
-          children: [
-            AppText(
-              text: title,
-              textSize: 14,
-              color: active ? AppColor.appColor : AppColor.grey,
-            ),
-            const SizedBox(height: 3),
-            Container(
-              width: 100,
-              height: 2,
-              color: active ? AppColor.appColor : Colors.transparent,
-            )
-          ],
         ),
       ),
     );

@@ -32,6 +32,9 @@ class PurchaseShareDetails {
   int? updated;
   int? isFavourite;
   List<SharePurchases>? sharePurchases;
+  int? totalSharePurchase;
+  double? totalPurchaseSharePrice;
+  double? totalProfit;
 
   PurchaseShareDetails(
       {this.id,
@@ -66,7 +69,10 @@ class PurchaseShareDetails {
       this.updatedAt,
       this.updated,
       this.isFavourite,
-      this.sharePurchases});
+      this.sharePurchases,
+      this.totalProfit,
+      this.totalPurchaseSharePrice,
+      this.totalSharePurchase});
 
   PurchaseShareDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -107,6 +113,14 @@ class PurchaseShareDetails {
         sharePurchases!.add(SharePurchases.fromJson(v));
       });
     }
+    if (json['totalProfit'] != null) {
+      totalProfit = double.parse("${json['totalProfit'] ?? '0.0'}");
+    }
+    if (json['totalPurchaseSharePrice'] != null) {
+      totalPurchaseSharePrice =
+          double.parse("${json['totalPurchaseSharePrice'] ?? '0.0'}");
+    }
+    totalSharePurchase = json['totalSharePurchase'];
   }
 
   Map<String, dynamic> toJson() {
@@ -146,6 +160,9 @@ class PurchaseShareDetails {
     if (sharePurchases != null) {
       data['sharePurchases'] = sharePurchases!.map((v) => v.toJson()).toList();
     }
+    data['totalProfit'] = totalProfit;
+    data['totalPurchaseSharePrice'] = totalPurchaseSharePrice;
+    data['totalSharePurchase'] = totalSharePurchase;
     return data;
   }
 }

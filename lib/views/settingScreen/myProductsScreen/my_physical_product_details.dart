@@ -24,6 +24,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double hzpadding = 20;
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: CommonAppbarWidget(
@@ -71,8 +72,10 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 30.0, right: 30.0, top: 15.0),
+                                padding: EdgeInsets.only(
+                                    left: hzpadding,
+                                    right: hzpadding,
+                                    top: 15.0),
                                 child: Column(
                                   children: [
                                     Row(
@@ -297,8 +300,10 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                 height: 20,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 30.0, right: 30.0),
+                                padding: EdgeInsets.only(
+                                  left: hzpadding,
+                                  right: hzpadding,
+                                ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -334,8 +339,8 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 20),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 30.0, right: 30.0),
+                                padding: EdgeInsets.only(
+                                    left: hzpadding, right: hzpadding),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -365,7 +370,8 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   Image.asset(Assets.assetsSale),
                                   const SizedBox(height: 15),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 30.0),
+                                    padding: EdgeInsets.only(
+                                        left: hzpadding, right: hzpadding),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -489,8 +495,9 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                 thickness: 2),
                                             const SizedBox(height: 8),
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 30.0, right: 30.0),
+                                              padding: EdgeInsets.only(
+                                                  left: hzpadding,
+                                                  right: hzpadding),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,

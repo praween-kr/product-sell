@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'app_text.dart';
+import 'color_constant.dart';
+
 class CommonButton extends StatelessWidget {
   final String? text;
   final Widget? child;
@@ -85,6 +88,50 @@ class CommonButton extends StatelessWidget {
                 )
               : Container(),
         ],
+      ),
+    );
+  }
+}
+
+class AppButton {
+  static Widget tabText(
+      {required String title, required Function onClick, bool active = false}) {
+    return GestureDetector(
+      onTap: () => onClick(),
+      child: Container(
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            AppText(
+              text: title,
+              textSize: 14,
+              color: active ? AppColor.appColor : AppColor.grey,
+            ),
+            const SizedBox(height: 3),
+            Container(
+              width: 100,
+              height: 2,
+              color: active ? AppColor.appColor : Colors.transparent,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget text(
+      {required String title, required Function onClick, bool active = true}) {
+    return GestureDetector(
+      onTap: () => onClick(),
+      child: Container(
+        color: Colors.transparent,
+        child: AppText(
+          text: title,
+          textSize: 14,
+          color: active ? AppColor.appColor : AppColor.grey,
+          underline: true,
+          underlineColor: AppColor.appColor,
+        ),
       ),
     );
   }

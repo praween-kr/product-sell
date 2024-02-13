@@ -266,8 +266,13 @@ class ChatMsgController extends GetxController
   @override
   listenerGroupSendMessage(GroupMessage? data) {
     if (data != null) {
-      groupMessages.add(data);
-      groupMessages.refresh();
+      if (groupMessages.isEmpty || (groupMessages.last.id != data.id)) {
+        groupMessages.add(data);
+        groupMessages.refresh();
+      }
+      // groupMessages.add(data);
+      // groupMessages.value = groupMessages.toSet().toList();
+      // // groupMessages.refresh();
       clearMsgInput();
     }
   }
