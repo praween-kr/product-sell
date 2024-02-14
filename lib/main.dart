@@ -165,8 +165,9 @@ class MyHttpOverrides extends HttpOverrides {
    -After biding end, that products will be show publicly or not
    -If user bid product history, will be show in user account?(got or not got products)
 2. Product
- * biding issue change details sreen to fiexed price product
- * 
+ *  -biding issue change details sreen to fiexed price product
+ *  -After Buy product--> how can update status of product delivering- (pedding, ongoing or completed)
+ *   because need to show and in seller side and as well as recieve payment of product by admin
  * 
 
 
