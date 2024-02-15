@@ -120,6 +120,7 @@ class ProductDetails {
   List<ProductSize>? productSizes;
   int? isFavourite;
   UserTransactionInfo? userTransactionInfo;
+  List<ShareTradModel>? sharePurchases;
 
   ProductDetails(
       {this.id,
@@ -172,7 +173,8 @@ class ProductDetails {
       this.productImages,
       this.productSizes,
       this.isFavourite,
-      this.userTransactionInfo});
+      this.userTransactionInfo,
+      this.sharePurchases});
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -240,6 +242,13 @@ class ProductDetails {
     userTransactionInfo = json['transactionUserData'] != null
         ? UserTransactionInfo.fromJson(json['transactionUserData'])
         : null;
+
+    if (json['sharePurchases'] != null) {
+      sharePurchases = <ShareTradModel>[];
+      json['sharePurchases'].forEach((v) {
+        sharePurchases!.add(ShareTradModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -302,6 +311,9 @@ class ProductDetails {
     data['isFavourite'] = isFavourite;
     if (userTransactionInfo != null) {
       data['transactionUserData'] = userTransactionInfo!.toJson();
+    }
+    if (sharePurchases != null) {
+      data['sharePurchases'] = sharePurchases!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -378,6 +390,11 @@ class ShareTradModel {
   int? totalSharePurchase;
   int? perSharePrice;
   int? totalPurchaseSharePrice;
+  int? adminSoldShareProfit;
+  int? adminSold;
+  String? calculation;
+  int? adminSoldSharePrice;
+  int? totalProfit;
   String? createdAt;
   String? updatedAt;
   UserBasicInfo? user;
@@ -391,7 +408,12 @@ class ShareTradModel {
       this.totalPurchaseSharePrice,
       this.createdAt,
       this.updatedAt,
-      this.user});
+      this.user,
+      this.adminSold,
+      this.adminSoldSharePrice,
+      this.adminSoldShareProfit,
+      this.calculation,
+      this.totalProfit});
 
   ShareTradModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -400,6 +422,13 @@ class ShareTradModel {
     totalSharePurchase = json['totalSharePurchase'];
     perSharePrice = json['perSharePrice'];
     totalPurchaseSharePrice = json['totalPurchaseSharePrice'];
+
+    adminSoldShareProfit = json['adminSoldShareProfit'];
+    adminSold = json['adminSold'];
+    calculation = json['calculation'];
+    adminSoldSharePrice = json['adminSoldSharePrice'];
+    totalProfit = json['totalProfit'];
+
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     user = json['user'] != null ? UserBasicInfo.fromJson(json['user']) : null;
@@ -413,6 +442,11 @@ class ShareTradModel {
     data['totalSharePurchase'] = totalSharePurchase;
     data['perSharePrice'] = perSharePrice;
     data['totalPurchaseSharePrice'] = totalPurchaseSharePrice;
+    data['adminSoldShareProfit'] = adminSoldShareProfit;
+    data['adminSold'] = adminSold;
+    data['calculation'] = calculation;
+    data['adminSoldSharePrice'] = adminSoldSharePrice;
+    data['totalProfit'] = totalProfit;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (user != null) {

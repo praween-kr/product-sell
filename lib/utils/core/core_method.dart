@@ -27,4 +27,16 @@ class AppCore {
           textSize: 11,
         ),
       );
+  static Widget soldTag() => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+        decoration: BoxDecoration(
+          color: AppColor.green.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: const AppText(
+          text: "Sold",
+          color: AppColor.green,
+          textSize: 12,
+        ),
+      );
 }

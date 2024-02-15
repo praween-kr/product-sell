@@ -13,6 +13,7 @@ import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
 import '../../../Socket/model/group/group_message_model.dart';
 import '../../../common_controller/home/home_controller.dart';
+import '../../../utils/core/core_method.dart';
 
 class PublicShareProductDetails extends StatelessWidget {
   PublicShareProductDetails({super.key});
@@ -58,13 +59,24 @@ class PublicShareProductDetails extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppText(
-                              text: _controller.productDetailsData.value
-                                      ?.details?.name ??
-                                  '',
-                              textSize: 14,
-                              fontFamily: "Poppins",
-                              fontWeight: FontWeight.w500),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: AppText(
+                                    text: _controller.productDetailsData.value
+                                            ?.details?.name ??
+                                        '',
+                                    textSize: 14,
+                                    fontFamily: "Poppins",
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              _controller.productDetailsData.value?.lastTrad
+                                          ?.adminSold ==
+                                      1
+                                  ? AppCore.soldTag()
+                                  : const SizedBox.shrink()
+                            ],
+                          ),
                           const SizedBox(height: 5),
                           AppText(
                             text: _controller.productDetailsData.value?.details
@@ -142,8 +154,11 @@ class PublicShareProductDetails extends StatelessWidget {
                           ),
                           const SizedBox(height: 40),
                           _controller.productDetailsData.value?.details
-                                      ?.vendorId ==
-                                  UserStoredInfo().userInfo?.id
+                                          ?.vendorId ==
+                                      UserStoredInfo().userInfo?.id ||
+                                  _controller.productDetailsData.value?.lastTrad
+                                          ?.adminSold ==
+                                      1
                               ? const SizedBox.shrink()
                               : GestureDetector(
                                   onTap: () {
@@ -167,6 +182,23 @@ class PublicShareProductDetails extends StatelessWidget {
                                         color: Colors.white),
                                   ),
                                 ),
+                          // const SizedBox(height: 20),
+
+                          // /// Seller Side Data ///
+                          // ListView.separated(
+                          //   shrinkWrap: true,
+                          //   physics: const NeverScrollableScrollPhysics(),
+                          //   itemBuilder: (context, index) {
+                          //     return const Text("Hello");
+
+                          //     //
+                          //   },
+                          //   separatorBuilder: (_, __) =>
+                          //       const SizedBox(height: 14),
+                          //   itemCount: 5,
+                          // ),
+
+                          ///
                           const SizedBox(height: 20),
                           (_controller.productDetailsData.value?.myTrads ?? [])
                                       .isNotEmpty ||

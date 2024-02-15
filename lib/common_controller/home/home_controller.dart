@@ -21,7 +21,10 @@ import '../../utils/helper/camera_helper.dart';
 import '../../views/bid_screen/notification_model.dart';
 
 class HomeCatProductController extends GetxController
-    implements CameraOnCompleteListener, AppBidSocketListener {
+    implements
+        CameraOnCompleteListener,
+        AppBidSocketListener,
+        AppShareSocketListener {
   // RxBool homePass = true.obs;
   // RxBool Switch = false.obs;
   RxBool upload = false.obs;
@@ -366,6 +369,7 @@ class HomeCatProductController extends GetxController
   }
 
   ///--- Share Product Socket ------
+  @override
   listenerShareProductDetails(ProductDetailsData? data) async {
     socketPrint("Get Share Product: $data");
     productDetailsData.value = null;
@@ -380,6 +384,7 @@ class HomeCatProductController extends GetxController
 
   // Purchage Share
   TextEditingController sharesInput = TextEditingController(text: '');
+  @override
   listenerPurchageProductShare(String? shareId, bool success) async {
     AppLoader.hide();
     if (success && shareId != null) {
