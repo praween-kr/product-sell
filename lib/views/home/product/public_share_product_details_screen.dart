@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
+import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_text_field.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 import 'package:oninto_flutter/utils/common_button.dart';
+import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
@@ -71,8 +74,12 @@ class PublicShareProductDetails extends StatelessWidget {
                                     fontWeight: FontWeight.w500),
                               ),
                               _controller.productDetailsData.value?.lastTrad
-                                          ?.adminSold ==
-                                      1
+                                              ?.adminSold ==
+                                          1 &&
+                                      UserStoredInfo().userInfo?.id !=
+                                          (_controller.productDetailsData.value
+                                                  ?.details)
+                                              ?.vendorId
                                   ? AppCore.soldTag()
                                   : const SizedBox.shrink()
                             ],
@@ -184,21 +191,141 @@ class PublicShareProductDetails extends StatelessWidget {
                                 ),
                           // const SizedBox(height: 20),
 
-                          // /// Seller Side Data ///
-                          // ListView.separated(
-                          //   shrinkWrap: true,
-                          //   physics: const NeverScrollableScrollPhysics(),
-                          //   itemBuilder: (context, index) {
-                          //     return const Text("Hello");
+                          /// ==========================Seller Side Data=========================== ///
+                          /// ---------------------- ADMIN SOLD INFO ------------------------------///
 
-                          //     //
-                          //   },
-                          //   separatorBuilder: (_, __) =>
-                          //       const SizedBox(height: 14),
-                          //   itemCount: 5,
+                          // Divider(
+                          //     color: AppColor.grey.withOpacity(0.4),
+                          //     thickness: 0.8,
+                          //     height: 30),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     const AppText(
+                          //       text: "Sold By Admin",
+                          //       textSize: 14,
+                          //       fontWeight: FontWeight.w600,
+                          //       underline: true,
+                          //     ),
+                          //     const SizedBox(height: 14),
+                          //     Column(
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //         tile("Total Shares",
+                          //             "${_controller.productDetailsData.value?.lastTrad?.totalSharePurchase ?? 0} shares"),
+                          //         tile("Sold Price",
+                          //             "\$${_controller.productDetailsData.value?.lastTrad?.adminSoldSharePrice ?? 0}/share"),
+                          //         tile("Total Profites",
+                          //             "\$${_controller.productDetailsData.value?.lastTrad?.totalProfit ?? 0}"),
+                          //         tile("Calculation",
+                          //             "${_controller.productDetailsData.value?.lastTrad?.calculation ?? 0}"),
+                          //         const SizedBox(height: 5),
+                          //         const AppText(
+                          //           text: "\$${'sdfs'}",
+                          //           textSize: 14,
+                          //           color: AppColor.green,
+                          //         ),
+                          //       ],
+                          //     )
+                          //   ],
                           // ),
+                          UserStoredInfo().userInfo?.id !=
+                                  (_controller
+                                          .productDetailsData.value?.details)
+                                      ?.vendorId
+                              ? const SizedBox.shrink()
+                              : Divider(
+                                  color: AppColor.grey.withOpacity(0.4),
+                                  thickness: 0.8,
+                                  height: 30),
 
-                          ///
+                          /// ---------------------- SOLD BY USER HISTORIES -----------------------///
+                          UserStoredInfo().userInfo?.id !=
+                                  (_controller
+                                          .productDetailsData.value?.details)
+                                      ?.vendorId
+                              ? const SizedBox.shrink()
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const AppText(
+                                      text: "Sold history",
+                                      textSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      underline: true,
+                                    ),
+
+                                    const SizedBox(height: 8),
+                                    // if (UserStoredInfo().userInfo?.id ==
+                                    //     _controller.productDetailsData.value?.details?.id)
+                                    ListView.separated(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        ShareTradModel data = (_controller
+                                                .productDetailsData
+                                                .value
+                                                ?.details
+                                                ?.sharePurchases ??
+                                            [])[index];
+                                        return userBuyShareTile(data);
+                                      },
+                                      separatorBuilder: (_, __) =>
+                                          const SizedBox(height: 14),
+                                      itemCount:
+                                          _controller.seeAllUserBuyShares.value
+                                              ? (_controller
+                                                          .productDetailsData
+                                                          .value
+                                                          ?.details
+                                                          ?.sharePurchases ??
+                                                      [])
+                                                  .length
+                                              : 3,
+                                    ),
+                                    const SizedBox(height: 8),
+                                    (_controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.sharePurchases ??
+                                                    [])
+                                                .length <
+                                            3
+                                        ? const SizedBox.shrink()
+                                        : GestureDetector(
+                                            onTap: () {
+                                              _controller.seeAllUserBuyShares
+                                                      .value =
+                                                  !_controller
+                                                      .seeAllUserBuyShares
+                                                      .value;
+                                            },
+                                            child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: Obx(
+                                                () => AppText(
+                                                  text: _controller
+                                                          .seeAllUserBuyShares
+                                                          .value
+                                                      ? "See Less"
+                                                      : "See All",
+                                                  color: AppColor.themeColor,
+                                                  fontWeight: FontWeight.w400,
+                                                  textSize: 12,
+                                                  underline: true,
+                                                  underlineColor:
+                                                      AppColor.themeColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                  ],
+                                ),
+
+                          ///---------COMMUNITY GROUP BUTTON-------------///
                           const SizedBox(height: 20),
                           (_controller.productDetailsData.value?.myTrads ?? [])
                                       .isNotEmpty ||
@@ -231,6 +358,80 @@ class PublicShareProductDetails extends StatelessWidget {
                 ),
               ),
       ),
+    );
+  }
+
+  Widget tile(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: AppText(
+                text: title,
+                textSize: 14,
+                color: AppColor.grey,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          AppText(
+            text: value,
+            textSize: 14,
+            color: AppColor.blackColor,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget userBuyShareTile(ShareTradModel data) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText(
+                text: "${data.user?.firstName} ${data.user?.lastName}",
+                textSize: 14,
+              ),
+              const SizedBox(height: 8),
+              AppText(
+                text: AppDateTime.getDateTime(
+                  data.createdAt,
+                  format: DateFormat("hh:mm a | dd MMM yyyy"),
+                ),
+                color: AppColor.grey,
+                textSize: 12,
+              ),
+            ],
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            AppText(
+              text: "${data.totalSharePurchase ?? 0} shares",
+              textSize: 14,
+              color: AppColor.red,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 5),
+            AppText(
+              text:
+                  "\$${(data.totalSharePurchase ?? 0) * (data.perSharePrice ?? 0)}",
+              textSize: 14,
+              color: AppColor.green,
+            ),
+          ],
+        ),
+      ],
     );
   }
 

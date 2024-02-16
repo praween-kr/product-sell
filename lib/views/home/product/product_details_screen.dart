@@ -9,7 +9,6 @@ import 'package:oninto_flutter/Socket/controller/chat_msg_controller.dart';
 import 'package:oninto_flutter/Socket/model/one-to-one/chat_product_user_model.dart';
 import 'package:oninto_flutter/common_controller/home/home_controller.dart';
 import 'package:oninto_flutter/common_controller/product/biding_.dart';
-import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/settings/address_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
@@ -25,11 +24,12 @@ import 'package:oninto_flutter/utils/common_button.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/empty_widget.dart';
-import 'package:oninto_flutter/utils/helper/stripe_services.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 import 'package:oninto_flutter/views/settingScreen/addressScreen/address_screen.dart';
 
+import '../../../common_controller/product/my_product_controller.dart';
+import '../../../common_controller/product/payment_methods.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/core/core_method.dart';
 
@@ -385,9 +385,17 @@ class ProductDetailsScreen extends StatelessWidget {
                                                         ?.id ??
                                                     '')
                                                 .toString();
+                                            String productType = (controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.sellOption ??
+                                                    '')
+                                                .toString();
                                             await _buyFixedPriceProduct(
                                               productId: productId,
                                               amount: totalPrice,
+                                              productType: productType,
                                             );
                                           } else if (controller
                                                   .bidingTimerStatus.value ==
@@ -420,10 +428,17 @@ class ProductDetailsScreen extends StatelessWidget {
                                                         ?.id ??
                                                     '')
                                                 .toString();
+                                            String productType = (controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.sellOption ??
+                                                    '')
+                                                .toString();
                                             await _buyFixedPriceProduct(
-                                              productId: productId,
-                                              amount: totalPrice,
-                                            );
+                                                productId: productId,
+                                                amount: totalPrice,
+                                                productType: productType);
                                           } else if (_myBidedProduct()) {
                                             // Biding Product - my last bid on product - Buy
                                             double totalPrice = double.parse(
@@ -438,10 +453,18 @@ class ProductDetailsScreen extends StatelessWidget {
                                                         ?.id ??
                                                     '')
                                                 .toString();
+                                            String productType = (controller
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.sellOption ??
+                                                    '')
+                                                .toString();
 
                                             await _buyBidProduct(
                                                 productId: productId,
-                                                amount: totalPrice);
+                                                amount: totalPrice,
+                                                productType: productType);
                                           }
 
                                           // Map<String, dynamic> data = {
@@ -549,57 +572,12 @@ class ProductDetailsScreen extends StatelessWidget {
             UserStoredInfo().userInfo?.id ||
         TimerTypeStatus.END == controller.bidingTimerStatus.value;
   }
-  //
 
+  /// Fixed Price Product Purchase
   _buyFixedPriceProduct(
-      {required String productId, required double amount}) async {
-    // await controller.buyProduct(
-    //     transactionId: "transactionId",
-    //     paymentData: {},
-    //     productId: "productId",
-    //     amount: 8,
-    //     shpingAddressId: "shpingAddressId",
-    //     chargeAccount: 8);
-    await _stripePay(
-      (transactionId) {
-        // Success
-        AppDialogs.paymentSuccess(() async {
-          Get.back();
-          Get.back();
-          await controller.stripeWebhookConfirmPayment(transactionId);
-        });
-      },
-      productId: productId,
-      amount: amount,
-    );
-  }
-
-  _buyBidProduct({required String productId, required double amount}) async {
-    // API Request: product_id,
-    await _stripePay(
-      (transactionId) {
-        // Success
-        AppDialogs.paymentSuccess(() async {
-          Get.back();
-          // controller.tabController.value = 1;
-          if (MyProductController().initialized) {
-            Get.find<MyProductController>().getMyProducts();
-          } else {
-            Get.put(MyProductController()).getMyProducts();
-          }
-          Get.toNamed(Routes.productScreen);
-          await controller.stripeWebhookConfirmPayment(transactionId);
-        });
-      },
-      productId: productId,
-      amount: amount,
-    );
-  }
-
-  /// Pick shiping address and stripe payment
-  _stripePay(Function(String) success,
-      {required String productId, required double amount}) {
-    //
+      {required String productId,
+      required String productType,
+      required double amount}) async {
     if (AddressController().initialized) {
       Get.find<AddressController>().getAddresses();
     } else {
@@ -609,38 +587,91 @@ class ProductDetailsScreen extends StatelessWidget {
     Get.to(
       () => AddressScreen(
         paynow: (String addressId) async {
-          await StripePaymentService.stripeMakePayment(
-            amount: amount.toString(),
-            // currency: "USD",
-            name:
-                "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
-            email: UserStoredInfo().userInfo?.email,
-            phone: UserStoredInfo().userInfo?.phone == null
-                ? null
-                : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
-            success: (paymentIntent) async {
-              // Success
-              AppPrint.all("Payment Info: $paymentIntent");
-              if (paymentIntent != null) {
-                var resp = await controller.buyProduct(
-                    transactionId: paymentIntent['id'],
-                    paymentData: paymentIntent,
-                    productId: productId,
-                    amount: (paymentIntent['amount'] ?? 0.0) / 100,
-                    shpingAddressId: addressId,
-                    chargeAccount: 5.0);
-                if (resp) {
-                  success(paymentIntent['id']);
-                }
-              }
-            },
-          );
+          AppPaymentMethods.stripePayment(
+              amount: amount,
+              productId: productId,
+              productType: productType,
+              success: (transactionId) {
+                // Success
+                AppDialogs.paymentSuccess(() async {
+                  Get.back();
+                  Get.back();
+                  await AppPaymentMethods.stripeWebhookConfirmPayment(
+                          transactionId)
+                      .then((e) {
+                    controller.getProductDetails(productId);
+                  });
+                });
+              });
         },
       ),
       arguments: {'type': 'select_address'},
     );
-    //---------
   }
+
+  /// Bid Product Purchase
+  _buyBidProduct(
+      {required String productId,
+      required String productType,
+      required double amount}) async {
+    // API Request: product_id,
+    if (AddressController().initialized) {
+      Get.find<AddressController>().getAddresses();
+    } else {
+      Get.put(AddressController()).getAddresses();
+    }
+    //
+    Get.to(
+      () => AddressScreen(
+        paynow: (String addressId) async {
+          AppPaymentMethods.stripePayment(
+              amount: amount,
+              productId: productId,
+              productType: productType,
+              success: (transactionId) {
+                // Success
+                AppDialogs.paymentSuccess(() async {
+                  Get.back();
+                  // controller.tabController.value = 1;
+                  if (MyProductController().initialized) {
+                    Get.find<MyProductController>().getMyProducts();
+                  } else {
+                    Get.put(MyProductController()).getMyProducts();
+                  }
+                  Get.toNamed(Routes.productScreen);
+                  await AppPaymentMethods.stripeWebhookConfirmPayment(
+                          transactionId)
+                      .then((e) {
+                    controller.getProductDetails(productId);
+                  });
+                });
+              });
+        },
+      ),
+      arguments: {'type': 'select_address'},
+    );
+  }
+
+  /// Pick shiping address and stripe payment
+  // _pickShippingAddress(Function(String) addressId,
+  //     {required String productId, required double amount}) {
+  //   //
+  //   if (AddressController().initialized) {
+  //     Get.find<AddressController>().getAddresses();
+  //   } else {
+  //     Get.put(AddressController()).getAddresses();
+  //   }
+  //   //
+  //   Get.to(
+  //     () => AddressScreen(
+  //       paynow: (String addressId) async {
+
+  //       },
+  //     ),
+  //     arguments: {'type': 'select_address'},
+  //   );
+  //   //---------
+  // }
 
   Widget _fixedInfo() {
     return Column(

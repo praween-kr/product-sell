@@ -822,6 +822,7 @@ class ApiRequests {
         data: {"shareId": shareId},
         showToast: false);
     if (respdata != null) {
+      AppPrint.all("dd--> ${jsonEncode(respdata)}");
       DataResponse<PurchaseShareDetails> resqData =
           DataResponse<PurchaseShareDetails>.fromJson(
               respdata,
@@ -843,17 +844,25 @@ class ApiRequests {
       required Map<String, dynamic> paymentData,
       required String productId,
       required double amount,
-      required String shpingAddressId,
-      required double chargeAccount}) async {
+      String? shpingAddressId,
+      required double chargeAccount,
+      required String type,
+      int? shareQty}) async {
     AppLoader.show();
     Map<String, dynamic>? requestData = {
       "transaction_id": transactionId,
       "paymentJSON": jsonEncode(paymentData),
       "productId": productId,
       "amount": amount,
-      "shpingAddressId": shpingAddressId,
-      "chargedAmount": chargeAccount
+      "chargedAmount": chargeAccount,
+      "type": type,
     };
+    if (shpingAddressId != null) {
+      requestData.addAll({"shpingAddressId": shpingAddressId});
+    }
+    if (shareQty != null) {
+      requestData.addAll({"numberOfShare": shareQty});
+    }
     AppPrint.all("requestData: buyAndAddShippingAddress-Req> $requestData");
     var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
         data: requestData, showToast: true);

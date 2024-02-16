@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:oninto_flutter/Socket/app_socket.dart';
 import 'package:oninto_flutter/Socket/model/add_bids_histories.dart';
 import 'package:oninto_flutter/common_controller/auth/auth_controller.dart';
+import 'package:oninto_flutter/common_controller/product/payment_methods.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/model/home/home_model.dart';
 import 'package:oninto_flutter/model/product/product_details_model.dart';
@@ -25,6 +26,7 @@ class HomeCatProductController extends GetxController
         CameraOnCompleteListener,
         AppBidSocketListener,
         AppShareSocketListener {
+  var seeAllUserBuyShares = false.obs;
   // RxBool homePass = true.obs;
   // RxBool Switch = false.obs;
   RxBool upload = false.obs;
@@ -348,25 +350,6 @@ class HomeCatProductController extends GetxController
 
   ///--------- Biding ---------
   ///--------- Buy Product ----
-  buyProduct(
-      {required String transactionId,
-      required Map<String, dynamic> paymentData,
-      required String productId,
-      required double amount,
-      required String shpingAddressId,
-      required double chargeAccount}) async {
-    return await ApiRequests.buyAndAddShippingAddress(
-        transactionId: transactionId,
-        paymentData: paymentData,
-        productId: productId,
-        amount: amount,
-        shpingAddressId: shpingAddressId,
-        chargeAccount: chargeAccount);
-  }
-
-  stripeWebhookConfirmPayment(String transactionId) async {
-    return await ApiRequests.stripeWebhookConfirmPayment(transactionId);
-  }
 
   ///--- Share Product Socket ------
   @override
@@ -396,12 +379,29 @@ class HomeCatProductController extends GetxController
     if (productDetailsData.value?.details?.id != null &&
         sharesInput.text.trim() != '' &&
         productDetailsData.value?.details?.price != null) {
-      AppLoader.show();
-      SocketEmits.purchaseProductShare(
+      double price = double.parse(
+          (productDetailsData.value?.details?.price ?? '0').toString());
+
+      int quantity = int.parse(sharesInput.text);
+      // Stripe Payment Call
+      AppPaymentMethods.stripePayment(
+          amount: price * quantity,
+          shareQty: quantity,
           productId: (productDetailsData.value?.details?.id ?? '').toString(),
-          shares: int.parse(sharesInput.text),
-          perSharePrice: double.parse(
-              (productDetailsData.value?.details?.price ?? '0').toString()));
+          productType: productDetailsData.value?.details?.sellOption ?? '',
+          success: (transactionId) {
+            // After Success of payment
+            // Purchase Share Socket Emit
+            AppLoader.show();
+            AppPaymentMethods.stripeWebhookConfirmPayment(transactionId);
+            SocketEmits.purchaseProductShare(
+                productId:
+                    (productDetailsData.value?.details?.id ?? '').toString(),
+                shares: int.parse(sharesInput.text),
+                perSharePrice: double.parse(
+                    (productDetailsData.value?.details?.price ?? '0')
+                        .toString()));
+          });
     }
   }
 }

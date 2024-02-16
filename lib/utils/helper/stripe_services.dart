@@ -139,7 +139,7 @@ class StripePaymentService {
 
     // 1. fetch Intent Client Secret from backend
     final clientSecret = await createPaymentIntent(
-        amount: amount ?? "0.0", currency: currency ?? 'INR', isCard: true);
+        amount: amount ?? "0.0", currency: currency ?? 'USD', isCard: true);
 
     // 2. Gather customer billing information (ex. email)
     var billingDetails = BillingDetails(
