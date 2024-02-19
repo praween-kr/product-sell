@@ -201,6 +201,15 @@ class SettingScreen extends GetView<SettingsController> {
                     Get.toNamed(Routes.productScreen);
                   }),
               const SizedBox(height: 17.0),
+              commonRow(
+                  icon: Icons.shopping_cart_rounded,
+                  title: "My Dashboard",
+                  onClick: () {
+                    // controller.tabController.value = 1;
+                    // _myProductController.getMyProducts();
+                    // Get.toNamed(Routes.productScreen);
+                  }),
+              const SizedBox(height: 17.0),
 
               /// Password Row
               commonRow(
@@ -217,7 +226,7 @@ class SettingScreen extends GetView<SettingsController> {
                 title: "Payment",
                 onClick: () {
                   // Get.toNamed(Routes.settingPaymentScreen);
-                  Get.toNamed(Routes.settingPaymentScreen);
+                  Get.toNamed(Routes.transactionHistories);
                 },
               ),
               const SizedBox(

@@ -59,7 +59,8 @@ class ShimmerWidgets {
           bool withoutImage = false,
           int textLine = 3,
           double imgRadius = 90,
-          bool circularImg = false}) =>
+          bool circularImg = false,
+          bool shdow = true}) =>
       ListView.separated(
         shrinkWrap: scrollHide,
         physics: scrollHide
@@ -68,7 +69,7 @@ class ShimmerWidgets {
                 parent: AlwaysScrollableScrollPhysics()),
         itemBuilder: (context, index) => Container(
           margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-          decoration: cardDecoration(radius: 20),
+          decoration: cardDecoration(radius: 20, shdow: shdow),
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           child: Row(
             children: [

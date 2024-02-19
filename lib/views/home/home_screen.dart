@@ -19,6 +19,7 @@ import 'package:oninto_flutter/utils/widgets/dialogs.dart';
 
 import '../../utils/app_print.dart';
 import '../../utils/app_text_field.dart';
+import '../../utils/app_type_status.dart';
 import '../../utils/core/core_method.dart';
 import 'product/product_details_navigation.dart';
 
@@ -308,9 +309,9 @@ class HomeScreen extends StatelessWidget {
                                                   return Obx(
                                                     () => CommonWidgets
                                                         .productGridCard2(
-                                                      isShareType:
-                                                          product.sellOption ==
-                                                              null,
+                                                      isShareType: product
+                                                              .type ==
+                                                          TypeOfProduct.share,
                                                       productSize: AppCore
                                                           .productSizeText(List<
                                                                   String>.generate(

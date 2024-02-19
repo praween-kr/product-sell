@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import '../../../common_controller/home/home_controller.dart';
 import '../../../model/product/product_model.dart';
 import '../../../routes/routes.dart';
+import '../../../utils/app_type_status.dart';
 
 gotoProductDetaiesScreen(ProductModel product) {
-  if (product.sellOption == null) {
+  if (product.type == TypeOfProduct.share) {
     // Share Product
     Map<String, dynamic> data = {"from": 0};
     if (HomeCatProductController().initialized) {

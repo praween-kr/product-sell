@@ -590,7 +590,7 @@ class ProductDetailsScreen extends StatelessWidget {
           AppPaymentMethods.stripePayment(
               amount: amount,
               productId: productId,
-              productType: productType,
+              type: TypeOfProduct.physical,
               success: (transactionId) {
                 // Success
                 AppDialogs.paymentSuccess(() async {
@@ -627,7 +627,7 @@ class ProductDetailsScreen extends StatelessWidget {
           AppPaymentMethods.stripePayment(
               amount: amount,
               productId: productId,
-              productType: productType,
+              type: TypeOfProduct.physical,
               success: (transactionId) {
                 // Success
                 AppDialogs.paymentSuccess(() async {

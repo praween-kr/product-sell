@@ -169,9 +169,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                   price: double.parse(
                                                       product.price ?? '0.0'),
                                                   about: product.name ?? '',
-                                                  isShareType:
-                                                      product.sellOption ==
-                                                          null,
+                                                  isShareType: product.type ==
+                                                      TypeOfProduct.share,
                                                   productSize: AppCore
                                                       .productSizeText(List<
                                                               String>.generate(
@@ -431,9 +430,9 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                         radius: 15,
                                                         color:
                                                             AppColor.appColor,
-                                                        text: product
-                                                                    .sellOption ==
-                                                                null
+                                                        text: product.type ==
+                                                                TypeOfProduct
+                                                                    .share
                                                             ? "Buy Share"
                                                             : product.sellOption ==
                                                                     ProductType

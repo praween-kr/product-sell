@@ -18,7 +18,7 @@ import 'service/local/local_store_keys.dart';
 import 'utils/color_constant.dart';
 import 'utils/helper/stripe_services.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp(
@@ -26,7 +26,7 @@ void main() async {
   );
   await GetStorage.init();
   await FirebaseMessaging.instance.requestPermission();
-  await NotificationService().init();
+  PushNotification().initNotification();
   StripePaymentService().init();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
     statusBarColor: Colors.transparent,

@@ -236,9 +236,7 @@ class HomeCatProductController extends GetxController
   }
 
   // Socket
-  //// ---- Biding Duration Increment If Any One Bid On ----
-  // var incrementTimeAfterNewBid = 50.obs; // in minutes
-  // var bidAlradyEnd = false.obs;
+  //// ---- Biding ----
   //
   var bidingDataLoading = false.obs;
   var addBbidingLoading = false.obs;
@@ -248,31 +246,6 @@ class HomeCatProductController extends GetxController
   //-------------------------
   // var bidingEndAfter = Rx<DateTime?>(null);
   var bidingTimerStatus = Rx<TimerTypeStatus?>(null);
-  // int? myBidProduct() {
-  //   if (productDetailsData.value?.details?.sellOption == "Fix Price") {
-  //     return 0; // Buy
-  //   }
-  //   if (bidingData.value?.save?.bidOver == 1 &&
-  //       bidingData.value?.save?.userId == UserStoredInfo().userInfo?.id) {
-  //     return 1; // After Bid Buy
-  //   }
-  //   return null;
-  // }
-
-  // int? bidingActionActive() {
-  //   if (productType.value == ProductType.biding) {
-  //     AppPrint.all(
-  //         "Bid-> controller: bidingTimerStatus-> ${bidingTimerStatus.value}");
-  //     if (bidingTimerStatus.value == TimerTypeStatus.UPCOMING) {
-  //       return 0;
-  //     }
-  //     if (bidingTimerStatus.value == TimerTypeStatus.GOINGON ||
-  //         bidingTimerStatus.value == TimerTypeStatus.GOINGON_NO_BID_YET) {
-  //       return 1;
-  //     }
-  //   }
-  //   return null;
-  // }
   //-----------------
 
   addBid(
@@ -322,19 +295,6 @@ class HomeCatProductController extends GetxController
       bidingTimerStatus.value = TimerTypeStatus.END;
     }
 
-    // if (data?.save?.createdAt != null) {
-    //   DateTime lastBidTime = DateTime.parse(data!.save!.createdAt!).toLocal();
-    //   DateTime today = DateTime.now();
-
-    //   Duration temp = lastBidTime.difference(today);
-    //   // print(temp.inSeconds);
-    //   if (temp.inSeconds <= 0) {
-    //     // bidAlradyEnd.value = true;
-    //   } else {
-    //     // bidingEndAfter.value =
-    //     //     lastBidTime.add(Duration(minutes: incrementTimeAfterNewBid.value));
-    //   }
-    // }
     bidingDataLoading.value = false;
   }
   //
@@ -388,7 +348,7 @@ class HomeCatProductController extends GetxController
           amount: price * quantity,
           shareQty: quantity,
           productId: (productDetailsData.value?.details?.id ?? '').toString(),
-          productType: productDetailsData.value?.details?.sellOption ?? '',
+          type: TypeOfProduct.share,
           success: (transactionId) {
             // After Success of payment
             // Purchase Share Socket Emit

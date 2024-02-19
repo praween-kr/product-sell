@@ -9,6 +9,7 @@ class AppPaymentMethods {
     return await ApiRequests.stripeWebhookConfirmPayment(transactionId);
   }
 
+  /// Calling this api after successfully payment done for buy product/shares
   static _paymentApi({
     required String transactionId,
     required Map<String, dynamic> paymentData,
@@ -16,7 +17,7 @@ class AppPaymentMethods {
     required double amount,
     String? shpingAddressId,
     required double chargeAccount,
-    required String type,
+    required int type,
     int? shareQty,
   }) async {
     return await ApiRequests.buyAndAddShippingAddress(
@@ -31,11 +32,11 @@ class AppPaymentMethods {
     );
   }
 
-  // Stripe Payment Default Dialog and Make Payment
+  // Stripe Payment Default Dialog/UI and Make Payment
   static stripePayment({
     required double amount,
     required String productId,
-    required String productType,
+    required int type,
     String? addressId,
     int? shareQty,
     //Function(transactionId)
@@ -61,7 +62,7 @@ class AppPaymentMethods {
               amount: (paymentIntent['amount'] ?? 0.0) / 100,
               shpingAddressId: addressId,
               chargeAccount: 5.0,
-              type: productType,
+              type: type,
               shareQty: shareQty);
           if (resp) {
             success(paymentIntent['id']);

@@ -846,7 +846,7 @@ class ApiRequests {
       required double amount,
       String? shpingAddressId,
       required double chargeAccount,
-      required String type,
+      required int type,
       int? shareQty}) async {
     AppLoader.show();
     Map<String, dynamic>? requestData = {
