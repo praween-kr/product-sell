@@ -179,8 +179,13 @@ class PushNotification {
 
   void _handleMessage(Map<String, dynamic> data) {
     // Navigation kill/background app
-
     debugPrint("Navigate: Navigate to page handle here:::: $data");
+  }
+
+  /// Notification Navigation Method
+  navigation(PushNotificationData data) {
+    // Chat
+    NotificationNavigation.to((data.notificationType ?? '').toString());
   }
 }
 
@@ -213,6 +218,56 @@ class NotificationNavigation {
   }
 }
 
+class PushNotificationData {
+  int? senderId;
+  String? thumbnail;
+  int? productId;
+  int? messageType;
+  int? groupId;
+  int? notificationType;
+  String? body;
+  String? title;
+  String? message;
+
+  PushNotificationData(
+      {this.senderId,
+      this.thumbnail,
+      this.productId,
+      this.messageType,
+      this.groupId,
+      this.notificationType,
+      this.body,
+      this.title,
+      this.message});
+
+  PushNotificationData.fromJson(Map<String, dynamic> json) {
+    senderId = json['senderId'];
+    thumbnail = json['thumbnail'];
+    productId = json['productId'];
+    messageType = json['messageType'];
+    groupId = json['groupId'];
+    notificationType = json['notificationType'];
+    body = json['body'];
+    title = json['title'];
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['senderId'] = senderId;
+    data['thumbnail'] = thumbnail;
+    data['productId'] = productId;
+    data['messageType'] = messageType;
+    data['groupId'] = groupId;
+    data['notificationType'] = notificationType;
+    data['body'] = body;
+    data['title'] = title;
+    data['message'] = message;
+    return data;
+  }
+}
+
+
 ///-------------------------
 
 
@@ -226,19 +281,14 @@ class NotificationNavigation {
 // import '../service/local/db_helper.dart';
 // import '../service/local/user_info_global.dart';
 // import 'notification_entity.dart';
-
-
 // class NotificationService {
 //   //Singleton pattern
 //   static final NotificationService _notificationService =
 //       NotificationService._internal();
-
 //   factory NotificationService() {
 //     return _notificationService;
 //   }
-
 //   NotificationService._internal();
-
 //   /// Create a [AndroidNotificationChannel] for heads up notifications
 //   AndroidNotificationChannel channel = const AndroidNotificationChannel(
 //     'high_importance_channel', // id
@@ -247,14 +297,11 @@ class NotificationNavigation {
 //     // description
 //     importance: Importance.high,
 //   );
-
 //   final StreamController<String?> selectNotificationSubject =
 //       StreamController<String?>();
-
 //   //instance of FlutterLocalNotificationsPlugin
 //   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 //       FlutterLocalNotificationsPlugin();
-
 //   Future<void> init() async {
 //     _configureSelectNotificationSubject();
 //     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -266,13 +313,11 @@ class NotificationNavigation {
 //       requestAlertPermission: true,
 //       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
 //     );
-
 //     InitializationSettings initializationSettings = InitializationSettings(
 //       android: initializationSettingsAndroid,
 //       iOS: initializationSettingsDarwin,
 //       macOS: null,
 //     );
-
 //     await flutterLocalNotificationsPlugin.initialize(
 //       initializationSettings,
 //       onDidReceiveNotificationResponse:
@@ -287,7 +332,6 @@ class NotificationNavigation {
 //         .resolvePlatformSpecificImplementation<
 //             AndroidFlutterLocalNotificationsPlugin>()
 //         ?.createNotificationChannel(channel);
-
 //     await flutterLocalNotificationsPlugin
 //         .resolvePlatformSpecificImplementation<
 //             IOSFlutterLocalNotificationsPlugin>()
@@ -297,7 +341,6 @@ class NotificationNavigation {
 //             alert: true, badge: true, sound: true);
 //     initFirebaseListeners();
 //   }
-
 //   Future<void> clear() async {
 //     if (GetPlatform.isIOS) {
 //       await flutterLocalNotificationsPlugin
@@ -306,7 +349,6 @@ class NotificationNavigation {
 //           ?.cancelAll();
 //     }
 //   }
-
 //   void _configureSelectNotificationSubject() {
 //     selectNotificationSubject.stream.listen((String? payload) async {
 //       if (UserStoredInfo().userInfo?.token == null) {
@@ -319,7 +361,6 @@ class NotificationNavigation {
 //       }
 //     });
 //   }
-
 //   Future? onDidReceiveLocalNotification(
 //       int id, String? title, String? body, String? payload) {
 //     if (UserStoredInfo().userInfo?.token == null) {
@@ -334,7 +375,6 @@ class NotificationNavigation {
 //     }
 //     return null;
 //   }
-
 //   void initFirebaseListeners() {
 //     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
 //       debugPrint("onMessageOpenedApp 11");
@@ -347,7 +387,6 @@ class NotificationNavigation {
 //         showNotifications(notificationEntity);
 //       }
 //     });
-
 //     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
 //       debugPrint("on Message  11 ${message.data}");
 //       NotificationEntity notificationEntity =
@@ -358,7 +397,6 @@ class NotificationNavigation {
 //       showNotifications(notificationEntity);
 //     });
 //   }
-
 //   Future? onSelectNotification(String? payload) {
 //     if (UserStoredInfo().userInfo?.token == null) {
 //       return null;
@@ -370,7 +408,6 @@ class NotificationNavigation {
 //     }
 //     return null;
 //   }
-
 //   Future<void> showNotifications(NotificationEntity notificationEntity) async {
 //     if (Get.currentRoute == Routes.messageScreen) {
 //       return;
@@ -399,25 +436,21 @@ class NotificationNavigation {
 //           .convertNotificationEntityToString(notificationEntity),
 //     );
 //   }
-
 //   void pushNextScreenFromForeground(
 //       NotificationEntity notificationEntity) async {
 //     // Utils.showLoader();
 // /*    Tuple2<String, Object?>? tuple2 = await callApi(notificationEntity);
 //     // await Utils.hideLoader();
 //     Utils.printLog("current active screen ${Get.currentRoute}");
-
 //     if (tuple2 != null) {
 //       Get.toNamed(tuple2.item1, arguments: tuple2.item2);
 //     }*/
 //   }
-
 // /*  Future<Tuple2<String, Object?>?> callApi(NotificationEntity entity) async {
 //     if (DbHelper().getIsLoggedIn() != true) {
 //       Get.toNamed(Routes.LOGIN);
 //     } else {
 //       switch (entity.type) {
-
 //         default:
 //           return const Tuple2<String, Object?>(
 //               Routes.NOTIFICATION_VIEW, null);

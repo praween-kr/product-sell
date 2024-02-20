@@ -43,29 +43,56 @@ class CommonWidgets {
                       height: 130, width: 130, fit: BoxFit.cover),
                 ),
                 Positioned(
-                    left: 5,
-                    top: 5,
-                    right: 0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        (isSold ?? false)
-                            ? Container(
-                                height: 20,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xff30E165),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: const Center(
-                                  child: AppText(
-                                      text: "Sold",
-                                      textSize: 10,
-                                      color: Colors.white),
-                                ))
-                            : const SizedBox.shrink(),
-                        // const Icon(Icons.more_vert, color: Colors.white)
-                      ],
-                    )),
+                  left: 5,
+                  top: 5,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      (isSold ?? false)
+                          ? Container(
+                              height: 20,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff30E165),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Center(
+                                child: AppText(
+                                    text: "Sold",
+                                    textSize: 10,
+                                    color: Colors.white),
+                              ))
+                          : const SizedBox.shrink(),
+                      // const Icon(Icons.more_vert, color: Colors.white)
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2, horizontal: 2),
+                        // height: 20,
+                        decoration: BoxDecoration(
+                            color: AppColor.red,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Center(
+                          child: AppText(
+                            text: "Not\nApproved",
+                            textSize: 10,
+                            color: Colors.white,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      // const Icon(Icons.more_vert, color: Colors.white)
+                    ],
+                  ),
+                ),
               ]),
               const SizedBox(height: 5),
               Expanded(

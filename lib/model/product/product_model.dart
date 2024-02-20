@@ -247,6 +247,7 @@ class ProductModel implements Product {
 
 class BuyProductModel implements Product {
   int? id;
+  int? isApproved;
   int? userId;
   int? productId;
   String? paymentStatus;
@@ -261,6 +262,7 @@ class BuyProductModel implements Product {
 
   BuyProductModel(
       {this.id,
+      this.isApproved,
       this.userId,
       this.productId,
       this.paymentStatus,
@@ -275,6 +277,7 @@ class BuyProductModel implements Product {
 
   BuyProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    isApproved = json['isApproved'];
     userId = json['userId'];
     productId = json['productId'];
     paymentStatus = json['payment_status'];
@@ -292,6 +295,7 @@ class BuyProductModel implements Product {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['isApproved'] = isApproved;
     data['userId'] = userId;
     data['productId'] = productId;
     data['payment_status'] = paymentStatus;

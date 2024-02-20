@@ -230,9 +230,13 @@ class PublicShareProductDetails extends StatelessWidget {
                           //   ],
                           // ),
                           UserStoredInfo().userInfo?.id !=
-                                  (_controller
-                                          .productDetailsData.value?.details)
-                                      ?.vendorId
+                                      (_controller.productDetailsData.value
+                                              ?.details)
+                                          ?.vendorId ||
+                                  (_controller.productDetailsData.value?.details
+                                              ?.sharePurchases ??
+                                          [])
+                                      .isEmpty
                               ? const SizedBox.shrink()
                               : Divider(
                                   color: AppColor.grey.withOpacity(0.4),
@@ -241,9 +245,13 @@ class PublicShareProductDetails extends StatelessWidget {
 
                           /// ---------------------- SOLD BY USER HISTORIES -----------------------///
                           UserStoredInfo().userInfo?.id !=
-                                  (_controller
-                                          .productDetailsData.value?.details)
-                                      ?.vendorId
+                                      (_controller.productDetailsData.value
+                                              ?.details)
+                                          ?.vendorId ||
+                                  (_controller.productDetailsData.value?.details
+                                              ?.sharePurchases ??
+                                          [])
+                                      .isEmpty
                               ? const SizedBox.shrink()
                               : Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

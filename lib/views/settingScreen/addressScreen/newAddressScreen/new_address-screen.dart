@@ -99,10 +99,6 @@ class NewAddressScreen extends StatelessWidget {
                           ? null
                           : LatLng(location.lat, location.lag);
                     },
-
-                    // AppMapView(
-                    //     initialLatLong:
-                    //         addressController.cordinates.value),
                   ),
                 ),
               ),

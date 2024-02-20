@@ -44,7 +44,7 @@ class ApiRequests {
     var bodyData = {
       "phoneEmail": phoneEmail,
       "password": password,
-      "deviceType": Platform.isIOS ? 1 : 1,
+      "deviceType": Platform.isIOS ? 2 : 1,
       "deviceToken": fcmToken ?? ''
     };
     AppPrint.info("Login Req: $bodyData");
@@ -87,7 +87,7 @@ class ApiRequests {
       "email": email,
       "countryCode": countryCode,
       "phone": phone,
-      "deviceType": Platform.isIOS ? 1 : 1,
+      "deviceType": Platform.isIOS ? 2 : 1,
       "deviceToken": fcmToken ?? '',
       "location": location,
       "latitude": cordinates?.latitude ?? 0.0,
@@ -408,7 +408,7 @@ class ApiRequests {
     var data = await BaseApiCall().postFormReq(
       AppApis.addPhysicalProduct,
       data: mapData,
-      multiAttachment: {'images': images}, //, 'video': videos
+      multiAttachment: {'images': images, 'video': videos},
     );
     AppPrint.all("Add Product Resp: $data");
     if (data != null) {
@@ -517,7 +517,7 @@ class ApiRequests {
       AppApis.editPhysicalProduct,
       data: mapData,
       multiAttachment:
-          images == null ? null : {'images': images}, //, 'video': videos
+          images == null ? null : {'images': images, 'video': videos ?? []}, //,
     );
     AppPrint.all("Add Product Resp: $data");
     if (data != null) {
@@ -552,7 +552,8 @@ class ApiRequests {
     AppPrint.all("Add Product Req: $mapData");
     AppLoader.show();
     var data = await BaseApiCall().postFormReq(AppApis.addCownerProduct,
-        data: mapData, multiAttachment: {'images': images}); //, 'video': videos
+        data: mapData,
+        multiAttachment: {'images': images, 'video': videos}); //,
     AppPrint.all(
         "Add Product Req: data--> $mapData images---> $images videos---> $videos");
     if (data != null) {
@@ -767,7 +768,7 @@ class ApiRequests {
     return false;
   }
 
-  /// ---- Add Physical Product -------
+  /// ---- Upload Message Attachment -------
   static uploadAttachment(
       {required String attachment,
       required String type,

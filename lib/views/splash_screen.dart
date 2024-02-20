@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       UserStoredInfo().storeUserInfo(UserInfoModel.fromJson(userInfo));
       NavigateTo.home();
     } else {
-      Get.offAllNamed(Routes.onboardingScreen);
+      Get.offAllNamed(Routes.loginScreen);
     }
   }
 

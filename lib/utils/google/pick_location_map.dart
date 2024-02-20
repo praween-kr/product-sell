@@ -20,14 +20,6 @@ class _AppMapViewState extends State<PickLocationMap> {
   final Completer<GoogleMapController> _mapController = Completer();
   LatLng latLng = const LatLng(0.0, 0.0);
   CurrentLocationData? selectedLocation;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if (widget.cordinates != null) {
-  //     latLng = widget.cordinates!;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
@@ -38,31 +30,6 @@ class _AppMapViewState extends State<PickLocationMap> {
         zoom: 8.0,
       ),
       myLocationEnabled: true,
-      // onCameraMove: (CameraPosition position) async {
-      //   if (_markers.isNotEmpty) {
-      //     MarkerId markerId = const MarkerId("pick");
-      //     Marker marker = const Marker(markerId: MarkerId("pick"));
-      //     Marker updatedMarker = marker.copyWith(
-      //       positionParam: position.target,
-      //     );
-      //     ////-----------------------------
-      //     List<Placemark> placemarks = await placemarkFromCoordinates(
-      //         position.target.latitude, position.target.longitude);
-      //     AppPrint.all("placemarks: $placemarks");
-      //     setState(() {
-      //       _markers[markerId] = updatedMarker;
-      //       //
-      //       selectedLocation = CurrentLocationData(
-      //         lat: position.target.latitude,
-      //         lag: position.target.longitude,
-      //         pinCode: placemarks.first.postalCode ?? '',
-      //         location:
-      //             "${placemarks.first.subLocality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.street}, ${placemarks.first.postalCode}, ${placemarks.first.country}",
-      //       );
-      //       widget.onChanged(selectedLocation);
-      //     });
-      //   }
-      // },
       onTap: (LatLng latLng) async {
         MarkerId markerId = const MarkerId("pick");
         Marker marker = const Marker(markerId: MarkerId("pick"));
