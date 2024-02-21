@@ -104,10 +104,16 @@ class BidingProductDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DetailsImagesView(
-                              images: (_favouritesController.productDetailsData
+                              items: (_favouritesController.productDetailsData
                                           .value?.details?.productImages ??
                                       [])
-                                  .map((e) => e.image ?? '')
+                                  .map((e) => ImgVideoData(
+                                      type: e.video != null
+                                          ? IVType.video
+                                          : IVType.image,
+                                      image: e.image,
+                                      video: e.video,
+                                      thumb: e.thumbnail))
                                   .toList()),
                           const SizedBox(height: 10),
                           Padding(

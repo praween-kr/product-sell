@@ -176,4 +176,10 @@ class MyHttpOverrides extends HttpOverrides {
 1. My bought share product listing
 2. 
 
+
+
+.....
+Dashboard
+ --> Total Profits
+  
 */

@@ -16,6 +16,7 @@ import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 import 'package:oninto_flutter/utils/widgets/dialogs.dart';
+import 'package:oninto_flutter/views/home/product/products_view_screen.dart';
 
 import '../../utils/app_print.dart';
 import '../../utils/app_text_field.dart';
@@ -385,145 +386,240 @@ class HomeScreen extends StatelessWidget {
                                                   height: Get.height * 0.22,
                                                   width: double.infinity,
                                                   fit: BoxFit.cover),
+
+                                              /// New---=------
+                                              const SizedBox(height: 30),
                                               Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 20,
-                                                    right: 20,
-                                                    top: 20),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                child: Column(
                                                   children: [
-                                                    const AppText(
-                                                      text: "Shop by category",
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      textSize: 16,
-                                                      color: Colors.black,
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: productDBCard(
+                                                              title:
+                                                                  "Collectible",
+                                                              value: "Items",
+                                                              theme:
+                                                                  Colors.blue,
+                                                              onClick: () {
+                                                                if (CategoriesController()
+                                                                    .initialized) {
+                                                                  Get.find<
+                                                                          CategoriesController>()
+                                                                      .getCategories();
+                                                                } else {
+                                                                  Get.put(CategoriesController())
+                                                                      .getCategories();
+                                                                }
+                                                                Get.toNamed(Routes
+                                                                    .categoryScreen);
+                                                              }),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 14),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: productDBCard(
+                                                            title: "Fixed",
+                                                            value: "Products",
+                                                            theme: Colors.green,
+                                                            onClick: () {
+                                                              controller
+                                                                  .searchProducts();
+                                                              Get.to(() =>
+                                                                  ProductsView());
+                                                            },
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 14),
+                                                      ],
                                                     ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        if (CategoriesController()
-                                                            .initialized) {
-                                                          Get.find<
-                                                                  CategoriesController>()
-                                                              .getCategories();
-                                                        } else {
-                                                          Get.put(CategoriesController())
-                                                              .getCategories();
-                                                        }
-                                                        Get.toNamed(Routes
-                                                            .categoryScreen);
-                                                      },
-                                                      child: const AppText(
-                                                          text: "See all",
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          textSize: 12,
-                                                          color: Color(
-                                                              0x80000000)),
+                                                    const SizedBox(height: 14),
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: productDBCard(
+                                                            title: "Bid",
+                                                            value: "Products",
+                                                            theme: Colors.blue,
+                                                            onClick: () {
+                                                              controller
+                                                                  .searchProducts();
+                                                              Get.to(() =>
+                                                                  ProductsView());
+                                                            },
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 14),
+                                                        Expanded(
+                                                          flex: 1,
+                                                          child: productDBCard(
+                                                            title: "Share",
+                                                            value: "Products",
+                                                            theme: Colors.green,
+                                                            onClick: () {
+                                                              controller
+                                                                  .searchProducts();
+                                                              Get.to(() =>
+                                                                  ProductsView());
+                                                            },
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 14),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
                                               ),
 
-                                              /// ----Categories data----
-                                              const SizedBox(height: 14),
-                                              Obx(
-                                                () => GridView.builder(
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 5),
-                                                    gridDelegate:
-                                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                                            crossAxisCount: 3,
-                                                            childAspectRatio:
-                                                                0.9),
-                                                    itemCount: (controller
-                                                                .homeData
-                                                                .value
-                                                                ?.category ??
-                                                            [])
-                                                        .length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      var data = controller
-                                                          .homeData
-                                                          .value
-                                                          ?.category?[index];
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          CategoriesController
-                                                              cc;
-                                                          if (CategoriesController()
-                                                              .initialized) {
-                                                            cc = Get.find<
-                                                                CategoriesController>();
-                                                          } else {
-                                                            cc = Get.put(
-                                                                CategoriesController());
-                                                          }
-                                                          cc.getSubCategories(
-                                                              (data?.id ?? '')
-                                                                  .toString());
-                                                          cc.selectedCategory
-                                                              .value = data;
-                                                          Get.toNamed(Routes
-                                                              .subCategories);
-                                                        },
-                                                        child: Column(
-                                                          children: [
-                                                            Container(
-                                                                padding: const EdgeInsets
-                                                                    .symmetric(
-                                                                    horizontal:
-                                                                        10,
-                                                                    vertical:
-                                                                        10),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        width:
-                                                                            1)),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  child: AppImage.view(
-                                                                      "${ImageBaseUrls.category}${data?.image ?? ''}",
-                                                                      height:
-                                                                          70,
-                                                                      width: 70,
-                                                                      fit: BoxFit
-                                                                          .cover),
-                                                                )),
-                                                            const SizedBox(
-                                                                height: 10),
-                                                            AppText(
-                                                              text:
-                                                                  data?.name ??
-                                                                      '',
-                                                              color: const Color
-                                                                  .fromARGB(
-                                                                  255, 6, 4, 4),
-                                                              textSize: 12,
-                                                            )
-                                                          ],
-                                                        ),
-                                                      );
-                                                    }),
-                                              ),
+                                              // /// -------------
+                                              // Padding(
+                                              //   padding: const EdgeInsets.only(
+                                              //       left: 20,
+                                              //       right: 20,
+                                              //       top: 20),
+                                              //   child: Row(
+                                              //     mainAxisAlignment:
+                                              //         MainAxisAlignment
+                                              //             .spaceBetween,
+                                              //     children: [
+                                              //       const AppText(
+                                              //         text: "Shop by category",
+                                              //         fontWeight:
+                                              //             FontWeight.w600,
+                                              //         textSize: 16,
+                                              //         color: Colors.black,
+                                              //       ),
+                                              //       GestureDetector(
+                                              //         onTap: () {
+                                              //           if (CategoriesController()
+                                              //               .initialized) {
+                                              //             Get.find<
+                                              //                     CategoriesController>()
+                                              //                 .getCategories();
+                                              //           } else {
+                                              //             Get.put(CategoriesController())
+                                              //                 .getCategories();
+                                              //           }
+                                              //           Get.toNamed(Routes
+                                              //               .categoryScreen);
+                                              //         },
+                                              //         child: const AppText(
+                                              //             text: "See all",
+                                              //             fontWeight:
+                                              //                 FontWeight.w400,
+                                              //             textSize: 12,
+                                              //             color: Color(
+                                              //                 0x80000000)),
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
+
+                                              // /// ----Categories data----
+                                              // const SizedBox(height: 14),
+                                              // Obx(
+                                              //   () => GridView.builder(
+                                              //       physics:
+                                              //           const NeverScrollableScrollPhysics(),
+                                              //       shrinkWrap: true,
+                                              //       padding: const EdgeInsets
+                                              //           .symmetric(
+                                              //           horizontal: 5,
+                                              //           vertical: 5),
+                                              //       gridDelegate:
+                                              //           const SliverGridDelegateWithFixedCrossAxisCount(
+                                              //               crossAxisCount: 3,
+                                              //               childAspectRatio:
+                                              //                   0.9),
+                                              //       itemCount: (controller
+                                              //                   .homeData
+                                              //                   .value
+                                              //                   ?.category ??
+                                              //               [])
+                                              //           .length,
+                                              //       itemBuilder:
+                                              //           (context, index) {
+                                              //         var data = controller
+                                              //             .homeData
+                                              //             .value
+                                              //             ?.category?[index];
+                                              //         return GestureDetector(
+                                              //           onTap: () {
+                                              //             CategoriesController
+                                              //                 cc;
+                                              //             if (CategoriesController()
+                                              //                 .initialized) {
+                                              //               cc = Get.find<
+                                              //                   CategoriesController>();
+                                              //             } else {
+                                              //               cc = Get.put(
+                                              //                   CategoriesController());
+                                              //             }
+                                              //             cc.getSubCategories(
+                                              //                 (data?.id ?? '')
+                                              //                     .toString());
+                                              //             cc.selectedCategory
+                                              //                 .value = data;
+                                              //             Get.toNamed(Routes
+                                              //                 .subCategories);
+                                              //           },
+                                              //           child: Column(
+                                              //             children: [
+                                              //               Container(
+                                              //                   padding: const EdgeInsets
+                                              //                       .symmetric(
+                                              //                       horizontal:
+                                              //                           10,
+                                              //                       vertical:
+                                              //                           10),
+                                              //                   decoration: BoxDecoration(
+                                              //                       borderRadius:
+                                              //                           BorderRadius.circular(
+                                              //                               10),
+                                              //                       border: Border.all(
+                                              //                           color: Colors
+                                              //                               .grey,
+                                              //                           width:
+                                              //                               1)),
+                                              //                   child:
+                                              //                       ClipRRect(
+                                              //                     borderRadius:
+                                              //                         BorderRadius
+                                              //                             .circular(
+                                              //                                 10),
+                                              //                     child: AppImage.view(
+                                              //                         "${ImageBaseUrls.category}${data?.image ?? ''}",
+                                              //                         height:
+                                              //                             70,
+                                              //                         width: 70,
+                                              //                         fit: BoxFit
+                                              //                             .cover),
+                                              //                   )),
+                                              //               const SizedBox(
+                                              //                   height: 10),
+                                              //               AppText(
+                                              //                 text:
+                                              //                     data?.name ??
+                                              //                         '',
+                                              //                 color: const Color
+                                              //                     .fromARGB(
+                                              //                     255, 6, 4, 4),
+                                              //                 textSize: 12,
+                                              //               )
+                                              //             ],
+                                              //           ),
+                                              //         );
+                                              //       }),
+                                              // ),
                                             ],
                                           ),
                               ],
@@ -553,6 +649,50 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget productDBCard(
+      {required String title,
+      Color? theme,
+      required String value,
+      required Function onClick}) {
+    return GestureDetector(
+      onTap: () => onClick(),
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: AppColor.grey.withOpacity(0.5)),
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.grey.withOpacity(0.5),
+              blurRadius: 20,
+            )
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AppText(
+              text: title,
+              textAlign: TextAlign.center,
+              maxlines: 2,
+            ),
+            const SizedBox(height: 8),
+            AppText(
+              text: value,
+              textSize: 18,
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.center,
+              maxlines: 3,
+            ),
+          ],
         ),
       ),
     );

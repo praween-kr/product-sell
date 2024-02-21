@@ -4,6 +4,7 @@ import 'package:oninto_flutter/views/message/group_details_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_product_filter_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/my_purchase_share_details.dart';
 import 'package:oninto_flutter/views/settingScreen/myProductsScreen/product_likes_views_screen.dart';
+import 'package:oninto_flutter/views/settingScreen/my_dashboard/my_dashboard_screen.dart';
 import 'package:oninto_flutter/views/settingScreen/paymentScreen/transaction_histories.dart';
 
 import '../views/auth_screens/forget_password_screens.dart';
@@ -269,5 +270,11 @@ class AppRoutes {
       page: () => MyPurchaseShareDetails(),
       binding: ProductBinding(),
     ),
+    // My Dashboard
+    GetPage(
+      name: Routes.myDashboard,
+      page: () => MyDashboard(),
+      binding: DashboardBinding(),
+    )
   ];
 }

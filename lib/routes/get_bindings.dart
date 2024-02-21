@@ -12,6 +12,8 @@ import 'package:oninto_flutter/common_controller/settings/settings_controller.da
 import 'package:oninto_flutter/common_controller/settings/transaction_controller.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 
+import '../common_controller/settings/my_dashboard_controller.dart';
+
 class AuthBinding extends Bindings {
   @override
   void dependencies() {
@@ -100,5 +102,12 @@ class TransactionsBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => TransactionsController());
+  }
+}
+
+class DashboardBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => MyDashboardController());
   }
 }

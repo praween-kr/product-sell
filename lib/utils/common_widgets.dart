@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/color_constant.dart';
 
 import 'app_text.dart';
+import 'app_type_status.dart';
 import 'core/core_method.dart';
 import 'date_time_formates.dart';
 import 'favourite_button.dart';
@@ -19,6 +19,7 @@ class CommonWidgets {
           required String productImage,
           bool? isSold,
           int? likes,
+          int? isApprovedByAdmin,
           int? views}) =>
       GestureDetector(
         onTap: () => onClick(),
@@ -38,7 +39,7 @@ class CommonWidgets {
             children: [
               Stack(children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(16),
                   child: AppImage.view("${ImageBaseUrls.product}$productImage",
                       height: 130, width: 130, fit: BoxFit.cover),
                 ),
@@ -49,6 +50,35 @@ class CommonWidgets {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      isApprovedByAdmin == ProductApproval.pending
+                          ? Container(
+                              height: 20,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              decoration: BoxDecoration(
+                                  color: AppColor.themeColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: const Center(
+                                child: AppText(
+                                    text: "no approval",
+                                    textSize: 10,
+                                    color: Colors.white),
+                              ))
+                          : isApprovedByAdmin == ProductApproval.rejected
+                              ? Container(
+                                  height: 20,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  decoration: BoxDecoration(
+                                      color: AppColor.red,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: const Center(
+                                    child: AppText(
+                                        text: "rejected",
+                                        textSize: 10,
+                                        color: Colors.white),
+                                  ))
+                              : const SizedBox.shrink(),
                       (isSold ?? false)
                           ? Container(
                               height: 20,
@@ -63,33 +93,6 @@ class CommonWidgets {
                                     color: Colors.white),
                               ))
                           : const SizedBox.shrink(),
-                      // const Icon(Icons.more_vert, color: Colors.white)
-                    ],
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  top: 5,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 2, horizontal: 2),
-                        // height: 20,
-                        decoration: BoxDecoration(
-                            color: AppColor.red,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Center(
-                          child: AppText(
-                            text: "Not\nApproved",
-                            textSize: 10,
-                            color: Colors.white,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      // const Icon(Icons.more_vert, color: Colors.white)
                     ],
                   ),
                 ),
@@ -165,22 +168,6 @@ class CommonWidgets {
                   ),
                 ),
               ),
-              // isSold == null
-              //     ? const SizedBox.shrink()
-              //     : Align(
-              //         alignment: Alignment.bottomLeft,
-              //         child: Padding(
-              //           padding: const EdgeInsets.symmetric(horizontal: 10),
-              //           child: AppText(
-              //             text:
-              //                 "Sold on : ${AppDateTime.getDateTime(isSold, format: DateFormat("dd MMM yyyy"))}", //29 May 2023
-              //             textSize: 10,
-              //             color: const Color(0x4d000000),
-              //             fontWeight: FontWeight.w500,
-              //             maxlines: 1,
-              //           ),
-              //         ),
-              //       ),
             ],
           ),
         ),
@@ -338,22 +325,6 @@ class CommonWidgets {
                   ),
                 ),
               ),
-              soldOn == null
-                  ? const SizedBox.shrink()
-                  : Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: AppText(
-                          text:
-                              "Sold on : ${AppDateTime.getDateTime(soldOn, format: DateFormat("dd MMM yyyy"))}", //29 May 2023
-                          textSize: 10,
-                          color: const Color(0x4d000000),
-                          fontWeight: FontWeight.w500,
-                          maxlines: 1,
-                        ),
-                      ),
-                    ),
             ],
           ),
         ),

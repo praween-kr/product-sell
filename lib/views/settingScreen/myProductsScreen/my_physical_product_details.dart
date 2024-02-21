@@ -64,10 +64,16 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           DetailsImagesView(
-                              images: (_myProductController.productDetailsData
+                              items: (_myProductController.productDetailsData
                                           .value?.details?.productImages ??
                                       [])
-                                  .map((e) => e.image ?? '')
+                                  .map((e) => ImgVideoData(
+                                      type: e.video != null
+                                          ? IVType.video
+                                          : IVType.image,
+                                      image: e.image,
+                                      video: e.video,
+                                      thumb: e.thumbnail))
                                   .toList()),
                           Column(
                             children: [

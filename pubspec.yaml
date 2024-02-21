@@ -67,8 +67,8 @@ dependencies:
   cached_network_image: ^3.3.0
   video_thumbnail: any
   path_provider: ^2.1.1
-  chewie: ^1.7.4
-  video_player: ^2.8.1
+  chewie: ^1.7.5
+  video_player: ^2.8.2
   timeago: ^3.6.0
   rename: ^3.0.1
   firebase_core: any

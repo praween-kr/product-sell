@@ -17,6 +17,7 @@ import '../model/product/product_details_model.dart';
 import '../model/product/product_fav_view_model.dart';
 import '../model/product/product_model.dart';
 import '../model/settings/address_model.dart';
+import '../model/settings/dashboard_info_model.dart';
 import '../model/settings/my_favourite_product_model.dart';
 import '../utils/app_print.dart';
 import '../utils/app_toast_loader.dart';
@@ -968,6 +969,26 @@ class ApiRequests {
                   NotificationModel.fromJson(json as Map<String, dynamic>));
 
       data(pageResponse.body ?? []);
+      loading(false);
+      return true;
+    }
+    loading(false);
+    return false;
+  }
+
+  /// My Dashboard Infoi
+  static getMyDasboardData(
+      {required Function(DashboardInfo?) data,
+      required Function(bool) loading}) async {
+    loading(true);
+    var respdata =
+        await BaseApiCall().getReq(AppApis.mydashboard, showToast: false);
+    if (respdata != null) {
+      DataResponse<DashboardInfo> pageResponse =
+          DataResponse<DashboardInfo>.fromJson(respdata,
+              (json) => DashboardInfo.fromJson(json as Map<String, dynamic>));
+
+      data(pageResponse.body);
       loading(false);
       return true;
     }

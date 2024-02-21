@@ -51,10 +51,16 @@ class PublicShareProductDetails extends StatelessWidget {
                 child: Column(
                   children: [
                     DetailsImagesView(
-                        images: (_controller.productDetailsData.value?.details
+                        items: (_controller.productDetailsData.value?.details
                                     ?.productImages ??
                                 [])
-                            .map((e) => e.image ?? '')
+                            .map((e) => ImgVideoData(
+                                type: e.video != null
+                                    ? IVType.video
+                                    : IVType.image,
+                                image: e.image,
+                                video: e.video,
+                                thumb: e.thumbnail))
                             .toList()),
                     Padding(
                       padding:
@@ -95,39 +101,39 @@ class PublicShareProductDetails extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                           const Divider(thickness: 1, height: 20),
-                          const SizedBox(height: 5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                flex: 1,
-                                child: AppText(
-                                    text:
-                                        "Volume: ${_controller.productDetailsData.value?.details?.share ?? 0}",
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Poppins",
-                                    textSize: 14),
-                              ),
-                              const Flexible(
-                                flex: 1,
-                                child: AppText(
-                                    text:
-                                        "High: 1.00", // Static Hight Share Price
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Poppins",
-                                    textSize: 14),
-                              ),
-                              const Flexible(
-                                flex: 1,
-                                child: AppText(
-                                    text: "Low: 1.00", // Static Low Share Price
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Poppins",
-                                    textSize: 14),
-                              )
-                            ],
-                          ),
-                          const Divider(thickness: 1, height: 20),
+                          // const SizedBox(height: 5),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Flexible(
+                          //       flex: 1,
+                          //       child: AppText(
+                          //           text:
+                          //               "Volume: ${_controller.productDetailsData.value?.details?.share ?? 0}",
+                          //           fontWeight: FontWeight.w400,
+                          //           fontFamily: "Poppins",
+                          //           textSize: 14),
+                          //     ),
+                          //     const Flexible(
+                          //       flex: 1,
+                          //       child: AppText(
+                          //           text:
+                          //               "High: 1.00", // Static Hight Share Price
+                          //           fontWeight: FontWeight.w400,
+                          //           fontFamily: "Poppins",
+                          //           textSize: 14),
+                          //     ),
+                          //     const Flexible(
+                          //       flex: 1,
+                          //       child: AppText(
+                          //           text: "Low: 1.00", // Static Low Share Price
+                          //           fontWeight: FontWeight.w400,
+                          //           fontFamily: "Poppins",
+                          //           textSize: 14),
+                          //     )
+                          //   ],
+                          // ),
+                          // const Divider(thickness: 1, height: 20),
                           const SizedBox(height: 5),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +165,7 @@ class PublicShareProductDetails extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 20),
                           _controller.productDetailsData.value?.details
                                           ?.vendorId ==
                                       UserStoredInfo().userInfo?.id ||

@@ -207,7 +207,7 @@ class SettingScreen extends GetView<SettingsController> {
                   onClick: () {
                     // controller.tabController.value = 1;
                     // _myProductController.getMyProducts();
-                    // Get.toNamed(Routes.productScreen);
+                    Get.toNamed(Routes.myDashboard);
                   }),
               const SizedBox(height: 17.0),
 

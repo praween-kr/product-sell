@@ -223,11 +223,10 @@ class ProductScreen extends StatelessWidget {
                     var product =
                         _myProductController.myPhysicalProducts[index];
                     return CommonWidgets.productGridCard(
-                      productImage:
-                          ((product as ProductModel).productImages ?? [])
-                                  .isNotEmpty
-                              ? (product).productImages!.first.image ?? ''
-                              : '',
+                      isApprovedByAdmin: (product as ProductModel).isApproved,
+                      productImage: ((product).productImages ?? []).isNotEmpty
+                          ? (product).productImages!.first.image ?? ''
+                          : '',
                       lastUpdate: (product).updatedAt ?? '',
                       price: double.parse((product).price ?? '0.0'),
                       title: (product).name ?? '',
@@ -274,11 +273,10 @@ class ProductScreen extends StatelessWidget {
                     //  var data = controller.Categorydata[index];
                     var product = _myProductController.myCoOwnerProducts[index];
                     return CommonWidgets.productGridCard(
-                      productImage:
-                          ((product as ProductModel).productImages ?? [])
-                                  .isNotEmpty
-                              ? product.productImages!.first.image ?? ''
-                              : '',
+                      isApprovedByAdmin: (product as ProductModel).isApproved,
+                      productImage: ((product).productImages ?? []).isNotEmpty
+                          ? product.productImages!.first.image ?? ''
+                          : '',
                       lastUpdate: product.updatedAt ?? '',
                       price: double.parse(product.price ?? '0.0'),
                       title: product.name ?? '',

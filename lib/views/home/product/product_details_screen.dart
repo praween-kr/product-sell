@@ -134,10 +134,16 @@ class ProductDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 DetailsImagesView(
-                                    images: (controller.productDetailsData.value
+                                    items: (controller.productDetailsData.value
                                                 ?.details?.productImages ??
                                             [])
-                                        .map((e) => e.image ?? '')
+                                        .map((e) => ImgVideoData(
+                                            type: e.video != null
+                                                ? IVType.video
+                                                : IVType.image,
+                                            image: e.image,
+                                            video: e.video,
+                                            thumb: e.thumbnail))
                                         .toList()),
                                 Padding(
                                   padding: const EdgeInsets.only(
@@ -590,7 +596,7 @@ class ProductDetailsScreen extends StatelessWidget {
           AppPaymentMethods.stripePayment(
               amount: amount,
               productId: productId,
-              type: TypeOfProduct.physical,
+              type: TypeOfProduct.fixed,
               success: (transactionId) {
                 // Success
                 AppDialogs.paymentSuccess(() async {
@@ -627,7 +633,7 @@ class ProductDetailsScreen extends StatelessWidget {
           AppPaymentMethods.stripePayment(
               amount: amount,
               productId: productId,
-              type: TypeOfProduct.physical,
+              type: TypeOfProduct.bid,
               success: (transactionId) {
                 // Success
                 AppDialogs.paymentSuccess(() async {
