@@ -137,33 +137,33 @@ class CommonWidgets {
                           ),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          likes == null
-                              ? const SizedBox.shrink()
-                              : const Icon(Icons.favorite,
-                                  color: AppColor.appColor, size: 12),
-                          likes == null
-                              ? const SizedBox.shrink()
-                              : AppText(
-                                  text: likes.toString(),
-                                  textSize: 10,
-                                  color: const Color(0x4d000000),
-                                  fontWeight: FontWeight.w500),
-                          views == null
-                              ? const SizedBox.shrink()
-                              : const Icon(Icons.remove_red_eye_outlined,
-                                  color: AppColor.appColor, size: 12),
-                          views == null
-                              ? const SizedBox.shrink()
-                              : AppText(
-                                  text: views.toString(),
-                                  textSize: 10,
-                                  color: const Color(0x4d000000),
-                                  fontWeight: FontWeight.w500),
-                        ],
-                      )
+                      // Column(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     likes == null
+                      //         ? const SizedBox.shrink()
+                      //         : const Icon(Icons.favorite,
+                      //             color: AppColor.appColor, size: 12),
+                      //     likes == null
+                      //         ? const SizedBox.shrink()
+                      //         : AppText(
+                      //             text: likes.toString(),
+                      //             textSize: 10,
+                      //             color: const Color(0x4d000000),
+                      //             fontWeight: FontWeight.w500),
+                      //     views == null
+                      //         ? const SizedBox.shrink()
+                      //         : const Icon(Icons.remove_red_eye_outlined,
+                      //             color: AppColor.appColor, size: 12),
+                      //     views == null
+                      //         ? const SizedBox.shrink()
+                      //         : AppText(
+                      //             text: views.toString(),
+                      //             textSize: 10,
+                      //             color: const Color(0x4d000000),
+                      //             fontWeight: FontWeight.w500),
+                      //   ],
+                      // )
                     ],
                   ),
                 ),

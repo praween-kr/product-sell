@@ -650,6 +650,8 @@ class ApiRequests {
     String? subCategoryId,
     int? limit,
     int? pageno,
+    // Filter by product type [1 for bid, 2 for fixed, 3 for share]
+    int? productType,
   }) async {
     Map<String, dynamic> reqData = {"search": searchKey ?? ''};
     if (endingSoon) {
@@ -682,6 +684,9 @@ class ApiRequests {
     if (pageno != null) {
       reqData.addAll({"skip": pageno});
     }
+    if (productType != null) {
+      reqData.addAll({"product_type": productType});
+    }
 
     AppPrint.all("text::: R-- ${jsonEncode(reqData)}");
 
@@ -709,11 +714,12 @@ class ApiRequests {
     loading(true);
     var data = await BaseApiCall().postReq(AppApis.addProductAsFavourite,
         data: {"productId": productId}, showToast: false);
+    print("r->, rp-> $data");
     if (data['body'] == 1) {
       status(false);
     } else {
       if (data['body'] != null) {
-        if (data['body']['id'] != null) {
+        if (data['body']['id'] != productId) {
           status(true);
         }
       }

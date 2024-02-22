@@ -56,42 +56,42 @@ class GroupMessageScreen extends StatelessWidget {
           ),
           textStyle: const TextStyle(
               fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
-          action: GestureDetector(
-            onTap: () {
-              pollCreateDialog(context, createPoll: (inputData) {
-                _chatMsgController.newMessageType.value = MessageType.poll;
-                _chatMsgController.newMessageInput.text = jsonEncode(inputData);
-                socketPrint("Poll Input: $inputData");
-                //
-                _chatMsgController.sendGroupMessage(
-                  groupId: _chatMsgController.activeGroup.value?.id.toString(),
-                  productId: (_chatMsgController
-                              .activeGroup.value?.productBaseInfo?.id ??
-                          '')
-                      .toString(),
-                );
-              });
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                  color: AppColor.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: AppColor.borderColor.withOpacity(0.3),
-                        blurRadius: 6)
-                  ],
-                  borderRadius: BorderRadius.circular(16.0)),
-              child: const Center(
-                child: Icon(
-                  Icons.bar_chart_rounded,
-                  color: AppColor.appColor,
-                  size: 28.0,
-                ),
-              ),
-            ),
-          ),
+          // action: GestureDetector(
+          //   onTap: () {
+          //     pollCreateDialog(context, createPoll: (inputData) {
+          //       _chatMsgController.newMessageType.value = MessageType.poll;
+          //       _chatMsgController.newMessageInput.text = jsonEncode(inputData);
+          //       socketPrint("Poll Input: $inputData");
+          //       //
+          //       _chatMsgController.sendGroupMessage(
+          //         groupId: _chatMsgController.activeGroup.value?.id.toString(),
+          //         productId: (_chatMsgController
+          //                     .activeGroup.value?.productBaseInfo?.id ??
+          //                 '')
+          //             .toString(),
+          //       );
+          //     });
+          //   },
+          //   child: Container(
+          //     margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+          //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          //     decoration: BoxDecoration(
+          //         color: AppColor.white,
+          //         boxShadow: [
+          //           BoxShadow(
+          //               color: AppColor.borderColor.withOpacity(0.3),
+          //               blurRadius: 6)
+          //         ],
+          //         borderRadius: BorderRadius.circular(16.0)),
+          //     child: const Center(
+          //       child: Icon(
+          //         Icons.bar_chart_rounded,
+          //         color: AppColor.appColor,
+          //         size: 28.0,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ),
         body: Column(
           children: [

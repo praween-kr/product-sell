@@ -98,7 +98,7 @@ class MyPurchaseShareDetails extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: infoTile(
-                                      level: "Total Profites: ",
+                                      level: "Total Profits: ",
                                       value:
                                           "\$${_myProductController.purchaseShareDetails.value?.totalProfit ?? 0.0}",
                                       valueColor: (_myProductController

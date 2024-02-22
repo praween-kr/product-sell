@@ -53,6 +53,8 @@ class HomeCatProductController extends GetxController
   RxList<CommonModel> onBoardingData = RxList([]);
   RxInt pagePosition = RxInt(0);
 
+  // VIew Pouduct -> Share, Bid
+  var currentViewProductType = Rx<int?>(null);
   @override
   void onInit() {
     cameraHelper = CameraHelper(this);
@@ -110,6 +112,9 @@ class HomeCatProductController extends GetxController
   void onClose() {
     pageController.dispose();
     super.onClose();
+
+    scrollController = ScrollController();
+    paginationListener();
   }
 
   void reset() {
@@ -158,17 +163,34 @@ class HomeCatProductController extends GetxController
   }
 
   var products = <ProductModel>[].obs;
-  //
-  searchProducts() async {
-    searchAndFilterApplied.value = true;
-    await _getSearchProducts();
+  // Filter by product type [1 for bid, 2 for fixed, 3 for share]
+  searchProducts({
+    bool isSearchFilter = true,
+    int? productType,
+    //page
+    int? pageno,
+    Function(bool)? pageLoading,
+    Function? nodata,
+  }) async {
+    searchAndFilterApplied.value = isSearchFilter;
+    await _getSearchProducts(
+        productType: productType,
+        pageno: pageno,
+        pageLoading: pageLoading,
+        nodata: nodata);
   }
 
   // 1-> endingSoon, 2-> highestPrice, 3-> lowestPrice, 4-> mostBid, 5-> leastBid, 6-> recentBid
   var selectedFilterKey = 1.obs;
   var filtering = false.obs;
 
-  filterProducts() async {
+  filterProducts(
+      //page
+      {
+    int? pageno,
+    Function(bool)? pageLoading,
+    Function? nodata,
+  }) async {
     await _getSearchProducts(
       endingSoon: selectedFilterKey.value == 1,
       highestPrice: selectedFilterKey.value == 2,
@@ -176,30 +198,57 @@ class HomeCatProductController extends GetxController
       lowestPrice: selectedFilterKey.value == 4,
       mostBid: selectedFilterKey.value == 5,
       recentBid: selectedFilterKey.value == 6,
+      pageno: pageno,
+      pageLoading: pageLoading,
+      nodata: nodata,
     );
   }
 
-  _getSearchProducts(
-      {bool endingSoon = false,
-      bool highestPrice = false,
-      bool lowestPrice = false,
-      bool mostBid = false,
-      bool leastBid = false,
-      bool recentBid = false}) async {
+  _getSearchProducts({
+    bool endingSoon = false,
+    bool highestPrice = false,
+    bool lowestPrice = false,
+    bool mostBid = false,
+    bool leastBid = false,
+    bool recentBid = false,
+    int? productType,
+    //page
+    int? pageno,
+    Function(bool)? pageLoading,
+    Function? nodata,
+  }) async {
     await ApiRequests.getProducts(
-        searchKey: searchInput.text.trim(),
-        endingSoon: endingSoon,
-        highestPrice: highestPrice,
-        leastBid: leastBid,
-        lowestPrice: lowestPrice,
-        mostBid: mostBid,
-        recentBid: recentBid,
-        data: (data) {
+      searchKey: searchInput.text.trim(),
+      endingSoon: endingSoon,
+      highestPrice: highestPrice,
+      leastBid: leastBid,
+      lowestPrice: lowestPrice,
+      mostBid: mostBid,
+      recentBid: recentBid,
+      productType: productType,
+      pageno: pageno,
+      data: (data) {
+        if (pageno != null) {
+          if (data.isEmpty && nodata != null) {
+            nodata();
+          } else {
+            products.addAll(data);
+            products.refresh();
+          }
+        } else {
           products.value = data;
-        },
-        loading: (loading) {
+          clearPagination();
+        }
+      },
+      loading: (loading) {
+        // filtering.value = loading;
+        if (pageno != null) {
+          if (pageLoading != null) pageLoading(loading);
+        } else {
           filtering.value = loading;
-        });
+        }
+      },
+    );
   }
 
   var localFavourites = <String, bool>{}.obs;
@@ -364,6 +413,69 @@ class HomeCatProductController extends GetxController
           });
     }
   }
+
+  // --------------- Pagination ------------------------------------
+  var pageno = 0.obs;
+  var limit = 5.obs;
+  var nextPageIsLoading = false.obs;
+  var noMoreData = false.obs;
+  ScrollController? scrollController;
+  paginationListener() {
+    if (scrollController != null) {
+      scrollController?.addListener(() async {
+        if (scrollController?.position.maxScrollExtent ==
+            scrollController?.position.pixels) {
+          AppPrint.all("dddddd-d-d-d-d---d");
+          getNextPage();
+        }
+      });
+    }
+  }
+
+  clearPagination() {
+    pageno.value = 0;
+    nextPageIsLoading.value = false;
+    noMoreData.value = false;
+  }
+
+  getNextPage({
+    bool isFromFilter = false,
+    bool isSearchFilter = true,
+    String? categoryId,
+    String? subCategoryId,
+    int? productType,
+  }) async {
+    if (!nextPageIsLoading.value) {
+      if (isFromFilter) {
+        await filterProducts(
+            pageno: ++pageno.value,
+            pageLoading: (loading) async {
+              if (noMoreData.value && !loading) {
+                await Future.delayed(const Duration(seconds: 1));
+              }
+              nextPageIsLoading.value = loading;
+            },
+            nodata: () async {
+              noMoreData.value = true;
+            });
+      } else {
+        await searchProducts(
+            isSearchFilter: isSearchFilter,
+            productType: productType,
+            pageno: ++pageno.value,
+            pageLoading: (loading) async {
+              if (noMoreData.value && !loading) {
+                await Future.delayed(const Duration(seconds: 1));
+              }
+              nextPageIsLoading.value = loading;
+            },
+            nodata: () async {
+              noMoreData.value = true;
+            });
+      }
+    }
+  }
+  // ----------------------------------------------------------------
 }
 
 // enum ProductType { BID, FIX_PRICE, SHERE }

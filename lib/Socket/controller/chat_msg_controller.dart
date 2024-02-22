@@ -82,11 +82,14 @@ class ChatMsgController extends GetxController
   @override
   listenerNewMessage(Message? data) {
     if (data != null) {
-      messages.add(data);
-      messages.refresh();
-      if (data.senderId.toString() == activeUser.value?.id.toString()) {
-        readUnread(data.senderId.toString());
+      if (messages.isEmpty || (messages.last.id != data.id)) {
+        messages.add(data);
+        messages.refresh();
+        if (data.senderId.toString() == activeUser.value?.id.toString()) {
+          readUnread(data.senderId.toString());
+        }
       }
+
       clearMsgInput();
     }
     // socketPrint("listenerNewMessage---> $data");

@@ -121,6 +121,7 @@ class ProductDetails {
   int? isFavourite;
   UserTransactionInfo? userTransactionInfo;
   List<ShareTradModel>? sharePurchases;
+  String? bidPrice;
 
   ProductDetails(
       {this.id,
@@ -174,7 +175,8 @@ class ProductDetails {
       this.productSizes,
       this.isFavourite,
       this.userTransactionInfo,
-      this.sharePurchases});
+      this.sharePurchases,
+      this.bidPrice});
 
   ProductDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -249,6 +251,7 @@ class ProductDetails {
         sharePurchases!.add(ShareTradModel.fromJson(v));
       });
     }
+    bidPrice = json['bidPrice'];
   }
 
   Map<String, dynamic> toJson() {
@@ -315,6 +318,7 @@ class ProductDetails {
     if (sharePurchases != null) {
       data['sharePurchases'] = sharePurchases!.map((v) => v.toJson()).toList();
     }
+    data['bidPrice'] = bidPrice;
     return data;
   }
 }

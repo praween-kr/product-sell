@@ -110,6 +110,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                 onRefresh: () async {
                                   _categoriesController.localFavourites.clear();
                                   await _categoriesController.getProducts(
+                                    productType: 2,
                                     categoryId: _categoriesController
                                         .selectedCategory.value?.id
                                         .toString(),
@@ -128,6 +129,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                 .clear();
                                             await _categoriesController
                                                 .getProducts(
+                                              productType: 2,
                                               categoryId: _categoriesController
                                                   .selectedCategory.value?.id
                                                   .toString(),
@@ -251,7 +253,9 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                           GestureDetector(
                                             onTap: () async {
                                               await _categoriesController
-                                                  .getProducts();
+                                                  .getProducts(
+                                                productType: 2,
+                                              );
                                             },
                                             child: Container(
                                               margin: const EdgeInsets.only(

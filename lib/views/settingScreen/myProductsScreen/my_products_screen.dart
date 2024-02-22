@@ -350,80 +350,78 @@ class ProductScreen extends StatelessWidget {
 
   RefreshIndicator tabBody1() {
     return RefreshIndicator(
-        onRefresh: () async {
-          await _myProductController.getMyProducts();
-        },
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Obx(
-                () => Row(
-                  children: [
-                    AppButton.tabText(
-                      title: "Active Shares",
-                      onClick: () {
-                        _myProductController.activeShareTab.value = true;
-                      },
-                      active: _myProductController.activeShareTab.value,
-                    ),
-                    const SizedBox(width: 14),
-                    AppButton.tabText(
-                      title: "Sold Shares",
-                      onClick: () {
-                        _myProductController.activeShareTab.value = false;
-                      },
-                      active: !_myProductController.activeShareTab.value,
-                    ),
-                  ],
-                ),
+      onRefresh: () async {
+        await _myProductController.getMyProducts();
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: Obx(
+              () => Row(
+                children: [
+                  AppButton.tabText(
+                    title: "Active Shares",
+                    onClick: () {
+                      _myProductController.activeShareTab.value = true;
+                    },
+                    active: _myProductController.activeShareTab.value,
+                  ),
+                  const SizedBox(width: 14),
+                  AppButton.tabText(
+                    title: "Sold Shares",
+                    onClick: () {
+                      _myProductController.activeShareTab.value = false;
+                    },
+                    active: !_myProductController.activeShareTab.value,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Expanded(
-              child: _myProductController.activeShareTab.value
-                  ? _myProductController.myActivePurchaseShares.isEmpty
-                      ? EmptyWidgets.noproducts(message: "No Active Shares")
-                      : ListView.separated(
-                          physics: const ClampingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          itemBuilder: (context, index) {
-                            MyShare data = _myProductController
-                                .myActivePurchaseShares[index];
-                            return shareTile(data, onClick: () {
-                              _myProductController.getPurchaseShareDetails(
-                                  (data.shareId ?? '').toString());
-                              Get.toNamed(Routes.myPurchaseShareDetails);
-                            });
-                          },
-                          separatorBuilder: (_, __) =>
-                              const SizedBox(height: 20),
-                          itemCount: _myProductController
-                              .myActivePurchaseShares.length,
-                        )
-                  : _myProductController.myUnActivePurchaseShares.isEmpty
-                      ? EmptyWidgets.noproducts(message: "No Sold Shares")
-                      : ListView.separated(
-                          physics: const ClampingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          itemBuilder: (context, index) {
-                            MyShare data = _myProductController
-                                .myUnActivePurchaseShares[index];
-                            return shareTile(data, onClick: () async {
-                              await _myProductController
-                                  .getPurchaseShareDetails(
-                                      (data.shareId ?? '').toString());
-                              Get.toNamed(Routes.myPurchaseShareDetails);
-                            });
-                          },
-                          separatorBuilder: (_, __) =>
-                              const SizedBox(height: 20),
-                          itemCount: _myProductController
-                              .myUnActivePurchaseShares.length,
-                        ),
-            ),
-          ],
-        ));
+          ),
+          const SizedBox(height: 8),
+          Expanded(
+            child: _myProductController.activeShareTab.value
+                ? _myProductController.myActivePurchaseShares.isEmpty
+                    ? EmptyWidgets.noproducts(message: "No Active Shares")
+                    : ListView.separated(
+                        physics: const ClampingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        itemBuilder: (context, index) {
+                          MyShare data = _myProductController
+                              .myActivePurchaseShares[index];
+                          return shareTile(data, onClick: () {
+                            _myProductController.getPurchaseShareDetails(
+                                (data.shareId ?? '').toString());
+                            Get.toNamed(Routes.myPurchaseShareDetails);
+                          });
+                        },
+                        separatorBuilder: (_, __) => const SizedBox(height: 20),
+                        itemCount:
+                            _myProductController.myActivePurchaseShares.length,
+                      )
+                : _myProductController.myUnActivePurchaseShares.isEmpty
+                    ? EmptyWidgets.noproducts(message: "No Sold Shares")
+                    : ListView.separated(
+                        physics: const ClampingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics()),
+                        itemBuilder: (context, index) {
+                          MyShare data = _myProductController
+                              .myUnActivePurchaseShares[index];
+                          return shareTile(data, onClick: () async {
+                            await _myProductController.getPurchaseShareDetails(
+                                (data.shareId ?? '').toString());
+                            Get.toNamed(Routes.myPurchaseShareDetails);
+                          });
+                        },
+                        separatorBuilder: (_, __) => const SizedBox(height: 20),
+                        itemCount: _myProductController
+                            .myUnActivePurchaseShares.length,
+                      ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget shareTile(MyShare data, {required Function onClick}) {

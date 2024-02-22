@@ -73,4 +73,5 @@ class Assets {
   static const String lottieNoMessage = 'assets/lottie/no_message.json';
   //
   static const String noproducts = "assets/no_products.png";
+  static const String collectibleItems = "assets/collectible_items.png";
 }

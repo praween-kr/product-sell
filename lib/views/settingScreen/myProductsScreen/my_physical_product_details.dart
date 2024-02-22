@@ -432,58 +432,65 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                           ),
                                         ),
                                         const SizedBox(height: 31.0),
-                                        GestureDetector(
-                                          onTap: () {
-                                            //Get.toNamed(Routes.editItemScreen);
-                                            if (CategoriesController()
-                                                .initialized) {
-                                              Get.find<CategoriesController>()
-                                                  .getCategories();
-                                            } else {
-                                              Get.put(CategoriesController())
-                                                  .getCategories();
-                                            }
-                                            //
-                                            SellItemController sc;
-                                            if (SellItemController()
-                                                .initialized) {
-                                              sc = Get.find<
-                                                  SellItemController>();
-                                            } else {
-                                              sc =
-                                                  Get.put(SellItemController());
-                                            }
-                                            sc.tabController.value = 1;
-                                            sc.initialData(_myProductController
-                                                .productDetailsData
-                                                .value
-                                                ?.details);
+                                        _myProductController.productDetailsData
+                                                    .value?.details?.bidPrice !=
+                                                null
+                                            ? const SizedBox.shrink()
+                                            : GestureDetector(
+                                                onTap: () {
+                                                  //Get.toNamed(Routes.editItemScreen);
+                                                  if (CategoriesController()
+                                                      .initialized) {
+                                                    Get.find<
+                                                            CategoriesController>()
+                                                        .getCategories();
+                                                  } else {
+                                                    Get.put(CategoriesController())
+                                                        .getCategories();
+                                                  }
+                                                  //
+                                                  SellItemController sc;
+                                                  if (SellItemController()
+                                                      .initialized) {
+                                                    sc = Get.find<
+                                                        SellItemController>();
+                                                  } else {
+                                                    sc = Get.put(
+                                                        SellItemController());
+                                                  }
+                                                  sc.tabController.value = 1;
+                                                  sc.initialData(
+                                                      _myProductController
+                                                          .productDetailsData
+                                                          .value
+                                                          ?.details);
 
-                                            Get.toNamed(Routes.sellItemScreen,
-                                                    arguments: 'edit')!
-                                                .then((value) async {
-                                              await _myProductController
-                                                  .getProductDetails(
-                                                      (_myProductController
-                                                                  .productDetailsData
-                                                                  .value
-                                                                  ?.details
-                                                                  ?.id ??
-                                                              '')
-                                                          .toString());
-                                            });
-                                          },
-                                          child: const CommonButton(
-                                            color: AppColor.appColor,
-                                            height: 57,
-                                            text: "Edit",
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 35),
-                                            textStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          ),
-                                        ),
+                                                  Get.toNamed(
+                                                          Routes.sellItemScreen,
+                                                          arguments: 'edit')!
+                                                      .then((value) async {
+                                                    await _myProductController
+                                                        .getProductDetails(
+                                                            (_myProductController
+                                                                        .productDetailsData
+                                                                        .value
+                                                                        ?.details
+                                                                        ?.id ??
+                                                                    '')
+                                                                .toString());
+                                                  });
+                                                },
+                                                child: const CommonButton(
+                                                  color: AppColor.appColor,
+                                                  height: 57,
+                                                  text: "Edit",
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 35),
+                                                  textStyle: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16),
+                                                ),
+                                              ),
                                       ],
                                     )
                                   : _myProductController

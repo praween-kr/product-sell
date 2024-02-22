@@ -32,11 +32,11 @@ import '../views/settingScreen/addressScreen/address_screen.dart';
 import '../views/settingScreen/addressScreen/newAddressScreen/new_address-screen.dart';
 import '../views/settingScreen/cms_screen/cms_screen.dart';
 import '../views/settingScreen/myProductsScreen/bidding_history_screen.dart';
-import '../views/settingScreen/myProductsScreen/biding_product_details_screen.dart';
 import '../views/settingScreen/myProductsScreen/my_physical_product_details.dart';
 import '../views/settingScreen/myProductsScreen/my_products_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/selectPlan_screen.dart';
 import '../views/settingScreen/mySubscriptionScreen/subscription_screen.dart';
+import '../views/settingScreen/my_dashboard/share_details_screen.dart';
 import '../views/settingScreen/passwordScreen/password_screen.dart';
 import '../views/settingScreen/paymentScreen/addNewCard_screen.dart';
 import '../views/settingScreen/paymentScreen/setting_payment_screen.dart';
@@ -184,10 +184,10 @@ class AppRoutes {
       page: () => MessageScreen(),
       binding: ChatMsgBinding(),
     ),
-    GetPage(
-      name: Routes.bidingProductDetails,
-      page: () => BidingProductDetailsScreen(),
-    ),
+    // GetPage(
+    //   name: Routes.bidingProductDetails,
+    //   page: () => BidingProductDetailsScreen(),
+    // ),
     GetPage(
       name: Routes.categoriesWiseProductsScreen,
       page: () => CategoryWiseProductsScreen(),
@@ -275,6 +275,9 @@ class AppRoutes {
       name: Routes.myDashboard,
       page: () => MyDashboard(),
       binding: DashboardBinding(),
-    )
+    ),
+    GetPage(
+        name: Routes.purchaseShareDetails,
+        page: () => PurchaseShareDetailsScreen())
   ];
 }

@@ -221,7 +221,7 @@ class PublicShareProductDetails extends StatelessWidget {
                           //             "${_controller.productDetailsData.value?.lastTrad?.totalSharePurchase ?? 0} shares"),
                           //         tile("Sold Price",
                           //             "\$${_controller.productDetailsData.value?.lastTrad?.adminSoldSharePrice ?? 0}/share"),
-                          //         tile("Total Profites",
+                          //         tile("Total Profits",
                           //             "\$${_controller.productDetailsData.value?.lastTrad?.totalProfit ?? 0}"),
                           //         tile("Calculation",
                           //             "${_controller.productDetailsData.value?.lastTrad?.calculation ?? 0}"),

@@ -400,8 +400,9 @@ class HomeScreen extends StatelessWidget {
                                                         Expanded(
                                                           flex: 1,
                                                           child: productDBCard(
+                                                              height: 90,
                                                               title:
-                                                                  "Collectible",
+                                                                  "Collectable",
                                                               value: "Items",
                                                               theme:
                                                                   Colors.blue,
@@ -419,24 +420,28 @@ class HomeScreen extends StatelessWidget {
                                                                     .categoryScreen);
                                                               }),
                                                         ),
-                                                        const SizedBox(
-                                                            width: 14),
-                                                        Expanded(
-                                                          flex: 1,
-                                                          child: productDBCard(
-                                                            title: "Fixed",
-                                                            value: "Products",
-                                                            theme: Colors.green,
-                                                            onClick: () {
-                                                              controller
-                                                                  .searchProducts();
-                                                              Get.to(() =>
-                                                                  ProductsView());
-                                                            },
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 14),
+                                                        // const SizedBox(
+                                                        //     width: 14),
+                                                        // Expanded(
+                                                        //   flex: 1,
+                                                        //   child: productDBCard(
+                                                        //     title: "Fixed",
+                                                        //     value: "Products",
+                                                        //     theme: Colors.green,
+                                                        //     onClick: () {
+                                                        //       controller
+                                                        //           .searchProducts(
+                                                        //         isSearchFilter:
+                                                        //             false,
+                                                        //         productType: 2,
+                                                        //       );
+                                                        //       Get.to(() =>
+                                                        //           ProductsView());
+                                                        //     },
+                                                        //   ),
+                                                        // ),
+                                                        // const SizedBox(
+                                                        //     width: 14),
                                                       ],
                                                     ),
                                                     const SizedBox(height: 14),
@@ -450,7 +455,14 @@ class HomeScreen extends StatelessWidget {
                                                             theme: Colors.blue,
                                                             onClick: () {
                                                               controller
-                                                                  .searchProducts();
+                                                                  .currentViewProductType
+                                                                  .value = 1;
+                                                              controller
+                                                                  .searchProducts(
+                                                                isSearchFilter:
+                                                                    false,
+                                                                productType: 1,
+                                                              );
                                                               Get.to(() =>
                                                                   ProductsView());
                                                             },
@@ -466,14 +478,19 @@ class HomeScreen extends StatelessWidget {
                                                             theme: Colors.green,
                                                             onClick: () {
                                                               controller
-                                                                  .searchProducts();
+                                                                  .currentViewProductType
+                                                                  .value = 3;
+                                                              controller
+                                                                  .searchProducts(
+                                                                isSearchFilter:
+                                                                    false,
+                                                                productType: 3,
+                                                              );
                                                               Get.to(() =>
                                                                   ProductsView());
                                                             },
                                                           ),
                                                         ),
-                                                        const SizedBox(
-                                                            width: 14),
                                                       ],
                                                     ),
                                                   ],
@@ -656,6 +673,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget productDBCard(
       {required String title,
+      double? height,
       Color? theme,
       required String value,
       required Function onClick}) {
@@ -663,15 +681,15 @@ class HomeScreen extends StatelessWidget {
       onTap: () => onClick(),
       child: Container(
         width: double.infinity,
-        height: 100,
+        height: height ?? 120,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: AppColor.white,
+          // color: AppColor.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColor.grey.withOpacity(0.5)),
+          border: Border.all(color: AppColor.appColor.withOpacity(0.7)),
           boxShadow: [
             BoxShadow(
-              color: AppColor.grey.withOpacity(0.5),
+              color: AppColor.appColor.withOpacity(0.2),
               blurRadius: 20,
             )
           ],

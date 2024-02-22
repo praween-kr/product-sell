@@ -63,12 +63,14 @@ class CategoriesController extends GetxController {
       String? subCategoryId,
       int? pageno,
       Function(bool)? pageLoading,
-      Function? nodata}) async {
+      Function? nodata,
+      int? productType}) async {
     await ApiRequests.getProducts(
         categoryId: categoryId,
         subCategoryId: subCategoryId,
         limit: limit.value,
         pageno: pageno,
+        productType: productType,
         data: (data) async {
           if (pageno != null) {
             if (data.isEmpty && nodata != null) {

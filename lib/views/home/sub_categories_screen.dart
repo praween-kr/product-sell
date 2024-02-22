@@ -68,6 +68,7 @@ class SubCategoriesScreen extends StatelessWidget {
                                 _categoriesController
                                     .selectedSubCategory.value = data;
                                 _categoriesController.getProducts(
+                                    productType: 2,
                                     categoryId: _categoriesController
                                         .selectedCategory.value?.id
                                         .toString(),

@@ -183,3 +183,8 @@ Dashboard
  --> Total Profits
   
 */
+
+/*
+If two user hit same amount of bid price in same time, then what will do
+Min price can add here in bid
+*/

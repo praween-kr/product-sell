@@ -836,16 +836,33 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         Row(
+          children: [
+            const AppText(text: "Base Price: ", color: AppColor.grey),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: AppText(
+                  text:
+                      "\$${controller.productDetailsData.value?.details?.price}",
+                  textSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const AppText(text: "Current Bid: ", color: AppColor.grey),
+            const AppText(text: "Last Bid: ", color: AppColor.grey),
             Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 AppText(
                   text:
-                      "\$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}",
+                      "\$${controller.bidingData.value?.save?.bidPrice ?? 0.0}",
                   textSize: 24,
                   fontWeight: FontWeight.w700,
                 ),
@@ -888,44 +905,46 @@ class ProductDetailsScreen extends StatelessWidget {
                 children: [
                   const AppText(text: "Ends: ", color: AppColor.grey),
                   Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: "",
-                          style: const TextStyle(color: AppColor.blackColor),
-                          children: <TextSpan>[
-                            TextSpan(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: "",
+                            style: const TextStyle(color: AppColor.blackColor),
+                            children: <TextSpan>[
+                              TextSpan(
                                 text:
                                     "${controller.bidingData.value?.save?.createdAt == null ? '' : AppDateTime.getDateTime(controller.bidingData.value?.save?.createdAt, format: DateFormat("EEE, dd/MM/yy, hh:mm a"))}",
                                 style: const TextStyle(color: AppColor.grey),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Get.toNamed(Routes.biddingHistoryScreen);
-                                  }),
-                          ],
+                                  },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      // const SizedBox(height: 8),
-                      // RichText(
-                      //   text: TextSpan(
-                      //     text: "Extended Biding Interval ",
-                      //     style: const TextStyle(color: AppColor.blackColor),
-                      //     children: <TextSpan>[
-                      //       TextSpan(
-                      //           text: "30 Minutes",
-                      //           style: const TextStyle(color: AppColor.grey),
-                      //           recognizer: TapGestureRecognizer()
-                      //             ..onTap = () {
-                      //               Get.toNamed(Routes.biddingHistoryScreen);
-                      //             }),
-                      //     ],
-                      //   ),
-                      // )
-                    ],
-                  ))
+                        // const SizedBox(height: 8),
+                        // RichText(
+                        //   text: TextSpan(
+                        //     text: "Extended Biding Interval ",
+                        //     style: const TextStyle(color: AppColor.blackColor),
+                        //     children: <TextSpan>[
+                        //       TextSpan(
+                        //           text: "30 Minutes",
+                        //           style: const TextStyle(color: AppColor.grey),
+                        //           recognizer: TapGestureRecognizer()
+                        //             ..onTap = () {
+                        //               Get.toNamed(Routes.biddingHistoryScreen);
+                        //             }),
+                        //     ],
+                        //   ),
+                        // )
+                      ],
+                    ),
+                  ),
                 ],
               )
             : const SizedBox.shrink(),
@@ -960,6 +979,26 @@ class ProductDetailsScreen extends StatelessWidget {
             bidingData: controller.bidingData.value,
             isAddingBid: controller.addBbidingLoading.value,
             confirm: () {
+              double inputPrice = double.parse(
+                  controller.bidAmountInput.text == ""
+                      ? "0.0"
+                      : controller.bidAmountInput.text);
+              double productPrice = double.parse(
+                  controller.productDetailsData.value?.details?.price ?? "0.0");
+              double lastBidPrice = double.parse(
+                  controller.bidingData.value?.save?.bidPrice ?? "0.0");
+              if ((controller.bidingData.value?.save?.bidPrice == null &&
+                  inputPrice <= productPrice)) {
+                AppToast.show("The bid price should exceed the base price.");
+                return;
+              }
+              if ((controller.bidingData.value?.save?.bidPrice != null &&
+                  inputPrice <= lastBidPrice)) {
+                AppToast.show(
+                    "The bid price should exceed the last bid price.");
+                return;
+              }
+
               controller.addBid(
                   lastBidPrice: double.parse(
                       controller.bidingData.value?.save?.bidPrice ?? "0.0"),

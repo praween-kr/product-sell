@@ -4,6 +4,8 @@ import 'package:oninto_flutter/common_controller/settings/my_dashboard_controlle
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 
+import '../../../common_controller/product/my_product_controller.dart';
+import '../../../routes/routes.dart';
 import '../../../utils/appbar.dart';
 import '../../../utils/color_constant.dart';
 
@@ -11,6 +13,8 @@ class MyDashboard extends StatelessWidget {
   MyDashboard({super.key});
 
   final MyDashboardController _controller = Get.find<MyDashboardController>();
+  final MyProductController _myProductController =
+      Get.find<MyProductController>();
 
   @override
   Widget build(BuildContext context) {
@@ -83,32 +87,32 @@ class MyDashboard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const AppText(
-                              text: "Profites",
+                              text: "Profits",
                               fontWeight: FontWeight.w600,
                             ),
                             const SizedBox(height: 14),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: productDBCard(
-                                    title: "Bid",
-                                    profiteAmount: 1230.2,
-                                    theme: Colors.blue,
-                                  ),
-                                ),
-                                const SizedBox(width: 14),
-                                Expanded(
-                                  flex: 1,
-                                  child: productDBCard(
-                                    title: "Fixed",
-                                    profiteAmount: 1230.2,
-                                    theme: Colors.orange,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 14),
+                            // Row(
+                            //   children: [
+                            //     Expanded(
+                            //       flex: 1,
+                            //       child: productDBCard(
+                            //         title: "Bid",
+                            //         profiteAmount: 1230.2,
+                            //         theme: Colors.blue,
+                            //       ),
+                            //     ),
+                            //     const SizedBox(width: 14),
+                            //     Expanded(
+                            //       flex: 1,
+                            //       child: productDBCard(
+                            //         title: "Fixed",
+                            //         profiteAmount: 1230.2,
+                            //         theme: Colors.orange,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // const SizedBox(height: 14),
                             productDBCard(
                               title: "Shares",
                               profiteAmount: _controller.totalSharProfies.value,
@@ -132,7 +136,8 @@ class MyDashboard extends StatelessWidget {
                             const SizedBox(height: 14),
                             mycard(
                               onClick: () {
-                                //
+                                _myProductController.getAllMyPurchaseShares();
+                                Get.toNamed(Routes.purchaseShareDetails);
                               },
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +162,7 @@ class MyDashboard extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 8),
                                   analysisTile(
-                                    title: "Profites",
+                                    title: "Profits",
                                     value:
                                         "\$${_controller.totalSharProfies.value}",
                                     valueColor: AppColor.green,
@@ -167,6 +172,9 @@ class MyDashboard extends StatelessWidget {
                             ),
                             const SizedBox(height: 14),
                             mycard(
+                              onClick: () {
+                                //
+                              },
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -235,7 +243,9 @@ class MyDashboard extends StatelessWidget {
                             const SizedBox(height: 14),
                             mycard(
                               onClick: () {
-                                //
+                                _myProductController.tabController.value = 2;
+                                _myProductController.getMyProducts();
+                                Get.toNamed(Routes.productScreen);
                               },
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,6 +272,11 @@ class MyDashboard extends StatelessWidget {
                             ),
                             const SizedBox(height: 14),
                             mycard(
+                              onClick: () {
+                                _myProductController.tabController.value = 4;
+                                _myProductController.getMyProducts();
+                                Get.toNamed(Routes.productScreen);
+                              },
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -287,6 +302,11 @@ class MyDashboard extends StatelessWidget {
                             ),
                             const SizedBox(height: 14),
                             mycard(
+                              onClick: () {
+                                _myProductController.tabController.value = 4;
+                                _myProductController.getMyProducts();
+                                Get.toNamed(Routes.productScreen);
+                              },
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

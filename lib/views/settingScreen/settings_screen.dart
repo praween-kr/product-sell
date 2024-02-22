@@ -18,8 +18,6 @@ import '../../utils/image_view.dart';
 
 class SettingScreen extends GetView<SettingsController> {
   SettingScreen({super.key});
-  @override
-  final SettingsController settingsController = Get.find();
   final GlobalController globleController = Get.find();
   final CmsController cmsController = Get.find();
   final MyProductController _myProductController = Get.find();
@@ -197,7 +195,7 @@ class SettingScreen extends GetView<SettingsController> {
                   title: "My Products",
                   onClick: () {
                     controller.tabController.value = 1;
-                    _myProductController.getMyProducts();
+                    _myProductController.getAllMyPurchaseShares();
                     Get.toNamed(Routes.productScreen);
                   }),
               const SizedBox(height: 17.0),
@@ -311,7 +309,7 @@ class SettingScreen extends GetView<SettingsController> {
                   context,
                   msg: "Are you sure\nwant to Logout?",
                   clickOnYes: () {
-                    settingsController.logout();
+                    controller.logout();
                   },
                 ),
               ),

@@ -42,7 +42,7 @@ class FavouriteScreen extends StatelessWidget {
               : _favouritesController.myFavProducts.isEmpty
                   ? Center(child: EmptyWidgets.simple())
                   : GridView.builder(
-                      physics: const ClampingScrollPhysics(
+                      physics: const BouncingScrollPhysics(
                           parent: AlwaysScrollableScrollPhysics()),
                       padding: const EdgeInsets.only(top: 20),
                       gridDelegate:
