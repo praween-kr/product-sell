@@ -254,6 +254,7 @@ class ApiRequests {
   }
 
   /// -------- Add Address --------
+  // Add
   static addAddress(
       {required String location,
       required String latitude,
@@ -270,6 +271,46 @@ class ApiRequests {
       "houseNo": houseNo,
       "landMark": landMark,
     });
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  // Update
+  static updateAddress(
+      {required String addressId,
+      required String location,
+      required String latitude,
+      required String longitude,
+      required String street,
+      required String houseNo,
+      required String landMark}) async {
+    AppLoader.show();
+    var data = await BaseApiCall().putReq(AppApis.updateAddress, data: {
+      "addressId": addressId,
+      "location": location,
+      "latitude": latitude,
+      "longitude": longitude,
+      "street": street,
+      "houseNo": houseNo,
+      "landMark": landMark,
+    });
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  /// -------- Add Address --------
+  static deleteAddress(String addressId) async {
+    AppLoader.show();
+    var data =
+        await BaseApiCall().deleteReq(AppApis.deleteAddress, id: addressId);
     if (data != null) {
       AppLoader.hide();
       return true;

@@ -384,34 +384,47 @@ class HomeCatProductController extends GetxController
     }
   }
 
+  var makingPayment = false.obs;
   emitPurchageProductShare() {
+    // if (!makingPayment.value) {
+    makingPayment.value = true;
     if (productDetailsData.value?.details?.id != null &&
-        sharesInput.text.trim() != '' &&
         productDetailsData.value?.details?.price != null) {
+      if (sharesInput.text.trim() == '' ||
+          int.parse(sharesInput.text.trim()) <= 0) {
+        AppToast.show("Please add share quantity");
+        return;
+      } else if ((sharesInput.text.trim())[0] == '0') {
+        AppToast.show("Please enter valid share quantity");
+        return;
+      }
       double price = double.parse(
           (productDetailsData.value?.details?.price ?? '0').toString());
-
       int quantity = int.parse(sharesInput.text);
       // Stripe Payment Call
       AppPaymentMethods.stripePayment(
-          amount: price * quantity,
-          shareQty: quantity,
-          productId: (productDetailsData.value?.details?.id ?? '').toString(),
-          type: TypeOfProduct.share,
-          success: (transactionId) {
-            // After Success of payment
-            // Purchase Share Socket Emit
-            AppLoader.show();
-            AppPaymentMethods.stripeWebhookConfirmPayment(transactionId);
-            SocketEmits.purchaseProductShare(
-                productId:
-                    (productDetailsData.value?.details?.id ?? '').toString(),
-                shares: int.parse(sharesInput.text),
-                perSharePrice: double.parse(
-                    (productDetailsData.value?.details?.price ?? '0')
-                        .toString()));
-          });
+        amount: price * quantity,
+        shareQty: quantity,
+        productId: (productDetailsData.value?.details?.id ?? '').toString(),
+        type: TypeOfProduct.share,
+        success: (transactionId) {
+          // After Success of payment
+          // Purchase Share Socket Emit
+          AppLoader.show();
+          AppPaymentMethods.stripeWebhookConfirmPayment(transactionId);
+          SocketEmits.purchaseProductShare(
+              productId:
+                  (productDetailsData.value?.details?.id ?? '').toString(),
+              shares: int.parse(sharesInput.text),
+              perSharePrice: double.parse(
+                  (productDetailsData.value?.details?.price ?? '0')
+                      .toString()));
+
+          makingPayment.value = false;
+        },
+      );
     }
+    // }
   }
 
   // --------------- Pagination ------------------------------------

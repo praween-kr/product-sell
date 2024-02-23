@@ -7,7 +7,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'get_current_location.dart';
 
 class PickLocationMap extends StatefulWidget {
-  const PickLocationMap({super.key, required this.onChanged, this.cordinates});
+  PickLocationMap(
+      {super.key,
+      required this.onChanged,
+      this.cordinates,
+      this.viewOnly = false});
+
+  bool viewOnly;
   final Function(CurrentLocationData?) onChanged;
   final LatLng? cordinates;
 
@@ -30,38 +36,44 @@ class _AppMapViewState extends State<PickLocationMap> {
         zoom: 8.0,
       ),
       myLocationEnabled: true,
-      onTap: (LatLng latLng) async {
-        MarkerId markerId = const MarkerId("pick");
-        Marker marker = const Marker(markerId: MarkerId("pick"));
-        Marker updatedMarker = marker.copyWith(
-          positionParam: latLng,
-        );
-        ////-----------------------------
-        List<Placemark> placemarks =
-            await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
-        setState(() {
-          _markers[markerId] = updatedMarker;
-          //
-          selectedLocation = CurrentLocationData(
-            lat: latLng.latitude,
-            lag: latLng.longitude,
-            pinCode: placemarks.first.postalCode ?? '',
-            location:
-                "${placemarks.first.subLocality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.street}, ${placemarks.first.postalCode}, ${placemarks.first.country}",
-          );
-          widget.onChanged(selectedLocation);
-        });
-      },
+      onTap: widget.viewOnly
+          ? null
+          : (LatLng latLng) async {
+              MarkerId markerId = const MarkerId("pick");
+              Marker marker = const Marker(markerId: MarkerId("pick"));
+              Marker updatedMarker = marker.copyWith(
+                positionParam: latLng,
+              );
+              ////-----------------------------
+              List<Placemark> placemarks = await placemarkFromCoordinates(
+                  latLng.latitude, latLng.longitude);
+              setState(() {
+                _markers[markerId] = updatedMarker;
+                //
+                selectedLocation = CurrentLocationData(
+                  lat: latLng.latitude,
+                  lag: latLng.longitude,
+                  pinCode: placemarks.first.postalCode ?? '',
+                  location:
+                      "${placemarks.first.subLocality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.street}, ${placemarks.first.postalCode}, ${placemarks.first.country}",
+                );
+                widget.onChanged(selectedLocation);
+              });
+            },
     );
   }
 
   getCurrentLoc() async {
-    CurrentLocationData currentLoc = await CurrentLocation.pick();
-    debugPrint("Location : ${currentLoc.lat} ${currentLoc.lag}");
-    setState(() {
-      latLng = LatLng(currentLoc.lat, currentLoc.lag);
-      // cameraPosition = CameraPosition(target: latLng);
-    });
+    if (widget.cordinates != null) {
+      latLng = widget.cordinates!;
+    } else {
+      CurrentLocationData currentLoc = await CurrentLocation.pick();
+      debugPrint("Location : ${currentLoc.lat} ${currentLoc.lag}");
+      setState(() {
+        latLng = LatLng(currentLoc.lat, currentLoc.lag);
+        // cameraPosition = CameraPosition(target: latLng);
+      });
+    }
   }
 
   void _onMapCreated(GoogleMapController controller) async {

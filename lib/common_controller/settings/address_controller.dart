@@ -23,6 +23,7 @@ class AddressController extends GetxController {
   //--------------------------------------------
   var location = TextEditingController(text: '');
   var cordinates = Rx<LatLng?>(null);
+  var refreshMap = false.obs;
 
   var street = TextEditingController(text: '');
   var houseNo = TextEditingController(text: '');
@@ -34,6 +35,21 @@ class AddressController extends GetxController {
     street.clear();
     houseNo.clear();
     landmark.clear();
+  }
+
+  initialFields({
+    required String location,
+    required String latitude,
+    required String longitude,
+    required String street,
+    required String houseNo,
+    required String landMark,
+  }) {
+    this.location.text = location;
+    cordinates.value = LatLng(double.parse(latitude), double.parse(longitude));
+    this.street.text = street;
+    this.houseNo.text = houseNo;
+    landmark.text = landMark;
   }
 
   saveAddress() async {
@@ -50,7 +66,36 @@ class AddressController extends GetxController {
         AppPrint.all("Add address successfully!");
         getAddresses();
         Get.back();
+        clearFields();
       }
+    }
+  }
+
+  editAddress(String addressId) async {
+    if (validation()) {
+      bool success = await ApiRequests.updateAddress(
+          addressId: addressId,
+          location: location.text.trim(),
+          latitude: (cordinates.value?.latitude).toString(),
+          longitude: (cordinates.value?.longitude).toString(),
+          street: street.text.trim(),
+          houseNo: houseNo.text.trim(),
+          landMark: landmark.text.trim());
+      if (success) {
+        AppPrint.all("Update address successfully!");
+        getAddresses();
+        Get.back();
+        clearFields();
+      }
+    }
+  }
+
+  deleteAddress(String addressId) async {
+    bool success = await ApiRequests.deleteAddress(addressId);
+    if (success) {
+      AppPrint.all("Delete address successfully!");
+      Get.back();
+      getAddresses();
     }
   }
 

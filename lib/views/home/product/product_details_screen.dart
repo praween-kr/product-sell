@@ -407,7 +407,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                                   .bidingTimerStatus.value ==
                                               TimerTypeStatus.UPCOMING) {
                                             AppToast.show(
-                                                "Biding will be start soon");
+                                                "Bid will be start soon");
                                           } else if (_bidingActionActive()) {
                                             // Can bid on continue
                                             if (controller.productType.value ==
@@ -807,7 +807,31 @@ class ProductDetailsScreen extends StatelessWidget {
               color: AppColor.blackColor,
             ),
           ],
-        )
+        ),
+        const SizedBox(height: 8),
+        (controller.productDetailsData.value?.details?.startDate == null ||
+                controller.productDetailsData.value?.details?.bidTime == null)
+            ? const SizedBox.shrink()
+            : Row(
+                children: [
+                  const AppText(
+                    text: "Bding start Time: ",
+                    textSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xff9F9F9F),
+                    fontFamily: "Poppins",
+                  ),
+                  AppText(
+                    text: AppDateTime.getDateTime(
+                      "${controller.productDetailsData.value?.details?.startDate ?? ''}T${controller.productDetailsData.value?.details?.bidTime ?? ''}",
+                      format: DateFormat("hh:mm a, dd MMM yyyy"),
+                    ),
+                    textSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.blackColor,
+                  ),
+                ],
+              )
       ],
     );
   }
@@ -853,51 +877,75 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const AppText(text: "Last Bid: ", color: AppColor.grey),
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                AppText(
-                  text:
-                      "\$${controller.bidingData.value?.save?.bidPrice ?? 0.0}",
-                  textSize: 24,
-                  fontWeight: FontWeight.w700,
-                ),
-                const SizedBox(height: 8),
-                AppText(
-                  text:
-                      "Min \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}",
-                  textSize: 14,
-                  color: AppColor.grey,
-                ),
-                const SizedBox(height: 8),
-                RichText(
-                  text: TextSpan(
-                    text: '${controller.bidingData.value?.count ?? 0} Bid ',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: AppColor.blackColor.withOpacity(0.8),
-                        fontWeight: FontWeight.bold),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Show bid history',
-                          style: const TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontSize: 12),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Get.toNamed(Routes.biddingHistoryScreen);
-                            }),
-                    ],
-                  ),
-                )
-              ],
-            ))
+            const AppText(
+              text: "Biding Time: ",
+              textSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Color(0xff9F9F9F),
+              fontFamily: "Poppins",
+            ),
+            AppText(
+              text: AppDateTime.getDateTime(
+                "${controller.productDetailsData.value?.details?.startDate ?? ''}T${controller.productDetailsData.value?.details?.bidTime ?? ''}",
+                format: DateFormat("hh:mm a, dd MMM yyyy"),
+              ),
+              textSize: 14,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
+            ),
           ],
         ),
+        const SizedBox(height: 12),
+        controller.bidingData.value?.save == null
+            ? const SizedBox.shrink()
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(text: "Last Bid: ", color: AppColor.grey),
+                  Expanded(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      AppText(
+                        text:
+                            "\$${controller.bidingData.value?.save?.bidPrice ?? 0.0}",
+                        textSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      const SizedBox(height: 8),
+                      AppText(
+                        text:
+                            "Min \$${controller.bidingData.value?.save?.bidPrice ?? controller.productDetailsData.value?.details?.price}",
+                        textSize: 14,
+                        color: AppColor.grey,
+                      ),
+                      const SizedBox(height: 8),
+                      RichText(
+                        text: TextSpan(
+                          text:
+                              '${controller.bidingData.value?.count ?? 0} Bid ',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: AppColor.blackColor.withOpacity(0.8),
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'Show bid history',
+                                style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Get.toNamed(Routes.biddingHistoryScreen);
+                                  }),
+                          ],
+                        ),
+                      )
+                    ],
+                  ))
+                ],
+              ),
         const SizedBox(height: 14),
         controller.bidingData.value?.save?.bidOver == 1
             ? Row(
@@ -1026,15 +1074,6 @@ class ProductDetailsScreen extends StatelessWidget {
         firstName: "Vendor");
     cmc.goToChatRoom(
         Receiver(id: controller.productDetailsData.value?.details?.vendorId));
-    // socketPrint(
-    //     "Send First Message: ${(controller.productDetailsData.value?.details?.vendorId ?? '').toString()}!");
-    // cmc.newMessageInput.text = "Hello";
-
-    // cmc.sendNewMessage(
-    //     (controller.productDetailsData.value?.details?.vendorId ?? '')
-    //         .toString(),
-    //     '1');
-    // Get.toNamed(Routes.messageScreen);
   }
 
   Future reviewDialog() async {

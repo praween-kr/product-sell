@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
-import '../views/bid_screen/notification_model.dart';
+import '../Socket/controller/chat_msg_controller.dart';
+import '../Socket/model/one-to-one/chat_product_user_model.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -29,14 +30,15 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void notificationTapBackground(NotificationResponse notificationResponse) {
   /// Navigate to page handle here
   String? dataJson = notificationResponse.payload;
-  if (dataJson != null) {
-    debugPrint(
-        "Navigate: Navigate to page handle here:::: ${jsonDecode(dataJson)}");
-    // NotificationNavigation.to(
-    //     jsonDecode(jsonDecode(dataJson)['bodyData'])['notitype'].toString());
-
-    //---
-  }
+  // if (dataJson != null) {
+  //   log("Navigate: Navigate to page handle here:::: $dataJson");
+  //   // NotificationNavigation.to(
+  //   //     jsonDecode(jsonDecode(dataJson)['bodyData'])['notitype'].toString());
+  //   PushNotificationData payload =
+  //       PushNotificationData.fromJson(jsonDecode(dataJson));
+  //   navigation(payload);
+  //   //---
+  // }
 }
 
 class PushNotification {
@@ -180,13 +182,15 @@ class PushNotification {
   void _handleMessage(Map<String, dynamic> data) {
     // Navigation kill/background app
     debugPrint("Navigate: Navigate to page handle here:::: $data");
+    PushNotificationData payload = PushNotificationData.fromJson(data);
+    navigation(payload);
   }
+}
 
-  /// Notification Navigation Method
-  navigation(PushNotificationData data) {
-    // Chat
-    NotificationNavigation.to((data.notificationType ?? '').toString());
-  }
+/// Notification Navigation Method
+navigation(PushNotificationData data) {
+  // Chat
+  NotificationNavigation.to(data);
 }
 
 class MsgSender {
@@ -198,11 +202,11 @@ class MsgSender {
 
 class NotificationNavigation {
   static void to(
-    String type, {
-    NotificationModel? notification,
+    PushNotificationData notification, {
     String? jobId,
     MsgSender? msgSender,
   }) async {
+    String type = (notification.notificationType ?? '').toString();
     log("Navigate: dddd----> $type");
     //---- Controllers ----
 
@@ -211,10 +215,22 @@ class NotificationNavigation {
     // await DbHelper.writeData(SharedPrefKeys.notificationType, "");
     switch (type) {
       case '1':
-      //
+        _sendMessage(notification);
       default:
       //
     }
+  }
+
+  // Functions of Screens
+  static _sendMessage(PushNotificationData data) {
+    ChatMsgController cmc;
+    if (ChatMsgController().initialized) {
+      cmc = Get.find<ChatMsgController>();
+    } else {
+      cmc = Get.put(ChatMsgController());
+    }
+    cmc.activeUser.value = Receiver(id: data.senderId, firstName: "Vendor");
+    cmc.goToChatRoom(Receiver(id: data.senderId));
   }
 }
 

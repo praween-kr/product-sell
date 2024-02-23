@@ -98,16 +98,19 @@ class ChatProductUser {
 
 class LastMessageIds {
   String? message;
+  int? messageType;
 
-  LastMessageIds({this.message});
+  LastMessageIds({this.message, this.messageType});
 
   LastMessageIds.fromJson(Map<String, dynamic> json) {
     message = json['message'];
+    messageType = json['messageType'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
+    data['messageType'] = messageType;
     return data;
   }
 }

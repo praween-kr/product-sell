@@ -261,6 +261,26 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                           ?.details
                                                           ?.brand ??
                                                       ''),
+                                              const SizedBox(height: 10),
+                                              (_myProductController
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.startDate ==
+                                                          null ||
+                                                      _myProductController
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.bidTime ==
+                                                          null)
+                                                  ? const SizedBox.shrink()
+                                                  : commonText(
+                                                      "Bid Start Time",
+                                                      AppDateTime.getDateTime(
+                                                          "${_myProductController.productDetailsData.value?.details?.startDate ?? ''}T${_myProductController.productDetailsData.value?.details?.bidTime ?? ''}",
+                                                          format: DateFormat(
+                                                              "hh:mm a, dd MMM yyyy"))),
                                             ],
                                           ),
                                         ),

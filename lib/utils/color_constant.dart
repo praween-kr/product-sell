@@ -16,6 +16,7 @@ class AppColor {
   static const grey = Color.fromARGB(255, 133, 136, 146);
   static const greylight = Color.fromARGB(255, 200, 206, 223);
   static const red = Color(0xFFF51303);
+  static const blue = Colors.blue;
   static const green = Colors.green;
 
   static const TextStyle defaultDateTextStyle = TextStyle(

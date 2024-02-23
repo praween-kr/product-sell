@@ -1,6 +1,7 @@
 import '../../service/api_requests.dart';
 import '../../service/local/user_info_global.dart';
 import '../../utils/app_print.dart';
+import '../../utils/app_toast_loader.dart';
 import '../../utils/helper/stripe_services.dart';
 
 class AppPaymentMethods {
@@ -42,6 +43,13 @@ class AppPaymentMethods {
     //Function(transactionId)
     required Function(String) success,
   }) async {
+    if (amount <= 0) {
+      AppToast.show("Please add amount");
+      return;
+    } else if ((amount.toString())[0] == '0') {
+      AppToast.show("Please enter valid amount");
+      return;
+    }
     await StripePaymentService.stripeMakePayment(
       amount: amount.toString(),
       currency: "USD",

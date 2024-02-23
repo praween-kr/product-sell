@@ -185,6 +185,10 @@ Dashboard
 */
 
 /*
-If two user hit same amount of bid price in same time, then what will do
-Min price can add here in bid
+- If two user hit same amount of bid price in same time, then what will do
+- Min price can add here in bid
+- Payment dialog open multiple time on multiple click
+- Share product comint two time in shar tab
+- Swaping time sold product
+- Dashboard refresh multiple time increging profites amount
 */

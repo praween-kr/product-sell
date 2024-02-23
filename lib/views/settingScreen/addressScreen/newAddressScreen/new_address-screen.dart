@@ -19,9 +19,11 @@ class NewAddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: const CommonAppbarWidget(
-        heading: "Add New Address",
-        textStyle: TextStyle(
+      appBar: CommonAppbarWidget(
+        heading: (Get.arguments != null && Get.arguments["mode"] == "edit")
+            ? "Edit Address"
+            : "Add New Address",
+        textStyle: const TextStyle(
             fontSize: 20,
             color: AppColor.blackColor,
             fontWeight: FontWeight.w500,
@@ -91,14 +93,55 @@ class NewAddressScreen extends StatelessWidget {
                   color: Colors.grey.shade300,
                   height: Get.height * 0.2,
                   width: Get.width * 0.85,
-                  child: PickLocationMap(
-                    onChanged: (location) {
-                      addressController.location.text =
-                          location?.location ?? '';
-                      addressController.cordinates.value = location == null
-                          ? null
-                          : LatLng(location.lat, location.lag);
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => PickLocationMap(
+                                cordinates: addressController.cordinates.value,
+                                onChanged: (location) {
+                                  addressController.location.text =
+                                      location?.location ?? '';
+                                  addressController.cordinates.value =
+                                      location == null
+                                          ? null
+                                          : LatLng(location.lat, location.lag);
+                                },
+                              ))!
+                          .then(
+                        (value) async {
+                          addressController.refreshMap.value = true;
+                          await Future.delayed(
+                              const Duration(milliseconds: 200));
+                          addressController.refreshMap.value = false;
+                        },
+                      );
                     },
+                    child: Stack(
+                      children: [
+                        Obx(
+                          () => addressController.refreshMap.value
+                              ? Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  color:
+                                      const Color.fromARGB(31, 107, 106, 104),
+                                )
+                              : PickLocationMap(
+                                  cordinates:
+                                      addressController.cordinates.value,
+                                  onChanged: (location) {
+                                    addressController.location.text =
+                                        location?.location ?? '';
+                                    addressController.cordinates.value =
+                                        location == null
+                                            ? null
+                                            : LatLng(
+                                                location.lat, location.lag);
+                                  },
+                                ),
+                        ),
+                        Container(color: Colors.white.withOpacity(0.2))
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -169,7 +212,13 @@ class NewAddressScreen extends StatelessWidget {
               SizedBox(height: Get.height * 0.08),
               GestureDetector(
                 onTap: () {
-                  addressController.saveAddress();
+                  if (Get.arguments != null &&
+                      Get.arguments["mode"] == "edit") {
+                    addressController
+                        .editAddress(Get.arguments["address_id"].toString());
+                  } else {
+                    addressController.saveAddress();
+                  }
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -181,8 +230,9 @@ class NewAddressScreen extends StatelessWidget {
                     color: AppColor.appColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const AppText(
-                    text: "Save Address",
+                  child: AppText(
+                    text:
+                        "${(Get.arguments != null && Get.arguments["mode"] == "edit") ? "Edit" : 'Save'} Address",
                     color: AppColor.white,
                   ),
                 ),

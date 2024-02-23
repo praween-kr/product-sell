@@ -27,6 +27,8 @@ class AppApis {
 
   // Address
   static String addAddress = "/addUserAddress";
+  static String updateAddress = "/updateAddress";
+  static String deleteAddress = "/deleteAddress";
   static String getAddresses = "/listOfAddress";
 
   // Categories

@@ -10,6 +10,7 @@ import 'package:oninto_flutter/utils/empty_widget.dart';
 import 'package:oninto_flutter/utils/image_view.dart';
 
 import '../../Socket/model/group/groups_list_model.dart';
+import '../../Socket/socket_keys.dart';
 import '../../utils/app_text.dart';
 import '../../utils/appbar.dart';
 import '../../utils/color_constant.dart';
@@ -130,6 +131,43 @@ class NavBarMsgScreen extends StatelessWidget {
     );
   }
 
+  Widget msgText(ChatProductUser data) {
+    String msgType = (data.lastMessageIds?.messageType).toString();
+    return msgType == MessageType.image || msgType == MessageType.video
+        ? Row(
+            children: [
+              Icon(
+                msgType == MessageType.image
+                    ? Icons.image
+                    : Icons.video_collection_rounded,
+                size: 16,
+                color: AppColor.blackColor.withOpacity(0.3),
+              ),
+              const SizedBox(width: 5),
+              AppText(
+                text: msgType == MessageType.image ? "Image" : "Video",
+                textSize: 12.0,
+                color: AppColor.blackColor.withOpacity(0.3),
+                style: AppTextStyle.medium,
+                maxlines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          )
+        : AppText(
+            text: msgType == MessageType.poll
+                ? "New poll"
+                : msgType == MessageType.replay
+                    ? "Poll replay"
+                    : data.lastMessageIds?.message ?? '',
+            textSize: 12.0,
+            color: AppColor.blackColor.withOpacity(0.3),
+            style: AppTextStyle.medium,
+            maxlines: 1,
+            overflow: TextOverflow.ellipsis,
+          );
+  }
+
   Widget products(List<ChatProductUser> productUsers) {
     socketPrint("Users: ${productUsers.length}");
     return RefreshIndicator(
@@ -222,15 +260,7 @@ class NavBarMsgScreen extends StatelessWidget {
                                           maxlines: 1,
                                         ),
                                         const SizedBox(height: 7.0),
-                                        AppText(
-                                          text: data.lastMessageIds?.message ??
-                                              '',
-                                          textSize: 12.0,
-                                          color: AppColor.blackColor
-                                              .withOpacity(0.3),
-                                          style: AppTextStyle.medium,
-                                          maxlines: 1,
-                                        )
+                                        msgText(data),
                                       ],
                                     ),
                                   )

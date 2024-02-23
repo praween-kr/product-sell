@@ -48,6 +48,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          _categoriesController.swapingIndex.value = 0;
                           _categoriesController.listViewTab.value = false;
                           _categoriesController.filter.value = false;
                           _categoriesController.selectValue.value = 0;
@@ -70,6 +71,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 7.0, left: 8),
                         child: GestureDetector(
                           onTap: () {
+                            _categoriesController.swapingIndex.value = 0;
                             _categoriesController.filter.value = true;
                             _categoriesController.listViewTab.value = true;
                             _categoriesController.selectValue.value = 1;
@@ -108,6 +110,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                             Expanded(
                               child: RefreshIndicator(
                                 onRefresh: () async {
+                                  _categoriesController.swapingIndex.value = 0;
                                   _categoriesController.localFavourites.clear();
                                   await _categoriesController.getProducts(
                                     productType: 2,
@@ -220,7 +223,10 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(bottom: 40, top: 10),
                           child: Obx(
                             () => Stack(children: [
-                              _categoriesController.products.isEmpty
+                              _categoriesController.products.isEmpty ||
+                                      _categoriesController
+                                              .swapingIndex.value >=
+                                          _categoriesController.products.length
                                   ? SizedBox(
                                       height: Get.height,
                                       child: Stack(
@@ -252,6 +258,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                           EmptyWidgets.simple(),
                                           GestureDetector(
                                             onTap: () async {
+                                              _categoriesController
+                                                  .swapingIndex.value = 0;
                                               await _categoriesController
                                                   .getProducts(
                                                 productType: 2,
@@ -284,24 +292,23 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                         AppPrint.all(
                                             "Swipe Completed: $index, $direction ${_categoriesController.products.length}");
                                       },
-                                      // onWillMoveNext: (index, swipeDirection) {
-                                      //   // if (!(index !=
-                                      //   //     _categoriesController
-                                      //   //             .products.length -
-                                      //   //         1)) {
-                                      //   //   _categoriesController.getProducts(
-                                      //   //       limit: 1,
-                                      //   //       pageno: _categoriesController
-                                      //   //           .products.length);
-                                      //   // }
-                                      //   print(_categoriesController
-                                      //       .products.length);
+                                      onWillMoveNext: (index, swipeDirection) {
+                                        // if (!(index !=
+                                        //     _categoriesController
+                                        //             .products.length -
+                                        //         1)) {
+                                        //   _categoriesController.getProducts(
+                                        //       limit: 1,
+                                        //       pageno: _categoriesController
+                                        //           .products.length);
+                                        // }
+                                        print(
+                                            "${_categoriesController.products.length} -> $index");
+                                        _categoriesController
+                                            .swapingIndex.value = index;
 
-                                      //   return index !=
-                                      //       _categoriesController
-                                      //               .products.length -
-                                      //           1;
-                                      // },
+                                        return true;
+                                      },
                                       builder: (context, properties) {
                                         var product =
                                             _categoriesController.products[
@@ -315,6 +322,8 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                                                   .productImages?.first.image ??
                                               '';
                                         }
+                                        print(
+                                            "---->>>> ${_categoriesController.products.length} -> ${properties.index}");
                                         return SizedBox(
                                           height: Get.height,
                                           child: Stack(

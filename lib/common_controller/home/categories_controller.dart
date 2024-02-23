@@ -46,6 +46,8 @@ class CategoriesController extends GetxController {
   var heartColor = false.obs;
   var selectValue = 0.obs;
   //
+  var swapingIndex = 0.obs;
+  //
   var products = <ProductModel>[].obs;
   var productDetailsData = Rx<ProductDetailsData?>(null);
   //
@@ -65,6 +67,7 @@ class CategoriesController extends GetxController {
       Function(bool)? pageLoading,
       Function? nodata,
       int? productType}) async {
+    swapingIndex.value = 0;
     await ApiRequests.getProducts(
         categoryId: categoryId,
         subCategoryId: subCategoryId,

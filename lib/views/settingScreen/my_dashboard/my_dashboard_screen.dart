@@ -35,6 +35,7 @@ class MyDashboard extends StatelessWidget {
               )
             : RefreshIndicator(
                 onRefresh: () async {
+                  _controller.totalSharProfies.value = 0;
                   await _controller.getDashboardInfo();
                 },
                 child: SingleChildScrollView(

@@ -288,16 +288,31 @@ class PublicShareProductDetails extends StatelessWidget {
                                       },
                                       separatorBuilder: (_, __) =>
                                           const SizedBox(height: 14),
-                                      itemCount:
-                                          _controller.seeAllUserBuyShares.value
-                                              ? (_controller
+                                      itemCount: _controller
+                                              .seeAllUserBuyShares.value
+                                          ? (_controller
+                                                      .productDetailsData
+                                                      .value
+                                                      ?.details
+                                                      ?.sharePurchases ??
+                                                  [])
+                                              .length
+                                          : (_controller
+                                                              .productDetailsData
+                                                              .value
+                                                              ?.details
+                                                              ?.sharePurchases ??
+                                                          [])
+                                                      .length >
+                                                  3
+                                              ? 3
+                                              : (_controller
                                                           .productDetailsData
                                                           .value
                                                           ?.details
                                                           ?.sharePurchases ??
                                                       [])
-                                                  .length
-                                              : 3,
+                                                  .length,
                                     ),
                                     const SizedBox(height: 8),
                                     (_controller
@@ -471,7 +486,6 @@ class PublicShareProductDetails extends StatelessWidget {
     cmc.goToGroupChatRoom(chatGroup);
     // socketPrint(
     //     "Send First Message: ${(controller.productDetailsData.value?.details?.vendorId ?? '').toString()}!");
-    cmc.newMessageInput.text = "Hello";
 
     // cmc.sendNewMessage(
     //     (controller.productDetailsData.value?.details?.vendorId ?? '')
