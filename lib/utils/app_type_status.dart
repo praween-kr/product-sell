@@ -9,13 +9,15 @@ class TypeOfProduct {
   static int bid = 3; // For ProductType-> Physical(Biding)
 }
 
-class NotificationType {
-  static int oneToOneChat = 1; // For one to one chat
-  static int groupChat = 2; // For group chat
-}
-
 class ProductApproval {
   static int pending = 0;
   static int accepted = 1;
   static int rejected = 2;
+}
+
+class NotificationType {
+  static int oneToOneChat = 1; // For one to one chat
+  static int groupChat = 2; // For group chat
+  static int bidStarted = 4; // Bid started
+  static int productApprouved = 5; // Product approuved by admin
 }

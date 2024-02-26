@@ -43,7 +43,7 @@ class MessageScreen extends StatelessWidget {
           // heading: 'Men Tshirt',
           headingChild: Obx(
             () => Text(
-              _chatMsgController.activeProduct.value?.name ?? '',
+              "${_chatMsgController.activeUser.value?.firstName ?? ''} ${_chatMsgController.activeUser.value?.lastName ?? ''}",
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -240,13 +240,9 @@ class MessageScreen extends StatelessWidget {
     bool me = UserStoredInfo().userInfo?.id == message.senderId;
     bool isRead = message.readStatus == 1;
     //
-    String productImg = ImageBaseUrls.product;
-    if ((product?.image ?? '') == '') {
-      if ((product?.productImages ?? []).isNotEmpty) {
-        productImg += (product?.productImages ?? []).first.image ?? '';
-      }
-    } else {
-      productImg += product?.image ?? '';
+    String receiverImg = ImageBaseUrls.product;
+    if ((reciverInfo?.image ?? '') != '') {
+      receiverImg += reciverInfo?.image ?? '';
     }
 
     ///----- Divider -----
@@ -307,8 +303,8 @@ class MessageScreen extends StatelessWidget {
                                   height: Get.context!.width * 0.12,
                                   width: Get.context!.width * 0.12,
                                   color: Colors.grey.shade300,
-                                  child: AppImage.view(productImg,
-                                      fit: BoxFit.cover),
+                                  child: AppImage.view(receiverImg,
+                                      fit: BoxFit.cover, isProfile: true),
                                 ),
                               ),
                         Container(

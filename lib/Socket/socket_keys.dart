@@ -46,7 +46,7 @@ class SocketKeys {
   static String listenerGetShareProductData = "viewSingleProduct";
   static String listenerPurchaseShare = "purchase_share";
 
-  /// Group Chat
+  // Group Chat
   // Emiter
   static String emiterSendMessageGroup = "send_message_group";
   static String emiterGroupUsersList = "user_constant_list_group";

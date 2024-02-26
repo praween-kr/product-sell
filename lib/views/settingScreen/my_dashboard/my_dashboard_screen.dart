@@ -43,16 +43,12 @@ class MyDashboard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 14),
-
                       // User Info
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RichText(
-                              text: const TextSpan(text: "Hello, "),
-                            ),
                             RichText(
                               text: TextSpan(
                                 text: 'Hello, ',
