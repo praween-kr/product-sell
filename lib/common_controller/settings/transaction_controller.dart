@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:oninto_flutter/model/transaction_model.dart';
+import 'package:oninto_flutter/model/payment/transaction_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
 
 class TransactionsController extends GetxController {

@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oninto_flutter/model/payment/transaction_model.dart';
 import 'package:oninto_flutter/model/product/my_purchase_share_model.dart';
-import 'package:oninto_flutter/model/transaction_model.dart';
 
 import '../model/auth/cms_model.dart';
 import '../model/auth/user_info_model.dart';
@@ -889,18 +889,16 @@ class ApiRequests {
   ///------------
   // transaction_id,paymentJSON,productId,amount,shpingAddressId,chargedAmount
   static buyAndAddShippingAddress(
-      {required String transactionId,
-      required Map<String, dynamic> paymentData,
-      required String productId,
+      {required String productId,
       required double amount,
       String? shpingAddressId,
       required double chargeAccount,
       required int type,
-      int? shareQty}) async {
+      int? shareQty,
+      required Function(Map<String, dynamic>?) intentData,
+      paymentId}) async {
     AppLoader.show();
     Map<String, dynamic>? requestData = {
-      "transaction_id": transactionId,
-      "paymentJSON": jsonEncode(paymentData),
       "productId": productId,
       "amount": amount,
       "chargedAmount": chargeAccount,
@@ -916,8 +914,10 @@ class ApiRequests {
     var data = await BaseApiCall().postReq(AppApis.shippingAddressAddProductBuy,
         data: requestData, showToast: true);
 
-    AppPrint.all("requestData: buyAndAddShippingAddress -Resp> $requestData");
+    AppPrint.all(
+        "requestData: buyAndAddShippingAddress -Resp> $requestData ||| ${data['body']['paymentIntent']['client_secret']}");
     if (data != null) {
+      intentData(data['body']);
       AppLoader.hide();
       return true;
     }
@@ -930,6 +930,21 @@ class ApiRequests {
     AppLoader.show();
     var data = await BaseApiCall().postReq(AppApis.stripeWebhookConfirmPayment,
         data: {"transaction_id": transactionId}, showToast: true);
+    if (data != null) {
+      AppLoader.hide();
+      return true;
+    }
+    AppLoader.hide();
+    return false;
+  }
+
+  // Shipped Poduct Status Update
+  // 0 shipping pending, 1 for shipping started and 2 for shipped to buyer
+  static shippedPoductStatusUpdate(int shippedProductStatus) async {
+    AppLoader.show();
+    var data = await BaseApiCall().postReq(AppApis.shippedPoductStatusUpdate,
+        data: {"shipped_product_status": shippedProductStatus},
+        showToast: true);
     if (data != null) {
       AppLoader.hide();
       return true;

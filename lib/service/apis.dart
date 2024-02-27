@@ -71,4 +71,5 @@ class AppApis {
       "/stripeWebhook"; //stripePaymentIntents
   static String purchaseShare = "/purchaseShare";
   static String transactionHistory = "/paymentHistory";
+  static String shippedPoductStatusUpdate = "/shippedPoductStatusUpdate";
 }

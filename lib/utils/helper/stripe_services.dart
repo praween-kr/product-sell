@@ -39,7 +39,8 @@ class StripePaymentService {
   }
 
   static Future<void> stripeMakePayment(
-      {String? amount,
+      {required Map<String, dynamic> paymentIntent,
+      String? amount,
       String? currency,
       String? name,
       String? email,
@@ -50,7 +51,7 @@ class StripePaymentService {
       String? postalCode,
       String? state,
       String? phone,
-      required Function(Map<String, dynamic>?) success}) async {
+      required Function() success}) async {
     try {
       // 1. Gather customer billing information (ex. email)
       var billingDetails = BillingDetails(
@@ -64,13 +65,13 @@ class StripePaymentService {
               line2: line2,
               postalCode: postalCode,
               state: state));
-      paymentIntent = await createPaymentIntent(
-          amount: amount ?? "0.0", currency: currency ?? 'INR', isCard: false);
+      // paymentIntent = await createPaymentIntent(
+      //     amount: amount ?? "0.0", currency: currency ?? 'INR', isCard: false);
       await Stripe.instance
           .initPaymentSheet(
               paymentSheetParameters: SetupPaymentSheetParameters(
         billingDetails: billingDetails,
-        paymentIntentClientSecret: paymentIntent!['client_secret'],
+        paymentIntentClientSecret: paymentIntent['client_secret'],
         //Gotten from payment intent
         style: ThemeMode.light,
         merchantDisplayName: 'Ownitoo',
@@ -104,7 +105,7 @@ class StripePaymentService {
 
       //STEP 3: Display Payment sheet
       displayPaymentSheet(() {
-        success(paymentIntent);
+        success();
       });
     } catch (e) {
       errorSnackBar(e.toString());

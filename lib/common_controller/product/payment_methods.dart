@@ -1,36 +1,35 @@
+import 'package:oninto_flutter/utils/app_print.dart';
+
 import '../../service/api_requests.dart';
 import '../../service/local/user_info_global.dart';
-import '../../utils/app_print.dart';
 import '../../utils/app_toast_loader.dart';
 import '../../utils/helper/stripe_services.dart';
 
 class AppPaymentMethods {
   /// Confirmation Payment API for store record of payment
-  static stripeWebhookConfirmPayment(String transactionId) async {
-    return await ApiRequests.stripeWebhookConfirmPayment(transactionId);
-  }
+  // static stripeWebhookConfirmPayment(String transactionId) async {
+  //   return await ApiRequests.stripeWebhookConfirmPayment(transactionId);
+  // }
 
   /// Calling this api after successfully payment done for buy product/shares
-  static _paymentApi({
-    required String transactionId,
-    required Map<String, dynamic> paymentData,
-    required String productId,
-    required double amount,
-    String? shpingAddressId,
-    required double chargeAccount,
-    required int type,
-    int? shareQty,
-  }) async {
-    return await ApiRequests.buyAndAddShippingAddress(
-      transactionId: transactionId,
-      paymentData: paymentData,
-      productId: productId,
-      amount: amount,
-      shpingAddressId: shpingAddressId,
-      chargeAccount: chargeAccount,
-      type: type,
-      shareQty: shareQty,
-    );
+  static _paymentApi(
+      {required String productId,
+      required double amount,
+      String? shpingAddressId,
+      required double chargeAccount,
+      required int type,
+      int? shareQty,
+      required Function(Map<String, dynamic>?) intentData}) async {
+    await ApiRequests.buyAndAddShippingAddress(
+        productId: productId,
+        amount: amount,
+        shpingAddressId: shpingAddressId,
+        chargeAccount: chargeAccount,
+        type: type,
+        shareQty: shareQty,
+        intentData: (data) {
+          intentData(data);
+        });
   }
 
   // Stripe Payment Default Dialog/UI and Make Payment
@@ -40,8 +39,7 @@ class AppPaymentMethods {
     required int type,
     String? addressId,
     int? shareQty,
-    //Function(transactionId)
-    required Function(String) success,
+    required Function(String?) success,
   }) async {
     if (amount <= 0) {
       AppToast.show("Please add amount");
@@ -50,33 +48,31 @@ class AppPaymentMethods {
       AppToast.show("Please enter valid amount");
       return;
     }
-    await StripePaymentService.stripeMakePayment(
-      amount: amount.toString(),
-      currency: "USD",
-      name:
-          "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
-      email: UserStoredInfo().userInfo?.email,
-      phone: UserStoredInfo().userInfo?.phone == null
-          ? null
-          : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
-      success: (paymentIntent) async {
-        // Success
-        AppPrint.all("Payment Info: $paymentIntent");
-        if (paymentIntent != null) {
-          var resp = await _paymentApi(
-              transactionId: paymentIntent['id'],
-              paymentData: paymentIntent,
-              productId: productId,
-              amount: (paymentIntent['amount'] ?? 0.0) / 100,
-              shpingAddressId: addressId,
-              chargeAccount: 5.0,
-              type: type,
-              shareQty: shareQty);
-          if (resp) {
-            success(paymentIntent['id']);
+    await _paymentApi(
+        productId: productId,
+        amount: amount,
+        shpingAddressId: addressId,
+        chargeAccount: 5.0,
+        type: type,
+        shareQty: shareQty,
+        intentData: (intentdata) async {
+          if (intentdata != null && intentdata['paymentIntent'] != null) {
+            AppPrint.all("Payment Intent API Call:: --> $intentdata");
+            await StripePaymentService.stripeMakePayment(
+              amount: amount.toString(),
+              currency: "USD",
+              name:
+                  "${UserStoredInfo().userInfo?.firstName ?? ''} ${UserStoredInfo().userInfo?.firstName ?? ''}",
+              email: UserStoredInfo().userInfo?.email,
+              phone: UserStoredInfo().userInfo?.phone == null
+                  ? null
+                  : "+${UserStoredInfo().userInfo?.countryCode} ${UserStoredInfo().userInfo?.phone}",
+              success: () async {
+                success(intentdata['paymentIntent']['id']);
+              },
+              paymentIntent: intentdata['paymentIntent'],
+            );
           }
-        }
-      },
-    );
+        });
   }
 }

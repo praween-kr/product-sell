@@ -21,3 +21,14 @@ class NotificationType {
   static int bidStarted = 4; // Bid started
   static int productApprouved = 5; // Product approuved by admin
 }
+
+class ProductShippingStatus {
+  // 0 shipping pending, 1 for shipping started and 2 for shipped to buyer
+  static int pending = 0;
+  static int shippedFromSeller = 1;
+  static int receiveByBuyer = 2;
+}
+
+class PaymentStatus {
+  static String success = "succeeded";
+}

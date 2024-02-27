@@ -367,8 +367,15 @@ class ProductDetailsScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 30),
                                 controller.productDetailsData.value?.details
-                                            ?.userTransactionInfo?.id !=
-                                        null
+                                                ?.userTransactionInfo?.id !=
+                                            null &&
+                                        controller
+                                                .productDetailsData
+                                                .value
+                                                ?.details
+                                                ?.userTransactionInfo
+                                                ?.paymentStatus ==
+                                            PaymentStatus.success
                                     ? const SizedBox.shrink()
                                     : GestureDetector(
                                         onTap: () async {
@@ -472,7 +479,6 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 amount: totalPrice,
                                                 productType: productType);
                                           }
-
                                           // Map<String, dynamic> data = {
                                           //   "data": "from",
                                           // };
@@ -602,11 +608,11 @@ class ProductDetailsScreen extends StatelessWidget {
                 AppDialogs.paymentSuccess(() async {
                   Get.back();
                   Get.back();
-                  await AppPaymentMethods.stripeWebhookConfirmPayment(
-                          transactionId)
-                      .then((e) {
-                    controller.getProductDetails(productId);
-                  });
+                  // await AppPaymentMethods.stripeWebhookConfirmPayment(
+                  //         transactionId)
+                  //     .then((e) {
+                  controller.getProductDetails(productId);
+                  // });
                 });
               });
         },
@@ -645,11 +651,11 @@ class ProductDetailsScreen extends StatelessWidget {
                     Get.put(MyProductController()).getMyProducts();
                   }
                   Get.toNamed(Routes.productScreen);
-                  await AppPaymentMethods.stripeWebhookConfirmPayment(
-                          transactionId)
-                      .then((e) {
-                    controller.getProductDetails(productId);
-                  });
+                  // await AppPaymentMethods.stripeWebhookConfirmPayment(
+                  //         transactionId)
+                  //     .then((e) {
+                  controller.getProductDetails(productId);
+                  // });
                 });
               });
         },

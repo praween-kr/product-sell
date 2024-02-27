@@ -1,6 +1,6 @@
 import 'package:oninto_flutter/model/product/product_model.dart';
 
-import 'settings/address_model.dart';
+import '../settings/address_model.dart';
 
 class TransactionModel {
   int? id;

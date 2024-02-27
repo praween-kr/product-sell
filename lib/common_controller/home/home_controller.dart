@@ -411,7 +411,7 @@ class HomeCatProductController extends GetxController
           // After Success of payment
           // Purchase Share Socket Emit
           AppLoader.show();
-          AppPaymentMethods.stripeWebhookConfirmPayment(transactionId);
+          // AppPaymentMethods.stripeWebhookConfirmPayment(transactionId);
           SocketEmits.purchaseProductShare(
               productId:
                   (productDetailsData.value?.details?.id ?? '').toString(),

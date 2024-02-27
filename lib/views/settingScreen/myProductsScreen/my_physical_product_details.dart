@@ -6,6 +6,7 @@ import 'package:oninto_flutter/common_controller/product/my_product_controller.d
 import 'package:oninto_flutter/common_controller/product/sell_item_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
 import 'package:oninto_flutter/utils/app_type_status.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';
@@ -425,6 +426,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              const Text("------0fdj;gkd;gdfsgdfgdfgdfg"),
                               myProduct(_myProductController
                                           .productDetailsData.value) ==
                                       MyProduct.NEW
@@ -513,132 +515,13 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                               ),
                                       ],
                                     )
-                                  : _myProductController
-                                              .productDetailsData
-                                              .value
-                                              ?.details
-                                              ?.userTransactionInfo
-                                              ?.paymentStatus ==
-                                          "succeeded"
-                                      ? Column(
-                                          children: [
-                                            Divider(
-                                                color: AppColor.blackColor
-                                                    .withOpacity(0.1),
-                                                thickness: 2),
-                                            const SizedBox(height: 8),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: hzpadding,
-                                                  right: hzpadding),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const AppText(
-                                                    text: "Payment Completed",
-                                                    color: AppColor.green,
-                                                    textSize: 15,
-                                                    style: AppTextStyle.title,
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  commonText(
-                                                    "Transaction ID: ",
-                                                    _myProductController
-                                                            .productDetailsData
-                                                            .value
-                                                            ?.details
-                                                            ?.userTransactionInfo
-                                                            ?.transactionId ??
-                                                        '',
-                                                  ),
-                                                  const SizedBox(height: 8),
-                                                  commonText(
-                                                    "Time: ",
-                                                    AppDateTime.getDateTime(
-                                                        _myProductController
-                                                            .productDetailsData
-                                                            .value
-                                                            ?.details
-                                                            ?.userTransactionInfo
-                                                            ?.createdAt,
-                                                        format: DateFormat(
-                                                            "HH:mm a, dd MMM yyyy")),
-                                                  ),
-                                                  const SizedBox(height: 18),
-                                                  commonText(
-                                                    "Price ",
-                                                    '\$${(_myProductController.productDetailsData.value?.details?.userTransactionInfo?.amount ?? 0).toStringAsFixed(1)}',
-                                                    spaceBetween: true,
-                                                  ),
-                                                  const SizedBox(height: 8),
-                                                  commonText(
-                                                    "Charge ",
-                                                    '\$${(_myProductController.productDetailsData.value?.details?.userTransactionInfo?.chargedAmount ?? 0).toStringAsFixed(1)}',
-                                                    spaceBetween: true,
-                                                  ),
-                                                  const SizedBox(height: 8),
-                                                  commonText("Total Payment ",
-                                                      '\$${((_myProductController.productDetailsData.value?.details?.userTransactionInfo?.chargedAmount ?? 0) + (_myProductController.productDetailsData.value?.details?.userTransactionInfo?.amount ?? 0)).toStringAsFixed(1)}',
-                                                      spaceBetween: true,
-                                                      bold: true,
-                                                      highlight: true),
-                                                  // User Info
-                                                  myProduct(_myProductController
-                                                              .productDetailsData
-                                                              .value) ==
-                                                          MyProduct.SELL
-                                                      ? Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            const SizedBox(
-                                                                height: 14),
-                                                            const AppText(
-                                                              text: "User Info",
-                                                              color: AppColor
-                                                                  .themeColor,
-                                                              textSize: 15,
-                                                              style:
-                                                                  AppTextStyle
-                                                                      .title,
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 8),
-                                                            commonText(
-                                                              "Name: ",
-                                                              "${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.firstName ?? ''} ${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.lastName ?? ''}",
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 8),
-                                                            commonText(
-                                                              "Phone: ",
-                                                              "+${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.countryCode ?? ''} ${_myProductController.productDetailsData.value?.details?.userTransactionInfo?.userInfo?.phone ?? ''}",
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 8),
-                                                            commonText(
-                                                              "Email: ",
-                                                              _myProductController
-                                                                      .productDetailsData
-                                                                      .value
-                                                                      ?.details
-                                                                      ?.userTransactionInfo
-                                                                      ?.userInfo
-                                                                      ?.email ??
-                                                                  '',
-                                                            ),
-                                                          ],
-                                                        )
-                                                      : const SizedBox.shrink()
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        )
+                                  : myProduct(_myProductController
+                                              .productDetailsData.value) ==
+                                          MyProduct.SELL
+                                      ? soldProductPaymentStatus(
+                                          _myProductController
+                                              .productDetailsData.value)
                                       : const SizedBox.shrink(),
-                              //
                             ],
                           ),
                         ],
@@ -649,16 +532,102 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
     );
   }
 
+  Widget soldProductPaymentStatus(ProductDetailsData? data) {
+    double hzpadding = 20;
+    return Column(
+      children: [
+        Divider(color: AppColor.blackColor.withOpacity(0.1), thickness: 2),
+        const SizedBox(height: 8),
+        Padding(
+          padding: EdgeInsets.only(left: hzpadding, right: hzpadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const AppText(
+                text: "Payment Completed",
+                color: AppColor.green,
+                textSize: 15,
+                style: AppTextStyle.title,
+              ),
+              const SizedBox(height: 12),
+              commonText(
+                "Transaction ID: ",
+                data?.details?.userTransactionInfo?.transactionId ?? '',
+              ),
+              const SizedBox(height: 8),
+              commonText(
+                "Time: ",
+                AppDateTime.getDateTime(
+                    data?.details?.userTransactionInfo?.createdAt,
+                    format: DateFormat("HH:mm a, dd MMM yyyy")),
+              ),
+              const SizedBox(height: 18),
+              commonText(
+                "Price ",
+                '\$${(data?.details?.userTransactionInfo?.amount ?? 0).toStringAsFixed(1)}',
+                spaceBetween: true,
+              ),
+              const SizedBox(height: 8),
+              commonText(
+                "Charge ",
+                '\$${(data?.details?.userTransactionInfo?.chargedAmount ?? 0).toStringAsFixed(1)}',
+                spaceBetween: true,
+              ),
+              const SizedBox(height: 8),
+              commonText("Total Payment ",
+                  '\$${((data?.details?.userTransactionInfo?.chargedAmount ?? 0) + (data?.details?.userTransactionInfo?.amount ?? 0)).toStringAsFixed(1)}',
+                  spaceBetween: true, bold: true, highlight: true),
+              // User Info
+              myProduct(data) == MyProduct.SELL
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 14),
+                        const AppText(
+                          text: "User Info",
+                          color: AppColor.themeColor,
+                          textSize: 15,
+                          style: AppTextStyle.title,
+                        ),
+                        const SizedBox(height: 8),
+                        commonText(
+                          "Name: ",
+                          "${data?.details?.userTransactionInfo?.userInfo?.firstName ?? ''} ${data?.details?.userTransactionInfo?.userInfo?.lastName ?? ''}",
+                        ),
+                        const SizedBox(height: 8),
+                        commonText(
+                          "Phone: ",
+                          "+${data?.details?.userTransactionInfo?.userInfo?.countryCode ?? ''} ${data?.details?.userTransactionInfo?.userInfo?.phone ?? ''}",
+                        ),
+                        const SizedBox(height: 8),
+                        commonText(
+                          "Email: ",
+                          data?.details?.userTransactionInfo?.userInfo?.email ??
+                              '',
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink()
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   /// Product Category
   MyProduct myProduct(ProductDetailsData? product) {
     UserTransactionInfo? userTransactionInfo = _myProductController
         .productDetailsData.value?.details?.userTransactionInfo;
     if (userTransactionInfo == null) {
+      AppPrint.info("Product Type: ${MyProduct.NEW}");
       return MyProduct.NEW;
     }
     if (userTransactionInfo.userId == UserStoredInfo().userInfo?.id) {
+      AppPrint.info("Product Type: ${MyProduct.BUY}");
       return MyProduct.BUY;
     }
+    AppPrint.info("Product Type: ${MyProduct.SELL}");
     return MyProduct.SELL;
   }
 

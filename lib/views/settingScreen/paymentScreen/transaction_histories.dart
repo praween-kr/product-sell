@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_controller/settings/transaction_controller.dart';
-import 'package:oninto_flutter/model/transaction_model.dart';
+import 'package:oninto_flutter/model/payment/transaction_model.dart';
 import 'package:oninto_flutter/service/apis.dart';
 import 'package:oninto_flutter/utils/appbar.dart';
 import 'package:oninto_flutter/utils/date_time_formates.dart';

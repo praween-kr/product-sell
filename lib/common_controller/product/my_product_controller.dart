@@ -3,6 +3,7 @@ import 'package:oninto_flutter/model/product/my_purchase_share_details_model.dar
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
+import 'package:oninto_flutter/utils/app_type_status.dart';
 
 import '../../model/product/my_purchase_share_model.dart';
 import '../../model/product/product_fav_view_model.dart';
@@ -19,6 +20,7 @@ class MyProductController extends GetxController {
   var myPhysicalProducts = <Product>[].obs;
   //Product Details
   var productDetailsData = Rx<ProductDetailsData?>(null);
+  var shippingProductStatus = Rx<int?>(null);
 
   /// ------ API Call ------
   getMyProducts(
@@ -120,5 +122,13 @@ class MyProductController extends GetxController {
         loadingData.value = loading;
       },
     );
+  }
+
+  // Shipping product status update by seller -- shipped from seller
+  shippingProductStatusUpdate(bool shipped) async {
+    bool status = await ApiRequests.shippedPoductStatusUpdate(shipped
+        ? ProductShippingStatus.shippedFromSeller
+        : ProductShippingStatus.pending);
+    return status;
   }
 }
