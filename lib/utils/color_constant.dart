@@ -18,6 +18,7 @@ class AppColor {
   static const red = Color(0xFFF51303);
   static const blue = Colors.blue;
   static const green = Colors.green;
+  static const orange = Colors.orange;
 
   static const TextStyle defaultDateTextStyle = TextStyle(
     color: text1,

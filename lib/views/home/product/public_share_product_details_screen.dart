@@ -179,7 +179,10 @@ class PublicShareProductDetails extends StatelessWidget {
                                       input: _controller.sharesInput,
                                       buynow: () {
                                         Get.back();
-                                        _controller.emitPurchageProductShare();
+                                        _controller.emitPurchageProductShare(
+                                            _controller.productDetailsData.value
+                                                    ?.details?.totalShare ??
+                                                0);
                                       },
                                     );
                                   },

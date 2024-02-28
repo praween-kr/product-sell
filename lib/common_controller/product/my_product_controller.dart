@@ -3,6 +3,7 @@ import 'package:oninto_flutter/model/product/my_purchase_share_details_model.dar
 import 'package:oninto_flutter/model/product/product_details_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
 import 'package:oninto_flutter/service/api_requests.dart';
+import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_type_status.dart';
 
 import '../../model/product/my_purchase_share_model.dart';
@@ -66,6 +67,9 @@ class MyProductController extends GetxController {
 
   getProductDetails(String productId) async {
     await ApiRequests.productDetails(productId, data: (data) {
+      currentShippedProductStatus.value =
+          data?.details?.userTransactionInfo?.shippedProductStatus ??
+              ProductShippingStatus.pending;
       productDetailsData.value = data;
     }, loading: (loading) {
       loadingData.value = loading;
@@ -125,10 +129,20 @@ class MyProductController extends GetxController {
   }
 
   // Shipping product status update by seller -- shipped from seller
-  shippingProductStatusUpdate(bool shipped) async {
-    bool status = await ApiRequests.shippedPoductStatusUpdate(shipped
-        ? ProductShippingStatus.shippedFromSeller
-        : ProductShippingStatus.pending);
-    return status;
+  var currentShippedProductStatus = Rx<int>(ProductShippingStatus.pending);
+  shippingProductStatusUpdate({
+    required String productId,
+    required String transactionId,
+    required int shippedStatus,
+  }) async {
+    bool success = await ApiRequests.shippedPoductStatusUpdate(
+        productId: productId,
+        shippedProductStatus: shippedStatus,
+        transactionId: transactionId);
+    if (success) {
+      AppPrint.info("Successfully updated shipping product status");
+      currentShippedProductStatus.value = shippedStatus;
+    }
+    return success;
   }
 }

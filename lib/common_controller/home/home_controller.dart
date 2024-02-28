@@ -385,17 +385,24 @@ class HomeCatProductController extends GetxController
   }
 
   var makingPayment = false.obs;
-  emitPurchageProductShare() {
+  emitPurchageProductShare(int totalShares) {
     // if (!makingPayment.value) {
     makingPayment.value = true;
     if (productDetailsData.value?.details?.id != null &&
         productDetailsData.value?.details?.price != null) {
       if (sharesInput.text.trim() == '' ||
           int.parse(sharesInput.text.trim()) <= 0) {
+        sharesInput.clear();
         AppToast.show("Please add share quantity");
         return;
       } else if ((sharesInput.text.trim())[0] == '0') {
+        sharesInput.clear();
         AppToast.show("Please enter valid share quantity");
+        return;
+      } else if (int.parse((sharesInput.text.trim())) > totalShares) {
+        sharesInput.clear();
+        AppToast.show(
+            "Please enter share quantity less then $totalShares shares");
         return;
       }
       double price = double.parse(
@@ -408,6 +415,7 @@ class HomeCatProductController extends GetxController
         productId: (productDetailsData.value?.details?.id ?? '').toString(),
         type: TypeOfProduct.share,
         success: (transactionId) {
+          sharesInput.clear();
           // After Success of payment
           // Purchase Share Socket Emit
           AppLoader.show();

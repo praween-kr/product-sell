@@ -222,393 +222,394 @@ class CategoryWiseProductsScreen extends StatelessWidget {
                       : Padding(
                           padding: const EdgeInsets.only(bottom: 40, top: 10),
                           child: Obx(
-                            () => Stack(children: [
-                              _categoriesController.products.isEmpty ||
-                                      _categoriesController
-                                              .swapingIndex.value >=
-                                          _categoriesController.products.length
-                                  ? SizedBox(
-                                      height: Get.height,
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        alignment: Alignment.bottomCenter,
-                                        children: [
-                                          Container(
-                                            height: double.infinity,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.bottomCenter,
-                                                end: Alignment.topCenter,
-                                                colors: <Color>[
-                                                  Colors.black.withOpacity(0.6),
-                                                  // Colors.black.withOpacity(0.3),
-                                                  Colors.black.withOpacity(0.0),
-                                                ],
-                                                tileMode: TileMode.mirror,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(28),
-                                                bottomLeft: Radius.circular(28),
-                                              ),
-                                            ),
-                                          ),
-                                          EmptyWidgets.simple(),
-                                          GestureDetector(
-                                            onTap: () async {
-                                              _categoriesController
-                                                  .swapingIndex.value = 0;
-                                              await _categoriesController
-                                                  .getProducts(
-                                                productType: 2,
-                                              );
-                                            },
-                                            child: Container(
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 80.0),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 14,
-                                                      vertical: 12),
-                                              decoration: BoxDecoration(
-                                                  color: AppColor.appColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              child: const Icon(
-                                                Icons.refresh,
-                                                color: Colors.white,
-                                                size: 28,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : SwipableStack(
-                                      onSwipeCompleted: (index, direction) {
-                                        AppPrint.all(
-                                            "Swipe Completed: $index, $direction ${_categoriesController.products.length}");
-                                      },
-                                      onWillMoveNext: (index, swipeDirection) {
-                                        // if (!(index !=
-                                        //     _categoriesController
-                                        //             .products.length -
-                                        //         1)) {
-                                        //   _categoriesController.getProducts(
-                                        //       limit: 1,
-                                        //       pageno: _categoriesController
-                                        //           .products.length);
-                                        // }
-                                        print(
-                                            "${_categoriesController.products.length} -> $index");
+                            () => Stack(
+                              children: [
+                                _categoriesController.products.isEmpty ||
                                         _categoriesController
-                                            .swapingIndex.value = index;
-
-                                        return true;
-                                      },
-                                      builder: (context, properties) {
-                                        var product =
-                                            _categoriesController.products[
-                                                properties.index %
-                                                    _categoriesController
-                                                        .products.length];
-                                        String img = "";
-                                        if ((product.productImages ?? [])
-                                            .isNotEmpty) {
-                                          img = product
-                                                  .productImages?.first.image ??
-                                              '';
-                                        }
-                                        print(
-                                            "---->>>> ${_categoriesController.products.length} -> ${properties.index}");
-                                        return SizedBox(
-                                          height: Get.height,
-                                          child: Stack(
-                                            clipBehavior: Clip.none,
-                                            alignment: Alignment.bottomCenter,
-                                            children: [
-                                              AppBlurWidget.child(
-                                                height: Get.height,
-                                                child: AppImage.view(
-                                                    "${ImageBaseUrls.product}$img",
-                                                    fit: BoxFit.contain,
-                                                    width: double.infinity),
-                                                blurChild: AppImage.view(
-                                                    "${ImageBaseUrls.product}$img",
-                                                    fit: BoxFit.cover,
-                                                    height: Get.height),
-                                              ),
-                                              // Details
-                                              Container(
-                                                height: Get.height * 0.45,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin:
-                                                        Alignment.bottomCenter,
-                                                    end: Alignment.topCenter,
-                                                    colors: <Color>[
-                                                      Colors.black
-                                                          .withOpacity(0.6),
-                                                      Colors.black
-                                                          .withOpacity(0.3),
-                                                      Colors.black
-                                                          .withOpacity(0.0),
-                                                    ],
-                                                    tileMode: TileMode.mirror,
-                                                  ),
-                                                  // color:
-                                                  //     Colors.black.withOpacity(0.3),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(28),
-                                                    bottomLeft:
-                                                        Radius.circular(28),
-                                                  ),
+                                                .swapingIndex.value >=
+                                            _categoriesController
+                                                .products.length
+                                    ? SizedBox(
+                                        height: Get.height,
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          alignment: Alignment.bottomCenter,
+                                          children: [
+                                            Container(
+                                              height: double.infinity,
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.bottomCenter,
+                                                  end: Alignment.topCenter,
+                                                  colors: <Color>[
+                                                    Colors.black
+                                                        .withOpacity(0.6),
+                                                    // Colors.black.withOpacity(0.3),
+                                                    Colors.black
+                                                        .withOpacity(0.0),
+                                                  ],
+                                                  tileMode: TileMode.mirror,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  bottomRight:
+                                                      Radius.circular(28),
+                                                  bottomLeft:
+                                                      Radius.circular(28),
                                                 ),
                                               ),
-                                              Positioned(
-                                                bottom: Get.height * .1,
-                                                left: 20,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        // controller.sub.value = true;
-                                                        _categoriesController
-                                                            .listViewTab
-                                                            .value = false;
-                                                        //  controller.touchTap.value = true;
-                                                        Get.toNamed(Routes
-                                                            .bidingProductDetails);
-                                                      },
-                                                      child: AppText(
-                                                        text:
-                                                            product.name ?? '',
-                                                        textSize: 18,
-                                                        fontFamily: "Poppins",
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
+                                            ),
+                                            EmptyWidgets.simple(),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                _categoriesController
+                                                    .swapingIndex.value = 0;
+                                                await _categoriesController
+                                                    .getProducts(
+                                                  productType: 2,
+                                                );
+                                              },
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 80.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 14,
+                                                        vertical: 12),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor.appColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                child: const Icon(
+                                                  Icons.refresh,
+                                                  color: Colors.white,
+                                                  size: 28,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : SwipableStack(
+                                        onSwipeCompleted: (index, direction) {
+                                          AppPrint.all(
+                                              "Swipe Completed: $index, $direction ${_categoriesController.products.length}");
+                                        },
+                                        onWillMoveNext:
+                                            (index, swipeDirection) {
+                                          // if (!(index !=
+                                          //     _categoriesController
+                                          //             .products.length -
+                                          //         1)) {
+                                          //   _categoriesController.getProducts(
+                                          //       limit: 1,
+                                          //       pageno: _categoriesController
+                                          //           .products.length);
+                                          // }
+                                          print(
+                                              "${_categoriesController.products.length} -> $index");
+                                          _categoriesController
+                                              .swapingIndex.value = index;
+
+                                          return true;
+                                        },
+                                        builder: (context, properties) {
+                                          var product =
+                                              _categoriesController.products[
+                                                  properties.index %
+                                                      _categoriesController
+                                                          .products.length];
+                                          String img = "";
+                                          if ((product.productImages ?? [])
+                                              .isNotEmpty) {
+                                            img = product.productImages?.first
+                                                    .image ??
+                                                '';
+                                          }
+                                          return SizedBox(
+                                            height: Get.height,
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              alignment: Alignment.bottomCenter,
+                                              children: [
+                                                AppBlurWidget.child(
+                                                  height: Get.height,
+                                                  child: AppImage.view(
+                                                      "${ImageBaseUrls.product}$img",
+                                                      fit: BoxFit.contain,
+                                                      width: double.infinity),
+                                                  blurChild: AppImage.view(
+                                                      "${ImageBaseUrls.product}$img",
+                                                      fit: BoxFit.cover,
+                                                      height: Get.height),
+                                                ),
+                                                // Details
+                                                Container(
+                                                  height: Get.height * 0.45,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      begin: Alignment
+                                                          .bottomCenter,
+                                                      end: Alignment.topCenter,
+                                                      colors: <Color>[
+                                                        Colors.black
+                                                            .withOpacity(0.6),
+                                                        Colors.black
+                                                            .withOpacity(0.3),
+                                                        Colors.black
+                                                            .withOpacity(0.0),
+                                                      ],
+                                                      tileMode: TileMode.mirror,
                                                     ),
-                                                    const SizedBox(height: 10),
-                                                    AppText(
-                                                      text:
-                                                          "\$${product.price ?? '0.0'}",
-                                                      textSize: 18,
-                                                      color: Colors.white,
-                                                      fontFamily: "Poppins",
-                                                      fontWeight:
-                                                          FontWeight.w400,
+                                                    // color:
+                                                    //     Colors.black.withOpacity(0.3),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(28),
+                                                      bottomLeft:
+                                                          Radius.circular(28),
                                                     ),
-                                                    const SizedBox(height: 10),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        gotoProductDetaiesScreen(
-                                                            product);
-                                                        // timerDialog(
-                                                        //   product,
-                                                        //   endTime: DateTime.parse(
-                                                        //       "2023-12-10 18:37:00"),
-                                                        //   bidNow: () {
-                                                        //     Get.back();
-                                                        //     AppDialogs
-                                                        //         .bidHistoryDialog(
-                                                        //       bidingData:
-                                                        //           AddBidsHistory(),
-                                                        //       confirm: () {
-                                                        //         Get.back();
-                                                        //         _bidNow((product
-                                                        //                     .id ??
-                                                        //                 '')
-                                                        //             .toString());
-                                                        //       },
-                                                        //       seeAll: () {
-                                                        //         Get.toNamed(Routes
-                                                        //             .biddingHistoryScreen);
-                                                        //       },
-                                                        //     );
-                                                        //   },
-                                                        // );
-                                                      },
-                                                      child: CommonButton(
-                                                        height: 40,
-                                                        radius: 15,
-                                                        color:
-                                                            AppColor.appColor,
-                                                        text: product.type ==
-                                                                TypeOfProduct
-                                                                    .share
-                                                            ? "Buy Share"
-                                                            : product.sellOption ==
-                                                                    ProductType
-                                                                        .fixedPrice
-                                                                ? "Buy"
-                                                                : "Bid \$${product.lastBidInfo == null ? product.price ?? '0.0' : product.lastBidInfo?.bidPrice ?? '0.0'}",
-                                                        textStyle:
-                                                            const TextStyle(
-                                                          fontSize: 15,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  bottom: Get.height * .1,
+                                                  left: 20,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          // controller.sub.value = true;
+                                                          _categoriesController
+                                                              .listViewTab
+                                                              .value = false;
+                                                          //  controller.touchTap.value = true;
+                                                          Get.toNamed(Routes
+                                                              .bidingProductDetails);
+                                                        },
+                                                        child: AppText(
+                                                          text: product.name ??
+                                                              '',
+                                                          textSize: 18,
                                                           fontFamily: "Poppins",
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         ),
                                                       ),
-                                                    ),
-                                                    // const SizedBox(height: 10),
-                                                    // AppText(
-                                                    //   text:
-                                                    //       "min \$${product.minimumSellingPrice ?? '0.0'}",
-                                                    //   textSize: 10,
-                                                    //   color: Colors.white,
-                                                    //   fontFamily: "Poppins",
-                                                    //   fontWeight:
-                                                    //       FontWeight.w400,
-                                                    // ),
-                                                    product.sellOption ==
-                                                            ProductType
-                                                                .fixedPrice
-                                                        ? const SizedBox
-                                                            .shrink()
-                                                        : const SizedBox(
-                                                            height: 10),
-                                                    product.sellOption ==
-                                                            ProductType
-                                                                .fixedPrice
-                                                        ? const SizedBox
-                                                            .shrink()
-                                                        : GestureDetector(
-                                                            onTap: () {
-                                                              Get.toNamed(Routes
-                                                                  .biddingHistoryScreen);
-                                                            },
-                                                            child: RichText(
-                                                                text: TextSpan(
-                                                                    text: (product.productBidCount ??
-                                                                                0) <
-                                                                            2
-                                                                        ? "${product.productBidCount ?? 0} Bid "
-                                                                        : "${product.productBidCount ?? 0} Bids ",
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          10,
-                                                                      fontFamily:
-                                                                          "Poppins",
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                    ),
-                                                                    children: [
-                                                                  TextSpan(
-                                                                      text:
-                                                                          "Show bid history",
-                                                                      style: const TextStyle(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontSize:
-                                                                              10,
-                                                                          fontFamily:
-                                                                              "Poppins",
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          decoration: TextDecoration
-                                                                              .underline),
-                                                                      recognizer:
-                                                                          TapGestureRecognizer()
-                                                                            ..onTap =
-                                                                                () {
-                                                                              if (HomeCatProductController().initialized) {
-                                                                                Get.find<HomeCatProductController>().getBidHistories(productId: (product.id ?? '').toString());
-                                                                              } else {
-                                                                                Get.put(HomeCatProductController()).getBidHistories(productId: (product.id ?? '').toString());
-                                                                              }
-
-                                                                              Get.toNamed(Routes.biddingHistoryScreen);
-                                                                            })
-                                                                ])),
-                                                          )
-                                                  ],
-                                                ),
-                                              ),
-
-                                              /// like and Dislike Heart View
-                                              Positioned(
-                                                bottom: -17,
-                                                child: Obx(
-                                                  () => Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      likeDeslikeBtn(
-                                                        icon: const IconData(
-                                                            0xf032e,
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      AppText(
+                                                        text:
+                                                            "\$${product.price ?? '0.0'}",
+                                                        textSize: 18,
+                                                        color: Colors.white,
+                                                        fontFamily: "Poppins",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          gotoProductDetaiesScreen(
+                                                              product);
+                                                          // timerDialog(
+                                                          //   product,
+                                                          //   endTime: DateTime.parse(
+                                                          //       "2023-12-10 18:37:00"),
+                                                          //   bidNow: () {
+                                                          //     Get.back();
+                                                          //     AppDialogs
+                                                          //         .bidHistoryDialog(
+                                                          //       bidingData:
+                                                          //           AddBidsHistory(),
+                                                          //       confirm: () {
+                                                          //         Get.back();
+                                                          //         _bidNow((product
+                                                          //                     .id ??
+                                                          //                 '')
+                                                          //             .toString());
+                                                          //       },
+                                                          //       seeAll: () {
+                                                          //         Get.toNamed(Routes
+                                                          //             .biddingHistoryScreen);
+                                                          //       },
+                                                          //     );
+                                                          //   },
+                                                          // );
+                                                        },
+                                                        child: CommonButton(
+                                                          height: 40,
+                                                          radius: 15,
+                                                          color:
+                                                              AppColor.appColor,
+                                                          text: product.type ==
+                                                                  TypeOfProduct
+                                                                      .share
+                                                              ? "Buy Share"
+                                                              : product.sellOption ==
+                                                                      ProductType
+                                                                          .fixedPrice
+                                                                  ? "Buy"
+                                                                  : "Bid \$${product.lastBidInfo == null ? product.price ?? '0.0' : product.lastBidInfo?.bidPrice ?? '0.0'}",
+                                                          textStyle:
+                                                              const TextStyle(
+                                                            fontSize: 15,
                                                             fontFamily:
-                                                                'MaterialIcons'),
-                                                        isFav: !_isFavourite(
-                                                            _categoriesController,
-                                                            product),
-                                                        onClick: () {
-                                                          if (_isFavourite(
-                                                              _categoriesController,
-                                                              product)) {
-                                                            _categoriesController
-                                                                .addProductAsFavourite(
-                                                                    (product.id ??
-                                                                            '')
-                                                                        .toString());
-                                                          }
-                                                        },
+                                                                "Poppins",
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      SizedBox(
-                                                          width:
-                                                              Get.width * 0.18),
-                                                      likeDeslikeBtn(
-                                                        color: AppColor.red,
-                                                        icon: Icons.favorite,
-                                                        isFav: _isFavourite(
-                                                            _categoriesController,
-                                                            product),
-                                                        onClick: () {
-                                                          if (!_isFavourite(
-                                                              _categoriesController,
-                                                              product)) {
-                                                            _categoriesController
-                                                                .addProductAsFavourite(
-                                                              (product.id ?? '')
-                                                                  .toString(),
-                                                            );
-                                                          }
-                                                        },
-                                                      ),
+                                                      // const SizedBox(height: 10),
+                                                      // AppText(
+                                                      //   text:
+                                                      //       "min \$${product.minimumSellingPrice ?? '0.0'}",
+                                                      //   textSize: 10,
+                                                      //   color: Colors.white,
+                                                      //   fontFamily: "Poppins",
+                                                      //   fontWeight:
+                                                      //       FontWeight.w400,
+                                                      // ),
+                                                      product.sellOption ==
+                                                              ProductType
+                                                                  .fixedPrice
+                                                          ? const SizedBox
+                                                              .shrink()
+                                                          : const SizedBox(
+                                                              height: 10),
+                                                      product.sellOption ==
+                                                              ProductType
+                                                                  .fixedPrice
+                                                          ? const SizedBox
+                                                              .shrink()
+                                                          : GestureDetector(
+                                                              onTap: () {
+                                                                Get.toNamed(Routes
+                                                                    .biddingHistoryScreen);
+                                                              },
+                                                              child: RichText(
+                                                                  text: TextSpan(
+                                                                      text: (product.productBidCount ?? 0) < 2 ? "${product.productBidCount ?? 0} Bid " : "${product.productBidCount ?? 0} Bids ",
+                                                                      style: const TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            10,
+                                                                        fontFamily:
+                                                                            "Poppins",
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                      ),
+                                                                      children: [
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "Show bid history",
+                                                                        style: const TextStyle(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontFamily:
+                                                                                "Poppins",
+                                                                            fontWeight:
+                                                                                FontWeight.w400,
+                                                                            decoration: TextDecoration.underline),
+                                                                        recognizer: TapGestureRecognizer()
+                                                                          ..onTap = () {
+                                                                            if (HomeCatProductController().initialized) {
+                                                                              Get.find<HomeCatProductController>().getBidHistories(productId: (product.id ?? '').toString());
+                                                                            } else {
+                                                                              Get.put(HomeCatProductController()).getBidHistories(productId: (product.id ?? '').toString());
+                                                                            }
+
+                                                                            Get.toNamed(Routes.biddingHistoryScreen);
+                                                                          })
+                                                                  ])),
+                                                            )
                                                     ],
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                              _categoriesController.loadingData.value ||
-                                      _categoriesController
-                                          .nextPageIsLoading.value
-                                  ? AppLoader.showWidget()
-                                  : const SizedBox.shrink(),
-                            ]),
+
+                                                /// like and Dislike Heart View
+                                                Positioned(
+                                                  bottom: -17,
+                                                  child: Obx(
+                                                    () => Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        likeDeslikeBtn(
+                                                          icon: const IconData(
+                                                              0xf032e,
+                                                              fontFamily:
+                                                                  'MaterialIcons'),
+                                                          isFav: !_isFavourite(
+                                                              _categoriesController,
+                                                              product),
+                                                          onClick: () {
+                                                            if (_isFavourite(
+                                                                _categoriesController,
+                                                                product)) {
+                                                              _categoriesController
+                                                                  .addProductAsFavourite(
+                                                                      (product.id ??
+                                                                              '')
+                                                                          .toString());
+                                                            }
+                                                          },
+                                                        ),
+                                                        SizedBox(
+                                                            width: Get.width *
+                                                                0.18),
+                                                        likeDeslikeBtn(
+                                                          color: AppColor.red,
+                                                          icon: Icons.favorite,
+                                                          isFav: _isFavourite(
+                                                              _categoriesController,
+                                                              product),
+                                                          onClick: () {
+                                                            if (!_isFavourite(
+                                                                _categoriesController,
+                                                                product)) {
+                                                              _categoriesController
+                                                                  .addProductAsFavourite(
+                                                                (product.id ??
+                                                                        '')
+                                                                    .toString(),
+                                                              );
+                                                            }
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                _categoriesController.loadingData.value ||
+                                        _categoriesController
+                                            .nextPageIsLoading.value
+                                    ? AppLoader.showWidget()
+                                    : const SizedBox.shrink(),
+                              ],
+                            ),
                           ),
                         ),
                 ),

@@ -6,7 +6,7 @@ import 'package:oninto_flutter/generated/assets.dart';
 
 class AppToast {
   static show(String msg, {Color? bgColor}) {
-    if(msg != "null"){
+    if (msg != "null") {
       Fluttertoast.showToast(
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
@@ -16,7 +16,6 @@ class AppToast {
         fontSize: 14.0,
       );
     }
-
   }
 }
 

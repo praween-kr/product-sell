@@ -1,6 +1,7 @@
 import 'package:oninto_flutter/Socket/model/group/group_message_model.dart';
 import 'package:oninto_flutter/model/home/category_model.dart';
 import 'package:oninto_flutter/model/product/product_model.dart';
+import 'package:oninto_flutter/model/settings/address_model.dart';
 
 import '../auth/user_info_model.dart';
 import 'product_image_model.dart';
@@ -328,6 +329,7 @@ class UserTransactionInfo {
   int? userId;
   int? productId;
   String? paymentStatus;
+  int? shippedProductStatus;
   String? transactionId;
   int? amount;
   int? chargedAmount;
@@ -336,16 +338,19 @@ class UserTransactionInfo {
   String? createdAt;
   String? updatedAt;
   UserBasicInfo? userInfo;
+  AddressModel? shippingAddress;
 
   UserTransactionInfo(
       {this.id,
       this.userId,
       this.productId,
       this.paymentStatus,
+      this.shippedProductStatus,
       this.transactionId,
       this.amount,
       this.chargedAmount,
       this.shpingAddressId,
+      this.shippingAddress,
       this.allJSON,
       this.createdAt,
       this.updatedAt,
@@ -356,6 +361,7 @@ class UserTransactionInfo {
     userId = json['userId'];
     productId = json['productId'];
     paymentStatus = json['payment_status'];
+    shippedProductStatus = json['shipped_product_status'];
     transactionId = json['transaction_id'];
     amount = json['amount'];
     chargedAmount = json['chargedAmount'];
@@ -365,6 +371,9 @@ class UserTransactionInfo {
     updatedAt = json['updatedAt'];
     userInfo =
         json['user'] != null ? UserBasicInfo.fromJson(json['user']) : null;
+    shippingAddress = json['userAddress'] != null
+        ? AddressModel.fromJson(json['userAddress'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -373,6 +382,7 @@ class UserTransactionInfo {
     data['userId'] = userId;
     data['productId'] = productId;
     data['payment_status'] = paymentStatus;
+    data['shipped_product_status'] = shippedProductStatus;
     data['transaction_id'] = transactionId;
     data['amount'] = amount;
     data['chargedAmount'] = chargedAmount;
@@ -382,6 +392,9 @@ class UserTransactionInfo {
     data['updatedAt'] = updatedAt;
     if (userInfo != null) {
       data['user'] = userInfo!.toJson();
+    }
+    if (shippingAddress != null) {
+      data['userAddress'] = shippingAddress!.toJson();
     }
     return data;
   }

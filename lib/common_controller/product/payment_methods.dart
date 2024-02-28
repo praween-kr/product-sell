@@ -37,7 +37,7 @@ class AppPaymentMethods {
     required double amount,
     required String productId,
     required int type,
-    String? addressId,
+    String? shpingAddressId,
     int? shareQty,
     required Function(String?) success,
   }) async {
@@ -51,7 +51,7 @@ class AppPaymentMethods {
     await _paymentApi(
         productId: productId,
         amount: amount,
-        shpingAddressId: addressId,
+        shpingAddressId: shpingAddressId,
         chargeAccount: 5.0,
         type: type,
         shareQty: shareQty,

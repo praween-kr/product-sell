@@ -940,11 +940,19 @@ class ApiRequests {
 
   // Shipped Poduct Status Update
   // 0 shipping pending, 1 for shipping started and 2 for shipped to buyer
-  static shippedPoductStatusUpdate(int shippedProductStatus) async {
+  static shippedPoductStatusUpdate(
+      {required String productId,
+      required String transactionId,
+      required int shippedProductStatus}) async {
     AppLoader.show();
     var data = await BaseApiCall().postReq(AppApis.shippedPoductStatusUpdate,
-        data: {"shipped_product_status": shippedProductStatus},
+        data: {
+          "productId": productId,
+          "id": transactionId,
+          "shipped_product_status": shippedProductStatus
+        },
         showToast: true);
+    AppPrint.info("Shipping Product Status Updated: $data");
     if (data != null) {
       AppLoader.hide();
       return true;

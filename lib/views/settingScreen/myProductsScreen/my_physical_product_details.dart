@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:oninto_flutter/common_controller/home/categories_controller.dart';
 import 'package:oninto_flutter/common_controller/product/my_product_controller.dart';
 import 'package:oninto_flutter/common_controller/product/sell_item_controller.dart';
 import 'package:oninto_flutter/generated/assets.dart';
+import 'package:oninto_flutter/model/settings/address_model.dart';
 import 'package:oninto_flutter/service/local/user_info_global.dart';
 import 'package:oninto_flutter/utils/app_print.dart';
 import 'package:oninto_flutter/utils/app_text.dart';
@@ -13,11 +15,13 @@ import 'package:oninto_flutter/utils/date_time_formates.dart';
 import 'package:oninto_flutter/utils/details_images_view.dart';
 import 'package:oninto_flutter/utils/shimmer_widget.dart';
 
+import '../../../model/auth/user_info_model.dart';
 import '../../../model/product/product_details_model.dart';
 import '../../../routes/routes.dart';
 import '../../../utils/appbar.dart';
 import '../../../utils/color_constant.dart';
 import '../../../utils/common_button.dart';
+import '../../../utils/google/pick_location_map.dart';
 
 class MyPysicalProductDetailScreen extends StatelessWidget {
   MyPysicalProductDetailScreen({super.key});
@@ -263,18 +267,25 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                           ?.brand ??
                                                       ''),
                                               const SizedBox(height: 10),
-                                              (_myProductController
+                                              _myProductController
                                                               .productDetailsData
                                                               .value
                                                               ?.details
-                                                              ?.startDate ==
-                                                          null ||
-                                                      _myProductController
-                                                              .productDetailsData
-                                                              .value
-                                                              ?.details
-                                                              ?.bidTime ==
-                                                          null)
+                                                              ?.sellOption ==
+                                                          ProductType
+                                                              .fixedPrice ||
+                                                      (_myProductController
+                                                                  .productDetailsData
+                                                                  .value
+                                                                  ?.details
+                                                                  ?.startDate ==
+                                                              null ||
+                                                          _myProductController
+                                                                  .productDetailsData
+                                                                  .value
+                                                                  ?.details
+                                                                  ?.bidTime ==
+                                                              null)
                                                   ? const SizedBox.shrink()
                                                   : commonText(
                                                       "Bid Start Time",
@@ -426,7 +437,45 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Text("------0fdj;gkd;gdfsgdfgdfgdfg"),
+                              _myProductController.productDetailsData.value
+                                              ?.details?.userTransactionInfo !=
+                                          null &&
+                                      _myProductController
+                                              .productDetailsData
+                                              .value
+                                              ?.details
+                                              ?.userTransactionInfo
+                                              ?.userId ==
+                                          UserStoredInfo().userInfo?.id
+                                  ? buyProductPaymentStatus(
+                                      _myProductController
+                                          .productDetailsData.value,
+                                      _myProductController
+                                          .currentShippedProductStatus.value,
+                                      updateShippingStatus:
+                                          (int newSatatus) async {
+                                      await _myProductController
+                                          .shippingProductStatusUpdate(
+                                        productId: (_myProductController
+                                                    .productDetailsData
+                                                    .value
+                                                    ?.details
+                                                    ?.id ??
+                                                '')
+                                            .toString(),
+                                        transactionId: (_myProductController
+                                                    .productDetailsData
+                                                    .value
+                                                    ?.details
+                                                    ?.userTransactionInfo
+                                                    ?.id ??
+                                                '')
+                                            .toString(),
+                                        shippedStatus: newSatatus,
+                                      );
+                                    })
+                                  : const SizedBox.shrink(),
+                              const SizedBox(height: 8),
                               myProduct(_myProductController
                                           .productDetailsData.value) ==
                                       MyProduct.NEW
@@ -459,49 +508,7 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                                 null
                                             ? const SizedBox.shrink()
                                             : GestureDetector(
-                                                onTap: () {
-                                                  //Get.toNamed(Routes.editItemScreen);
-                                                  if (CategoriesController()
-                                                      .initialized) {
-                                                    Get.find<
-                                                            CategoriesController>()
-                                                        .getCategories();
-                                                  } else {
-                                                    Get.put(CategoriesController())
-                                                        .getCategories();
-                                                  }
-                                                  //
-                                                  SellItemController sc;
-                                                  if (SellItemController()
-                                                      .initialized) {
-                                                    sc = Get.find<
-                                                        SellItemController>();
-                                                  } else {
-                                                    sc = Get.put(
-                                                        SellItemController());
-                                                  }
-                                                  sc.tabController.value = 1;
-                                                  sc.initialData(
-                                                      _myProductController
-                                                          .productDetailsData
-                                                          .value
-                                                          ?.details);
-
-                                                  Get.toNamed(
-                                                          Routes.sellItemScreen,
-                                                          arguments: 'edit')!
-                                                      .then((value) async {
-                                                    await _myProductController
-                                                        .getProductDetails(
-                                                            (_myProductController
-                                                                        .productDetailsData
-                                                                        .value
-                                                                        ?.details
-                                                                        ?.id ??
-                                                                    '')
-                                                                .toString());
-                                                  });
-                                                },
+                                                onTap: updateProduct,
                                                 child: const CommonButton(
                                                   color: AppColor.appColor,
                                                   height: 57,
@@ -520,7 +527,32 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
                                           MyProduct.SELL
                                       ? soldProductPaymentStatus(
                                           _myProductController
-                                              .productDetailsData.value)
+                                              .productDetailsData.value,
+                                          _myProductController
+                                              .currentShippedProductStatus
+                                              .value,
+                                          updateShippingStatus:
+                                              (int newSatatus) async {
+                                          await _myProductController
+                                              .shippingProductStatusUpdate(
+                                            productId: (_myProductController
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.id ??
+                                                    '')
+                                                .toString(),
+                                            transactionId: (_myProductController
+                                                        .productDetailsData
+                                                        .value
+                                                        ?.details
+                                                        ?.userTransactionInfo
+                                                        ?.id ??
+                                                    '')
+                                                .toString(),
+                                            shippedStatus: newSatatus,
+                                          );
+                                        })
                                       : const SizedBox.shrink(),
                             ],
                           ),
@@ -532,9 +564,35 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget soldProductPaymentStatus(ProductDetailsData? data) {
+  void updateProduct() {
+    //Get.toNamed(Routes.editItemScreen);
+    if (CategoriesController().initialized) {
+      Get.find<CategoriesController>().getCategories();
+    } else {
+      Get.put(CategoriesController()).getCategories();
+    }
+    //
+    SellItemController sc;
+    if (SellItemController().initialized) {
+      sc = Get.find<SellItemController>();
+    } else {
+      sc = Get.put(SellItemController());
+    }
+    sc.tabController.value = 1;
+    sc.initialData(_myProductController.productDetailsData.value?.details);
+    Get.toNamed(Routes.sellItemScreen, arguments: 'edit')!.then((value) async {
+      await _myProductController.getProductDetails(
+          (_myProductController.productDetailsData.value?.details?.id ?? '')
+              .toString());
+    });
+  }
+
+  Widget buyProductPaymentStatus(ProductDetailsData? data, int? shippingStatus,
+      {required Function(int) updateShippingStatus}) {
+    AppPrint.all("shippingStatus---> $shippingStatus");
     double hzpadding = 20;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(color: AppColor.blackColor.withOpacity(0.1), thickness: 2),
         const SizedBox(height: 8),
@@ -543,76 +601,453 @@ class MyPysicalProductDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AppText(
-                text: "Payment Completed",
-                color: AppColor.green,
-                textSize: 15,
-                style: AppTextStyle.title,
-              ),
-              const SizedBox(height: 12),
-              commonText(
-                "Transaction ID: ",
-                data?.details?.userTransactionInfo?.transactionId ?? '',
-              ),
-              const SizedBox(height: 8),
-              commonText(
-                "Time: ",
-                AppDateTime.getDateTime(
-                    data?.details?.userTransactionInfo?.createdAt,
-                    format: DateFormat("HH:mm a, dd MMM yyyy")),
-              ),
-              const SizedBox(height: 18),
-              commonText(
-                "Price ",
-                '\$${(data?.details?.userTransactionInfo?.amount ?? 0).toStringAsFixed(1)}',
-                spaceBetween: true,
-              ),
-              const SizedBox(height: 8),
-              commonText(
-                "Charge ",
-                '\$${(data?.details?.userTransactionInfo?.chargedAmount ?? 0).toStringAsFixed(1)}',
-                spaceBetween: true,
-              ),
-              const SizedBox(height: 8),
-              commonText("Total Payment ",
-                  '\$${((data?.details?.userTransactionInfo?.chargedAmount ?? 0) + (data?.details?.userTransactionInfo?.amount ?? 0)).toStringAsFixed(1)}',
-                  spaceBetween: true, bold: true, highlight: true),
-              // User Info
-              myProduct(data) == MyProduct.SELL
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(
+                    text: "Shipping Status",
+                    color: AppColor.orange,
+                    textSize: 15,
+                    style: AppTextStyle.title,
+                  ),
+                  const SizedBox(height: 12),
+                  AppText(
+                    text: shippingStatus == ProductShippingStatus.receiveByBuyer
+                        ? "Product has successfully delivered"
+                        : "Product will be delivered",
+                    textSize: 12,
+                    color: AppColor.grey,
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColor.appColor, width: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
                       children: [
-                        const SizedBox(height: 14),
-                        const AppText(
-                          text: "User Info",
-                          color: AppColor.themeColor,
-                          textSize: 15,
-                          style: AppTextStyle.title,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              shippingStatus ==
+                                      ProductShippingStatus.receiveByBuyer
+                                  ? const SizedBox.shrink()
+                                  : AppText(
+                                      text: shippingStatus ==
+                                              ProductShippingStatus
+                                                  .shippedFromSeller
+                                          ? "Product shipped-\nAfter receiving your product please update"
+                                          : "Not shipped yet- ",
+                                      textSize: 12,
+                                      color: AppColor.grey,
+                                    ),
+                              const SizedBox(height: 5),
+                              Wrap(
+                                children: [
+                                  const AppText(
+                                    text: "Status- ",
+                                    textSize: 12,
+                                    color: AppColor.grey,
+                                  ),
+                                  AppText(
+                                    text: shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? "Pending"
+                                        : shippingStatus ==
+                                                ProductShippingStatus
+                                                    .receiveByBuyer
+                                            ? "Received"
+                                            : "Not shipped yet",
+                                    textSize: 12,
+                                    color: shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? AppColor.blue
+                                        : shippingStatus ==
+                                                ProductShippingStatus
+                                                    .receiveByBuyer
+                                            ? AppColor.green
+                                            : AppColor.red,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 8),
-                        commonText(
-                          "Name: ",
-                          "${data?.details?.userTransactionInfo?.userInfo?.firstName ?? ''} ${data?.details?.userTransactionInfo?.userInfo?.lastName ?? ''}",
-                        ),
-                        const SizedBox(height: 8),
-                        commonText(
-                          "Phone: ",
-                          "+${data?.details?.userTransactionInfo?.userInfo?.countryCode ?? ''} ${data?.details?.userTransactionInfo?.userInfo?.phone ?? ''}",
-                        ),
-                        const SizedBox(height: 8),
-                        commonText(
-                          "Email: ",
-                          data?.details?.userTransactionInfo?.userInfo?.email ??
-                              '',
-                        ),
+                        shippingStatus == ProductShippingStatus.pending ||
+                                shippingStatus ==
+                                    ProductShippingStatus.receiveByBuyer
+                            ? const SizedBox.shrink()
+                            : TextButton(
+                                onPressed: () => updateShippingStatus(
+                                    shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? ProductShippingStatus.receiveByBuyer
+                                        : ProductShippingStatus
+                                            .shippedFromSeller),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 0),
+                                  backgroundColor:
+                                      AppColor.orange.withOpacity(0.1),
+                                ),
+                                child: Text(
+                                  "Received",
+                                  style: TextStyle(
+                                    color: shippingStatus ==
+                                            ProductShippingStatus.receiveByBuyer
+                                        ? AppColor.grey
+                                        : AppColor.orange,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
                       ],
-                    )
-                  : const SizedBox.shrink()
+                    ),
+                  ),
+                  shippingAddress(
+                      data?.details?.userTransactionInfo?.shippingAddress),
+                  // User Info
+                  myProduct(data) == MyProduct.SELL
+                      ? buyerInfo(data?.details?.userTransactionInfo?.userInfo)
+                      : const SizedBox.shrink()
+                ],
+              ),
+              //
+              // shippingStatus == ProductShippingStatus.shippedFromSeller
+              //     ? const Text("Shipped from me")
+              //     : const SizedBox.shrink(),
+              const Divider(),
+              const SizedBox(height: 14),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(
+                    text: "Paied Successfullly",
+                    color: AppColor.green,
+                    textSize: 15,
+                    style: AppTextStyle.title,
+                  ),
+                  const SizedBox(height: 12),
+                  commonText(
+                    "Transaction ID: ",
+                    data?.details?.userTransactionInfo?.transactionId ?? '',
+                  ),
+                  const SizedBox(height: 8),
+                  commonText(
+                    "Time: ",
+                    AppDateTime.getDateTime(
+                        data?.details?.userTransactionInfo?.createdAt,
+                        format: DateFormat("HH:mm a, dd MMM yyyy")),
+                  ),
+                  const SizedBox(height: 8),
+                  commonText(
+                    "Price ",
+                    '\$${(data?.details?.userTransactionInfo?.amount ?? 0).toStringAsFixed(1)}',
+                    spaceBetween: true,
+                  ),
+                  const SizedBox(height: 8),
+                  commonText(
+                    "Charge ",
+                    '\$${(data?.details?.userTransactionInfo?.chargedAmount ?? 0).toStringAsFixed(1)}',
+                    spaceBetween: true,
+                  ),
+                  const SizedBox(height: 8),
+                  commonText("Total Payment ",
+                      '\$${((data?.details?.userTransactionInfo?.chargedAmount ?? 0) + (data?.details?.userTransactionInfo?.amount ?? 0)).toStringAsFixed(1)}',
+                      spaceBetween: true, bold: true, highlight: true),
+                ],
+              ),
             ],
           ),
         ),
       ],
     );
+  }
+
+  Widget soldProductPaymentStatus(ProductDetailsData? data, int? shippingStatus,
+      {required Function(int) updateShippingStatus}) {
+    AppPrint.all("shippingStatus---> $shippingStatus");
+    double hzpadding = 20;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(color: AppColor.blackColor.withOpacity(0.1), thickness: 2),
+        const SizedBox(height: 8),
+        Padding(
+          padding: EdgeInsets.only(left: hzpadding, right: hzpadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(
+                    text: "Shipping Status",
+                    color: AppColor.orange,
+                    textSize: 15,
+                    style: AppTextStyle.title,
+                  ),
+                  const SizedBox(height: 12),
+                  const AppText(
+                    text:
+                        "Your product have sold, you will be receive payment after shipped to buyer",
+                    textSize: 12,
+                    color: AppColor.grey,
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColor.appColor, width: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: shippingStatus ==
+                                        ProductShippingStatus.receiveByBuyer
+                                    ? "Your product has delivered on location"
+                                    : shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? "Product shipped-\nReceiver will be update soon"
+                                        : "Update status- Shipped",
+                                textSize: 12,
+                                color: AppColor.grey,
+                              ),
+                              const SizedBox(height: 5),
+                              Wrap(
+                                children: [
+                                  const AppText(
+                                    text: "Status- ",
+                                    textSize: 12,
+                                    color: AppColor.grey,
+                                  ),
+                                  AppText(
+                                    text: shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? "Pending"
+                                        : shippingStatus ==
+                                                ProductShippingStatus
+                                                    .receiveByBuyer
+                                            ? "Delivered"
+                                            : "Not shipped yet",
+                                    textSize: 13,
+                                    color: shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? AppColor.blue
+                                        : shippingStatus ==
+                                                ProductShippingStatus
+                                                    .receiveByBuyer
+                                            ? AppColor.green
+                                            : AppColor.red,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        shippingStatus == ProductShippingStatus.receiveByBuyer
+                            ? const SizedBox(height: 45)
+                            : TextButton(
+                                onPressed: () => updateShippingStatus(
+                                    shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? ProductShippingStatus.pending
+                                        : ProductShippingStatus
+                                            .shippedFromSeller),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 0),
+                                  backgroundColor:
+                                      AppColor.orange.withOpacity(0.1),
+                                ),
+                                child: Text(
+                                  shippingStatus ==
+                                          ProductShippingStatus
+                                              .shippedFromSeller
+                                      ? "Cancel"
+                                      : "Shipped",
+                                  style: TextStyle(
+                                    color: shippingStatus ==
+                                            ProductShippingStatus
+                                                .shippedFromSeller
+                                        ? AppColor.red
+                                        : AppColor.orange,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                  shippingAddress(
+                      data?.details?.userTransactionInfo?.shippingAddress),
+                  // User Info
+                  myProduct(data) == MyProduct.SELL
+                      ? buyerInfo(data?.details?.userTransactionInfo?.userInfo)
+                      : const SizedBox.shrink()
+                ],
+              ),
+              shippingStatus == ProductShippingStatus.receiveByBuyer
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 14),
+                        const AppText(
+                          text: "Payment Completed",
+                          color: AppColor.green,
+                          textSize: 15,
+                          style: AppTextStyle.title,
+                        ),
+                        const SizedBox(height: 12),
+                        commonText(
+                          "Transaction ID: ",
+                          data?.details?.userTransactionInfo?.transactionId ??
+                              '',
+                        ),
+                        const SizedBox(height: 8),
+                        commonText(
+                          "Time: ",
+                          AppDateTime.getDateTime(
+                              data?.details?.userTransactionInfo?.createdAt,
+                              format: DateFormat("HH:mm a, dd MMM yyyy")),
+                        ),
+                        const SizedBox(height: 8),
+                        commonText(
+                          "Price ",
+                          '\$${(data?.details?.userTransactionInfo?.amount ?? 0).toStringAsFixed(1)}',
+                          spaceBetween: true,
+                        ),
+                        const SizedBox(height: 8),
+                        commonText(
+                          "Charge ",
+                          '\$${(data?.details?.userTransactionInfo?.chargedAmount ?? 0).toStringAsFixed(1)}',
+                          spaceBetween: true,
+                        ),
+                        const SizedBox(height: 8),
+                        commonText("Total Payment ",
+                            '\$${((data?.details?.userTransactionInfo?.chargedAmount ?? 0) + (data?.details?.userTransactionInfo?.amount ?? 0)).toStringAsFixed(1)}',
+                            spaceBetween: true, bold: true, highlight: true),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buyerInfo(UserBasicInfo? userInfo) {
+    return userInfo == null
+        ? const SizedBox.shrink()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 14),
+              const AppText(
+                text: "User Info",
+                color: AppColor.themeColor,
+                textSize: 12,
+                style: AppTextStyle.title,
+              ),
+              const SizedBox(height: 8),
+              commonText(
+                "Name: ",
+                "${userInfo.firstName ?? ''} ${userInfo.lastName ?? ''}",
+              ),
+              const SizedBox(height: 8),
+              commonText(
+                "Phone: ",
+                "+${userInfo.countryCode ?? ''} ${userInfo.phone ?? ''}",
+              ),
+              const SizedBox(height: 8),
+              commonText(
+                "Email: ",
+                userInfo.email ?? '',
+              ),
+            ],
+          );
+  }
+
+  Widget shippingAddress(AddressModel? address) {
+    return address == null
+        ? const SizedBox.shrink()
+        : Column(
+            children: [
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AppText(
+                          text: "Shipping Address",
+                          style: AppTextStyle.title,
+                          textSize: 13.0,
+                          color: AppColor.blackColor,
+                        ),
+                        const SizedBox(height: 5.0),
+                        AppText(
+                          text: address.location ?? '',
+                          style: AppTextStyle.medium,
+                          textSize: 13.0,
+                          color: AppColor.blackColor.withOpacity(0.3),
+                        ),
+                        const SizedBox(height: 5.0),
+                        AppText(
+                          text: address.street ?? '',
+                          style: AppTextStyle.medium,
+                          textSize: 11.0,
+                          color: AppColor.blackColor.withOpacity(0.3),
+                        ),
+                        const SizedBox(height: 5.0),
+                        AppText(
+                          text: address.landMark ?? '',
+                          style: AppTextStyle.medium,
+                          textSize: 11.0,
+                          color: AppColor.blackColor.withOpacity(0.3),
+                        ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => PickLocationMap(
+                          viewOnly: true,
+                          cordinates: LatLng(
+                              double.parse(address.latitude ?? "0.0"),
+                              double.parse(address.longitude ?? "0.0")),
+                          onChanged: (location) {},
+                        ),
+                      );
+                    },
+                    child: Image.asset(Assets.assetsLocationImage,
+                        height: 61.0, width: 61.0),
+                  ),
+                ],
+              ),
+            ],
+          );
   }
 
   /// Product Category

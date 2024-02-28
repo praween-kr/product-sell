@@ -54,7 +54,8 @@ class ProductDetailsScreen extends StatelessWidget {
           () => controller.loadingData.value
               ? ShimmerWidgets.text(w: Get.width * 0.4)
               : Text(
-                  controller.productDetailsData.value?.details?.name ?? '',
+                  controller.productDetailsData.value?.details?.name ??
+                      'Product Details',
                   style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
@@ -598,9 +599,10 @@ class ProductDetailsScreen extends StatelessWidget {
     //
     Get.to(
       () => AddressScreen(
-        paynow: (String addressId) async {
+        paynow: (String shpingAddressId) async {
           AppPaymentMethods.stripePayment(
               amount: amount,
+              shpingAddressId: shpingAddressId,
               productId: productId,
               type: TypeOfProduct.fixed,
               success: (transactionId) {
@@ -635,9 +637,10 @@ class ProductDetailsScreen extends StatelessWidget {
     //
     Get.to(
       () => AddressScreen(
-        paynow: (String addressId) async {
+        paynow: (String shpingAddressId) async {
           AppPaymentMethods.stripePayment(
               amount: amount,
+              shpingAddressId: shpingAddressId,
               productId: productId,
               type: TypeOfProduct.bid,
               success: (transactionId) {
@@ -816,12 +819,15 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         (controller.productDetailsData.value?.details?.startDate == null ||
-                controller.productDetailsData.value?.details?.bidTime == null)
+                    controller.productDetailsData.value?.details?.bidTime ==
+                        null) ||
+                (controller.productDetailsData.value?.details?.bidTime ?? '')
+                    .contains('00:00')
             ? const SizedBox.shrink()
             : Row(
                 children: [
                   const AppText(
-                    text: "Bding start Time: ",
+                    text: "Biding Start Time: ",
                     textSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Color(0xff9F9F9F),
